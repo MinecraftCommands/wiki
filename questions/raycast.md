@@ -1,4 +1,4 @@
-If you're trying to check whether an entity / player is looking at a specific entity / position, you might be able to use a more streamlined method [described here](/wiki/questionss/lookat). 
+If you're trying to check whether an entity / player is looking at a specific entity / position, you might be able to use a more streamlined method [described here](/wiki/questions/lookat). 
 
 # Raycast
 
@@ -30,7 +30,7 @@ First, the command that will initiate a raycast. We're anchoring the execution p
 
     execute as <shooter> at @s anchored eyes positioned ^ ^ ^ anchored feet run function namespace:start_ray
 
-Next up, the ray setup. We need to set a maxium amount of steps that we can go before we abort our search. This means we can just set a score to the maximum amount of steps. Here a `dummy` scoreboard named `ray_steps` is used. It's set to 50 steps, so a maximum distance of 5 blocks considering our step distance is 0.1 blocks per step (which is also the reach distance of a player). We also want to store whether our ray successfully hit something, so we know whether to continue or to stop. In this case another `dummy` objective is used, called `ray_success`. Instead of two scoreboards you can also use a single scoreboard and use [fake players](/wiki/questionss/fakeplayer) to store the scores.
+Next up, the ray setup. We need to set a maxium amount of steps that we can go before we abort our search. This means we can just set a score to the maximum amount of steps. Here a `dummy` scoreboard named `ray_steps` is used. It's set to 50 steps, so a maximum distance of 5 blocks considering our step distance is 0.1 blocks per step (which is also the reach distance of a player). We also want to store whether our ray successfully hit something, so we know whether to continue or to stop. In this case another `dummy` objective is used, called `ray_success`. Instead of two scoreboards you can also use a single scoreboard and use [fake players](/wiki/questions/fakeplayer) to store the scores.
 
 `namespace:start_ray`
 

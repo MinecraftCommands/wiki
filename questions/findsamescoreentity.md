@@ -1,6 +1,6 @@
 # Find an entity with the same score as another entity or player
 
-related: [Check if a score is equal to, greater than, or less than another score](/wiki/questionss/scorecompare)
+related: [Check if a score is equal to, greater than, or less than another score](/wiki/questions/scorecompare)
 
 ## Java
 
@@ -16,7 +16,7 @@ This method works by changing the executor to all entities that need to be check
 
 ### Method 2: Store the score in a fake player first.
 
-This method has the advantage over the first one that it only need to evaluate the selector for the special entity once, but it has the disadvantage that it needs 2 commands. ([what is a fake player?](/wiki/questionss/fakeplayer))
+This method has the advantage over the first one that it only need to evaluate the selector for the special entity once, but it has the disadvantage that it needs 2 commands. ([what is a fake player?](/wiki/questions/fakeplayer))
 
     scoreboard players operation #fakeplayer points = @e[tag=compare,limit=1] points
     execute as @a if score @s points = #fakeplayer points run I have the same points

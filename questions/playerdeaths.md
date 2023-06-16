@@ -1,6 +1,6 @@
 # Detect Player Death
 
-_Related: [Detect Player Kills](/wiki/questionss/playerkills)_
+_Related: [Detect Player Kills](/wiki/questions/playerkills)_
 
 ## Java
 

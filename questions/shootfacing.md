@@ -8,7 +8,7 @@ Shooting a projectile/entity in the direction a player is facing is not trivial,
 
 *This article has been updated to use a `marker` entity. If you're using an older version that doesn't have the marker entity yet, swap it out for an `area_effect_cloud`.*
 
-*Related: [How to detect item click](/wiki/questionss/itemclick)*
+*Related: [How to detect item click](/wiki/questions/itemclick)*
 
 ## Using teleports to essentially do vector calculations
 
@@ -77,7 +77,7 @@ Or rather, make use of the fact that we can use the worlds zero position and pre
 
 *Please note that you probably shouldn't be using this method if method 1 covers your usecase.*
 
-This example will assume you have a dummy scoreboard objective set up that is named `pos` and that you're running these commands `as` and `at` the player (in a function). Whenever you see `#<something>` this is a [fake player](/wiki/questionss/fakeplayer) that we use for convenient value storage. Because scoreboards can only hold integer values (whole numbers), we scale up the values by 1000 when storing them and down by 0.001 when putting them back into the Motion tag so we don't lose too much accuracy. We need to use scoreboards however, because we need to do some subtractions which is only conveniently possible with scoreboard operations. (This means that the system will stop working once you go above a position of 2'000'000 on either axis, if that is a concern, change it to 100/0.01, that way you can reach 2/3 to the worldborder without issues.)
+This example will assume you have a dummy scoreboard objective set up that is named `pos` and that you're running these commands `as` and `at` the player (in a function). Whenever you see `#<something>` this is a [fake player](/wiki/questions/fakeplayer) that we use for convenient value storage. Because scoreboards can only hold integer values (whole numbers), we scale up the values by 1000 when storing them and down by 0.001 when putting them back into the Motion tag so we don't lose too much accuracy. We need to use scoreboards however, because we need to do some subtractions which is only conveniently possible with scoreboard operations. (This means that the system will stop working once you go above a position of 2'000'000 on either axis, if that is a concern, change it to 100/0.01, that way you can reach 2/3 to the worldborder without issues.)
 
     # summon the temporary entity
     summon marker ^ ^ ^1 {Tags:["direction"]}

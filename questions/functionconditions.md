@@ -10,7 +10,7 @@ Easiest way to do this is by prefixing the command with an `execute if entity`:
 
     execute if entity @a[tag=TeamChange,limit=1] run say test
 
-Notice the `limit=1` in the above command, this is purely for performance reasons so the game stops after the first matching entity it found. [If you want to check whether there are an exact amount of entities found with a selector, click here](/wiki/questionss/numplayers).
+Notice the `limit=1` in the above command, this is purely for performance reasons so the game stops after the first matching entity it found. [If you want to check whether there are an exact amount of entities found with a selector, click here](/wiki/questions/numplayers).
 
 ### My condition is whether or not another command succeeds
 

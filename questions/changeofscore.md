@@ -8,7 +8,7 @@ If you are changing the score yourself, it is generally advised to also do the e
 
 ## The destructive method
 
-This is the more commonly used method, because in many use cases it's not important to know the total score, just that the score changed. It is generally used for [item click detection](/wiki/questionss/itemclick), [player deaths](/wiki/questionss/playerdeaths) in minigames and more and involves resetting the score back to 0 once it has been changed.  
+This is the more commonly used method, because in many use cases it's not important to know the total score, just that the score changed. It is generally used for [item click detection](/wiki/questions/itemclick), [player deaths](/wiki/questions/playerdeaths) in minigames and more and involves resetting the score back to 0 once it has been changed.  
 _Some objective types are read-only, such as Health or Hunger. Those won't work for this method._
 
 So lets assume you have a score that detects a players death and want to do something with that player everytime they die once.
