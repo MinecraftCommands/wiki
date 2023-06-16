@@ -8,59 +8,59 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 
 ### Items
 
-[Detect a specific item (in the Inventory, in the selected slot, on the ground)?](questions/detectitem)  
-[Give an item a custom tag to identify it by?](questions/customitemtag)  
-[Select players with exactly X of a certain item?](questions/amountitems)  
-[Detect rightclick or leftclick (on an item)?](questions/itemclick)  
-[Give a special item (Bedrock)?](questions/giveitembedrock)  
-[Change an item while it's in the players inventory?](questions/modifyinventory)  
+[Detect a specific item (in the Inventory, in the selected slot, on the ground)?](/wiki/questions/detectitem)  
+[Give an item a custom tag to identify it by?](/wiki/questions/customitemtag)  
+[Select players with exactly X of a certain item?](/wiki/questions/amountitems)  
+[Detect rightclick or leftclick (on an item)?](/wiki/questions/itemclick)  
+[Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
+[Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
 
 ### Scores
 
-[Generate a random number?](questions/randomnumber)  
-[Store an NBT value to a score, and vice versa?](questions/nbttransfer) **(1.13+ only)**  
-[Check if a score is equal to, greater than, or less than another score?](questions/scorecompare)  
-[Find an entity that has the same score as another entity?](questions/findsamescoreentity)  
-[Summon/Teleport an entity/player at/to a position defined in a score?](questions/movetoscore)  
-[Detect a change in score?](questions/changeofscore)  
-[Link an entity to another entity through scoreboards?](questions/linkentity)  
-[Find the player / entity with the highest score?](questions/highestscore/)   
+[Generate a random number?](/wiki/questions/randomnumber)  
+[Store an NBT value to a score, and vice versa?](/wiki/questions/nbttransfer) **(1.13+ only)**  
+[Check if a score is equal to, greater than, or less than another score?](/wiki/questions/scorecompare)  
+[Find an entity that has the same score as another entity?](/wiki/questions/findsamescoreentity)  
+[Summon/Teleport an entity/player at/to a position defined in a score?](/wiki/questions/movetoscore)  
+[Detect a change in score?](/wiki/questions/changeofscore)  
+[Link an entity to another entity through scoreboards?](/wiki/questions/linkentity)  
+[Find the player / entity with the highest score?](/wiki/questions/highestscore/)   
 
 ### Players
 
-[Activate a command *once* when a player does something (e.g: enters an area)?](questions/runonce)  
-[Do something on all players in certain area(s)?](questions/areas)   
-[Target a player above/below a certain Y level?](questions/heighttest)  
-[Detect when a player died?](questions/playerdeaths)  
-[Detect when a player kills an entity/other player?](questions/playerkills)  
-[Detect a player joining (for the first time)?](questions/playerjoin)  
-[Store a players inventory (and give it back later)?](questions/storeinventory)  
-[Detect a player looking at something (entity / position)](questions/lookat)  
+[Activate a command *once* when a player does something (e.g: enters an area)?](/wiki/questions/runonce)  
+[Do something on all players in certain area(s)?](/wiki/questions/areas)   
+[Target a player above/below a certain Y level?](/wiki/questions/heighttest)  
+[Detect when a player died?](/wiki/questions/playerdeaths)  
+[Detect when a player kills an entity/other player?](/wiki/questions/playerkills)  
+[Detect a player joining (for the first time)?](/wiki/questions/playerjoin)  
+[Store a players inventory (and give it back later)?](/wiki/questions/storeinventory)  
+[Detect a player looking at something (entity / position)](/wiki/questions/lookat)  
 
 ### Misc
 
-[Do something if a command block *wasn't* successful?](questions/blockinvert)  
-[Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)?](questions/tagentity)  
-[Add a delay to a command block?](questions/blockdelay)  
-[Check if there are exactly X players matching a selector?](questions/numplayers)  
-[Do conditions with functions?](questions/functionconditions)  
-[Point a compass towards a player?](questions/compasstoplayer)  
-[Summon an entity/projectile flying in the direction the player is looking?](questions/shootfacing)  
-[Make a scoreboard ID system?](questions/linkentity)  
-[Make one mob attack another mob/player?](questions/angermob)  
-[Do raycasting?](questions/raycast)   
-[Make a circle (of blocks / entities)?](questions/makecircle/)
+[Do something if a command block *wasn't* successful?](/wiki/questions/blockinvert)  
+[Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)?](/wiki/questions/tagentity)  
+[Add a delay to a command block?](/wiki/questions/blockdelay)  
+[Check if there are exactly X players matching a selector?](/wiki/questions/numplayers)  
+[Do conditions with functions?](/wiki/questions/functionconditions)  
+[Point a compass towards a player?](/wiki/questions/compasstoplayer)  
+[Summon an entity/projectile flying in the direction the player is looking?](/wiki/questions/shootfacing)  
+[Make a scoreboard ID system?](/wiki/questions/linkentity)  
+[Make one mob attack another mob/player?](/wiki/questions/angermob)  
+[Do raycasting?](/wiki/questions/raycast)   
+[Make a circle (of blocks / entities)?](/wiki/questions/makecircle/)
 
 ## What is...
 
-[a fake player?](questions/fakeplayer)  
-[a range? / those two dots `..`?](questions/range)  
-[command context?](questions/commandcontext)  
+[a fake player?](/wiki/questions/fakeplayer)  
+[a range? / those two dots `..`?](/wiki/questions/range)  
+[command context?](/wiki/questions/commandcontext)  
 
 
 ## How do I... (1.12 and below only)
 
-[Select an entity with *multiple* scoreboard tags?](questions/multipletags)
+[Select an entity with *multiple* scoreboard tags?](/wiki/questions/multipletags)
 
 
 ## Still needed articles

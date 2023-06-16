@@ -76,7 +76,7 @@ Primarily, turn off TrackOutput on all of your command blocks. This will stop th
 
 Redstone causes a lot of block and chunk updates, especially redstone wire, and especially if it's on a fast clock. 
 
-Any processing you can do with redstone, you can do with solely commands. Repeaters should no longer be used for delays ([use scoreboard or area effect cloud timers](questions#wiki_add_a_delay_to_a_command)), and comparators should no longer be used to check conditions (use conditional blocks, [stats](questions/functionconditions), or [tags](questions#wiki_activate_a_command_once_when_a_player_does_something_.28e.g.3A_enters_an_area.29))
+Any processing you can do with redstone, you can do with solely commands. Repeaters should no longer be used for delays ([use scoreboard or area effect cloud timers](/wiki/questions#wiki_add_a_delay_to_a_command)), and comparators should no longer be used to check conditions (use conditional blocks, [stats](/wiki/questions/functionconditions), or [tags](/wiki/questions#wiki_activate_a_command_once_when_a_player_does_something_.28e.g.3A_enters_an_area.29))
 
 Trying to reduce how often commands are running by switching from a repeating block to a redstone clock (e.g: comparator) can actually worsen the performance. You should use the methods described in the slowing down your commands section above.
 

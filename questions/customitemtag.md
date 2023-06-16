@@ -22,6 +22,6 @@ The key can be any string and the value of this tag can be any NBT, so long as y
 
     /give @p stick{BlahBlahBlah:"string value!"} 1
 
-[How to detect a specific item in more detail](/questions/detectitem).  
+[How to detect a specific item in more detail](/wiki/questionss/detectitem).  
 
-([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/questions/tagentity))
+([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/wiki/questionss/tagentity))

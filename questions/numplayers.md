@@ -8,7 +8,7 @@ A command will still run (and potentially succeed once) even if `@a[team=red,lim
 
 ## Bedrock
 
-The easiest way to do this in bedrock is to have the found entities count up the score of another entity or a [fake player](/questions/fakeplayer) (the later is currently a little harder to check for their score, so it is not used in this tutorial).
+The easiest way to do this in bedrock is to have the found entities count up the score of another entity or a [fake player](/wiki/questionss/fakeplayer) (the later is currently a little harder to check for their score, so it is not used in this tutorial).
 
 Using a dummy scoreboard objective named `result` and an entity with the `counter` tag, we can count how many players there are in team red:
 
@@ -21,7 +21,7 @@ Using a dummy scoreboard objective named `result` and an entity with the `counte
 ### Method 1: Storing the found entities using `execute store`
 
 Introduced in 1.13 and replacing the `/stats` command, the `store` subcommand of `execute` is able to store the result of the command after it in multiple ways, including into a scoreboard.  
-Using a dummy scoreboard objective name `result` and the [fake player](/questions/fakeplayer) `#count`, we can count the amount of entities a command finds and then execute off of that. 
+Using a dummy scoreboard objective name `result` and the [fake player](/wiki/questionss/fakeplayer) `#count`, we can count the amount of entities a command finds and then execute off of that. 
 
     execute store result score #count result if entity @a[team=red]
     execute if score #count result matches 2 run say there are exactly 2 players on team red.

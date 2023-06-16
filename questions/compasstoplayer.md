@@ -14,7 +14,7 @@ The give command for such a compass which doesn't need a lodestone to work looks
 
     /give @s compass{LodestoneTracked:0b,LodestonePos:{X:-460,Y:64,Z:-701},LodestoneDimension:"minecraft:overworld"}
 
-Now, using data merge we can modify those numbers dynamically. For example, lets say you want to drop the compass to make it point to the second-nearest player, assuming the nearest player is you. The commands for something like that could look like this (using the [custom item tag](/questions/customitemtag) `playertracker:1b` to identify such a compass):
+Now, using data merge we can modify those numbers dynamically. For example, lets say you want to drop the compass to make it point to the second-nearest player, assuming the nearest player is you. The commands for something like that could look like this (using the [custom item tag](/wiki/questionss/customitemtag) `playertracker:1b` to identify such a compass):
 
 tick.mcfunction
 
@@ -39,4 +39,4 @@ In 1.17 we got [item modifiers](https://minecraft.fandom.com/wiki/Item_modifier)
 
 In this case you follow the process of the 1.16 section above, but instead of storing it into an item entity you for example store it into the [command storage](https://minecraft.fandom.com/wiki/Commands/data#Storage) and then use the `copy_nbt` function in the item modifier to copy that data to the item.
 
-_Related: [Modify an item inside the players inventory](/questions/modifyinventory)_
+_Related: [Modify an item inside the players inventory](/wiki/questionss/modifyinventory)_

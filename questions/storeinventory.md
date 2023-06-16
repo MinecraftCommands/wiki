@@ -49,7 +49,7 @@ For convenience, we can create a single event that deals with both of these comp
 
 For a better performance however I recommend to remove the item_hopper component once you're done picking up the items through a dedicated event.
 
-You are now ready to get the items out of the player, let them be picked up by your custom entity, link them through a [scoreboard ID system](/questions/linkentity) (aka giving the entity and the player the same id score) and after the game is over, teleport the entity and the player into the same room and kill the entity (through the `/event` described above).
+You are now ready to get the items out of the player, let them be picked up by your custom entity, link them through a [scoreboard ID system](/wiki/questionss/linkentity) (aka giving the entity and the player the same id score) and after the game is over, teleport the entity and the player into the same room and kill the entity (through the `/event` described above).
 
 ### `/structure`
 
@@ -71,7 +71,7 @@ There are community made datapacks that do the heavy lifting for you like [Playe
 
 The way to do this is to store the players `Inventory` NBT somewhere safe. There are many things in the game that can store arbitrary NBT data (storage, item tag nbt, etc), and they sure are all good solutions in their own right. In this case, since we're assuming that one player is supposed to be connected to one Inventory save, without any further knowledge of the environment, we'll be using the `marker` entities ability to store arbitrary data for us. *(In case a player is bound to a certain area in a map for example, an item in a jukebox might be a better choice. In any situation, using the `storage` might be a better choice for various reasons, if you know how to properly link data in there with players.)*
 
-So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard id system](/questions/linkentity) set up to link the entity to the player.
+So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard id system](/wiki/questionss/linkentity) set up to link the entity to the player.
 
     # summon marker
     summon marker ~ ~ ~ {Tags:["inv_store","inv_new"]}
@@ -195,7 +195,7 @@ And we should be getting all our items back in a single tick. Items that do not 
 
 **However, if the player is moving or close to other players while this is supposed to happen, or if you're worried about spawning lots of item entites, use the following method instead**. It does NOT fix the issue of too many items, as the player isn't able to pick up more than 36 items, but there could be a total of up to 41 items in their inventory at the time of storing (armor and offhand). The first method will drop the item on the floor if that is the case. **The second method will not give the player anything once they reached limit due to how `/loot give` works!**
 
-This method uses the [yellow shulkerbox loottable trick as outlined here](/questions/modifyinventory).
+This method uses the [yellow shulkerbox loottable trick as outlined here](/wiki/questionss/modifyinventory).
 
 For this to work, we first need to get rid of the `Slot` data that is in the Inventory data (see under [explanations](#wiki_some_explanations_on_why_we_do_it_this_way) below as to why we need to do this). Then we copy the entire list of items to the shulkerbox, where it will promptly throw out all the ones that didn't fit, we use `/loot` to give its contents to the player. Then we remove the first 27 entries of the inventory (1 full shulkerbox worth) and repeat the same process with the remaining items.
 

@@ -33,7 +33,7 @@ That means that if you have those 3 commands repeating somewhere in your world, 
 
 ### Scoreboard
 
-For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependant events/delays) or "[fake player](/questions/fakeplayer)" scores (set "fake" values for player names, recommended for player independant delays).
+For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependant events/delays) or "[fake player](/wiki/questionss/fakeplayer)" scores (set "fake" values for player names, recommended for player independant delays).
 
     # the repeating commandblock
     scoreboard players add @a timer 1

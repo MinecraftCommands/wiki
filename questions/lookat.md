@@ -1,6 +1,6 @@
 # Check whether the player / an entity is looking at something
 
-_This method describes how to check whether the player / an entity is **looking at something specific / predetermined**, like a specific entity or a specific position! If you're looking for a more general approach, [you'll need to use a raycast](/questions/raycast)._
+_This method describes how to check whether the player / an entity is **looking at something specific / predetermined**, like a specific entity or a specific position! If you're looking for a more general approach, [you'll need to use a raycast](/wiki/questionss/raycast)._
 
 ## Java & Bedrock after 1.19.50
 

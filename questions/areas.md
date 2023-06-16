@@ -2,7 +2,7 @@
 
 _Java Syntax, but this can be applied to Bedrock just as well by changing the selector arguments to Bedrock Syntax._
 
-This mostly comes up as a question to change the gamemode in a certain area (e.g. spawn, safe zones, etc), so we will focus on that, but this can be applied to any use case. For questions to do something once a player enters a single area, [look here](/questions/runonce).
+This mostly comes up as a question to change the gamemode in a certain area (e.g. spawn, safe zones, etc), so we will focus on that, but this can be applied to any use case. For questions to do something once a player enters a single area, [look here](/wiki/questionss/runonce).
 
 The naive approach would be to put everyone in a radius X around the worldspawn (e.g.at 0 0 0) to adventure mode and everyone outside of it to survival mode.
 

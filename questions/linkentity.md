@@ -8,7 +8,7 @@ First we need to set up a dummy scoreboard objective
 
     scoreboard objectives add id dummy
 
-Next, to make sure that every player gets a unique id, we need a system that assigns every player a unique score. This can be achieved by simply counting up with every subsequent player that needs a score. For this, we'll set a [fake player](/questions/fakeplayer) score of this objective to 1 to start with.
+Next, to make sure that every player gets a unique id, we need a system that assigns every player a unique score. This can be achieved by simply counting up with every subsequent player that needs a score. For this, we'll set a [fake player](/wiki/questionss/fakeplayer) score of this objective to 1 to start with.
 
     scoreboard players set $total id 1
 
@@ -45,4 +45,4 @@ If for some reason you cannot use a function, use this code for your commandbloc
 
 _If you're on bedrock, replace `execute as @a[tag=addId] run` with `execute @a[tag=addId] ~~~`._
 
-**And we're done, every player has a unique ID**. Now we can just copy the id score to whatever entity we want to link up using `scoreboard players operation`, and use [this method](/questions/findsamescoreentity) to find the entity with the same score (aka the linked entity).
+**And we're done, every player has a unique ID**. Now we can just copy the id score to whatever entity we want to link up using `scoreboard players operation`, and use [this method](/wiki/questionss/findsamescoreentity) to find the entity with the same score (aka the linked entity).

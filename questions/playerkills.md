@@ -1,6 +1,6 @@
 # Detect the player killing entities and players
 
-_Related: [Detect Player Deaths](/questions/playerdeaths)_
+_Related: [Detect Player Deaths](/wiki/questionss/playerdeaths)_
 
 ## Java
 
@@ -46,7 +46,7 @@ From here you can go two ways:
 
 1. Either you give the player closest to the dropped item the credit for the kill by counting their score up by one, then killing the item. Be aware that this can easily create false results if the combat is ranged or in a chaotic environment, where the closest player to the killed player isn't necessarily the killer.  
 2. Or you require the players to pick up the item for their kill to be counted, check for the item in their inventory, count up by 1 if you find it and clear 1 from their inventory.  
-Read [here](/questions/detectitem) how you can detect a certain item.
+Read [here](/wiki/questionss/detectitem) how you can detect a certain item.
 
 _Credit to /u/DanRileyCG, for the original [thread here](https://www.reddit.com/r/MinecraftCommands/comments/f7jd9f/help_with_server/)_
 

@@ -2,7 +2,7 @@
 
 This page contains a list of links to utilities and references for **Pocket Edition/Windows 10** ("Minecraft Unified") map making that you may find useful.
 
-Looking for resources for the normal Java PC edition? [Click here for Java/PC resources.](resources)
+Looking for resources for the normal Java PC edition? [Click here for Java/PC resources.](/wiki/resources)
 
 Submit a pull request or create a GitHub issue if you've found a useful tool or reference that you think would fit here.
 

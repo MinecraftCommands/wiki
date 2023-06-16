@@ -1,6 +1,6 @@
 # Do something if a command block *wasn't* successful
 
-(This is for command blocks only. For functions, [see here](/questions/functionconditions))
+(This is for command blocks only. For functions, [see here](/wiki/questionss/functionconditions))
 
 When a command block runs, its `SuccessCount` tag is updated. This is the value used by comparators to decide how strong a signal to output from that command block. If the command block does not succeed, its `SuccessCount` will be `0`.
 
