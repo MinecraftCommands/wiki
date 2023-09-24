@@ -6,7 +6,7 @@ If you're trying to check whether an entity / player is looking at a specific en
 
 Raycasting (or more accurately in this context: ray marching) in minecraft commands describes a process of moving forward in small increments (basically "drawing" a line) until a certain condition is met. It has many possible usecases, most often it is used to check what a player/entity is looking at by following the looking direction.
 
-A raycast is possible due to the introduction of [local coordinates](https://minecraft.fandom.com/wiki/Coordinates#Local_coordinates) (`^ ^ ^`) which allows a commands origin to be moved relative to the entities local coordinates instead of absolute or world based relative coordinates.
+A raycast is possible due to the introduction of [local coordinates](https://minecraft.wiki/wiki/Coordinates#Local_coordinates) (`^ ^ ^`) which allows a commands origin to be moved relative to the entities local coordinates instead of absolute or world based relative coordinates.
 
 In all of the below examples we'll use a step-size of 0.1 blocks at a time. This is a reasonable compromise between error margin and performance hit, but depending on the usecase a smaller or larger step size is absolutely thinkable.
 

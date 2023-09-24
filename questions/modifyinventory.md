@@ -6,7 +6,7 @@ _Java only, as NBT data is inaccessible in bedrock this article is irrelevant fo
 
 In snapshot [20w46a](https://www.minecraft.net/article/minecraft-snapshot-20w46a) the `/replaceitem` command was replaced by the `item` command, which, while keeping the replacing functionality from the now obsolete command, also allows for modifiers to be applied to (replaced) items and items to be copied from other sources. This is currently only in the snapshots and subject to change. However if it stays around for the full release, it would drastically improve on the previous methods of doing this.
 
-Further information: https://minecraft.gamepedia.com/Commands/item
+Further information: https://minecraft.wiki/Commands/item
 
 ## 1.16 and below
 

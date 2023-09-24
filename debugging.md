@@ -41,7 +41,7 @@ This page details information on common problems you might have with a command, 
 * Try using `/say` to check whether its the selector or the rest of your command that's not working 
 * In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments
 * Dropped item entities can have scoreboard tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard tags applied to it
-* [Selector arguments](http://minecraft.gamepedia.com/Commands#Target_selector_arguments) usually specify a maximum value, and adding `m` (or `_min` for scores) will specify a minimum value. E.G:
+* [Selector arguments](http://minecraft.wiki/Commands#Target_selector_arguments) usually specify a maximum value, and adding `m` (or `_min` for scores) will specify a minimum value. E.G:
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
@@ -52,15 +52,15 @@ This page details information on common problems you might have with a command, 
 
 ## NBT
 
-* Check the spelling, location, and capitalization of tags. References: [entity/world data](http://minecraft.gamepedia.com/Chunk_format), [player/item data](http://minecraft.gamepedia.com/Player.dat_format)
+* Check the spelling, location, and capitalization of tags. References: [entity/world data](http://minecraft.wiki/Chunk_format), [player/item data](http://minecraft.wiki/Player.dat_format)
 * Try [pca's tag checker](https://pca006132.neocities.org/pcc/nbtcheck.html)
 * When testing data:
    * You must specify the tag's type. E.G: `/testfor @e {Marker:1b}` instead of just `/testfor @e {Marker:1}`
    * You must put the namespace before IDs. E.G: `/testfor @e {Item:{id:"minecraft:stone"}}` instead of just `/testfor @e {Item:{id:"stone"}}`
    * In a list, the same element can be matched multiple times. E.G: `{Motion:[0.0,1.7,2.5]}` matches `/testfor @e {Motion:[0.0,0.0,0.0]}`, as all `0.0`'s find the first `0.0`
-* Item data from `/replaceitem` or `/give` is put in [the item's `tag` tag](http://minecraft.gamepedia.com/Player.dat_format#Item_structure), not directly in the item's root compound tag
+* Item data from `/replaceitem` or `/give` is put in [the item's `tag` tag](http://minecraft.wiki/Player.dat_format#Item_structure), not directly in the item's root compound tag
 * Minecraft generally won't "fix" data inside an item's `tag` tag; if you give an item with `{ench:[{id:10,lvl:1}]}`, `id` and `lvl` will stay (and need to be tested) as integers, even though they're normally shorts
-* A dropped item entity stores its item data [in an `Item` compound tag](http://minecraft.gamepedia.com/Chunk_format#Items_and_XPOrbs), not directly in the entity's root compound tag
+* A dropped item entity stores its item data [in an `Item` compound tag](http://minecraft.wiki/Chunk_format#Items_and_XPOrbs), not directly in the entity's root compound tag
 * If you need to include quotes in a string, you'll need to "escape" them by putting \ in front of them. E.G: `{Command:"/say My name is \"\"!"}`
 * If you need to escape a second level, you need to escape both the quotes and the previous backslash E.G: `{Command:"/setblock ~ ~ ~ wall_sign 0 replace {Text1:\"{\\\"text\\\":\\\"hello!\\\"}\"}"}`
 * [Generators are handy](https://mcstacker.bimbimma.com)

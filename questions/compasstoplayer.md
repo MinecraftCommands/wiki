@@ -35,8 +35,8 @@ update_compass.mcfunction
 
 ## 1.17+ (Java only)
 
-In 1.17 we got [item modifiers](https://minecraft.fandom.com/wiki/Item_modifier), which allow us to modify an item live while it's in the players inventory, no need to drop it on the floor anymore (if you know which slot it is in).
+In 1.17 we got [item modifiers](https://minecraft.wiki/wiki/Item_modifier), which allow us to modify an item live while it's in the players inventory, no need to drop it on the floor anymore (if you know which slot it is in).
 
-In this case you follow the process of the 1.16 section above, but instead of storing it into an item entity you for example store it into the [command storage](https://minecraft.fandom.com/wiki/Commands/data#Storage) and then use the `copy_nbt` function in the item modifier to copy that data to the item.
+In this case you follow the process of the 1.16 section above, but instead of storing it into an item entity you for example store it into the [command storage](https://minecraft.wiki/wiki/Commands/data#Storage) and then use the `copy_nbt` function in the item modifier to copy that data to the item.
 
 _Related: [Modify an item inside the players inventory](/wiki/questions/modifyinventory)_

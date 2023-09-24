@@ -38,7 +38,7 @@ this does use a lot of commands but using a function it's fairly easy to do and 
 
 ### 2: End Gateways
 
-You can use end gateways to teleport the players to an exact location, see [this for more info.](https://minecraft.gamepedia.com/End_Gateway_(block\)#Data_values).  
+You can use end gateways to teleport the players to an exact location, see [this for more info.](https://minecraft.wiki/End_Gateway_(block\)#Data_values).  
 
 Basically you can set its block NBT Data to `ExactTeleport:1b,ExitPortal:{X:1,Y:2,X:3}` using `data merge block` or `execute store` and then teleport the player into said portal. Thanks to `execute store` you can set the Exit Portal NBT dynamically:
 

@@ -51,7 +51,7 @@ _Only detecting the item in a players inventory is currently possible with comma
 
 #### since 1.18.20
 
-In the 1.18.20 beta they added the [`hasitem`](https://minecraft.fandom.com/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/wiki/questions/range)) of specific items in specific amounts in entities inventories. Below are some examples, check the link above for more information.
+In the 1.18.20 beta they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/wiki/questions/range)) of specific items in specific amounts in entities inventories. Below are some examples, check the link above for more information.
 
 A player with 5 or more apples in their inventory
 

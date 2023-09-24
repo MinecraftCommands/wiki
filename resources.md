@@ -19,9 +19,9 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Chunk format](http://minecraft.gamepedia.com/Chunk_format) (Wiki)
-[Player.dat format](http://minecraft.gamepedia.com/Player.dat_format) (Wiki)
-[Structure file format](http://minecraft.gamepedia.com/Structure_block_file_format) (Wiki)
+[Chunk format](http://minecraft.wiki/Chunk_format) (Wiki)
+[Player.dat format](http://minecraft.wiki/Player.dat_format) (Wiki)
+[Structure file format](http://minecraft.wiki/Structure_block_file_format) (Wiki)
 
 ## Commands
 
@@ -40,8 +40,8 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Commands list](http://minecraft.gamepedia.com/Commands) (Wiki)
-[Statistics list](http://minecraft.gamepedia.com/Statistics) (Wiki)
+[Commands list](http://minecraft.wiki/Commands) (Wiki)
+[Statistics list](http://minecraft.wiki/Statistics) (Wiki)
 [Full syntax tree (as JSON, useful for tools)](https://gist.github.com/Dinnerbone/7370a2846953eee2d8fc64514fb76de8) (Dinnerbone)
 
 ## Loot tables (& predicates)
@@ -58,7 +58,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Guide](http://minecraft.gamepedia.com/Loot_table) (Wiki)
+[Guide](http://minecraft.wiki/Loot_table) (Wiki)
 [Guide](https://github.com/skylinerw/guides/blob/master/java/loot%20tables.md) (Skylinerw)
 [New 1.14 features guide](https://gist.github.com/misode/66456e57372ce62cd9b65d1052521069) (Misode)
 
@@ -74,7 +74,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Info](http://minecraft.gamepedia.com/Function) (Wiki)
+[Info](http://minecraft.wiki/Function) (Wiki)
 
 ## Advancements
 
@@ -90,7 +90,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 ### References
 
 [Guide](https://github.com/skylinerw/guides/blob/master/java/advancements.md) (Skylinerw)
-[Format](http://minecraft.gamepedia.com/Advancements#JSON_Format) (Wiki)
+[Format](http://minecraft.wiki/Advancements#JSON_Format) (Wiki)
 [Biome list](https://pastebin.com/MK61Xuzf) (Skylinerw)
 [Order of trigger activations in a tick](http://i.imgur.com/pz5mU0G.png) (Skylinerw)
 
@@ -125,7 +125,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 ### References
 
 [Guide](https://github.com/skylinerw/guides/blob/master/java/text%20component.md) (Skylinerw)
-[§ codes](http://minecraft.gamepedia.com/Formatting_codes) (Wiki)
+[§ codes](http://minecraft.wiki/Formatting_codes) (Wiki)
 [§ codes](http://minecraft.tools/en/color-code.php) (Minecraft Tools)
 
 ## Give
@@ -156,7 +156,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Chunk format](http://minecraft.gamepedia.com/Chunk_format) (Wiki)
+[Chunk format](http://minecraft.wiki/Chunk_format) (Wiki)
 
 ## World editing
 
@@ -175,7 +175,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Data values](http://minecraft.gamepedia.com/Data_values) (Wiki)
+[Data values](http://minecraft.wiki/Data_values) (Wiki)
 [Building guides](https://www.reddit.com/r/Minecraft/comments/6eua5z/a_reminder_of_some_excellent_build_guidesbuilders/) (Adrian Brightmoore)
 [Biome colour-map](http://i.imgur.com/05QGuPX.png) (Word_Wizzard)
 
@@ -188,7 +188,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Custom world type format](https://minecraft.gamepedia.com/Custom)
+[Custom world type format](https://minecraft.wiki/Custom)
 [Noise settings examples](https://gist.github.com/misode/b83bfe4964e6bf53b2dd31b22ee94157) (Misode)
 [Vanilla worldgen reference files](https://t.co/cm3pJcAHcy) (Mojang)
 
@@ -209,8 +209,8 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Model format](http://minecraft.gamepedia.com/Model) (Wiki)
-[Sounds list](https://minecraft.gamepedia.com/Sounds.json/Java_Edition_values) (Wik)
+[Model format](http://minecraft.wiki/Model) (Wiki)
+[Sounds list](https://minecraft.wiki/Sounds.json/Java_Edition_values) (Wik)
 [Font json format](https://discordapp.com/channels/154777837382008833/154777837382008833/468913675017912320) (AmberW)
 [Shader `post` json format](https://discordapp.com/channels/154777837382008833/154777837382008833/490651571261014036) (Mrpingouin)
 [Shader `program` special variables](https://discordapp.com/channels/154777837382008833/306175724942000128/491380153960628231) (Mrpingouin)
@@ -257,7 +257,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 [Image to map](https://mc-map.djfun.de/) (MC Map Item Tool)
 [Image to map](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/1261738-linux-windows-imagetomap-in-game-text-and-images) (ImageToMap)
 [Image to map](https://github.com/tryashtar/image-map/raw/master/Image%20Map/bin/Debug/Image%20Map.exe) (tryashtar)
-[NBT reference](http://minecraft.gamepedia.com/Player.dat_format#Maps) (Wiki)
+[NBT reference](http://minecraft.wiki/Player.dat_format#Maps) (Wiki)
 
 
 ### Animation

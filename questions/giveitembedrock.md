@@ -36,6 +36,6 @@ It has the disadvantage that it can take a tick or two for the structure to be l
 
 **_Probably the best method currently available_**
 
-Same as the structure block method, but instead of loading it with a structureblock, you load it using the [/structure](https://minecraft.gamepedia.com/Commands/structure) command. It has the advantage over the block method that you don't need to worry about the whole redstone block setting and the issues that come with that, you can just load the structure directly at the player in question and be done with it.
+Same as the structure block method, but instead of loading it with a structureblock, you load it using the [/structure](https://minecraft.wiki/Commands/structure) command. It has the advantage over the block method that you don't need to worry about the whole redstone block setting and the issues that come with that, you can just load the structure directly at the player in question and be done with it.
 
 Make sure to save the structure with a structure void block inside, or the air might override whatever block the player is currently standing on.

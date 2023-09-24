@@ -11,7 +11,7 @@ This context is first set when the command is run and consists of multiple parts
 
 All of which can be modified individually with the 1.13+ Java as well as 1.19.1+ Bedrock execute command.
 
-See [the fandom wiki on the execute command](https://minecraft.fandom.com/wiki/Commands/execute) for which subcommands modify which context.
+See [the Minecraft wiki on the execute command](https://minecraft.wiki/wiki/Commands/execute) for which subcommands modify which context.
 
 ## Defaults
 
@@ -27,6 +27,6 @@ Functions _keep the context_ that they're run in.
 
 So a function run in chat will have the same defaults as any other command run from a player in chat. The same is true for a function command run from a commandblock, it will have the same context as any command run from a commandblock would.  
 
-A command run from either the `#minecraft:load` or `#minecraft:tick` [function tags](https://minecraft.fandom.com/wiki/Tag#Function_tags) will run positioned at world spawn (at the lowest end of the block, unlike the commandblock), rotated `0 0` and without an executing entity.
+A command run from either the `#minecraft:load` or `#minecraft:tick` [function tags](https://minecraft.wiki/wiki/Tag#Function_tags) will run positioned at world spawn (at the lowest end of the block, unlike the commandblock), rotated `0 0` and without an executing entity.
 
 This allows a lot of [optimization](/optimising) since you can use a selector once, running the function as that entity and then refer to that entity as `@s` for the rest of the function. It also allows for [entityless raycasting](/wiki/questions/raycast#wiki_without_an_entity) as the position and rotation is preserved between function calls.

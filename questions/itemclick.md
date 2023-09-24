@@ -4,7 +4,7 @@ For item clicks we have to differentiate between leftclick and rightclick detect
 
 ## Left-click
 
-This one is as easily explained as it is flawed: You can only detect left clicks, if you put something in front of the player to hit. Teleport some form of entity or mob that can take damage and has a hitbox directly in the players face or even over their head, so they have no other chance but to hit that entity. You can then "detect" the clicks either using an advancement with the `player_hurt_entity` trigger ([see here](https://minecraft.gamepedia.com/Advancements/JSON_format#minecraft:player_hurt_entity)) or with a scoreboard objective of type `minecraft.custom:minecraft.damage_dealt` ([see here](https://minecraft.gamepedia.com/Scoreboard#Criteria)). This method however has many obvious flaws:  
+This one is as easily explained as it is flawed: You can only detect left clicks, if you put something in front of the player to hit. Teleport some form of entity or mob that can take damage and has a hitbox directly in the players face or even over their head, so they have no other chance but to hit that entity. You can then "detect" the clicks either using an advancement with the `player_hurt_entity` trigger ([see here](https://minecraft.wiki/Advancements/JSON_format#minecraft:player_hurt_entity)) or with a scoreboard objective of type `minecraft.custom:minecraft.damage_dealt` ([see here](https://minecraft.wiki/Scoreboard#Criteria)). This method however has many obvious flaws:  
 
 - you're blocking the player from hitting anything else but the entity in their face  
 - you're also blocking the player from building and breaking blocks  
@@ -20,7 +20,7 @@ For rightclick detection we have [a lot of different ways](https://i.imgur.com/8
 
 _Note: This works the same with the warped fungus on a stick._
 
-Mapmakers have for many years now exploited what is technically [a bug](https://bugs.mojang.com/browse/MC-112991): Carrots on sticks have the property that when you click with one in your main hand or nothing clickable in your main hand with the CoaS in your offhand, it increases a player's "used carrot_on_a_stick" score (`minecraft.used:minecraft.carrot_on_a_stick` see [here](https://minecraft.gamepedia.com/Scoreboard#Criteria)). Testing if a player is holding a carrot on a stick with a specific tag like `{shoot_fireball:1b}` and also has `[scores={used_CoaS=1..}]` will test if a player clicks with a custom carrot on a stick. (related: [detect what item a player is holding](/wiki/questions/detectitem))
+Mapmakers have for many years now exploited what is technically [a bug](https://bugs.mojang.com/browse/MC-112991): Carrots on sticks have the property that when you click with one in your main hand or nothing clickable in your main hand with the CoaS in your offhand, it increases a player's "used carrot_on_a_stick" score (`minecraft.used:minecraft.carrot_on_a_stick` see [here](https://minecraft.wiki/Scoreboard#Criteria)). Testing if a player is holding a carrot on a stick with a specific tag like `{shoot_fireball:1b}` and also has `[scores={used_CoaS=1..}]` will test if a player clicks with a custom carrot on a stick. (related: [detect what item a player is holding](/wiki/questions/detectitem))
 
 This is the generally preferred method of doing this if it fits your situation, as its pros outweigh the cons.
 
@@ -58,7 +58,7 @@ The models/item/carrot_on_a_stick.json file within the resource pack might end u
 
 ### Villager method
 
-Spawn an invisible, NoAI, Silent dummy villager in front of the player and test if the player's "talked to villager" score increases (`minecraft.custom:minecraft.talked_to_villager`, see [here](https://minecraft.gamepedia.com/Scoreboard#Criteria)).
+Spawn an invisible, NoAI, Silent dummy villager in front of the player and test if the player's "talked to villager" score increases (`minecraft.custom:minecraft.talked_to_villager`, see [here](https://minecraft.wiki/Scoreboard#Criteria)).
 
 Pros:
 - Works for any item.

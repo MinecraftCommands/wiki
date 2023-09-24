@@ -124,7 +124,7 @@ Using armor stands as markers? Strongly consider switching to area effect clouds
 
 These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item or using `Motion`.
 
-[Marker entities](https://minecraft.fandom.com/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client, so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
+[Marker entities](https://minecraft.wiki/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client, so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
 Additionally they can store any kind of NBT data in their `data` NBT component (though storing abritrary data is probably better stored in the `storage` anyways).
 
 Remember from the previous section that selectors work by getting a list of all loaded entities, then narrowing that down. This means that extra entities increase the workload of every selector in your commands. In some cases, you could be able to use static coordinates rather than executing off of a marker entity. 

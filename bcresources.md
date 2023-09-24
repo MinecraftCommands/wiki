@@ -16,7 +16,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 [NBT Editor](http://www.mcctoolchest.com/Download) (MCC Tool Chest)
 
 ### Resources
-[Level format](https://minecraft.gamepedia.com/Bedrock_Edition_level_format) (Wiki)
+[Level format](https://minecraft.wiki/Bedrock_Edition_level_format) (Wiki)
 
 ## World editing
 
@@ -37,17 +37,17 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Creating a resource pack guide](http://minecraft.gamepedia.com/Tutorials/Creating_resource_pack_add-ons) (Wiki)
-[Changing entity models guide](http://minecraft.gamepedia.com/Tutorials/Changing_Minecraft_entity_models) (Wiki)
-[Sounds list](https://minecraft.gamepedia.com/Sounds.json/Bedrock_Edition_values) (Wiki)
+[Creating a resource pack guide](http://minecraft.wiki/Tutorials/Creating_resource_pack_add-ons) (Wiki)
+[Changing entity models guide](http://minecraft.wiki/Tutorials/Changing_Minecraft_entity_models) (Wiki)
+[Sounds list](https://minecraft.wiki/Sounds.json/Bedrock_Edition_values) (Wiki)
 
 # Behavior packs
 
 ### References
 
-[Creating a behavior pack guide](http://minecraft.gamepedia.com/Tutorials/Creating_behavior_packs) (Wiki)
-[Entity components for latest release](http://minecraft.gamepedia.com/Pocket_Edition_entity_components) (Wiki)
-[Entity components for latest beta](https://minecraft.gamepedia.com/Bedrock_Beta_Add-On_Documentation) (Wiki)
+[Creating a behavior pack guide](http://minecraft.wiki/Tutorials/Creating_behavior_packs) (Wiki)
+[Entity components for latest release](http://minecraft.wiki/Pocket_Edition_entity_components) (Wiki)
+[Entity components for latest beta](https://minecraft.wiki/Bedrock_Beta_Add-On_Documentation) (Wiki)
 [Loot table guide](http://www.minecraftforum.net/forums/minecraft-pocket-edition/mcpe-maps/mcpe-map-help-requests/2838965-custom-loot-tables-for-pe-win10) (Skylinerw)
 [UI format documentation](https://github.com/bleonard252/mc-uijson/wiki) (bleonard252)
 
@@ -55,5 +55,5 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 ### References
 
-[Commands list](http://minecraft.gamepedia.com/Commands) (Wiki)
-[Data values](https://minecraft.gamepedia.com/Bedrock_Edition_data_values) (Wiki)
+[Commands list](http://minecraft.wiki/Commands) (Wiki)
+[Data values](https://minecraft.wiki/Bedrock_Edition_data_values) (Wiki)
