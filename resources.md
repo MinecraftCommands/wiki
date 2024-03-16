@@ -13,7 +13,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 - [Web NBT Editor](https://irath96.github.io/webNBT/) (irath96)
 - [NBT Workbench](https://rttv.ca) ([On GitHub](https://github.com/RealRTTV/nbtworkbench)) (RealRTTV)
 - [Tag checker](http://www.mediafire.com/file/n38fgnjnr0q113d/PCN+1.4.zip) (pca006132)
-- [Web NBT Validator](https://ajaxgb.github.io/NBTLint/#{Hello:"reddit",Test:{Int:267,Short:345s,TooLarge:9999999999,"1.12 Compatible":[I;1,2,3]}}) (AjaxGb)
+- [Web NBT Validator](https://www.soltoder.com/NBTLint/#{Hello:%22reddit%22,Test:{Int:267,Short:345s,TooLarge:9999999999,%221.12%20Compatible%22:[I;1,2,3]}}) (AjaxGb)
 - [1.16 UUID Converter](https://www.soltoder.com/mc-uuid-converter/) (AjaxGb)
 - [UUID <--> UUIDMost/Least converter](https://minecraft.repertor.space/uuid.html) (Repertor)
 - [UUID <--> UUIDMost/Least converter](http://skylinerw.com/uuid/index.php?convert=dechex&uuidleast=1&uuidmost=1) (Skylinerw)
