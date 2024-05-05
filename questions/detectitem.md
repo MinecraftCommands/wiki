@@ -57,7 +57,7 @@ The correct check in the `SelectedItem` slot would look something like this:
 
 ## 1.20.5 and above
  
-# Target selector
+### Target selector
 
 In 1.20.5 you can check an item using the NBT data check in the [target selector](https://minecraft.wiki/w/Target_selectors#Selecting_targets_by_nbt), however now can use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if|unless)_items) to flexibly detect items and can now use the [predicate](https://minecraft.wiki/w/Predicate) not only for equipment, but also for any slot and now even without using a datapack.
 
