@@ -1,8 +1,10 @@
 # Item Click Detection
 
-For item clicks we have to differentiate between leftclick and rightclick detection.
+For item clicks we have to differentiate between leftclick and rightclick detection. And from version 1.20.5 you can easily click on an item in your inventory by checking the cursor slot.
 
 ## Left-click
+
+### Hurt entity
 
 This one is as easily explained as it is flawed: You can only detect left clicks, if you put something in front of the player to hit. Teleport some form of entity or mob that can take damage and has a hitbox directly in the players face or even over their head, so they have no other chance but to hit that entity. You can then "detect" the clicks either using an advancement with the `player_hurt_entity` trigger ([see here](https://minecraft.wiki/Advancements/JSON_format#minecraft:player_hurt_entity)) or with a scoreboard objective of type `minecraft.custom:minecraft.damage_dealt` ([see here](https://minecraft.wiki/Scoreboard#Criteria)). This method however has many obvious flaws:  
 
@@ -12,15 +14,31 @@ This one is as easily explained as it is flawed: You can only detect left clicks
 
 While you can use this method more reliably if this is about hitting some special mobs with a special item or something (the advancement method is really good at that), **general leftclick detection is discouraged unless you have a very controlled environment**.
 
+### Interaction entity
+
+Added in 1.19.4, the [interaction entity](https://minecraft.wiki/w/Interaction) now makes it easier to detect left/right clicks as it uses fewer commands and the hitbox size can be adjusted, making it less likely to miss a click, but otherwise has the same disadvantages as the previous method.
+
+Here's a simplest example for command blocks:
+
+    # Setup
+    summon minecraft:interaction ~ ~ ~ {Tags:["click_scan"],width:3f,height:3f}
+    
+    # Command blocks
+    tp @e[type=interaction,tag=click_scan] @p
+    execute as @e[type=interaction,tag=click_scan] store success entity @s attack.player[] int 0 on attacker run say Left Click!
+    execute as @e[type=interaction,tag=click_scan] store success entity @s interaction.player[] int 0 on target run say Right Click!
+
+**This example does not support multiplayer.** To support multiplayer you need to use the [scoreboard ID system](/questions/linkentity.md).
+
 ## Right-click
 
-For rightclick detection we have [a lot of different ways](https://i.imgur.com/8gKEdp1.png) (image by /u/Dieuwt), and different situations might call for different solutions. Since we cannot write a detailed guide on all these methods, we'll only describe the two most common solutions here. A rundown of the knowledge book method can be found [here](https://www.reddit.com/r/MinecraftCommands/comments/g4jxzy/simple_rightclick_detection_without_sacrificing/) (by /u/U2106_Later).
+For rightclick detection we have [a lot of different ways](https://i.imgur.com/8gKEdp1.png) (image by @Dieuwt), and different situations might call for different solutions. Since we cannot write a detailed guide on all these methods, we'll only describe the two most common solutions here. A rundown of the knowledge book method can be found [here](https://www.reddit.com/r/MinecraftCommands/comments/g4jxzy/simple_rightclick_detection_without_sacrificing/) (by @U2106_Later).
 
 ### Carrot on a stick method
 
 _Note: This works the same with the warped fungus on a stick._
 
-Mapmakers have for many years now exploited what is technically [a bug](https://bugs.mojang.com/browse/MC-112991): Carrots on sticks have the property that when you click with one in your main hand or nothing clickable in your main hand with the CoaS in your offhand, it increases a player's "used carrot_on_a_stick" score (`minecraft.used:minecraft.carrot_on_a_stick` see [here](https://minecraft.wiki/Scoreboard#Criteria)). Testing if a player is holding a carrot on a stick with a specific tag like `{shoot_fireball:1b}` and also has `[scores={used_CoaS=1..}]` will test if a player clicks with a custom carrot on a stick. (related: [detect what item a player is holding](/wiki/questions/detectitem))
+Mapmakers have for many years now exploited what is technically [a bug](https://bugs.mojang.com/browse/MC-112991): Carrots on sticks have the property that when you click with one in your main hand or nothing clickable in your main hand with the CoaS in your offhand, it increases a player's "used carrot_on_a_stick" score (`minecraft.used:minecraft.carrot_on_a_stick` see [here](https://minecraft.wiki/Scoreboard#Criteria)). Testing if a player is holding a carrot on a stick with a specific tag like `{shoot_fireball:1b}` and also has `[scores={used_CoaS=1..}]` will test if a player clicks with a custom carrot on a stick. (related: [detect what item a player is holding](/questions/detectitem.md))
 
 This is the generally preferred method of doing this if it fits your situation, as its pros outweigh the cons.
 
@@ -55,6 +73,61 @@ The models/item/carrot_on_a_stick.json file within the resource pack might end u
         ]
     }
 
+### Make item food metod
+
+From version 1.20.5 you can add a right click check for any item that does not already use a right click event.
+
+This method involves adding the [`minecraft:food component`](https://minecraft.wiki/w/Data_component_format#food) to the item.
+
+When using only command blocks, you need to actually consume this item in order for the usage statistics of your item to change. So it might make sense to set the `eat_seconds` tag to a small value, such as 0.05 seconds (1 tick). Here is a small example for command blocks:
+
+    # Setup
+    give @s minecraft:stick[minecraft:food={nutrition:0,saturation:0f,eat_seconds:0.05f,can_always_eat:true}]
+    scoreboard objectives add click.stick used:stick
+    
+    # Command blocks
+    execute as @a[scores={click.stick=1..}] run say Right Click!
+    scoreboard players reset @a click.stick
+
+This method has obvious disadvantages, such as particles appearing when used, sounds and the fact that the item is actually used.
+
+But when using a datapack there are no these disadvantages. Then you want to change `eat_seconds` to something very large so that the eating animation can't start and use the advancement trigger [`minecraft:using_item`](https://minecraft.wiki/w/Custom_advancement#minecraft:using_item) to check the item's usage. Since this advancement trigger is triggered every tick while the player is using the item, you can execute the command up to 20 times per second. However, often you don't want to do this as often and want to add a delay between command runs.
+Below is an example for this with a delay that is easy to configure:
+
+    # Setup
+    give @s minecraft:stick[minecraft:custom_data={right_click:true},minecraft:food={nutrition:0,saturation:0f,eat_seconds:2147483648f,can_always_eat:true}]
+    scoreboard objectives add stick.cooldown dummy
+    
+    # advancement example:stick/right_click
+    {
+        "criteria": {
+            "requirement": {
+                "trigger": "minecraft:using_item",
+                "conditions": {
+                    "item": {
+                        "predicates": {
+                            "minecraft:custom_data": { "right_click": true }
+                        }
+                    }
+                }
+            }
+        },
+        "rewards": {
+            "function": "example:right_click"
+        }
+    }
+    
+    # function example:right_click
+    execute store result score @s stick.cooldown run time query gametime
+    scoreboard players add @s stick.cooldown 10
+    schedule function example:reset_cooldown 10t append
+    say Right Click!
+    
+    # function example:reset_cooldown
+    execute store result score #reset stick.cooldown run time query gametime
+    execute as @a if score @s stick.cooldown = #reset stick.cooldown run advancement revoke @s only example:stick/right_click
+
+This method allows you to check a right click for almost any item and you do not need to use a resourcepack to change the texture as for the CoaS / FoaS method.
 
 ### Villager method
 
@@ -68,4 +141,18 @@ Cons:
 - Zombies will path-find to the fake villager often and not the player.  
 - Creates unexpected behaviour in multiplayer, as other players can also interfere with one player's fake villager; possible to abuse.  
 
-_Parts of this post are taken and modified from [here](https://www.reddit.com/r/MinecraftCommands/comments/elnygk/item_abilities/), which have been written by /u/Lemon_Lord1_
+_Parts of this post are taken and modified from [here](https://www.reddit.com/r/MinecraftCommands/comments/elnygk/item_abilities/), which have been written by @Lemon_Lord1_
+
+## Inventory click
+
+__Note: This method works since version 1.20.5__
+
+This method is based on checking the player's cursor slot. To do this, need to check slot `player.cursor` using the `if items` subcommand or predicates. Below is an example for running a command when holding a custom item in the cursor.
+
+    # Setup
+    give @s stick[minecraft:custom_data={in_cursor:true}]
+    scoreboard objectives add hold.in_cursor dummy
+    
+    # Command blocks
+    execute as @a[scores={hold.in_cursor=0}] if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}] run say Cursor Command.
+    execute as @a store success score @s hold.in_cursor if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}]
