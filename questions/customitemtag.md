@@ -1,12 +1,12 @@
 # Give an item a custom tag to identify it by
 
-For example, you want to give/summon/replaceitem an item, then later easily check if a player is wearing it on their head. 
+For example, you want to give/summon/item an item, then later easily check if a player is wearing it on their head. 
 
 First, check out [this](https://drive.google.com/file/d/0B5GBricpOPLnSEJ2YW1ocldHVkE/view?usp=sharing&resourcekey=0-xlxvTptTpoQF-TTlFKaT_g) to get an understanding of an item's NBT structure. Note that scoreboard tags (like `@e[tag=blah]`) belong to the *dropped item entity*, and **not** the inventory item that it contains. Inventory items cannot have scoreboard tags, only the entities that contain them can (players, mules, item frames, dropped item entities, etc.). 
 
 Normally Minecraft will remove any unknown NBT data (e.g: `data merge entity @e[limit=1] {Test:"blah"}` will be instantly removed, as that's not a valid tag for any entity), but this is not the case with NBT data in the item's `tag` tag (1.20.4 and below) or `custom_data` component (1.20.5 and above). As Minecraft leaves data in an item's `tag` tag / `custom_data` component intact, we can put anything we want there, and later test for it.
 
-**Since version 1.20.5, unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components'. Therefore, now you need to use the `minecraft:custom_data` component to give an item with custom data.**
+**Since version 1.20.5, unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components'. Therefore, now you need to use the `minecraft:custom_data` component to give an item with custom data [\[See changelog\]](https://minecraft.wiki/w/Java_Edition_1.20.5#Command_format_2).**
 
 Below is the general syntax for the give item with some data for the new and previous versions:
 
@@ -53,18 +53,18 @@ Or test if it's dropped as an item entity like this:
     # 1.20.4 and below
     execute if entity @e[type=item,nbt={Item:{tag:{my_custom_tag:true}}}]
 
-[How to detect a specific item in more detail](/wiki/questions/detectitem).
+[How to detect a specific item in more detail](/questions/detectitem.md).
 
 The key can be any string and the value of this tag can be any [NBT](https://minecraft.wiki/w/NBT_format), so long as you test for it in the same way:
 
     give @s stick[custom_data={BlahBlahBlah:"string value!"}]
     give @s stick{BlahBlahBlah:"string value!"}
 
-([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/wiki/questions/tagentity))
+([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/questions/tagentity.md))
 
 If you use a datapack, you can also create items with custom data using a loot table or recipes (1.20.5+).
 
-When using a loot table since version 1.20.5, you need to use the `minecraft:set_custom_data` or `minecraft:set_components` loot function instead of `minecraft:set_nbt` to create an item with custom data.
+When using a loot table since version 1.20.5, you need to use the `minecraft:set_custom_data` or `minecraft:set_components` [loot function](https://minecraft.wiki/w/Item_modifier) instead of `minecraft:set_nbt` to create an item with custom data.
 
 Below are examples of loot tables for different versions. **For version 1.20.5+, two ways to set custom data are shown, but you should only use one.**
 
