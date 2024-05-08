@@ -11,7 +11,7 @@ That means we can use [`execute store`](https://minecraft.wiki/w/Commands/execut
     scoreboard objectives add diamonds dummy
 
     # Commands
-    execute store result score @s count.diamonds run clear @s diamond 0
+    execute store result score @s diamonds run clear @s diamond 0
     execute if score @s diamonds matches 5 run say I have exactly 5 diamonds in my inventory.
     execute if score @s diamonds matches 1..4 run say I have somewhere between 1 and 4 diamonds in my inventory.
     execute if score @s diamonds matches 10.. run say I have 10 or more diamonds in my inventory.
