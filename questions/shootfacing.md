@@ -93,7 +93,7 @@ You can go ahead and do this using almost just one command block. You can perfor
 
     # Command blocks
     tag @e[type=fireball,tag=!exist] add exist
-    execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 store success score @s fix positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
+    execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
 
 However, you may notice that this projectile lags in flight. Read about how to fix this in the [[Visual bug fix]](/questions/shootfacing.md#visual-bug-fix) section.
 
@@ -145,20 +145,19 @@ However, you may notice that some entities that you want to use may visually lag
 
     execute as @e[tag=projectile] store result entity @s Air short 1 run time query gametime
 
-**It is important to update the data on the next tick, but not on the current one!**
+**It is important to update the data on the next tick, but not on the current one!** But for some projectiles it may be necessary to update the `Air` tag every tick, but not just once.
 
 If you are using command blocks, you can achieve this by running this command **before** summon and changing the `Motion` tag. Here is a complete example for command blocks:
 
     # In chat
     scoreboard objectives add click used:carrot_on_a_stick
-    scoreboard objectives add fix dummy
     forceload add -1 -1 0 0
     
     # Command blocks
-    execute as @e[tag=projectile,scores={fix=1}] store result entity @s Air short 1 run time query gametime
+    execute as @e[tag=projectile] store result entity @s Air short 1 run time query gametime
     tag @e[tag=projectile] remove projectile
     execute as @a[scores={click=1..}] at @s anchored eyes run summon snowball ^ ^ ^ {Tags:["projectile"]}
-    execute rotated as @a[scores={click=1..}] positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud store success score @s fix run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
+    execute rotated as @a[scores={click=1..}] positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
     scoreboard players reset @a click
 
 When using a datapack, you can use the shedule function to do this fix.
