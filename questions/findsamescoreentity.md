@@ -59,6 +59,8 @@ Below is an example of a function and predicate that selects an entity with the 
         }
     }
 
+**Note:** In addition, using predicate for the score comparison is preferable based on [performance comparisons](https://www.reddit.com/r/MinecraftCommands/comments/1ceck9n/comment/l1u6z2a) by [@sanscadre](https://www.reddit.com/u/sanscadre).
+
 ### Method 3: Keeping the context through location
 
 In this method we change the execution _location_ to be the player(s) and the execution _entity_ to be the entities to be compared to. That way `@p` is all the players respectively and `@s` is the entity to compare to. We can then get the player back into the execution chain using `@p`. 
