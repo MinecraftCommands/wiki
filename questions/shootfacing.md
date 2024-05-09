@@ -22,7 +22,7 @@ So, we can get the players location using its `Pos` NBT values and we can summon
 
 -----
 
-## Method 1: Let the game do the math for us by using the zero point (optimised)
+## Method 1: Let the game do the math for us by using the zero point (simplified)
 
 Or rather, make use of the fact that we can use the worlds zero position and pretend the player is there. And because X - 0 = X, we don't need to do the math ourselves but can directly store the result into the entity. Here is how it works (running `as` and `at` the player):
 
@@ -45,6 +45,7 @@ Or rather, make use of the fact that we can use the worlds zero position and pre
 
     # summon the temporary entity at the players position
     summon marker ~ ~ ~ {Tags:["direction"]}
+    
     # execute the below function as the marker entity, so it doesn't get lost from being unloaded
     # also run positioned at the world zero point
     execute as @e[tag=direction,limit=1] positioned 0.0 0.0 0.0 run function namespace:get_motion
@@ -52,8 +53,10 @@ Or rather, make use of the fact that we can use the worlds zero position and pre
     # summon the projectile entity. Again, it might make sense to summon the projectile at the players eyes
     # and in front of them, so we'll do that in this example
     execute anchored eyes run summon sheep ^ ^ ^1 {Tags:["projectile"]}
+    
     # store the previously stored Motion into the projectile entity
     data modify entity @e[tag=projectile,limit=1] Motion set from storage namespace:storage Motion
+    
     # clean up the tag
     tag @e[tag=projectile] remove projectile
 
@@ -70,6 +73,29 @@ Or rather, make use of the fact that we can use the worlds zero position and pre
     
     # we don't need this entity anymore
     kill @s
+
+Since version 1.19.4 you can use `summon` inside the `/execute` command, which allows you to simplify shootfacing and combine the command of calling the direction of an entity and modifying the `Motion` tag of the projectile.
+
+Now, instead of a marker that must be manually killed, you can use area_effect_cloud, which will disappear on its own on the next tick. Also, force loaded coordinates 0 0 0 are no longer required to work, since we are creating and using direction entities within one command, but it is still strongly recommended to load chunks [-1, -1] to [0, 0], since area_effect_cloud will not be deleted in unloaded chunks automatically.
+
+    # Summon the projectile entity
+    summon sheep ~ ~ ~ {Tags:["projectile"]}
+    
+    # Use player rotation to create an area_effect_cloud of about 0 0 and immediately copy the position of this entity into the projectile motion tag.
+    execute rotated as <player> positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
+    
+    # Remove projectile tag
+    tag @e[tag=projectile] remove projectile
+
+`^ ^ ^1` is used as the throw strength.
+
+You can go ahead and do this using almost just one command block. You can perform all settings using `store success entity`. For example, for a fireball, you can immediately set ExplosionPower and power[1] so that the projectile does not fly in a straight line, but in an arc:
+
+    # Command blocks
+    tag @e[type=fireball,tag=!exist] add exist
+    execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 store success score @s fix positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
+
+However, you may notice that this projectile lags in flight. Read about how to fix this in the [[Visual bug fix]](/questions/shootfacing.md#visual-bug-fix) section.
 
 -----
 
@@ -110,3 +136,50 @@ This example will assume you have a dummy scoreboard objective set up that is na
 Instead of using 2 entities, you can also only use the projectile entity. Make sure if you teleport it twice (once to the "target" position and then to the "starting" position) that you apply the motion **after** the teleportation, because teleportation resets y motion.
 
 Also, using this Method instead of Method 1, you can more easily modify the individual values (say you want X to be halved, y to be doubled and z should always get 1 added, for some reason, then you can easily do that). Apply your modifications after the `#do the math` part.
+
+----
+
+## Visual bug fix
+
+However, you may notice that some entities that you want to use may visually lag when summoned and fall in front of the player. This is due to the fact that the movement of this entity is not updated on the client, but this can be easily fixed by updating the NBT data **on the next tick** in any way. The simplest and “safest” thing is to update the `Air` store tag with some value.
+
+    execute as @e[tag=projectile] store result entity @s Air short 1 run time query gametime
+
+**It is important to update the data on the next tick, but not on the current one!**
+
+If you are using command blocks, you can achieve this by running this command **before** summon and changing the `Motion` tag. Here is a complete example for command blocks:
+
+    # In chat
+    scoreboard objectives add click used:carrot_on_a_stick
+    scoreboard objectives add fix used:carrot_on_a_stick
+    forceload add -1 -1 0 0
+    
+    # Command blocks
+    execute as @e[tag=projectile,scores={fix=1}] store result entity @s Air short 1 run time query gametime
+    tag @e[tag=projectile] remove projectile
+    execute as @a[scores={click=1..}] at @s anchored eyes run summon snowball ^ ^ ^ {Tags:["projectile"]}
+    execute rotated as @a[scores={click=1..}] positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud store success score @s fix run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
+    scoreboard players reset @a click
+
+When using a datapack, you can use the shedule function to do this fix.
+
+    # function example:tick
+    execute as @a[scores={click=1..}] at @s run function example:click
+    
+    # function example:click
+    scoreboard players reset @s click
+    execute anchored eyes positioned ^ ^ ^ summon snowball run function example:shootfacing
+    
+    # function example:shootfacing
+    tag @s add this
+    execute positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud run data modify entity @e[tag=this,limit=1] Motion set from entity @s Pos
+    tag @s remove this
+    tag @s add fix
+    schedule function example:fix 2t replace
+    
+    # function example:fix
+    execute unless entity @s as @e[tag=fix] run function example:fix
+    execute store result entity @s Air short 1 run time query gametime
+    tag @s remove fix
+
+You may notice that in the case of the datapack, the schedule is runs with a delay of 2 ticks, but not 1 tick. This is because inside a tick schedule, the tick function runs before the schedule function runs, and therefore a 1 tick delay when running from a tick function will run the function on the same tick, but not on the next one.
