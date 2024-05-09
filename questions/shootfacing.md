@@ -151,7 +151,7 @@ If you are using command blocks, you can achieve this by running this command **
 
     # In chat
     scoreboard objectives add click used:carrot_on_a_stick
-    scoreboard objectives add fix used:carrot_on_a_stick
+    scoreboard objectives add fix dummy
     forceload add -1 -1 0 0
     
     # Command blocks
