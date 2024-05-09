@@ -116,8 +116,8 @@ However, this implementation can support any data other than player `ID` and `In
 
 But now, we **want to give it back**. This is where it becomes tricky. Choose the category from below that fits your needs the best.
 
-- [Putting things in the original slot](#putting-things-in-the-original-slot-from-marker)
-- [Putting things in the original slot](#putting-things-in-the-original-slot-from-storage)
+- [Putting things in the original slot (from marker)](#putting-things-in-the-original-slot-from-marker)
+- [Putting things in the original slot (from storage)](#putting-things-in-the-original-slot-from-storage)
 - [Don't care about the slot](#dont-care-about-the-slot)
 - [Put it in a chest](#put-it-in-a-chest)
 
