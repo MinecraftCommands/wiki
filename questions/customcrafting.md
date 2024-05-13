@@ -16,13 +16,13 @@ First, let’s introduce custom ingredients and how much of each ingredient is n
     give @s emerald{some:true,display:{Name:'{"text":"Some Emerald","italic":false}'}}
     give @s diamond{custom:true,display:{Name:'{"text":"Some Diamond","italic":false}'}}
     give @s redstone{data:true,display:{Name:'{"text":"Some Redstone","italic":false}'}}
-    
-    # Example recipe
+
+    Example recipe:
     2x emerald
     1x diamond
     5x redstone
 
-It is highly recommended for all custom ingredients in a recipe to use [items with custom tags](/questions/customitemtag.md) because the command will be very long anyway, so this is a good way to shorten the command length and make the command easier to read/edit. Also check out the article on how to [detect custom tags](/questions/detectitem.md).
+It is highly recommended for all custom ingredients in a recipe to use [items with custom tags](/wiki/questions/customitemtag) because the command will be very long anyway, so this is a good way to shorten the command length and make the command easier to read/edit. Also check out the article on how to [detect custom tags](/wiki/questions/detectitem).
 
 Below is the command in pseudocode:
 
@@ -49,7 +49,7 @@ However, this creates a small problem - if the craft is inside water blocks, the
 
 You can also add particles/sound when crafting; to do this, at the end of the command (before `run`) you need to place this code and create a scoreboard objective `craft_anim` (1.19.4+):
 
-    ... summon area_effect_cloud store success score @s craft_anim run ...
+    execute ... summon area_effect_cloud store success score @s craft_anim run ...
 
 And add several command blocks that will show particles and play sound:
 
@@ -85,7 +85,7 @@ Since version 1.20.5 NBT tags have been replaced with [components](https://minec
 
 Another popular way to create custom crafts that support NBT data is to use custom dropper crafting. This method uses a dropper / dispenser interface to simulate the crafting grid as the crafting\_table. This method is more difficult to implement, but looks much better than floor crafting.
 
-In this article will use item\_display to display custom dropper crafting as crafting\_table, so this method will apply to versions 1.19.4 and above, although you can use falling\_block or something else for earlier versions.
+In this article we will use an item_display to make a custom dropper look like a crafting_table, so this method will apply to versions 1.19.4 and above, although you can use a falling_block or something else for earlier versions.
 
     # 1.19.4 - 1.20.4
     give @p bat_spawn_egg{EntityTag:{id:"minecraft:item_display",Tags:["custom_crafting","placing"],Rotation:[0f,0f],brightness:{sky:10,block:10},transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0.5f,0f],scale:[1.01f,1.01f,1.01f]},item:{id:"minecraft:crafting_table",Count:1b}},display:{Name:'"Custom Crafting Table"'}}
@@ -95,7 +95,7 @@ In this article will use item\_display to display custom dropper crafting as cra
 
 This crafting method consists of two parts: the controller and the recipes.
 
-The controller is command blocks that detect the placement of spawn\_egg to install a dropper block, as well as to remove the support entity when the block is destroyed by the player and return spawn\_egg to the player.
+The controller is a command block that detects the placement of a spawn_egg to install a dropper block, as well as to remove the support entity when the block is destroyed by the player and return a spawn_egg to the player.
 
     # Command blocks (controller) for 1.19.4 - 1.20.4
     execute at @e[type=item_display,tag=custom_crafting,tag=placing] run setblock ~ ~ ~ dropper[facing=up]{CustomName:'"Custom Crafting Table"'}
@@ -111,7 +111,7 @@ The controller is command blocks that detect the placement of spawn\_egg to inst
 
 Recipes can be made as separate command blocks. Each recipe is a separate command block that checks the block data in the Items tag, and if the data matches, then replace the Items tag with your item as the crafting result.
 
-**Hint:** If you find it difficult to create a command to check block data, then put your recipe in dropper / dispenser. Exit the block interface and press **F3** \+ **I** to copy the block data. You will receive a /setblock command with the full block data. All of their commands leave only the data inside {}, and it is also advisable to remove unnecessary NBT data for each item, leave only a custom tag for checking the item, this will be less likely that something will break.
+**Hint:** If you find it difficult to create a command to check block data, then put your recipe in a dropper / dispenser. Exit the block interface and press `F3 + I` to copy the block data. You will receive a /setblock command with the full block data. All of their commands leave only the data inside {}, and it is also advisable to remove unnecessary NBT data for each item, leave only a custom tag for checking the item, this will be less likely that something will break.
 
 Below is a schematic representation of the command to check the recipe:
 
@@ -146,9 +146,9 @@ Now you can create a ready-made command for the recipe. Below is an example of c
 
 Before version 1.20 you could create custom crafts using the Knowledge Book method, however **this method does not support creating custom crafts with NBT data for ingredients, only for the result**.
 
-Typically, many files are created for each craft: a recipe file, an advancement with the recipe\_unlocked trigger, and a function file, inside of which the knowledge\_book is deleted, take this recipe, revoke this advancement and give an item with custom data. However, if you add a lot of recipes, it quickly becomes unwieldy.
+Typically, many files are created for each craft: a recipe file, an advancement with the recipe\_unlocked trigger, and a function file, inside of which the knowledge\_book is deleted, the recipe and the advancement are revoked, and the item with custom data is given. However, if you add a lot of recipes, it quickly becomes unwieldy.
 
-However, it can be done more compactly and cleaner. You only need to create one function to take all custom recipes, revoke recipe advancements and clear knowledge\_book, one root advancement for all recipes, and for each recipe only a recipe file, one recipe advancement and a loot table with your custom item.
+However, it can be done more compactly and cleaner. You only need to create one function to take all custom recipes, revoke all recipe advancements and clear the knowledge_book. You can also have one root advancement for all recipes to make revoking them easier. So for each recipe you only need the recipe file, the individual advancement and a loot table with the custom item.
 
 It works like this:
 
@@ -255,7 +255,7 @@ The obvious disadvantages of this method are the inability to create a craft wit
 
 Starting with version 1.20, a new advancement trigger was added - `recipe_crafted`. This one triggers when you have crafted the specified craft, but not just unlocked it. Therefore you don't need to take recipes and you can have your crafts in the craft book, although these crafts will appear as knowledge\_book.
 
-But besides this, also now using this advncement trigger to check NBT data for ingredients. For this you can use the `ingredients` condition. Each entry will correspond to exactly one item. So, if you use several identical custom items in a recipe, then you need to specify this item 3 times. The ingredient check only checks the specified ingredients, other items in the recipe will be ignored.
+You can now use this advancement trigger to check the NBT data of the ingredients. For this you can use the `ingredients` condition. Each entry will correspond to exactly one item. So, if you use several identical custom items in a recipe, then you need to specify this item several times. The ingredient check only checks the specified ingredients, other items in the recipe will be ignored.
 
 Below is an example for creating an advancement for a custom craft, which must have ingredients with NBT data to get the craft result. Only the changes in this version are shown here, the rest of the code is unchanged:
 
