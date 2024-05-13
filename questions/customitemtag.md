@@ -53,14 +53,14 @@ Or test if it's dropped as an item entity like this:
     # 1.20.4 and below
     execute if entity @e[type=item,nbt={Item:{tag:{my_custom_tag:true}}}]
 
-[How to detect a specific item in more detail](/questions/detectitem.md).
+[How to detect a specific item in more detail](/wiki/questions/detectitem).
 
 The key can be any string and the value of this tag can be any [NBT](https://minecraft.wiki/w/NBT_format), so long as you test for it in the same way:
 
     give @s stick[custom_data={BlahBlahBlah:"string value!"}]
     give @s stick{BlahBlahBlah:"string value!"}
 
-([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/questions/tagentity.md))
+([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/wiki/questions/tagentity))
 
 If you use a datapack, you can also create items with custom data using a loot table or recipes (1.20.5+).
 
