@@ -4,7 +4,7 @@ This makes a command act as if it was on a comparator, without the lag and multi
 
 ## Scoreboard
 
-This way is that the first command checks the player whose score value, for example, `matched` = 0, and if your any condition, for example, the player is in a certain area, is met, then execute your command that you want. But the second command selects all players and store the success of your condition in score (`matched`), which you checked in the first command:
+For this method our first command checks two things: Your condition for running the command (e.g. `@a[x=73,y=10,z=3,distance=..1]`) and the condition that it didn't already match in the last tick (e.g. `[scores={matched=0}]`). We're storing the success of your condition in a scoreboard in the second command through a success check:
 
     # In chat / load function
     scoreboard objectives add matched dummy
@@ -25,7 +25,7 @@ Besides the player, this could be some kind of global event, for example, it sta
 
 If you are using a datapack and need to do a lot of similar checks, then you can use [advancements](https://minecraft.wiki/w/Advancement/JSON_format) in the datapack for this.
 
-This method is to create a [predicate](https://minecraft.wiki/w/Predicate) that you check for the player, for example, the player is on server spawn (`predicate example:at_spawn`), and create two advancements - the first one checks the predicate - if the player is at spawn, and the second one which inverts this check (player leave spawn). Then inside the run function you execute the desired command when the player enters / leaves spawn and revoke just the opposite of the advancement.
+This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) that you check against the player, in this example we want to know whether the player is at the server spawn area (`predicate example:at_spawn`). Then we create two advancements - the first one checks the predicate (player is at spawn) and the second one inverts this check (player isn't at spawn). Then inside the run function you execute the desired command when the player enters / leaves spawn and revoke the opposite advancement.
 
     # predicate example:at_spawn
     {
@@ -93,9 +93,11 @@ This method is to create a [predicate](https://minecraft.wiki/w/Predicate) that 
     
     # function example:spawn/leave
     advancement revoke @s only example:spawn/enter
-    tellraw @s "Welcome to spawn!"
+    tellraw @s "You leave spawn!"
 
-Such a check may seem very large, but this method allows you not to check the same condition 2 times per tick, but only 1 time per second, which can be important with a large online number of players.
+_Note: In the predicate `example:at_spawn` omits the Y position check, so a player at any height in the specified area will match the conditions of the predicate._
+
+Such a check may seem very large, but this method allows you not to check the same condition 2 times per tick, but only 1 time per second (because the `minecraft:location` advancement trigger only runs once per second), which can be important with a large online number of players.
 
 ## Add/remove tag
 
