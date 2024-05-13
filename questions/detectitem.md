@@ -13,7 +13,7 @@ To get the NBT for your specific usecase, use the `data get` command to see the 
     data get entity @s SelectedItem
     data get block X Y Z Items
 
-Let's give a simple example of an item with a custom name and [custom tag](/questions/customitemtag.md):
+Let's give a simple example of an item with a custom name and [custom tag](/wiki/questions/customitemtag):
 
     # 1.13 - 1.20.4
     give @s minecraft:stick{awesome_stick:true,display:{Name:'{"text":"Awesome Stick"}'}}
@@ -21,7 +21,7 @@ Let's give a simple example of an item with a custom name and [custom tag](/ques
     # 1.20.5+
     give @s minecraft:stick[minecraft:custom_data={awesome_stick:true},minecraft:custom_name='"Awesome Stick"']
 
-**Important!** When you create any custom item that the player should not be able to obtain by renaming it at an anvil, always add a [custom tag](/questions/customitemtag.md) to your item and when check only this tag, but not the item name, because checking the item name can cause problems with proper formatting and makes the command longer. All examples of check items below will be duplicated with checking the item name and checking the custom tag, if applicable.
+**Important!** When you create any custom item that the player should not be able to obtain by renaming it at an anvil, always add a [custom tag](/wiki/questions/customitemtag) to your item. When checking the item, only check for the tag, not the item name, because checking the item name can cause problems with proper formatting and makes the command longer. All examples of check items below will be duplicated with checking the item name and checking the custom tag, if applicable.
 
 While holding this item in your hand you can get the item data using /data get in chat:
 
@@ -92,11 +92,11 @@ An example for checking an item in almost any player slot:
 
 This will not include the offhand slot, armor slots and ender_chest slots, so it will require an additional command to check these slots or use a predicate in the datapack.
 
-Can also check multiple items by checking the item tag, for example, if the player is holding any banner in his hand:
+You can also check multiple items by checking the item tag, for example, if the player is holding any banner in his hand:
 
     execute as @a if items entity @s weapon.mainhand #minecraft:banners
 
-Or can omit the item id check and check only the components. There are two modes for checking components - exact compliance with the specified condition (`=`) or checking the item as a sub-predicate (`~`).
+Or you can omit the item id check and check only the components. There are two modes for checking components - exact compliance with the specified condition (`=`) or checking the item as a sub-predicate (`~`).
 
 The component check (`=`) checks the exact match of the component specified in the check and any difference from the specified one fails the check, so it is recommended to use the exact check only if the item sub-predicate (`~`) check is not available for this component. So, for example, if for some reason you want to check the `minecraft:can_break` component, then only the predicate check is available here, so you cannot find any item that, for example, can break a stone, but you always need to specify the entire component.
 
@@ -248,7 +248,7 @@ _Only detecting the item in a players inventory is currently possible with comma
 
 #### since 1.18.20
 
-In the 1.18.20 beta they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/questions/range.md)) of specific items in specific amounts in entities inventories. Below are some examples, check the link above for more information.
+In the 1.18.20 beta they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/wiki/questions/range)) of specific items in specific amounts in entities inventories. Below are some examples, check the link above for more information.
 
 A player with 5 or more apples in their inventory
 
