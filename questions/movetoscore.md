@@ -1,6 +1,6 @@
 ## Summon an entity at the position set in a score
 
-Since version 1.20.2 you can summon the entity directly at the position of the score using a [macros](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) in the datapack. If you are using an earlier version, or do not use a datapack, then you cannot summon the entity directly at the position of the score, instead you have to summon the entity and then teleport it to your desired position.
+Since version 1.20.2 you can summon the entity directly at the position of the score using a [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) in the datapack. If you are using an earlier version, or do not use a datapack, then you cannot summon the entity directly at the position of the score, instead you have to summon the entity and then teleport it to your desired position.
 
 Below is an example of summoning a pig according to the set value in the scoreboard:
 
@@ -52,60 +52,11 @@ But you can easily avoid unloading the entity if you do not change each axis sep
 
 ## Teleport the player to the position set in a score
 
-The problem with the player is that the player NBT data cannot be modified and thus we can't just set their position like we can with entities. There are three decent ways to go about this:
+The problem with the player is that the player NBT data cannot be modified and thus we can't just set their position like we can with entities. There are four decent ways to go about this:
 
-### 1: Binary Teleportation
+### 1: Macro function
 
-You basically copy their score to some temporary score so you don't loose it when you modify it, and then you go through the different powers of 2 (hence the name), check if their score is above that and then teleport them relatively that far.
-
-    teleport @p 0 0 0
-    
-    execute at @p if entity @p[scores={xTmp=128..}] tp @p ~128 ~ ~
-    scoreboard players remove @p[scores={xTmp=128..}] xTmp 128
-    
-    execute at @p if entity @p[scores={xTmp=64..}] tp @p ~64 ~ ~
-    scoreboard players remove @p[scores={xTmp=64..}] xTmp 64
-    
-    execute at @p if entity @p[scores={xTmp=32..}] tp @p ~32 ~ ~
-    scoreboard players remove @p[scores={xTmp=32..}] xTmp 32
-    
-    ....
-    all the way down to 1, repeat for all 3 coordinates
-
-This does use a lot of commands but using a function it's fairly easy to do and you can go as high as you want. Always start with the highest power of 2.
-
-### 2: End Gateways
-
-You can use end gateways to teleport the players to an exact location, see [this for more info](https://minecraft.wiki/End_Gateway_(block)#Data_values).  
-
-Basically you can set its block NBT Data to `ExactTeleport:1b,ExitPortal:{X:1,Y:2,X:3}` using `data merge block` or `execute store` and then teleport the player into said portal. Thanks to `execute store` you can set the Exit Portal NBT dynamically:
-
-    # 1.13 - 1.20.4
-    setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,ExitPortal:{X:0,Y:0,Z:0},Age:-9223372036854775808L}
-    execute store result block 0 5 0 ExitPortal.X int 1 run scoreboard players get @s MapX
-    execute store result block 0 5 0 ExitPortal.Y int 1 run scoreboard players get @s MapY
-    execute store result block 0 5 0 ExitPortal.Z int 1 run scoreboard players get @s MapZ
-    tp @s 0 5 0
-
-Make sure the position you're using for the endgateway is in the loaded chunks. _If the `Age` tag is not set to a negative number, then End Gateways sometimes shoot out beacon beams, especially when they are newly created, so you migh want to add set the portal once and not every time you need it._
-
-Since version 1.20.5, the `ExitPortal` Compound tag has been replaced by the [Int Array](https://minecraft.wiki/w/NBT_format#Data_types) `exit_portal` tag (not a List).
-
-    # 1.20.5+
-    setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,exit_portal:[I;0,0,0],Age:-9223372036854775808L}
-    execute store result block 0 5 0 exit_portal[0] int 1 run scoreboard players get @s MapX
-    execute store result block 0 5 0 exit_portal[1] int 1 run scoreboard players get @s MapY
-    execute store result block 0 5 0 exit_portal[2] int 1 run scoreboard players get @s MapZ
-    tp @s 0 5 0
-
-### 3: Use an entity
-
-Summon an entity, use the above method to teleport the entity to the position and then teleport the player to the entity. Here it is also important that the entity is @s from the moment you move it, in case it goes into unloaded chunks.  
-See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about this [here](https://www.reddit.com/r/MinecraftCommands/comments/fd1lds/new_method_to_tp_to_scoreboard_values).
-
-### 4: Macro function
-
-Since version 1.20.2 you can also use the [macros](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) to teleport to specified coordinates. Here is an example of running a macro function with data from `storage example:macro pos`:
+Since version 1.20.2 you can also use the [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) to teleport to specified coordinates. Here is an example of running a macro function with data from `storage example:macro pos`:
 
     execute store result storage example:macro pos.x int 1 run scoreboard players get X pos
     execute store result storage example:macro pos.y int 1 run scoreboard players get Y pos
@@ -126,3 +77,52 @@ Since version 1.20.2 you can also use the [macros](https://minecraft.wiki/w/Func
     data modify storage example:macro pos.y set from storage example:data Pos[1]
     data modify storage example:macro pos.z set from storage example:data Pos[2]
     function example:tp/macro with storage example:macro pos
+
+### 2: End Gateways
+
+You can use end gateways to teleport the players to an exact location, see [this for more info](https://minecraft.wiki/End_Gateway_(block)#Data_values).  
+
+Basically you can set its block NBT Data to `ExactTeleport:1b,ExitPortal:{X:1,Y:2,X:3}` using `data merge block` or `execute store` and then teleport the player into said portal. Thanks to `execute store` you can set the Exit Portal NBT dynamically:
+
+    # 1.13 - 1.20.4
+    setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,ExitPortal:{X:0,Y:0,Z:0},Age:-9223372036854775808L}
+    execute store result block 0 5 0 ExitPortal.X int 1 run scoreboard players get @s MapX
+    execute store result block 0 5 0 ExitPortal.Y int 1 run scoreboard players get @s MapY
+    execute store result block 0 5 0 ExitPortal.Z int 1 run scoreboard players get @s MapZ
+    tp @s 0 5 0
+
+Make sure the position you're using for the endgateway is in the loaded chunks. _If the `Age` tag is not set to a negative number, then End Gateways sometimes shoot out beacon beams, especially when they are newly created, so you might want to set the portal once and not every time you need it._
+
+Since version 1.20.5, the `ExitPortal` Compound tag has been replaced by the [Int Array](https://minecraft.wiki/w/NBT_format#Data_types) `exit_portal` tag (not a List).
+
+    # 1.20.5+
+    setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,exit_portal:[I;0,0,0],Age:-9223372036854775808L}
+    execute store result block 0 5 0 exit_portal[0] int 1 run scoreboard players get @s MapX
+    execute store result block 0 5 0 exit_portal[1] int 1 run scoreboard players get @s MapY
+    execute store result block 0 5 0 exit_portal[2] int 1 run scoreboard players get @s MapZ
+    tp @s 0 5 0
+
+### 3: Use an entity
+
+Summon an entity, use the above method to teleport the entity to the position and then teleport the player to the entity. Here it is also important that the entity is @s from the moment you move it, in case it goes into unloaded chunks.  
+See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about this [here](https://www.reddit.com/r/MinecraftCommands/comments/fd1lds/new_method_to_tp_to_scoreboard_values).
+
+### 4: Binary Teleportation
+
+You basically copy their score to some temporary score so you don't loose it when you modify it, and then you go through the different powers of 2 (hence the name), check if their score is above that and then teleport them relatively that far.
+
+    execute as @a unless score @s xTmp matches 0 if score @s xTmp = @s xTmp run teleport @s 0 0 0
+    
+    execute as @a[scores={xTmp=128..}] at @s run tp @s ~128 ~ ~
+    scoreboard players remove @a[scores={xTmp=128..}] xTmp 128
+    
+    execute as @a[scores={xTmp=64..}] at @s run tp @s ~64 ~ ~
+    scoreboard players remove @a[scores={xTmp=64..}] xTmp 64
+    
+    execute as @a[scores={xTmp=32..}] at @s run tp @s ~32 ~ ~
+    scoreboard players remove @a[scores={xTmp=32..}] xTmp 32
+    
+    ....
+    all the way down to 1, repeat for all 3 coordinates
+
+This does use a lot of commands but using a function it's fairly easy to do and you can go as high as you want. Always start with the highest power of 2.
