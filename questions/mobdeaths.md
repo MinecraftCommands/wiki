@@ -1,6 +1,6 @@
 # Detect when a mob has died
 
-This article applies to Java Edition only. For Bedrock Edition the method is described in this wiki article: [Detect the player killing entities and players](/questions/playerkills.md#bedrock)
+This article applies to Java Edition only. For Bedrock Edition the method is described in this wiki article: [Detect the player killing entities and players](/wiki/questions/playerkills#bedrock)
 
 When a mob begins to play the death animation, then this mob cannot be selected using the target selector, this is the main difficulty in detecting the death of a mob, but there are still several ways to do this, but each has its own limitations. Each of the methods listed below is completely resistant to unloading mobs from loaded chunks and there will be no false positives.
 
@@ -14,7 +14,7 @@ Key points:
 * low server load
 * can detect mob death only if the killer is a player
 * cannot determine the location of a mob's death
-* cannot detect the death of a mob with the tag
+* cannot detect the death of a mob with a specific entity tag or other attribute
 * each mob type must have a separate scoreboard objective.
 
 Here's a quick example to detect if a zombie was killed by a player:
@@ -68,7 +68,7 @@ Here's a quick example to detect if a any skeleton type with the tag some\_tag w
     
     # function example:skeleton_death
     advancement revoke @s only example:killed_skeleton
-    say Skeleton with tag some_tag has dead.
+    say Skeleton with tag some_tag has died.
 
 ----
 
@@ -92,7 +92,7 @@ This method requires preliminary setup of the mob, for example, you can summon a
 
     summon husk ~ ~ ~ {Tags:["some_tag"],Passengers:[{id:"minecraft:marker",Tags:["death_detector"]}]}
 
-From version 1.19.4 you can also add a marker entity as passenger to an existing mob use [/ride command](https://minecraft.wiki/w/Commands/ride):
+From version 1.19.4 you can also add a marker entity as passenger to an existing mob using the [/ride command](https://minecraft.wiki/w/Commands/ride):
 
     summon marker ~ ~ ~ {Tags:["death_detector","set_ride"]}
     ride @e[type=marker,tag=death_detector,tag=set_ride,limit=1] mount <mob>
@@ -141,7 +141,7 @@ As of version 1.19.4, you can use the [execute](https://minecraft.wiki/w/Command
     execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} run say This mob is dying!
     execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} on passengers run kill @s
 
-However, this implementation on command blocks may cause lags due to NBT checks every tick, so it is recommended to use a [check delay](/questions/blockdelay.md) or use a datapack with [schedule function](https://minecraft.wiki/w/Commands/schedule):
+However, this implementation on command blocks may cause lags due to NBT checks every tick, so it is recommended to use a [check delay](/wiki/questions/blockdelay) or use a datapack with [schedule function](https://minecraft.wiki/w/Commands/schedule):
 
     # function example:load
     function example:loops/1s
@@ -175,13 +175,13 @@ Key points:
 * high complexity of implementation
 * cannot check mob despawn
 
-The difficulty with this method is that need to get the mob's UUID in Hexadecimal format (`ba7916ab-abc0-4ef6-8a43-391dbffdefcd`), but data get can only get the UUID as a list of int values (`[I;-1166469461,-1413460234,-1975305955,-1073877043]`). Therefore, need to use a UUID converter. In this article will use this [UUID converter library](https://github.com/gibbsly/gu) by u/gibbsly.
+The difficulty with this method is that you need to get the mob's UUID in Hexadecimal format (`ba7916ab-abc0-4ef6-8a43-391dbffdefcd`), but `/data get` can only get the UUID as a list of int values (`[I;-1166469461,-1413460234,-1975305955,-1073877043]`). Therefore, you need to use a UUID converter. In this article will we use this [UUID converter library](https://github.com/gibbsly/gu) by [@gibbsly](https://github.com/gibbsly).
 
 To convert UUID using this library you need to run the `function gu:convert` as a macro function with the data of the selected mob, and then read the `storage gu:main out` tag.
 
 In addition, you need to save the converted UUIDs of mobs in storage and use a macro to insert these UUIDs into your check command.
 
-After detecting the death of a mob, it is also necessary to remove the UUID from storage, since macro functions can quickly cause lags with a large number of checks. For the same reason, you need to use a [delay for checks](/questions/blockdelay.md).
+After detecting the death of a mob, it is also necessary to remove the UUID from storage, since macro functions can quickly cause lags with a large number of checks. For the same reason, you need to use a [delay for checks](/wiki/questions/blockdelay).
 
 Below is an example to check the death of any mob that has the `death_check` tag:
 
