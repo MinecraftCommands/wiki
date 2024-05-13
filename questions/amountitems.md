@@ -26,9 +26,9 @@ The `if items` subcommand, when executed, returns the number of items that meet 
     # In chat
     execute if items entity @s container.* *
 
-For more details on how to detect specific items, you can find out here: [Detect a specific item](/questions/detectitem.md)
+You can find out more details on how to detect specific items here: [Detect a specific item](/wiki/questions/detectitem)
 
-Below is an example for getting amount of custom item and executing some command:
+Below is an example for getting the amount of a custom item and executing some command depending on the result:
 
     # Example item
     give @s diamond[minecraft:custom_data={diamond:true},minecraft:item_name="'Custom Diamond'"]
@@ -40,7 +40,7 @@ Below is an example for getting amount of custom item and executing some command
     execute as @a[scores={diamonds=10..}] run say I have 10 or more coins.
     execute as @a[scores={diamonds=..20}] run say I have 20 or less coins.
 
-Although you can use `/clear` on a player, `if items` can also count the number of items in a chest, shulker_box and other containers, can also count the number of items in a player's ender_chest.
+Although you can use `/clear` on a player, `if items` can also count the number of items in a chest, shulker_box and other containers, can also count the number of items in a players ender_chest.
 
 Here are some examples for this:
 
@@ -52,6 +52,6 @@ Here are some examples for this:
 
 ## Bedrock
 
-In the **1.18.20 beta** they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/questions/range.md)) of items in entities inventories. Below is an example, check the link above for more information.
+In the **1.18.20 beta** they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/wiki/questions/range)) of items in entities inventories. Below is an example, check the link above for more information.
 
     execute @a[hasitem={item:apple,quantity=5..}] ~~~ run say I have 5 or more apples in my inventory
