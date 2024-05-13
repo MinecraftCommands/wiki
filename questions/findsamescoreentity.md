@@ -1,6 +1,6 @@
 # Find an entity with the same score as another entity or player
 
-related: [Check if a score is equal to, greater than, or less than another score](/questions/scorecompare.md)
+related: [Check if a score is equal to, greater than, or less than another score](/wiki/questions/scorecompare)
 
 ## Java
 
@@ -16,13 +16,13 @@ This method works by changing the executor to all entities that need to be check
 
 ### Method 2: Store the score in a fake player first
 
-This method has the advantage over the first one that it only need to evaluate the selector for the special entity once, but it has the disadvantage that it needs 2 commands. ([what is a fake player?](/questions/fakeplayer.md))
+This method has the advantage over the first one that it only need to evaluate the selector for the special entity once, but it has the disadvantage that it needs 2 commands. ([what is a fake player?](/wiki/questions/fakeplayer))
 
     scoreboard players operation #fakeplayer points = @e[tag=compare,limit=1] points
     execute as @a if score @s points = #fakeplayer points run I have the same points
 
-When using a datapack, you can use this method for your [Scoreboard ID system](/questions/linkentity.md).
-One command copies the `ID` score from the selected player to [fakename](/questions/fakeplayer.md) `#this ID` and the second adds the `this` tag to the selected entity, so that in the following commands you can simply select all entities except `this` entity. And after that you can easily select any entity that has the same `ID` score in any target selector. At the end of the function you need to remove `this` tag. 
+When using a datapack, you can use this method for your [Scoreboard ID system](/wiki/questions/linkentity).
+One command copies the `ID` score from the selected player to [fake player](/wiki/questions/fakeplayer) `#this ID` and the second adds the `this` tag to the selected entity, so that in the following commands you can simply select all entities except `this` entity. And after that you can easily select any entity that has the same `ID` score in any target selector. At the end of the function you need to remove `this` tag. 
 
 Below is an example of a function and predicate that selects an entity with the same `ID` score as the selected player:
 
@@ -59,7 +59,7 @@ Below is an example of a function and predicate that selects an entity with the 
         }
     }
 
-**Note:** In addition, using predicate for the score comparison is preferable based on [performance comparisons](https://www.reddit.com/r/MinecraftCommands/comments/1ceck9n/comment/l1u6z2a) by [@sanscadre](https://www.reddit.com/u/sanscadre).
+**Note:** In addition, using predicate for the score comparison is preferable based on [performance comparisons](https://www.reddit.com/r/MinecraftCommands/comments/1ceck9n/comment/l1u6z2a) by [u/sanscadre](https://www.reddit.com/u/sanscadre).
 
 ### Method 3: Keeping the context through location
 
