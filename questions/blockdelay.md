@@ -89,19 +89,19 @@ For a scoreboard timer you can have a repeating commandblock somewhere that's co
     scoreboard players reset @a[scores={timer=100..}] timer
 
     # Alternatively for a fake player timer
-    scoreboard players add #FakePlayer timer 1
-    execute if score #FakePlayer timer matches 120 run say This command has 6 seconds delay.
-    execute if score #FakePlayer timer matches 120.. run scoreboard players reset #FakePlayer timer
+    scoreboard players add $FakePlayer timer 1
+    execute if score $FakePlayer timer matches 120 run say This command has 6 seconds delay.
+    execute if score $FakePlayer timer matches 120.. run scoreboard players reset $FakePlayer timer
 
 Or, if you do not create additional conditions, you can immediately reset the score in one command using `store success score`:
 
     # Command blocks
     execute as @a[scores={timer=101..}] store success score @s timer run say This command has 5 seconds delay.
-    execute if score #FakePlayer timer matches 121.. store success score #FakePlayer timer run say This command has 6 seconds delay.
+    execute if score $FakePlayer timer matches 121.. store success score $FakePlayer timer run say This command has 6 seconds delay.
 
 This command will not only execute the command, it also works as a timer reset command, however this implementation may not have the exact delay in some cases where your command is executed in some conditions and not in another.
 
-You can also make the delay more dynamic by setting the delay to fakename and comparing it to the player's score:
+You can also make the delay more dynamic by setting a score of a fake player and comparing it to the players score:
 
     # Set delay
     scoreboard players set #delay timer 300
@@ -128,21 +128,22 @@ _Note: Do not run the schedule function in a tick function, without any conditio
 
 This has several limitations:
 
-1. Even when using `/execute as`, the scheduled function will always run as the Server.  
+1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity.  
 2. Scheduling the same function before it is successfully ran will by default overwrite the previous schedule: if you schedule a function to happen in 5 seconds, then schedule the same function again before the 5 seconds are up, the new schedule will be the one that happens. **Since 1.15 you can now add the `append` argument as the last argument in the command, which circumvents this problem**.  
 3. It requires functions and thus datapacks to work.
+4. It will be executed at position Y = -64 under the world spawn.
 
-However it has the peculiarity that the function being executed will be executed as a server and at position Y=-64 under spawn, but not as the selected entity.
+```
+# In chat
+execute as @a run schedule function example:some_function 5s
 
-    # In chat
-    execute as @a run schedule function example:some_function 5s
-    
-    # function example:some_function
-    say This is a message from the server.
+# function example:some_function
+say This is a message from the server.
+```
 
-However, you can do a little trick:
+If you want to schedule a function to execute as an entity, here is a method that allows you to do that with different schedules for different entities:
 
-Read the current gametime and store it in the score of the selected entity and add your delay to this score. Then run the schedule function and count the gametime again and find the entities with the same score value:
+Read the current gametime and store it in the score of the selected entity and add your delay to this score. Then run the schedule function and count the gametime again and find the entities with the same score value.
 
     # Run shedule function (as entity)
     execute store result score @s timer run time query gametime
