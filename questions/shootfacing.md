@@ -95,7 +95,7 @@ You can go ahead and do this using almost just one command block. You can perfor
     tag @e[type=fireball,tag=!exist] add exist
     execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
 
-However, you may notice that this projectile lags in flight. Read about how to fix this in the [[Visual bug fix]](/questions/shootfacing.md#visual-bug-fix) section.
+However, you may notice that this projectile lags in flight. Read about how to fix this in the [\[Visual bug fix\]](#visual-bug-fix) section.
 
 -----
 
@@ -141,7 +141,7 @@ Also, using this Method instead of Method 1, you can more easily modify the indi
 
 ## Visual bug fix
 
-However, you may notice that some entities that you want to use may visually lag when summoned and fall in front of the player. This is due to the fact that the movement of this entity is not updated on the client, but this can be easily fixed by updating the NBT data **on the next tick** in any way. The simplest and “safest” thing is to update the `Air` store tag with some value.
+However, you may notice that some entities that you want to use may visually lag when summoned and fall in front of the player. This is due to the fact that the movement of this entity is not updated on the client, but this can be easily fixed by updating the NBT data **on the next tick** in any way. The simplest and "safest" thing is to update the `Air` store tag with some value.
 
     execute as @e[tag=projectile] store result entity @s Air short 1 run time query gametime
 
@@ -160,7 +160,7 @@ If you are using command blocks, you can achieve this by running this command **
     execute rotated as @a[scores={click=1..}] positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
     scoreboard players reset @a click
 
-When using a datapack, you can use the shedule function to do this fix.
+When using a datapack, you can use the schedule function to do this fix.
 
     # function example:tick
     execute as @a[scores={click=1..}] at @s run function example:click
