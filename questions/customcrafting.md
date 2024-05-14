@@ -111,7 +111,7 @@ The controller is a command block that detects the placement of a spawn_egg to i
 
 Recipes can be made as separate command blocks. Each recipe is a separate command block that checks the block data in the Items tag, and if the data matches, then replace the Items tag with your item as the crafting result.
 
-**Hint:** If you find it difficult to create a command to check block data, then put your recipe in a dropper / dispenser. Exit the block interface and press `F3 + I` to copy the block data. You will receive a /setblock command with the full block data. All of their commands leave only the data inside {}, and it is also advisable to remove unnecessary NBT data for each item, leave only a custom tag for checking the item, this will be less likely that something will break.
+**Hint:** If you find it difficult to create a command to check block data, then put your recipe in a dropper / dispenser. Exit the block interface and press `F3 + I` to copy the block data. You will receive a /setblock command with the full block data. This command has all of the blocks data, including data that is irrelevant or even hindering our ability to properly detect the relevant items. Thus you should not use the NBT data (`{}`) as-is, but remove any and all unnecessary NBT data. This involves removing all but the defining attributes of the item: `id`, `count`, `Slot` and potentially the custom data you used to mark your custom items.
 
 Below is a schematic representation of the command to check the recipe:
 
