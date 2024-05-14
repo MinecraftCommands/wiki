@@ -14,7 +14,7 @@ This page details information on common problems you might have with a command, 
   * The coordinates before the NBT data in `/summon`
   * The coordinates before the command in `/execute`
   * The old block handling mode (replace, keep, etc.) before NBT data in `/setblock` or `/fill`
-  * The block state/datavalue in `/setblock`, `/execute ~ ~ ~ detect` or `/fill`
+  * The block state/datavalue in `/setblock`, `/execute if block` or `/fill`
 * Watch out for `“smart quotes”` that word processors might auto-add, only `"normal quotes"` will work. You should use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Narrow down your problem as much as possible. Remove parts slowly (or build up your command slowly in the first place) until you have just the part that's causing the issue
 * Macs add weird characters that are invisible in-game when the arrow keys are pressed. These will stop the command from working
@@ -37,7 +37,7 @@ This page details information on common problems you might have with a command, 
 
 * In some situations, selectors have player bias (will select players first, even if another entity is closer) or sender bias (will select the command's executer first, even if another entity is closer to the specified `x,y,z`). 
     * [See this post for more details](https://www.reddit.com/r/MinecraftCommands/comments/5url0r/selector_bias_info/ddwdek9/)
-* Break down your selector into parts to see what is causing the issue. If you have `@a[r=5,tag=playing]`, try `@a[r=5]` and `@a[tag=playing]` separately
+* Break down your selector into parts to see what is causing the issue. If you have `@e[type=zombie,tag=playing]`, try `@e[type=zombie]` and `@e[tag=playing]` separately
 * Try using `/say` to check whether its the selector or the rest of your command that's not working 
 * In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments
 * Dropped item entities can have scoreboard tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard tags applied to it
@@ -45,20 +45,21 @@ This page details information on common problems you might have with a command, 
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
+     * This is not the case in newer versions since it uses ranges. E.G: `@a[scores={x=5..10}]
 * `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players
-     * Be careful with commands like: `/execute @a[tag=x] ~ ~ ~ /kill @p`
+     * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
-     * `@s` can be used instead to select themself even if they're dead: `/execute @a[tag=x] ~ ~ ~ /kill @s`
+     * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
 
 ## NBT
 
 * Check the spelling, location, and capitalization of tags. References: [entity/world data](http://minecraft.wiki/Chunk_format), [player/item data](http://minecraft.wiki/Player.dat_format)
 * Try [pca's tag checker](https://pca006132.neocities.org/pcc/nbtcheck.html)
 * When testing data:
-   * You must specify the tag's type. E.G: `/testfor @e {Marker:1b}` instead of just `/testfor @e {Marker:1}`
-   * You must put the namespace before IDs. E.G: `/testfor @e {Item:{id:"minecraft:stone"}}` instead of just `/testfor @e {Item:{id:"stone"}}`
+   * You must specify the tag's type. E.G: `/execute if entity @e[nbt={Marker:1b}]` instead of just `/execute if entity @e[nbt={Marker:1}]`
+   * You must put the namespace before IDs. E.G: `/execute if entity @e[nbt={Item:{id:"minecraft:stone"}}]` instead of just `/execute if entity @e[nbt={Item:{id:"stone"}}]`
    * In a list, the same element can be matched multiple times. E.G: `{Motion:[0.0,1.7,2.5]}` matches `/testfor @e {Motion:[0.0,0.0,0.0]}`, as all `0.0`'s find the first `0.0`
-* Item data from `/replaceitem` or `/give` is put in [the item's `tag` tag](http://minecraft.wiki/Player.dat_format#Item_structure), not directly in the item's root compound tag
+* Item data from `/item` or `/give` is put in [the item's `tag` tag](http://minecraft.wiki/Player.dat_format#Item_structure), not directly in the item's root compound tag
 * Minecraft generally won't "fix" data inside an item's `tag` tag; if you give an item with `{ench:[{id:10,lvl:1}]}`, `id` and `lvl` will stay (and need to be tested) as integers, even though they're normally shorts
 * A dropped item entity stores its item data [in an `Item` compound tag](http://minecraft.wiki/Chunk_format#Items_and_XPOrbs), not directly in the entity's root compound tag
 * If you need to include quotes in a string, you'll need to "escape" them by putting \ in front of them. E.G: `{Command:"/say My name is \"\"!"}`
@@ -95,8 +96,7 @@ This page details information on common problems you might have with a command, 
 ## Scoreboard objectives
 
 * Players who have not yet had a score set do not have a score of 0, they have no score. 
-    * `@a[score_x=0,score_x_min=0]` and similar will not detect players who have not had their score set yet
+    * `@a[scores={x=-2147483647..}]` and similar will not detect players who have not had their score set yet
     * Stats also require the score to be initiated to function
     * `/scoreboard players add @e x 0` will initiate scores to 0 without affecting already set scores
 * `/scoreboard players operation` requires one or both selectors to resolve to a single target
-* `/stats` requires the second selector (on which the score is to be stored) to resolve to a single target
