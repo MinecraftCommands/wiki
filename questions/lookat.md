@@ -27,6 +27,26 @@ Example 2: looking at the position 10 20 30
 
     execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello block
 
+## Java
+
+    # function example:tick
+    execute as @a[predicate=example:looking_cow] run say Hi, cow!
+    
+
+    # predicate example:looking_cow
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type_specific": {
+          "type": "minecraft:player",
+         "looking_at": {
+            "type": "minecraft:pig"
+          }
+        }
+      }
+    }
+
 ## Bedrock
 
 ### Using Commands (before 1.19.50)
