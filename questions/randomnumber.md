@@ -119,6 +119,33 @@ A different way to use the spreadplayers randomisation is to `data get` the posi
 
 A very primitive way to get somewhat random numbers but probably the easiest one. It relies on time to get a random number, so this is not applicable for when random numbers are needed in predefined time lengths (X amount of ticks, maybe even the same tick) and **it is advised not to use this**, as there are much better alternatives. How it works is you basically count up a scoreboard from the minimum to the maximum random number, incrementing by one per tick and resetting it to the minimum once you reached the maximum. Then to get a "random" number you just take whatever number this running score happens to be on at that moment.
 
+## 8: /random command
+**This method is, currently, the best, there is no reason to use the others**
+
+This command is used to generate a random number specifying the maximum and the minimum, this is the best method of all because it is the easiest to make. More information can be found on the wiki.
+
+First we need to create a scoreboard where we will store the random number.
+
+    /scoreboard objectives add random dummy
+We need to store the result of the /random command to a fake player
+
+    /execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
+    
+For example:
+execute store result score #command random run random value 1..5
+And now we need to check the value of the scoreboard, in this case we used numbers from 1 to 5 so we use one command to check every possible scoreboard value.
+
+    execute if score #command random matches 1 run <command 1>
+    execute if score #command random matches 2 run <command 2>
+    execute if score #command random matches 3 run <command 3>
+    execute if score #command random matches 4 run <command 4>
+    execute if score #command random matches 5 run <command 5>
+
+Or we can use ranges to detect more of one number.
+
+    execute if score #command random matches 1..3 run say 1, 2 or 3
+    execute if score #command random matches 4..5 run say 4 or 4
+
 ## Get the number into the desired range
 
 Many of the generators above have a range that only covers positive numbers, reaching from 0 up to X. But what if you need a random number between 5 and 15? what about -10 and 10?  
