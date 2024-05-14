@@ -20,6 +20,7 @@ This page details information on common problems you might have with a command, 
 * Macs add weird characters that are invisible in-game when the arrow keys are pressed. These will stop the command from working
 * Mods/plugins (especially Essentials) may overwrite vanilla commands. Try `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
+* Make sure command blocks are enabled in server.propietie
 
 ## Functions
 
