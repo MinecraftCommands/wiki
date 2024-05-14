@@ -2,7 +2,7 @@
 
 The basic principle for this method is that a mob that can attack will get angry at whoever attacks them. _(some exceptions apply)_
 
-## Java
+## Java (without /damage)
 
 ### Spawning a projectile with a specific owner
 
@@ -16,7 +16,7 @@ For example you can use a snowball, as this projectile does not deal damage to n
     execute as @e[type=minecraft:snowball,tag=atk_target] run data modify entity @s Owner set from entity @e[type=zombie,limit=1,tag=target] UUID
 
 
-## Bedrock
+## Bedrock and Java
 
 ### Using /damage
 
@@ -24,17 +24,28 @@ _Info: In bedrock a lot of entities have a very defined set of other entities th
 
 Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wiki/Commands/damage) in 1.18.10 we can use this command to inflict fake damage from one entity onto another with relative ease:
 
+    # bedrock
     /damage <target> <amount> entity_attack entity <source entity>
+    # java
+    /damage <target> <amount> <damage_type> by <source entity>
 
 so for example, to make an (untamed) wolf attack a player, you can run this command
 
+    # bedrock
     /damage @e[type=wolf] 0 entity_attack entity @p
+    # java
+    /damage @e[type=wolf] 0 player_attack by @p
 
 or to make a skeleton attack a zombie
 
+    # bedrock
     /damage @e[type=skeleton] 0 entity_attack entity @e[type=zombie]
+    # java
+    /damage @e[type=skeleton] 0 player_attack by @e[type=zombie,limit=1]
 
 In this example we're using `0` as the amount of damage, as we just want to pretend to deal damage to the entity, not actually deal any damage.
+
+## Bedrock
 
 ### Using behaviors
 
