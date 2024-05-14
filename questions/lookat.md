@@ -28,6 +28,7 @@ Example 2: looking at the position 10 20 30
     execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello block
 
 ## Java
+There is a predicate that allows us to detect when a player is looking at an entity, it's the one used by the 3 advancements related to the spyglass.
 
     # function example:tick
     execute as @a[predicate=example:looking_cow] run say Hi, cow!
