@@ -1,6 +1,6 @@
 # Detect a player joining
 
-For this, we'll have to differentiate between players joining for the first time and players _re_joining the world for the Nth time, as the approaches are slightly different.
+For this, we'll have to differentiate between players joining for the first time and players rejoining the world for the Nth time, as the approaches are slightly different.
 
 ## First time
 A player that joins a world for the first time is a blank slate, they have no scores no tags no nothing on them. We can use this to detect the lack of an initialisation tag on the player, apply all our actions to them, then give them the tag.
@@ -52,12 +52,12 @@ However, be aware that it will stop working after 3 years of the world being act
 
 ## Both
 
-We can combine these two if you want the same thing to happen in both cases. The easiest here would of course be a function that's just run in both cases, but it'd be similarly easy to remove the tag from anyone with the score so you don't need to do everything twice but instead just need one additional command:
+We can detect when the leave game changes and use the execute store to reset the scoreboard, so we can avoid using another command.
 
     # In chat
     scoreboard objectives add join custom:leave_game
     
-    # tick function or repeating command blocks
+    # command blocks
     execute as @a unless score @s join = @s join store success score @s join run tellraw @a [{"selector":"@s"}," just logged in for the first time!"]
     execute as @a unless score @s join matches 1 store success score @s join run tellraw @a [{"selector":"@s"}," just came back to us!"]
 
