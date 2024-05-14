@@ -65,20 +65,51 @@ Please note that while an add-on isn't necessarily required for this solution, u
 
 Luckily in Java we don't have to go through what is essentially a custom hopper minecart, killing the player to get their items. Instead we can use `NBT` to solve this issue for us. _Usage of functions is highly recommended and is expected for this explanation._
 
-There are community made datapacks that do the heavy lifting for you like [PlayerDB](https://rx-modules.github.io/PlayerDB/).
+There are community made datapacks that do the heavy lifting for you like [PlayerDB](https://rx-modules.github.io/PlayerDB).
 
 ### Storing
 
+- [In storage](#in-storage)
+- [In marker entity](#in-marker-entity)
+
+#### In storage
+
+Since version 1.20.2, [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) have been added that allow you to insert any data into any part of the command, making storing/returning easier.
+
+Below is an example of storing a player's inventory in storage using the [scoreboard ID system](/wiki/questions/linkentity), or you can store the UUID / nickname instead of using the scoreboard ID system. To do this you need to run the function `example:storing` as a player.
+
+    # function example:storing
+    data remove storage example:inv this
+    execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+    data modify storage example:inv this.Inventory set from entity @s Inventory
+    function example:storing/update with storage example:inventory this
+    
+    # function example:storing/update
+    $execute unless data storage example:inv players[{ID:$(ID)}] run data modify storage example:inv players append {ID:$(ID)}
+    $data modify storage example:inv players[{ID:$(ID)}] merge from storage example:inv this
+
+This player data storage system will create an in storage `example:inv` object for each player in the `players` list that will look something like:
+
+    # storage example:inv players[{ID:5}]
+    {ID:5,Inventory:[{Slot:0b,id:"minecraft:stick",Count:1b}]}
+
+However, this implementation can support any data other than player `ID` and `Inventory` and you can easily add saving any other data.
+
+#### In marker entity
+
 The way to do this is to store the players `Inventory` NBT somewhere safe. There are many things in the game that can store arbitrary NBT data (storage, item tag nbt, etc), and they sure are all good solutions in their own right. In this case, since we're assuming that one player is supposed to be connected to one Inventory save, without any further knowledge of the environment, we'll be using the `marker` entities ability to store arbitrary data for us. *(In case a player is bound to a certain area in a map for example, an item in a jukebox might be a better choice. In any situation, using the `storage` might be a better choice for various reasons, if you know how to properly link data in there with players.)*
 
-So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard id system](/wiki/questions/linkentity) set up to link the entity to the player.
+So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard ID system](/wiki/questions/linkentity) set up to link the entity to the player.
 
     # summon marker
     summon marker ~ ~ ~ {Tags:["inv_store","inv_new"]}
+    
     # link marker to player    
     scoreboard players operation @e[tag=inv_new] id = @s id
+    
     # copy Inventory of player to marker data.Inventory
     data modify entity @e[tag=inv_new,limit=1] data.Inventory set from from entity @s Inventory
+    
     # remove the new tag to get ready for the next player
     tag @e[tag=inv_new] remove inv_new
 
@@ -88,11 +119,126 @@ And **that's it, the entire inventory is now stored in this marker** that has be
 
 But now, we **want to give it back**. This is where it becomes tricky. Choose the category from below that fits your needs the best.
 
-- [Putting things in the original slot](#wiki_putting_things_in_the_original_slot)
-- [Don't care about the slot](#wiki_don.27t_care_about_the_slot)
-- [Put it in a chest](#wiki_put_it_in_a_chest)
+- [Putting things in the original slot (from storage)](#putting-things-in-the-original-slot-from-storage)
+- [Putting things in the original slot (from marker)](#putting-things-in-the-original-slot-from-marker)
+- [Don't care about the slot](#dont-care-about-the-slot)
+- [Put it in a chest](#put-it-in-a-chest)
 
-#### Putting things in the original slot
+#### Putting things in the original slot (from storage)
+
+Using macros makes it very easy to return items to the player, since you can simply read the `Slot`, `id`, `Count` and `tag` tags and paste this data into the /item replace command. But there are two small difficulties:
+
+- some slots (offhand and armor slots) cannot be directly inserted by slot number, so a separate function is needed to handle these slots.
+- items may not contain a tag tag, but macros always require all the data to be inserted.
+
+Therefore, need to create a scoreboard in which the current slot will be stored in order to run one of two functions: `example:returning/inventory` - for inventory slots (0 - 35) and `example:returning/equipment` - for offhand (-106) and armor slots (100 - 103).
+
+For items without tags, you need to create an empty tag before running the macro for that slot.
+
+Below is an example for versions 1.20.2 - 1.20.4. To do this need to run function `example:returning` as a player:
+
+    # function example:load
+    scoreboard objectives add Slot dummy
+    
+    # function example:returning
+    ## Read player Scoreboard ID
+    execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID 
+    ## Reading the selected player's data from the entire array of data of all players.
+    function example:returning/read with storage example:inv this
+    ## Create an empty tag if there is no tag data in the current slot.
+    execute unless data storage example:inv this.Inventory[-1].tag run data modify storage example:inv this.Inventory[-1].tag set value "" 
+    ## Running the function of returning items from the end of the list.
+    function example:returning/item with storage example:inv this.Inventory[-1]
+    
+    # function example:returning/read
+    $data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
+    
+    # function example:returning/item
+    ## Set the current slot to select slot processing
+    $scoreboard players set #this Slot $(Slot)
+    execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+    execute unless score #this Slot matches 0..35 run function example:returning/equipment with storage example:inv this.Inventory[-1]
+    ## After returning the current item, remove this slot from storage and start returning the next item
+    data remove storage example:inv this.Inventory[-1]
+    execute unless data storage example:inv this.Inventory[-1].tag run data modify storage example:inv this.Inventory[-1].tag set value "" 
+    function example:returning/item with storage example:inv this.Inventory[-1]
+    
+    # function example:returning/inventory
+    ## For inventory slots, can directly insert Slot into the /item command
+    function example:returning/equipment with storage example:inv this.Inventory[-1]
+    $item replace entity @s container.$(Slot) $(id)$(tag) $(Count)
+    
+    # function example:returning/equipment
+    ## Equipment slots require converting slot number to slot name
+    $execute if score #this Slot matches -106 run item replace entity @s weapon.offhand $(id)$(tag) $(Count)
+    $execute if score #this Slot matches 100 run item replace entity @s armor.feet $(id)$(tag) $(Count)
+    $execute if score #this Slot matches 101 run item replace entity @s armor.legs $(id)$(tag) $(Count)
+    $execute if score #this Slot matches 102 run item replace entity @s armor.chest $(id)$(tag) $(Count)
+    $execute if score #this Slot matches 103 run item replace entity @s armor.head $(id)$(tag) $(Count)
+
+However, as of version 1.20.5, item tags have now been replaced with components that cannot simply be inserted into the /item command, so for this need use a loot table written inline.
+
+Below is an example of a loot table in which you need to put the item data using a macro:
+
+    {
+      "pools": [
+        {
+          "rolls": 1,
+          "entries": [
+            {
+              "type": "minecraft:item",
+              "name": "$(id)",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "count": $(count)
+                },
+                {
+                  "function": "minecraft:set_components",
+                  "components": $(components)
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+
+**Note: This loot table should be inside a macro function, and not as a separate loot table file!**
+
+Below is an updated example for version 1.20.5 without comments, since otherwise it is the same as for version 1.20.2:
+
+    # function example:load
+    scoreboard objectives add Slot dummy
+    
+    # function example:returning
+    execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+    function example:returning/read with storage example:inv this
+    execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+    function example:returning/item with storage example:inv this.Inventory[-1]
+    
+    # function example:returning/read
+    $data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
+    
+    # function example:returning/item
+    $scoreboard players set #this Slot $(Slot)
+    execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+    execute unless score #this Slot matches 0..35 run function example:returning/equipment with storage example:inv this.Inventory[-1]
+    data remove storage example:inv this.Inventory[-1]
+    execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {} 
+    function example:returning/item with storage example:inv this.Inventory[-1]
+    
+    # function example:returning/inventory with storage example:inv this.Inventory[-1]
+    $loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+    
+    # function example:returning/equipment
+    $execute if score #this Slot matches -106 run loot replace entity @s weapon.offhand loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+    $execute if score #this Slot matches 100 run loot replace entity @s armor.feet loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+    $execute if score #this Slot matches 101 run loot replace entity @s armor.legs loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+    $execute if score #this Slot matches 102 run loot replace entity @s armor.chest loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+    $execute if score #this Slot matches 103 run loot replace entity @s armor.head loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+
+#### Putting things in the original slot (from marker)
 
 This one is a little command intensive, but probably the easiest to understand. All we do is use `item replace` to return all the items back to the player, for every slot. But because we can't get the item data directly from the data storage, we first need to put it into a different container or entity inventory. So lets assume we have a chest placed at `<pos>` that we can store these items into (you can instead use an entity that has an inventory and summon it as needed).  
 

@@ -14,6 +14,7 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 [Detect rightclick or leftclick (on an item)?](/wiki/questions/itemclick)  
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
+[Do custom crafting](/wiki/questions/customcrafting)
 
 ### Scores
 
@@ -50,6 +51,7 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 [Make one mob attack another mob/player?](/wiki/questions/angermob)  
 [Do raycasting?](/wiki/questions/raycast)   
 [Make a circle (of blocks / entities)?](/wiki/questions/makecircle/)
+[Detect when a mob has died](/wiki/questions/mobdeaths)
 
 ## What is...
 
@@ -66,6 +68,3 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 ## Still needed articles
 
 *Found something that should be added? Maybe even want to contribute an article? Submit a pull request or create a GitHub issue.*
-
-- Detect when a mob has died?   
-- Do custom crafting (with NBT)
