@@ -22,17 +22,13 @@ First, set up a dummy scoreboard objective:
 
 We're going to use the executing entity to store the result. This can of course be substituted for a fake player or a different entity as well.
 
-Make sure the score is initiated (not null). Easy way to do this is by adding 0:
-
-    scoreboard players add @s success_score 0
-
 ----
 
 Then, whenever you want to perform a conditional command:
 
-    execute store success @s success_score if block 73 10 31 stone
-    execute if score @s success_score=1 run say Stone found!
-    execute if score @s success_score=0 run say Stone not found!
+    execute store success #success success_score if block 73 10 31 stone
+    execute if score #success success_score matches 1 run say Succes!!
+    execute unless score #success success_score matches 1 run say Not success!!
 
 ## 1.12
 
@@ -42,16 +38,20 @@ For example, you want to execute a command when `@a[tag=TeamChange]` finds somet
 
 Easiest way to do this is by prefixing the command with an `execute`:
 
-    execute @a[tag=TeamChange,c=1] ~ ~ ~ say test
+    execute as @a[tag=TeamChange,limit=1] run say test
 
 ----
 
 If you want to run commands without changing the executer, or run a command if the selector **fails**, you can use `/function`'s `if` or `unless` arguments. For example:
 
+    # Pre 1.13
     function code:team_change if @a[tag=TeamChange]
     function code:ready unless @a[tag=!Ready]
+    # After 1.13
+    execute if entity @a[tag=TeamChange] run function code:team_change
+    execute unless entity @a[tag=!Ready] run functipn code:ready
 
-### My condition is whether or not another command succeeds
+### My condition is whether or not another command succeeds (before 1.13)
 
 For this you will need to use `/stats`. If you have not used `/stats` in the past, you should watch/read a tutorial (or multiple) and play around with them until you are reasonably confident in its usage and understand what they do.
 
