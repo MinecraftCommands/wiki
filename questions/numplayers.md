@@ -13,8 +13,8 @@ The easiest way to do this in bedrock is to have the found entities count up the
 Using a dummy scoreboard objective named `result` and an entity with the `counter` tag, we can count how many players there are in team red:
 
     scoreboard players set @e[tag=counter] result 0
-    execute @a[team=red] ~~~ scoreboard players add @e[tag=counter] result 1
-    execute @e[tag=counter,scores={result=2}] ~~~ say there are exactly 2 people on the red team
+    execute as @a[team=red] run scoreboard players add @e[tag=counter] result 1
+    execute as @e[tag=counter,scores={result=2}] run say there are exactly 2 people on the red team
 
 ## Java 
 
@@ -36,7 +36,7 @@ The fake player can be replaced by an entity, which then changes the second comm
 
 *For the sake of allowing users of 1.12 and below to access this for them still useful information, it is kept around.*
 
-When a `/testfor` command is run, the command block's `SuccessCount` NBT tag will be set equal to the number of entities that the selector found. You can then use a `/testforblock` command in another block to check whether the first command block's `SuccessCount` is a certain number.
+When a `/testfor` command is run, the command block's `SuccessCount` NBT tag will be set equal to the number of entities that the selector found. You can then use a `/testfor` command in another block to check whether the first command block's `SuccessCount` is a certain number.
 
 For example, this will test for *exactly* 2 players on the red team (no more, no less):
 
