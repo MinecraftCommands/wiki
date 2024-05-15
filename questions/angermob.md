@@ -24,7 +24,8 @@ In the following example a skeleton tagged `attacker` is tricked into attacking 
 
 ### Using /damage
 
-_Info: In bedrock a lot of entities have a very defined set of other entities they can attack, as defined in their behavior pack. So if the below method doesn't work to anger them, make sure they're actually able to attack the target entity and change the behavior files accordingly!_
+> [!IMPORTANT]
+> In bedrock a lot of entities have a very defined set of other entities they can attack, as defined in their behavior pack. So if the below method doesn't work to anger them, make sure they're actually able to attack the target entity and change the behavior files accordingly!
 
 Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wiki/Commands/damage) in 1.18.10 we can use this command to inflict fake damage from one entity onto another with relative ease:
 
