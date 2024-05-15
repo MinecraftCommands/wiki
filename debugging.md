@@ -22,7 +22,7 @@ This page details information on common problems you might have with a command, 
 * Mods/plugins (especially Essentials) may overwrite vanilla commands. Try `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
 * Make sure command blocks are enabled in server.propieties
-* When using tutorials or [online generators](resources.md) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
+* When using tutorials or [online generators](wiki/resources.md) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 
 ## Functions
 
@@ -42,18 +42,18 @@ This page details information on common problems you might have with a command, 
     * [See this post for more details](https://www.reddit.com/r/MinecraftCommands/comments/5url0r/selector_bias_info/ddwdek9/)
 * Break down your selector into parts to see what is causing the issue. If you have `@e[type=zombie,tag=playing]`, try `@e[type=zombie]` and `@e[tag=playing]` separately
 * Try using `/say` to check whether its the selector or the rest of your command that's not working 
-* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem in [multipletags](questions/multipletags.md)
+* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem in [multipletags](wiki/questions/multipletags.md)
 * Dropped item entities can have scoreboard values and tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard values and will lose all tags applied to it
 * [Selector arguments](http://minecraft.wiki/Commands#Target_selector_arguments) usually specify a maximum value, and adding `m` (or `_min` for scores) will specify a minimum value. E.G:
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
-     * This is not the case in newer versions since it uses [ranges](questions/ranges.md). E.G: `@a[scores={x=5..10}]`
+     * This is not the case in newer versions since it uses [ranges](wiki/questions/ranges.md). E.G: `@a[scores={x=5..10}]`
 * `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players
      * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
-     * `as` and `at` have a diference in [command context](questions/commandcontext.md). `as` change the executor entity and `at` changes the position.
+     * `as` and `at` have a diference in [command context](wiki/questions/commandcontext.md). `as` change the executor entity and `at` changes the position.
 
 ## NBT
 
