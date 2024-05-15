@@ -3,7 +3,7 @@
 
 ## Bedrock
 
-In the Bedrock edition of the game, you can just give a commandblock a delay direcly through its interface, no need for any workarounds.
+In the Bedrock edition of the game, you can just give a commandblock a delay direcly through its interface, no need for any workarounds, unless you want to make a timer for every player, see the method using a [scoreboard](wiki/questions/blockdelay.md#scoreboard)
 
 ## Java 
 
