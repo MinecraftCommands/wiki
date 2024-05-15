@@ -17,7 +17,8 @@ For example, the following creates an AEC that will disappear in 100 ticks (5 se
 
     summon area_effect_cloud ~ ~ ~ {Duration:100}
 
-_Note: To see area_effect_cloud press `F3 + B` to show hitboxes._
+> [!NOTE]
+> To see area_effect_cloud press `F3 + B` to show hitboxes.
 
 You can set the `Duration` tag as a positive value or the `Age` tag as a negative value, but then you need to set the `Particle` tag to `"block air"` (1.20.4 and below) or `{type:"block",block_state:"minecraft:air"}` (1.20.5 and above) to prevent it from creating particles.
 
