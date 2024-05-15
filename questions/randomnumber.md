@@ -8,6 +8,8 @@ This article talks about the Java Edition of the game. In Bedrock, you can just 
 ## /random command
 **This method is, currently, the best, there is no reason to use the others**
 
+Effective Range [-2'147'483'648 to 2'147'483'647]
+
 This command is used to generate a random number specifying the maximum and the minimum, this is the best method of all because it is the easiest to make. More information can be found on the wiki.
 
 First we need to create a scoreboard where we will store the random number.
