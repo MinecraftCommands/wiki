@@ -10,7 +10,7 @@ The way the game knows who got attacked by whom is by tracking the owner of a pr
 
 For example you can use a snowball, as this projectile only deal damage to blazes. The snowball is summoned 2.3 blocks above the target so their hitboxes don't overlap (which would cause the snowball to ignore the target). 
 > [!IMPORTANT]
-> If the player or entity is crowling or has a block above them, it wont work.
+> If the player is crawnling or it has a block above them, it wont work.
 
 In the following example a skeleton tagged `attacker` is tricked into attacking a zombie tagged `target`.
 
