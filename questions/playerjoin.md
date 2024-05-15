@@ -52,7 +52,7 @@ However, be aware that it will stop working after 3 years of the world being act
 
 ## Both
 
-We can detect when the leave game changes and use the execute store to reset the scoreboard, so we can avoid using another command.
+We can detect when the leave game changes and use the execute store to reset the scoreboard, so we can avoid using another command, this is java exclusive because bedrock does not have `execute store`
 
     # In chat
     scoreboard objectives add join custom:leave_game
