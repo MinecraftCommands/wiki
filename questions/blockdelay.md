@@ -93,7 +93,7 @@ For a scoreboard timer you can have a repeating commandblock somewhere that's co
     execute if score $FakePlayer timer matches 120 run say This command has 6 seconds delay.
     execute if score $FakePlayer timer matches 120.. run scoreboard players reset $FakePlayer timer
 
-Or, if you do not create additional conditions, you can immediately reset the score in one command using `store success score`:
+Or, if you do not create additional conditions, you can immediately reset the score in one command using `store success score` (only java edition):
 
     # Command blocks
     execute as @a[scores={timer=101..}] store success score @s timer run say This command has 5 seconds delay.
@@ -124,11 +124,12 @@ So you can create a simple way to run your commands not every tick, but, for exa
     schedule function example:loops/10s 10s
     say This will run every 10 second.
 
-_Note: Do not run the schedule function in a tick function, without any conditions. This will overwrite the schedule every tick and the schedule function will never run._
+> [!NOTE]
+> Do not run the schedule function in a tick function, without any conditions. This will overwrite the schedule every tick and the schedule function will never run.
 
 This has several limitations:
 
-1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity.  
+1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity. See [context](wiki/questions/commandcontext.md)
 2. Scheduling the same function before it is successfully ran will by default overwrite the previous schedule: if you schedule a function to happen in 5 seconds, then schedule the same function again before the 5 seconds are up, the new schedule will be the one that happens. **Since 1.15 you can now add the `append` argument as the last argument in the command, which circumvents this problem**.  
 3. It requires functions and thus datapacks to work.
 4. It will be executed at position Y = -64 under the world spawn.
@@ -154,4 +155,5 @@ Read the current gametime and store it in the score of the selected entity and a
     execute store result score #this timer run time query gametime
     execute as @e if score @s timer = #this timer run say Example Command.
 
-**Note:** If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one.
+> [!NOTE]
+> If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one.
