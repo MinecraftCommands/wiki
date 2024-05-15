@@ -18,3 +18,7 @@ then you execute as all the entities you want to compare, running the scoreboard
 And now you can find whoever has the same score as the fake player ([using Method #2 from here](/wiki/questions/findsamescoreentity/)) to name your winner.
 
     execute as @a if score @s score = #max score run I have the highest score!
+
+## Lowest score
+
+This can be used to detect the player with the lowest score, just instead of `>` use `<` and instead of `-2147483648` use positive `2147483648`
