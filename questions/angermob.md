@@ -8,7 +8,10 @@ The basic principle for this method is that a mob that can attack will get angry
 
 The way the game knows who got attacked by whom is by tracking the owner of a projectile through the projectiles `Owner` tag, which represents the owners UUID. We can use this to make a projectile that pretends to be from a specific entity by modifying this NBT tag.
 
-For example you can use a snowball, as this projectile does not deal damage to non-nether mobs. The snowball is summoned 2.3 blocks above the target so their hitboxes don't overlap (which would cause the snowball to ignore the target). In the following example a skeleton tagged `attacker` is tricked into attacking a zombie tagged `target`.
+For example you can use a snowball, as this projectile only deal damage to blazes. The snowball is summoned 2.3 blocks above the target so their hitboxes don't overlap (which would cause the snowball to ignore the target). 
+> [!IMPORTANT]
+> If the player or entity is crowling or has a block above them, it wont work.
+In the following example a skeleton tagged `attacker` is tricked into attacking a zombie tagged `target`.
 
     # summon the snowball
     execute at @e[type=skeleton,tag=attacker] run summon minecraft:snowball ~ ~2.3 ~ {Tags:["atk_target"]}
