@@ -22,7 +22,7 @@ This page details information on common problems you might have with a command, 
 * Mods/plugins (especially Essentials) may overwrite vanilla commands. Try `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
 * Make sure command blocks are enabled in server.propieties
-* When using tutorials or [online generators](wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
+* When using tutorials or [online generators](resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 
 ## Functions
 
