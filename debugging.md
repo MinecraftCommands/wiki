@@ -10,6 +10,7 @@ This page details information on common problems you might have with a command, 
     * If there is no previous output, the command may have never ran, or you have its output turned off. Turn the command block's output [on](http://i.imgur.com/s4DYa9L.png) when you are debugging
     * You can fix this by turning the command block to *Needs Redstone*, pressing *Done*, turning it back to *Always Active*, then pressing *Done* again 
 * Check for double &nbsp;spaces between arguments, especially after copy pasting a part of the command. These are ignored in chat, but not elsewhere
+* Check for a space at the end of the command, command should **not** end with a space
 * Don't miss out arguments. Common ones to forget are:
   * The coordinates before the NBT data in `/summon`
   * The coordinates before the command in `/execute`
@@ -20,7 +21,8 @@ This page details information on common problems you might have with a command, 
 * Macs add weird characters that are invisible in-game when the arrow keys are pressed. These will stop the command from working
 * Mods/plugins (especially Essentials) may overwrite vanilla commands. Try `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
-* Make sure command blocks are enabled in server.propietie
+* Make sure command blocks are enabled in server.propieties
+* When using tutorials or [online generators](wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 
 ## Functions
 
@@ -32,7 +34,7 @@ This page details information on common problems you might have with a command, 
 * The namespace folder is not optional, functions should **not** be directly inside `data/functions/`
 * Don't forget to use `/reload` to reload the functions after making changes
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
-* Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop
+* Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
 
 ## Selectors
 
@@ -40,17 +42,18 @@ This page details information on common problems you might have with a command, 
     * [See this post for more details](https://www.reddit.com/r/MinecraftCommands/comments/5url0r/selector_bias_info/ddwdek9/)
 * Break down your selector into parts to see what is causing the issue. If you have `@e[type=zombie,tag=playing]`, try `@e[type=zombie]` and `@e[tag=playing]` separately
 * Try using `/say` to check whether its the selector or the rest of your command that's not working 
-* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments
-* Dropped item entities can have scoreboard tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard tags applied to it
+* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem in [multipletags](wiki/questions/multipletags)
+* Dropped item entities can have scoreboard values and tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard values and will lose all tags applied to it
 * [Selector arguments](http://minecraft.wiki/Commands#Target_selector_arguments) usually specify a maximum value, and adding `m` (or `_min` for scores) will specify a minimum value. E.G:
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
-     * This is not the case in newer versions since it uses ranges. E.G: `@a[scores={x=5..10}]`
+     * This is not the case in newer versions since it uses [ranges](wiki/questions/ranges). E.G: `@a[scores={x=5..10}]`
 * `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players
      * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
+     * `as` and `at` have a diference in [command context](wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
 
 ## NBT
 
@@ -73,6 +76,7 @@ This page details information on common problems you might have with a command, 
 * As of 1.12, lists can no longer have indices. 
     * For example, `Lore:[0:"aaa",1:"bbb",2:"ccc"]` would need to be `Lore:["aaa","bbb","ccc"]`
 * As of 1.12, array syntax has changed. Most notable on the integer array in firework rocket colors where `Colors:[7310,31]` would now need to be `Colors:[I;7310,31]`
+* You can **not** edit player data, unless when using a [mod](https://modrinth.com/mod/edit-player-nbt)
 
 ## Loot tables
 
@@ -100,4 +104,7 @@ This page details information on common problems you might have with a command, 
     * `@a[scores={x=-2147483647..}]` and similar will not detect players who have not had their score set yet
     * Stats also require the score to be initiated to function
     * `/scoreboard players add @e x 0` will initiate scores to 0 without affecting already set scores
+    * You can check if a player has a score set or no with this command:
+
+    /execute as @a unless score @s X = @s X run ...
 * `/scoreboard players operation` requires one or both selectors to resolve to a single target
