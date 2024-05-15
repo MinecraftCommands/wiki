@@ -106,7 +106,7 @@ Selectors are used a lot in commands. To make sure you're not causing extra work
 
 Your main aim here is to narrow down the list as much as possible before getting to the expensive distance-sorting/shuffling and especially the super expensive NBT checks. You shouldn't however unnecessarily check arguments that won't narrow down the list before distance-sorting/shuffling. For example, don't check `@e[type=zombie,tag=IsUndeadMob]` if all zombies will have that tag. You shouldn't make your selector imprecise so that it applies to more entities than it needs to, either. 
 
-`nbt` is the least efficient target selector, as it has to do a lot of converting and comparing, and as such should be avoided at (almost) all costs, or at least limited to the absolute minimum required. Predicates, in the other hand, can archive the same causing less performanec impacts.
+`nbt` is the least efficient target selector, as it has to do a lot of converting and comparing, and as such should be avoided at (almost) all costs, or at least limited to the absolute minimum required. [Predicates](https://minecraft.wiki/w/Predicate), in the other hand, can archive the same causing less performanec impacts.
 
 `@s` is the most efficient selector, directly grabbing the command sender. See the section on **function-specific optimisations** for how you can make use of it to cut down on use of other selectors.
 
