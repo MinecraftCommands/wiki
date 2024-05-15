@@ -135,7 +135,7 @@ A way to get a random number before 1.13 in the range of up to 360 numbers was t
 
 Effective Range: [0, 10] (theoretically infinite, but practically anything above 10 is not worth it)
 
-Before we got the (arguably much better) solutions above, we could use `@e[limit=1,sort=random,tag=randomizer]` to select a random entity, which we would've each given their respective scoreboard score (or put the commandblock to be triggered below them or something similar). This has the obvious disadvantage, that you'll need one entity per possible score. as long as it's below 10 this is still doable, anything above does get tedious. To avoid performance issues, use a [marker entity](https://minecraft.wiki/w/Marker)
+Before we got the (arguably much better) solutions above, we could use `@e[limit=1,sort=random,tag=randomizer]` to select a random entity, which we would've each given their respective scoreboard score (or put the commandblock to be triggered below them or something similar). This has the obvious disadvantage, that you'll need one entity per possible score. as long as it's below 10 this is still doable, anything above does get tedious. To avoid performance issues, use a [marker entity](https://minecraft.wiki/w/Marker).
 
 ## 6: spreadplayers
 
