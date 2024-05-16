@@ -106,7 +106,5 @@ This page details information on common problems you might have with a command, 
     * `@a[scores={x=-2147483647..}]` and similar will not detect players who have not had their score set yet
     * Stats also require the score to be initiated to function
     * `/scoreboard players add @e x 0` will initiate scores to 0 without affecting already set scores
-    * You can check if a player has a score set or no with this command:
-
-    /execute as @a unless score @s X = @s X run ...
+    * You can check if a player has a score set or no with the command `/execute as @a unless score @s X = @s X run ...`
 * `/scoreboard players operation` requires one or both selectors to resolve to a single target
