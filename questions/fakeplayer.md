@@ -11,7 +11,7 @@ They can be used like any other selector, but only make sense when dealing with 
 
 ## Special characters
 
-It is recommended to use special characters inside the fake player names to prevent conflicts with real players (see [things to look out for](#things_to_look_out_for)). While you cannot use spaces, you can use a lot more characters that normally wouldn't be possible to be used in normal playernames like `.#$%/*!`. The three most common ones are 
+It is recommended to use special characters inside the fake player names to prevent conflicts with real players (see [things to look out for](##things_to_look_out_for)). While you cannot use spaces, you can use a lot more characters that normally wouldn't be possible to be used in normal playernames like `.#$%/*!`. The three most common ones are 
 
 - `.` generally used to create a sort of namespace (e.g. `homes.x`, `homes.y`)  
 - `$` tends to be used at the start of the fake name. This likely stems from other programming languages where this character symbolises a variable. Not to be confused with macros.
