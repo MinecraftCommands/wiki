@@ -56,6 +56,7 @@ This page details information on common problems you might have with a command, 
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
      * `as` and `at` have a diference in [command context](wiki/questions/commandcontext.md). `as` change the executor entity and `at` changes the position.
+         * Scheduled functions will lose the context
 
 ## NBT
 
@@ -94,6 +95,7 @@ This page details information on common problems you might have with a command, 
 * Check that all coordinates in models are between `-16` and `32`
 * Check [what errors you are receiving in the game log](http://i.imgur.com/q3vhNGR.png)
 * Don't forget to press `F3+T` to reload the resource pack after making changes
+* Check if you have the resource pack enabled
 * Macs add invisible layers of folders to zip files. These will stop zipped resources from working
 * If you're working with a zip file rather than a folder, you'll need to update the zip file after saving the files (working in a folder is easier)
 * Remember that model paths have `block`/`item` (singular), whereas texture paths have `blocks`/`items` (plural)
@@ -106,5 +108,5 @@ This page details information on common problems you might have with a command, 
     * `@a[scores={x=-2147483647..}]` and similar will not detect players who have not had their score set yet
     * Stats also require the score to be initiated to function
     * `/scoreboard players add @e x 0` will initiate scores to 0 without affecting already set scores
-    * You can check if a player has a score set or no with the command `/execute as @a unless score @s X = @s X run ...`
+    * You can check if a player has a score set or no with the command `/execute as @a unless score @s x = @s x run ...`
 * `/scoreboard players operation` requires one or both selectors to resolve to a single target
