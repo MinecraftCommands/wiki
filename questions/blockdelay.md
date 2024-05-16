@@ -57,7 +57,7 @@ This is a simple way to execute any command at a specified position once with a 
 
 ### Marker
 
-If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use the invisible armor_stand.
+If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use an [`area_effect_cloud`](https://minecraft.wiki/w/Lingering_Potion#ID_3) that will not despawn or an invisible [`armor_stand`](https://minecraft.wiki/w/Armor_Stand).
 
     # Summon
     summon marker ~ ~ ~ {Tags:["delay"]}
