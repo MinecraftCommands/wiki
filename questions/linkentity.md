@@ -78,6 +78,4 @@ If for some reason you cannot use a function, use this code for your commandbloc
     # remove tag so we're ready for the next player
     tag @a remove addId
 
-_If you're on bedrock, replace `execute as @a[tag=addId] run` with `execute @a[tag=addId] ~~~`._
-
 **And we're done, every player has a unique ID**. Now we can just copy the id score to whatever entity we want to link up using `scoreboard players operation`, and use [this method](/wiki/questions/findsamescoreentity) to find the entity with the same score (aka the linked entity).
