@@ -23,7 +23,7 @@ You can alternatively use the following commands to activate an impulse command 
 
 These commands should be conditional blocks on the chain that performs the condition test. Your setup might look [something like this](http://i.imgur.com/vyhnmTH.png).
 
-**Functions** make this even easier and more efficient. You can run a different function only if a selector succeeds/fails, for example:
+**Functions** make this even easier and more efficient. You can run a different function only if a condition (for example, if a specified selector exist) succeeds/fails, for example:
 
     # pre-1.13 syntax
     function code:arena_events if @a[tag=in_arena]
@@ -31,6 +31,11 @@ These commands should be conditional blocks on the chain that performs the condi
     # 1.13+ syntax
     execute if entity @a[tag=in_arena] run function code:arena_events
     execute unless entity @a[tag=winner] run function code:check_winner
+    # 1.13+ syntax (block condition)
+    execute if block 0 60 0 air run function code:missing_block
+    execute unless block 0 90 0 grass_block run function code:place_block
+
+In 1.13+ you can check more things apart from selectors with [`execute if/unless`](https://minecraft.wiki/w/Commands/execute#Condition_subcommands)
 
 ## Slow down your commands
 
@@ -42,14 +47,37 @@ An easy trick with command blocks to make a clock run at half its speed is the f
     testforblock ~ ~ ~ repeating_command_block * {SuccessCount:0}
     # 1.13+ syntax
     execute if block ~ ~ ~ repeating_command_block{SuccessCount:0}
+    # 1.13+ syntax (only run one command)
+    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0} run <command>
 
-Set up [like this](http://i.imgur.com/OULTCZx.png), the command will alternate between succeeding (as it failed last time so has `SuccessCount:0`) and failing (as it succeeded last time so has `SuccessCount:1`), and the conditional repeating block coming off of it will thus activate every other tick.
+Set up [like this](http://i.imgur.com/OULTCZx.png) (unless running only one command), the command will alternate between succeeding (as it failed last time so has `SuccessCount:0`) and failing (as it succeeded last time so has `SuccessCount:1`), and the conditional repeating block coming off of it will thus activate every other tick.
 
 These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
 
-More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated. 
+More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated.
 
-[Here's an example setup image.](http://i.imgur.com/fGyA294.png)
+    ## pre-1.12
+    # in chat
+    scoreboard objectives add timer dummy
+
+    # command block
+    scoreboard players add FakeflayerA TimerScore 1    
+    scoreboard players test FakeFlayer# TimerScore 60
+    # Chain conditional
+    scoreboard players set Fakeflayerf TimerScore 0
+    # Conditional repeating command
+    <any command>
+
+[Here's an example setup image pre-1.13](http://i.imgur.com/fGyA294.png)
+
+    ## 1.13+
+    # in chat
+    scoreboard objectives add timer dummy
+
+    # command blocks / tick function
+    scoreboard players add t.5sec timer 1
+    execute if score t.5sec timer matches 100.. run <command/function>
+    execute if score t.5sec timer matches 100.. run scoreboard players reset t.5sec timer
 
 These cause no block updates and require no entities, but will require an objective, and a new fake player for each timer. Scoreboard timers can also be used in functions.
 
