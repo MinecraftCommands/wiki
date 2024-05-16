@@ -41,6 +41,7 @@ In 1.13+ you can check more things apart from selectors with [`execute if/unless
 
 Not everything needs to be running at 20Hz. If you can run some commands at 10Hz instead, you've halved the impact those commands were having. In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround.
 
+### Success Count
 An easy trick with command blocks to make a clock run at half its speed is the following command:
 
     # pre-1.13 syntax
@@ -54,6 +55,7 @@ Set up [like this](http://i.imgur.com/OULTCZx.png) (unless running only one comm
 
 These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
 
+### Scoreboard timer
 More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated.
 
     ## pre-1.12
@@ -61,10 +63,10 @@ More flexible and commonly used are scoreboard timers. One command continually i
     scoreboard objectives add timer dummy
 
     # command block
-    scoreboard players add FakeflayerA TimerScore 1    
-    scoreboard players test FakeFlayer# TimerScore 60
+    scoreboard players add FakePlayerA TimerScore 1    
+    scoreboard players test FakePlayerA TimerScore 60
     # Chain conditional
-    scoreboard players set Fakeflayerf TimerScore 0
+    scoreboard players set FakePlayerA TimerScore 0
     # Conditional repeating command
     <any command>
 
@@ -81,8 +83,10 @@ More flexible and commonly used are scoreboard timers. One command continually i
 
 These cause no block updates and require no entities, but will require an objective, and a new fake player for each timer. Scoreboard timers can also be used in functions.
 
+### Falling blocks or entities
 Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.
 
+### Schedule
 **Functions** can be even easier to run on slower speeds, as the `schedule` command allows you to run functions after a certain amount of time has passed. You can use this for functions to schedule themselves to essentially create a slower clock.
 
 `code/slow_function.mcfunction`
