@@ -32,11 +32,11 @@ The fake player can be replaced by an entity, which then changes the second comm
 
 ### Method 2: Checking the command block's `SuccessCount`
 
-**This method is outdated and should not be used in current versions of the game**.
+> [!NOTE]
+> This method is outdated and should not be used in current versions of the game.
+> For the sake of allowing users of 1.12 and below to access this for them still useful information, it is kept around.
 
-*For the sake of allowing users of 1.12 and below to access this for them still useful information, it is kept around.*
-
-When a `/testfor` command is run, the command block's `SuccessCount` NBT tag will be set equal to the number of entities that the selector found. You can then use a `/testfor` command in another block to check whether the first command block's `SuccessCount` is a certain number.
+When a `/testfor` command is run, the command block's `SuccessCount` NBT tag will be set equal to the number of entities that the selector found. You can then use a `/testforblock` command in another block to check whether the first command block's `SuccessCount` is a certain number.
 
 For example, this will test for *exactly* 2 players on the red team (no more, no less):
 
@@ -49,7 +49,8 @@ The second command will only succeed if the first command has a SuccessCount of 
 
 ### Method 3: With `/stats` (1.8-1.12)
 
-**This method is outdated and can not be used in current versions of the game**.
+> [!NOTE]
+> This method is outdated and can not be used in current versions of the game.
 
 Stats are harder to understand and set up, but gives you more flexibility (works in functions, can test a range rather than exact values, can test things other than SuccessCount). If you have not used `/stats` in the past, you will need to watch/read a tutorial (or multiple) and play around with them until you are confident in its usage. Then:
 
