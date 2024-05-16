@@ -34,7 +34,7 @@ Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wik
     # java
     /damage <target> <amount> <damage_type> by <source entity>
 
-so for example, to make an wolf attack a player, you can run this command
+so for example, to make a wolf attack a player, you can run this command
 
     # bedrock
     /damage @e[type=wolf] 0 entity_attack entity @p
