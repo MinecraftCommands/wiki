@@ -4,8 +4,8 @@ This page details information on common problems you might have with a command, 
 
 ## General
 
-* A command block [may not be running](https://bugs.mojang.com/browse/MC-86846) even when it is *Always Active* + *Unconditional* + *Repeating*. 
-    * Put `/say test` in the command block to check whether it is running when you want it to run
+* A command block [may not be running](https://bugs.mojang.com/browse/MC-86846) even when it is *Always Active* + *Unconditional* + *Repeating*.
+    * Put `/say test` in the command block to check whether it is running when you want it to run. Make sure you have chat activated in the client options
     * Or open and close the command block. If the time on the [previous output message](http://i.imgur.com/k2rmrXS.png) is not updating, the command block is not running
     * If there is no previous output, the command may have never ran, or you have its output turned off. Turn the command block's output [on](http://i.imgur.com/s4DYa9L.png) when you are debugging
     * You can fix this by turning the command block to *Needs Redstone*, pressing *Done*, turning it back to *Always Active*, then pressing *Done* again 
@@ -29,9 +29,11 @@ This page details information on common problems you might have with a command, 
 * Make sure file extensions are not hidden ([Windows](http://i.imgur.com/FJ9x9Yg.png), [Mac](http://i.imgur.com/xDdYbXL.png)), otherwise a file that looks like `function.mcfunction` might actually be `function.mcfunction.txt`
 * [Check what errors you are receiving in the game log](https://i.imgur.com/vfwl8FX.png) (this isn't chat)
 * Commands cannot start with a `/` in functions (you'll get told this if you check the game log)
+* Macros lines **must** start with `$` and the values are specified using `$(example)`
 * Use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Make sure your file's encoding is UTF-8 (without BOM) - this is not the default in many programs! ([Notepad](http://i.imgur.com/R4yFjAQ.png), [Notepad++](http://i.imgur.com/8AsDJ3F.png), [Sublime](http://i.imgur.com/63rsYOB.png), [Code](http://i.imgur.com/dmOqy0y.png))
-* The namespace folder is not optional, functions should **not** be directly inside `data/functions/`
+* The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/functions/namespace/`
+* Don't forget to save changes if editing directly the datapack (with programs like VScode), normaly `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
 * Don't forget to use `/reload` to reload the functions after making changes
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
