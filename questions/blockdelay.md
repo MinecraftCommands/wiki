@@ -63,7 +63,7 @@ If you need to execute a command not only once, but every 5 seconds, for example
     summon marker ~ ~ ~ {Tags:["delay"]}
     
     # Spawn egg
-    ## 1.13 - 1.20.4
+    ## 1.17 - 1.20.4
     give @s bat_spawn_egg{EntityTag:{id:"minecraft:marker",Tags:["delay"]}}
     
     ## 1.20.5+
