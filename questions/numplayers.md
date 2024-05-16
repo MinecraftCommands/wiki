@@ -2,7 +2,8 @@
 
 For example, you want to check if a team has exactly 2 players. 
 
-First note that if a selector such as `@a[team=red]` selects `Alice, Bob, Carol, Dave`, then `@a[team=red,limit=2]` will select `Alice, Bob` and run the command on those players. `limit=2` does not mean *"only run if there are 2 players"*, but rather *"limit the players selected to at most 2"*. (Same for `c` in bedrock).
+> [!NOTE]
+> f a selector such as `@a[team=red]` selects `Alice, Bob, Carol, Dave`, then `@a[team=red,limit=2]` will select `Alice, Bob` and run the command on those players. `limit=2` does not mean *"only run if there are 2 players"*, but rather *"limit the players selected to at most 2"*. (Same for `c` in bedrock).
 
 A command will still run (and potentially succeed once) even if `@a[team=red,limit=2]` only finds one player, and succeeding once is all that is needed for conditional blocks coming off of the command block to run.
 
@@ -21,7 +22,7 @@ Using a dummy scoreboard objective named `result` and an entity with the `counte
 ### Method 1: Storing the found entities using `execute store`
 
 Introduced in 1.13 and replacing the `/stats` command, the `store` subcommand of `execute` is able to store the result of the command after it in multiple ways, including into a scoreboard.  
-Using a dummy scoreboard objective name `result` and the [fake player](/wiki/questions/fakeplayer) `#count`, we can count the amount of entities a command finds and then execute off of that. 
+Using a dummy scoreboard objective name `result` and the [fake player](/wiki/questions/fakeplayer) `#count`, we can count the amount of entities a command finds and then execute off of that. Note that we can use [ranges](wiki/questions/ranges)
 
     execute store result score #count result if entity @a[team=red]
     execute if score #count result matches 2 run say there are exactly 2 players on team red.
