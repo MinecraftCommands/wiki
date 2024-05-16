@@ -31,7 +31,7 @@ For a list of how item components are structured, see [this article on the minec
 [Summon/Teleport an entity/player at/to a position defined in a score?](/wiki/questions/movetoscore)  
 [Detect a change in score?](/wiki/questions/changeofscore)  
 [Link an entity to another entity through scoreboards?](/wiki/questions/linkentity)  
-[Find the player / entity with the highest score?](/wiki/questions/highestscore/)   
+[Find the player / entity with the highest / lowest score?](/wiki/questions/highestscore/)   
 
 ### Players
 
