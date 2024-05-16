@@ -1,7 +1,7 @@
 # Do something if a player is in certain areas
 
 > [!NOTE]
-> Java Syntax, but this can be applied to Bedrock just as well by changing the selector arguments to Bedrock Syntax. Instead of `distance=..X`, use `r=X` and instead of `distance=X..Y`, use `r=Y,rm=X`.
+> Java Syntax, but this can be applied to Bedrock just as well by changing the selector arguments to Bedrock Syntax. Instead of `distance=..X` use `r=X`, instead of `distance=X..Y` use `r=Y,rm=X` and instead of `distance=X..` use `rm=X`.
 
 This mostly comes up as a question to change the gamemode in a certain area (e.g. spawn, safe zones, etc.), so we will focus on that, but this can be applied to any use case. For questions to do something once a player enters a single area, [look here](/wiki/questions/runonce).
 
