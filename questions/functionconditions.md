@@ -10,6 +10,10 @@ Easiest way to do this is by prefixing the command with an `execute if entity`:
 
     execute if entity @a[tag=TeamChange,limit=1] run say test
 
+    # another example
+    execute if entity @a[tag=TeamChange,limit=1] run function code:team_change
+    execute unless entity @a[tag=!Ready,limit=1] run functipn code:ready
+
 Notice the `limit=1` in the above command, this is purely for performance reasons so the game stops after the first matching entity it found. [If you want to check whether there are an exact amount of entities found with a selector, click here](/wiki/questions/numplayers).
 
 ### My condition is whether or not another command succeeds
@@ -21,8 +25,6 @@ First, set up a dummy scoreboard objective:
     scoreboard objectives add success_score dummy
 
 We're going to use the executing entity to store the result. This can of course be substituted for a fake player or a different entity as well.
-
-----
 
 Then, whenever you want to perform a conditional command:
 
@@ -38,20 +40,16 @@ For example, you want to execute a command when `@a[tag=TeamChange]` finds somet
 
 Easiest way to do this is by prefixing the command with an `execute`:
 
-    execute as @a[tag=TeamChange,limit=1] run say test
+    execute @a[tag=TeamChange,c=1] ~ ~ ~ say test
 
 ----
 
 If you want to run commands without changing the executer, or run a command if the selector **fails**, you can use `/function`'s `if` or `unless` arguments. For example:
 
-    # Pre 1.13
     function code:team_change if @a[tag=TeamChange]
     function code:ready unless @a[tag=!Ready]
-    # After 1.13
-    execute if entity @a[tag=TeamChange] run function code:team_change
-    execute unless entity @a[tag=!Ready] run functipn code:ready
 
-### My condition is whether or not another command succeeds (before 1.13)
+### My condition is whether or not another command succeeds
 
 For this you will need to use `/stats`. If you have not used `/stats` in the past, you should watch/read a tutorial (or multiple) and play around with them until you are reasonably confident in its usage and understand what they do.
 
