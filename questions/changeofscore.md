@@ -15,6 +15,7 @@ So lets assume you have a score that detects a players death and want to do some
 
     execute as @a[scores={deaths=1..}] run say I died :(
     scoreboard players set @a[scores={dead=1..}] deaths 0
+    
 
 You can either `set` the score back to 0, or `reset` the score, whichever one fits your system better. In most cases either one will work fine.
 
@@ -23,12 +24,4 @@ You can either `set` the score back to 0, or `reset` the score, whichever one fi
 Sometimes you have an objective you don't want to or cannot change. In those cases it's more difficult to know when an objective changed from the last tick to the current one and involves a second, type dummy objective which we use to store the previous value to be able to compare them. Assuming you're running this as the entity you want to check, have the objective called `deaths` and the additional one called `tmp`, the commands could look like this:
 
     execute unless score @s tmp = @s deaths run say My score has changed in the last tick!
-    scoreboard players operation @s tmp = @s deaths
-
-In Bedrock we lack the `if/unless score` argument, so we'll need to do a slightly different and longer approach:
-    
-    scoreboard players operation @s tmp -= @s deaths
-    tag @s[scores={tmp=0}] add noChange
-    execute @s[tag=!noChange] ~ ~ ~ say My score has changed in the last tick!
-    tag @s remove noChange
     scoreboard players operation @s tmp = @s deaths
