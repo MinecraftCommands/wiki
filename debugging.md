@@ -31,6 +31,8 @@ This page details information on common problems you might have with a command, 
 * [Check what errors you are receiving in the game log](https://i.imgur.com/vfwl8FX.png) (this isn't chat)
 * Commands cannot start with a `/` in functions (you'll get told this if you check the game log)
 * Macros lines **must** start with `$` and the values are specified using `$(example)`
+  * Macro commands **must** contain at least one insert macro.
+  * Inserting from a list/array or NBT path is not allowed.
 * Use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Make sure your file's encoding is UTF-8 (without BOM) - this is not the default in many programs! ([Notepad](http://i.imgur.com/R4yFjAQ.png), [Notepad++](http://i.imgur.com/8AsDJ3F.png), [Sublime](http://i.imgur.com/63rsYOB.png), [Code](http://i.imgur.com/dmOqy0y.png))
 * The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/functions/namespace/`
