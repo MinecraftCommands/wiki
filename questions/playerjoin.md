@@ -52,7 +52,8 @@ However, be aware that it will stop working after 3 years of the world being act
 
 ## Both
 
-We can detect when the leave game changes and use the execute store to reset the scoreboard, so we can avoid using another command, this is java exclusive because bedrock does not have `execute store`
+### Java
+We can detect when the leave game changes and use the execute store to reset the scoreboard, so we can avoid using another command.
 
     # In chat
     scoreboard objectives add join custom:leave_game
@@ -60,4 +61,22 @@ We can detect when the leave game changes and use the execute store to reset the
     # command blocks
     execute as @a unless score @s join = @s join store success score @s join run tellraw @a [{"selector":"@s"}," just logged in for the first time!"]
     execute as @a unless score @s join matches 1 store success score @s join run tellraw @a [{"selector":"@s"}," just came back to us!"]
+
+### Bedrock
+
+In bedrock we don't have `execute store` so we will need to split the command in 2. 
+> [!Note]
+> This method is the same as the 2 others merged, nothing else changed
+
+    # in chat
+    /scoreboard objectives add online dummy
+
+    # in command block
+    scoreboard players add @a online 1
+    scoreboard players add .total online 1
+    scoreboard players operation @a online -= .total online
+    execute as @a[scores={online=..-1}] run say I rejoined
+    scoreboard players operation @a online = .total online
+    execute as @a[tag=!init] run say I joined for first time
+    tag @a[tag=!init] add init
 
