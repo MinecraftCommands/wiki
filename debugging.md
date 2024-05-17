@@ -19,7 +19,9 @@ This page details information on common problems you might have with a command, 
 * Watch out for `“smart quotes”` that word processors might auto-add, only `"normal quotes"` will work. You should use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Narrow down your problem as much as possible. Remove parts slowly (or build up your command slowly in the first place) until you have just the part that's causing the issue
 * Macs add weird characters that are invisible in-game when the arrow keys are pressed. These will stop the command from working
-* Mods/plugins (especially Essentials) may overwrite vanilla commands. Try `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
+* Mods/plugins (especially Essentials) may overwrite vanilla commands. To avoid this you can use one of the two following methods:
+  * `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
+  * `/execute run command` instead of `/command`, this is better because it works in vanilla servers too
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
 * Make sure command blocks are enabled in server.propieties
 * When using tutorials or [online generators](wiki/resources.md) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
@@ -113,3 +115,6 @@ This page details information on common problems you might have with a command, 
     * `/scoreboard players add @e x 0` will initiate scores to 0 without affecting already set scores
     * You can check if a player has a score set or no with the command `/execute as @a unless score @s x = @s x run ...`
 * `/scoreboard players operation` requires one or both selectors to resolve to a single target
+* The minimum and maximum value of a scoreboard is ±2,147,483,647
+* There are scoreboards criterias that can **not** be edited such as hunger or health
+* In order to people to use the `/trigger` command, the scoreboard **must** be enabled for that player, you can enable a trigger with this command: `/scoreboard players enable <player_selector> <objective>
