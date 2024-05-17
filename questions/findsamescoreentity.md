@@ -67,7 +67,7 @@ In this method we change the execution _location_ to be the player(s) and the ex
 
     execute at @a as @e if score @s id = @p id run ...
 
-## Bedrock
+## Bedrock (before new execute) and Java Pre-1.12
 
 In bedrock this whole endeavour requires a few more commands, as execute doesn't have any subcommands like that and `/scoreboard players test` only allows for hardcoded ranges. Instead the way to go here is to remove the score from all the entities that need to be checked and then checking whether their score is 0.
 
