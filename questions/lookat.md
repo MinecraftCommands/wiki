@@ -54,7 +54,7 @@ There is a predicate that allows us to detect when a player is looking at an ent
 This example is the same advancement as the vanilla ones but without any display.
 You can find (and edit the preset with [misode](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast))
 
-    # advancement example:looking_at/cow
+    # advancement example:lookat/cow
     {
       "criteria": {
         "requirement": {
@@ -86,7 +86,7 @@ You can find (and edit the preset with [misode](https://misode.github.io/advance
     }
 
     # function example:lookat/cow
-    advancement revoke @s only example:looking_at/cow
+    advancement revoke @s only example:lookat/cow
     say I am looking at a cow
 
 ## Bedrock
