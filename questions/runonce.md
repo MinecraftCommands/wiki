@@ -1,5 +1,8 @@
 # Activate a command *once* when a player does something (e.g: enters an area)
 
+> [!NOTE]
+> In bedrock `distance` does not exist so instead of `distance=..X` use `r=X` and instead of `distance=X..` use `rm=X` and instead of `distance=X..Y` use `rm=X,r=Y`
+
 This makes a command act as if it was on a comparator, without the lag and multiplayer incompatibility that comes from using a comparator. The general idea here is to select players that match a selector, but did **not** match that same selector in the previous tick. For example, players who have just entered an area (with `@a[x=73,y=10,z=3,distance=..1]`), just gained level 5 (with `@a[level=5]`), just entered creative (with `@a[gamemode=creative]`), etc.  
 
 ## Scoreboard
