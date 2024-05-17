@@ -28,6 +28,8 @@ Example 2: looking at the position 10 20 30
     execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello block
 
 ## Java
+
+### Predicate
 There is a predicate that allows us to detect when a player is looking at an entity, it's the one used by the 3 advancements related to the spyglass.
 
     # function example:tick
@@ -47,6 +49,45 @@ There is a predicate that allows us to detect when a player is looking at an ent
         }
       }
     }
+
+### Advancement
+This example is the same advancement as the vanilla ones but without any display.
+You can find (and edit the preset with [misode](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast))
+
+    # advancement example:looking_at/cow
+    {
+      "criteria": {
+        "requirement": {
+          "trigger": "minecraft:using_item",
+          "conditions": {
+            "player": [
+              {
+                "condition": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "type_specific": {
+                    "type": "minecraft:player",
+                    "looking_at": {
+                      "type": "minecraft:cow"
+                    }
+                  }
+                }
+              }
+            ],
+            "item": {
+              "items": "minecraft:spyglass"
+            }
+          }
+        }
+      },
+      "rewards": {
+        "function": "example:lookat/cow"
+      }
+    }
+
+    # function example:lookat/cow
+    advancement revoke @s only example:looking_at/cow
+    say I am looking at a cow
 
 ## Bedrock
 
