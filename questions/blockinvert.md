@@ -13,10 +13,11 @@ We can use another command block to check whether the first block has `SuccessCo
     testfor @a[r=5]
     testforblock ~ ~ ~1 command_block * {SuccessCount:0}
     say Nobody is within 5 blocks!
+    
     # 1.13+
     <any command>
     execute if block ~ ~ ~1 command_block{SuccessCount:0}
-    say Command didnt succed
+    say Command didn't succed
 
 [Example image](http://i.imgur.com/Syq4crm.png).
 
