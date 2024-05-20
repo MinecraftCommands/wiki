@@ -20,7 +20,7 @@ For a list of how item components are structured, see [this article on the minec
 [Detect rightclick or leftclick (on an item)?](/wiki/questions/itemclick)  
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
-[Do custom crafting](/wiki/questions/customcrafting)
+[Do custom crafting](/wiki/questions/cust)  
 [Make a shop/Buy items](wiki/questions/shop)
 
 ### Scores
@@ -57,7 +57,7 @@ For a list of how item components are structured, see [this article on the minec
 [Make a scoreboard ID system?](/wiki/questions/linkentity)  
 [Make one mob attack another mob/player?](/wiki/questions/angermob)  
 [Do raycasting?](/wiki/questions/raycast)   
-[Make a circle (of blocks / entities)?](/wiki/questions/makecircle/)
+[Make a circle (of blocks / entities)?](/wiki/questions/mak)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)
 
 ## What is...
