@@ -106,6 +106,7 @@ This page details information on common problems you might have with a command, 
 * Remember that model paths have `block`/`item` (singular), whereas texture paths have `blocks`/`items` (plural)
 * Check that the syntax of JSON files is valid with a [JSON validator](http://jsonlint.com/)
 * Try something simple like temporarily changing the texture of an apple to verify your changes are going through
+* Text display that displays translation key will not only require reloading the resource pack when changing the translation, it **will** require rejoining the world in order to see the changes.
 
 ## Scoreboard objectives
 
@@ -114,7 +115,7 @@ This page details information on common problems you might have with a command, 
     * Stats also require the score to be initiated to function
     * `/scoreboard players add @e x 0` will initiate scores to 0 without affecting already set scores
     * You can check if a player has a score set or no with the command `/execute as @a unless score @s x = @s x run ...`
-* `/scoreboard players operation` requires one or both selectors to resolve to a single target
+* `/scoreboard players operation` requires one or both selectors to resolve to a single target.
 * The minimum and maximum value of a scoreboard is ±2,147,483,647
-* There are scoreboards criterias that can **not** be edited such as hunger or health
-* In order to people to use the `/trigger` command, the scoreboard **must** be enabled for that player, you can enable a trigger with this command: `/scoreboard players enable <player_selector> <objective>
+* There are scoreboards criterias that can **not** be edited such as hunger or health.
+* In order to people to use the `/trigger` command, the scoreboard **must** be enabled for that player, you can enable a trigger with this command: `/scoreboard players enable <player_selector> <objective>`.
