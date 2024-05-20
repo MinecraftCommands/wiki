@@ -20,6 +20,9 @@ When a command is run, it will get some default values depending on how it is ru
 - A command **run from chat** is executed _as_ and _at_ (so positioned and rotated as) the player who runs it.
 - A command **run from a commandblock** is executed with the position set to the center of the commandblock in all three axis. It is always rotated `0 0`, so facing straight forward in south (positive z) direction. _There is no executing entity_.  
 - A command **run from a function** can have various values, as functions themselves keep context. See below.
+   - A scheduled command do **not** keep context, it will be run in world spawn.
+   - Tick and load function are run at world spawn.
+- A command run from the server console is executed in world spawn.
 
 ## Context in Functions
 
