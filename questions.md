@@ -20,8 +20,8 @@ For a list of how item components are structured, see [this article on the minec
 [Detect rightclick or leftclick (on an item)?](/wiki/questions/itemclick)  
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
-[Do custom crafting](/wiki/questions/cust)  
-[Make a shop/Buy items](wiki/questions/shop)
+[Do custom crafting?](/wiki/questions/cust)  
+[Make a shop? / Buy items?](wiki/questions/shop)
 
 ### Scores
 
