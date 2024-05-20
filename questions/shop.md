@@ -17,7 +17,7 @@ Both methods will require this setup:
     # In chat / Load function
     scoreboard objectives add diamonds dummy
 
-Both methods wors the same:
+Both methods works the same:
 First we are going to know how many diamonds the player has storing the value in a scoreboard and if the player has that that number of diamonds we will add a tag (first and second command) or we will run a function instead if using a datapack.
 After that we are going to give the netherite ingot to the player with the tag and we will clear the diamonds from it.
 To avoid the player from a loop we will remove the tag as we dont need it more.
