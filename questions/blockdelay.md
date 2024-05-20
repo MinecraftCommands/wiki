@@ -48,7 +48,8 @@ However, if you want to use spawn_egg to simply create an AEC's for delay, then 
     # 1.20.5+
     give @s bat_spawn_egg[entity_data={id:"minecraft:area_effect_cloud",Tags:["delay"],Duration:100,Radius:0f,WaitTime:0}]
 
-_Note: You can use any spawn_egg, but not just `bat_spawn_egg`._
+> [!NOTE]
+> You can use any `spawn_egg`, but not just `bat_spawn_egg`
 
     # Command block / tick function
     execute at @e[type=area_effect_cloud,tag=delay,nbt={Age:99}] run summon zombie
@@ -130,7 +131,7 @@ So you can create a simple way to run your commands not every tick, but, for exa
 
 This has several limitations:
 
-1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity. See [context](wiki/questions/commandcontext.md)
+1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity. See [command context](wiki/questions/commandcontext.md)
 2. Scheduling the same function before it is successfully ran will by default overwrite the previous schedule: if you schedule a function to happen in 5 seconds, then schedule the same function again before the 5 seconds are up, the new schedule will be the one that happens. **Since 1.15 you can now add the `append` argument as the last argument in the command, which circumvents this problem**.  
 3. It requires functions and thus datapacks to work.
 4. It will be executed at position Y = -64 under the world spawn.
