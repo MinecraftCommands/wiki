@@ -21,6 +21,7 @@ For a list of how item components are structured, see [this article on the minec
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
 [Do custom crafting](/wiki/questions/customcrafting)
+[Make a shop/Buy items](wiki/questions/shop)
 
 ### Scores
 
