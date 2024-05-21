@@ -5,7 +5,7 @@ This is a quick guide of how to make a shop where you can buy items with other i
 This method consists of buying items with other items, in this example, you will buy 1 netherite ingot with 5 diamonds.
 
 > [!NOTE]
-> You can add any command you wan't to run (for example a playsound) before the last command, but the selector must be the same as the command before, (`@a[tag=buy_netherite]` in this case)
+> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before, (`@a[tag=buy_netherite]` in this case)
 
 ### Java
 There are 2 methods, one for pre-1.20.5 and the other for 1.20.5 and above, this is due to the new `execute if items` subcommand.
