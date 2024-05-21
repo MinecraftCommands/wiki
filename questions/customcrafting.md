@@ -393,37 +393,38 @@ You can also make [custom crafting tables](https://wiki.bedrock.dev/blocks/block
 
 Here is an example of a shaped recipe from the bedrock wiki:
 
-        {
-    	"format_version": "1.17.41",
-    	"minecraft:recipe_shaped": {
-    		"description": {
-	    		"identifier": "wiki:cold_steel_sword"
-    		},
-    		"tags": ["crafting_table", "altar"],
-    	   	"pattern": [
-    			"X",
-    			"X",
-	    		"I"
-	   	],
-   		"key": {
-    			"X": "wiki:cold_steel",
-    			"I": "minecraft:stick"
-    		},
-    		"unlock": [
-    			{
-    				"item": "wiki:cold_steel"
-    			},
-    			{
-	    			"item": "minecraft:wool",
-    				"data":  3
-    			},
-    			{
-	    			"context": "PlayerInWater"
-    			}
-    		],
-    		"result": "wiki:cold_steel_sword"
-    	}
-    }
+	{
+		"format_version": "1.17.41",
+		"minecraft:recipe_shaped": {
+			"description": {
+				"identifier": "wiki:cold_steel_sword"
+			},
+			"tags": ["crafting_table", "altar"],
+			"pattern": [
+				"X",
+				"X",
+				"I"
+			],
+			"key": {
+				"X": "wiki:cold_steel",
+				"I": "minecraft:stick"
+			},
+			"unlock": [
+				{
+					"item": "wiki:cold_steel"
+				},
+				{
+					"item": "minecraft:wool",
+					"data":  3
+				},
+				{
+					"context": "PlayerInWater"
+				}
+			],
+			"result": "wiki:cold_steel_sword"
+		}
+	}
+
 
 A quick explanation:
 * `format_version` is the minecraft version, it is recomended to use the last relase.
