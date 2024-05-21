@@ -32,7 +32,7 @@ For a list of how item components are structured, see [this article on the minec
 [Summon/Teleport an entity/player at/to a position defined in a score?](/wiki/questions/movetoscore)  
 [Detect a change in score?](/wiki/questions/changeofscore)  
 [Link an entity to another entity through scoreboards?](/wiki/questions/linkentity)  
-[Find the player / entity with the highest / lowest score?](/wiki/questions/highestscore/)   
+[Find the player / entity with the highest / lowest score?](/wiki/questions/highestscore)   
 
 ### Players
 
@@ -58,7 +58,8 @@ For a list of how item components are structured, see [this article on the minec
 [Make one mob attack another mob/player?](/wiki/questions/angermob)  
 [Do raycasting?](/wiki/questions/raycast)   
 [Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
-[Detect when a mob has died](/wiki/questions/mobdeaths)
+[Detect when a mob has died](/wiki/questions/mobdeaths)  
+[Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)
 
 ## What is...
 
