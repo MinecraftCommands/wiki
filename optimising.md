@@ -55,6 +55,10 @@ Set up [like this](http://i.imgur.com/OULTCZx.png) (unless running only one comm
 
 These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
 
+
+### Command block minecart
+The entity [`command_block_minecart`](https://minecraft.wiki/w/Minecart_with_Command_Block) execute the written command every 4 ticks. Keep in mind that people can break the minecart (but it will **not** drop the command block).
+
 ### Scoreboard timer
 More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated.
 
