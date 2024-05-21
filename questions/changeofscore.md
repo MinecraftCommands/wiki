@@ -25,3 +25,13 @@ Sometimes you have an objective you don't want to or cannot change. In those cas
 
     execute unless score @s tmp = @s deaths run say My score has changed in the last tick!
     scoreboard players operation @s tmp = @s deaths
+
+This olso allow use to know if the scoreboard value has incremented or decreased, here is an example using health
+
+    # Command blocks
+    execute as @a unless score @s health = @s health.tmp run say My health has changed!
+    execute as @a if score @s health < @s health.tmp run say My health has decreased!
+    execute as @a if score @s health > @s health.tmp run say My health has increased!
+    execute as @a run scoreboard players operation @s health.tmp = @s health
+
+The first command detects if the health is not the same as the value in the last tick and the second and third command detects if the value incremented or decreased. The last command updates the `health.tpm` scoreboard to be the same as the current health.
