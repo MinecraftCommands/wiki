@@ -55,7 +55,7 @@ This page details information on common problems you might have with a command, 
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
-     * This is not the case in newer versions since it uses [ranges](wiki/questions/ranges.md). E.G: `@a[scores={x=5..10}]`
+     * This is not the case in newer versions since it uses [ranges](wiki/questions/ranges). E.G: `@a[scores={x=5..10}]`
 * `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players
      * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
