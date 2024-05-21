@@ -60,7 +60,7 @@ This page details information on common problems you might have with a command, 
      * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
-     * `as` and `at` have a diference in [command context](wiki/questions/commandcontext.md). `as` change the executor entity and `at` changes the position.
+     * `as` and `at` have a diference in [command context](wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
          * Scheduled functions will lose the context
 
 ## NBT
@@ -84,7 +84,7 @@ This page details information on common problems you might have with a command, 
 * As of 1.12, lists can no longer have indices. 
     * For example, `Lore:[0:"aaa",1:"bbb",2:"ccc"]` would need to be `Lore:["aaa","bbb","ccc"]`
 * As of 1.12, array syntax has changed. Most notable on the integer array in firework rocket colors where `Colors:[7310,31]` would now need to be `Colors:[I;7310,31]`
-* You can **not** edit player data, unless when using a [mod](https://modrinth.com/mod/edit-player-nbt)
+* You can **not** [edit player data](https://www.reddit.com/r/MinecraftCommands/comments/9ty42s/data_modify_is_irritating_me_today/e91rwc7/?context=3), unless when using a mod, for example [Edit Player NBT](https://modrinth.com/mod/edit-player-nbt).
 
 ## Loot tables
 
