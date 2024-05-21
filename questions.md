@@ -57,7 +57,7 @@ For a list of how item components are structured, see [this article on the minec
 [Make a scoreboard ID system?](/wiki/questions/linkentity)  
 [Make one mob attack another mob/player?](/wiki/questions/angermob)  
 [Do raycasting?](/wiki/questions/raycast)   
-[Make a circle (of blocks / entities)?](/wiki/questions/mak)  
+[Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)
 
 ## What is...
