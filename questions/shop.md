@@ -45,13 +45,15 @@ Or if you prefer a function:
     clear @s diamond 5
     ## you can add any command you want here
 
+> [!NOTE]
+> The function `example:buy/netherite` must be run `as` the player
 
 #### 1.20.5 and above
 
     # Command blocks
     execute as @p store result score @s diamonds if items entity @s container.* diamond
-    execute as @p at @s[scores={diamonds=5..}] run tag @s add buy_netherite
-    give @a[tag=buy_item_1] netherite_ingot 1
+    execute as @p run tag @s[scores={diamonds=5..}] add buy_netherite
+    give @a[tag=buy_netherite] netherite_ingot 1
     clear @a[tag=buy_netherite] diamond 5
     tag @a remove buy_netherite
     
@@ -62,6 +64,7 @@ Or if you prefer a function:
     
     # function example:buy/netherite
     execute store result score @s diamonds if items entity @s container.* diamond
+    execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
     
     # function example:buy/netherite/success
     give @s netherite_ingot 1
@@ -96,9 +99,9 @@ When the player wants to buy the item, run this commands in order. It can be arc
 This is more optimized compared to using command blocks as functions keep the selector
 
     # function example:buy/diamond
-    execute as @p at @s[scores={coins=10..}] run function example:buy/diamond/succes
+    execute as @p at @s[scores={coins=10..}] run function example:buy/diamond/success
 
-    # function example:buy/diamond/succes
+    # function example:buy/diamond/success
     give @s diamond
     scoreboard players remove @s coins 10
     ## you can add any command you want here
