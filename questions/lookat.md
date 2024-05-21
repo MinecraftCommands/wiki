@@ -44,7 +44,7 @@ There is a predicate that allows us to detect when a player is looking at an ent
         "type_specific": {
           "type": "minecraft:player",
          "looking_at": {
-            "type": "minecraft:pig"
+            "type": "minecraft:cow"
           }
         }
       }
