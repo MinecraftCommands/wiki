@@ -2,6 +2,36 @@
 
 The basic principle for this method is that a mob that can attack will get angry at whoever attacks them. _(some exceptions apply)_
 
+## Bedrock and Java
+
+### Using /damage
+
+> [!IMPORTANT]
+> In bedrock a lot of entities have a very defined set of other entities they can attack, as defined in their behavior pack. So if the below method doesn't work to anger them, make sure they're actually able to attack the target entity and change the behavior files accordingly!
+
+Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wiki/Commands/damage) (in 1.18.10 Bedrock and 1.19.4 Java) we can use this command to inflict fake damage from one entity onto another with relative ease:
+
+    # bedrock
+    /damage <target> <amount> entity_attack entity <source entity>
+    # java
+    /damage <target> <amount> <damage_type> by <source entity>
+
+so for example, to make a single wolf attack a player, you can run this command
+
+    # bedrock
+    /damage @e[type=wolf,c=1] 0 entity_attack entity @p
+    # java
+    /damage @e[type=wolf,limit=1,sort=nearest] 0 player_attack by @p
+
+or to make all skeleton skeleton attack a zombie
+
+    # bedrock
+    /damage @e[type=skeleton] 0 entity_attack entity @e[type=zombie]
+    # java
+    /execute as @e[type=skeleton] run damage @s 0 player_attack by @e[type=zombie,limit=1]
+
+In this example we're using `0` as the amount of damage, as we just want to pretend to deal damage to the entity, not actually deal any damage.
+
 ## Java (without /damage)
 
 ### Spawning a projectile with a specific owner
@@ -18,37 +48,6 @@ In the following example a skeleton tagged `attacker` is tricked into attacking 
     execute at @e[type=skeleton,tag=attacker] run summon minecraft:snowball ~ ~2.3 ~ {Tags:["atk_target"]}
     # make the snowball owner the zombie
     execute as @e[type=minecraft:snowball,tag=atk_target] run data modify entity @s Owner set from entity @e[type=zombie,limit=1,tag=target] UUID
-
-
-## Bedrock and Java
-
-### Using /damage
-
-> [!IMPORTANT]
-> In bedrock a lot of entities have a very defined set of other entities they can attack, as defined in their behavior pack. So if the below method doesn't work to anger them, make sure they're actually able to attack the target entity and change the behavior files accordingly!
-
-Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wiki/Commands/damage) (in 1.18.10 Bedrock and 1.19.4 Java) we can use this command to inflict fake damage from one entity onto another with relative ease:
-
-    # bedrock
-    /damage <target> <amount> entity_attack entity <source entity>
-    # java
-    /damage <target> <amount> <damage_type> by <source entity>
-
-so for example, to make a wolf attack a player, you can run this command
-
-    # bedrock
-    /damage @e[type=wolf] 0 entity_attack entity @p
-    # java
-    /damage @e[type=wolf] 0 player_attack by @p
-
-or to make a skeleton attack a zombie
-
-    # bedrock
-    /damage @e[type=skeleton] 0 entity_attack entity @e[type=zombie]
-    # java
-    /damage @e[type=skeleton] 0 player_attack by @e[type=zombie,limit=1]
-
-In this example we're using `0` as the amount of damage, as we just want to pretend to deal damage to the entity, not actually deal any damage.
 
 ## Bedrock
 
