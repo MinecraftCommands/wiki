@@ -24,7 +24,7 @@ This page details information on common problems you might have with a command, 
   * `/execute run command` instead of `/command`, this is better because it works in vanilla servers too
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
 * Make sure command blocks are enabled in server.propieties
-* When using tutorials or [online generators](wiki/resources.md) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
+* When using tutorials or [online generators](wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 * Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command to force a chunk to be always loaded
 
 ## Functions
