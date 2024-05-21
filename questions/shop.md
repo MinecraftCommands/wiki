@@ -25,9 +25,9 @@ To avoid the player from a loop we will remove the tag as we dont need it more.
 #### Pre-1.20.5
 
     # Command blocks
-    execute as @p store result score @s diamonds run clear @s diamond
+    execute as @p store result score @s diamonds run clear @s diamond 0
     execute as @p run tag @s[scores={diamonds=5..}] add buy_netherite
-    give @a[tag=buy_netherite]  netherite_ingot 1
+    give @a[tag=buy_netherite] netherite_ingot 1
     clear @a[tag=buy_netherite] diamond 5
     tag @a remove buy_netherite
 
