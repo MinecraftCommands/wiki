@@ -25,11 +25,15 @@ To avoid the player from a loop we will remove the tag as we dont need it more.
 #### Pre-1.20.5
 
     # Command blocks
-    execute as @p store result score @s diamonds run clear @s diamond 0
-    execute as @p run tag @s[scores={diamonds=5..}] add buy_netherite
+    tag @p add buyer_netherite
+    execute as @p[tag=buyer_netherite] store result score @s diamonds run clear @s diamond 0
+    execute as @p[tag=buyer_netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
     give @a[tag=buy_netherite] netherite_ingot 1
     clear @a[tag=buy_netherite] diamond 5
+    tellraw @a[tag=buy_netherite] ["",{"text":"You bought a netherite ingot for 5 diamonds","color":"green"}]
+    tellraw @a[tag=buyer_netherite,tag=!buy_netherite] ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
     tag @a remove buy_netherite
+    tag @a remove buyer_netherite
 
 Or if you prefer a function:
 
@@ -39,10 +43,12 @@ Or if you prefer a function:
     # function example:buy/netherite
     execute store result score @s diamonds run clear @s diamond 0
     execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
+    execute unless entity @s[scores={diamonds=5..}] run tellraw @s ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
 
     # function example:buy/netheirte/success
     give @s netherite_ingot 1
     clear @s diamond 5
+    tellraw @s ["",{"text":"You bought a netherite ingot for 5 diamonds","color":"green"}]
     ## you can add any command you want here
 
 > [!NOTE]
@@ -51,11 +57,15 @@ Or if you prefer a function:
 #### 1.20.5 and above
 
     # Command blocks
-    execute as @p store result score @s diamonds if items entity @s container.* diamond
-    execute as @p run tag @s[scores={diamonds=5..}] add buy_netherite
+    tag @p add buyer_netherite
+    execute as @p[tag=buyer_netherite] store result score @s diamonds if items entity @s container.* diamond
+    execute as @p[tag=buyer_netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
     give @a[tag=buy_netherite] netherite_ingot 1
     clear @a[tag=buy_netherite] diamond 5
+    tellraw @a[tag=buy_netherite] ["",{"text":"You bought a netherite ingot for 5 diamonds","color":"green"}]
+    tellraw @a[tag=buyer_netherite,tag=!buy_netherite] ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
     tag @a remove buy_netherite
+    tag @a remove buyer_netherite
     
 Or if you prefer a function:
 
@@ -65,12 +75,14 @@ Or if you prefer a function:
     # function example:buy/netherite
     execute store result score @s diamonds if items entity @s container.* diamond
     execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
+    execute unless entity @s[scores={diamonds=5..}] run tellraw @s ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
     
     # function example:buy/netherite/success
     give @s netherite_ingot 1
     clear @s diamond 5
 
-
+> [!NOTE]
+> The function `example:buy/netherite` must be run `as` the player
 
 ### Bedrock
 In bedrock we have the `hasitem` argument, in this case this command would be from an NPC, if you don't want to use a NPC you can make them in a chain of command blocks and change `@initiator` to `@p[r=10]`.
@@ -79,7 +91,9 @@ In bedrock we have the `hasitem` argument, in this case this command would be fr
     /clear @initiator[tag=buy_netherite] diamond 5
     /give @initiator[tag=buy_netherite] netherite_ingot 1
     /execute as @initiator[tag=buy_netherite] at @s run <any command>
+    tellraw @ainitiatior[tag=buy_netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
     /tag @initiator[tag=buy_netherite] remove buy_netherite
+    /tellraw @initiator[hasitem={item=diamond, quantity=..4}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
 
 ## Score shop
 This method uses a scoreboard as a currency (such as `coins` for this example) and you can buy items with that currency. In this example, you can buy a `diamond` with 10 `coins`.
@@ -90,18 +104,26 @@ When the player wants to buy the item, run this commands in order. It can be arc
 
 ### With command blocks
 
-    /execute as @p run tag @s[scores={coins=10..}] add buy_diamond
+    /tag @p add buyer_diamond
+    /execute as @p[tag=buyer_diamond] run tag @s[scores={coins=10..}] add buy_diamond
     /execute as @a[tag=buy_diamond] run <any command>
     /scoreboard players remove @a[tag=buy_diamond] coins 10
+    /tellraw @a[tag=buyer_diamond,tag=!buy_diamond] "You need at least 10 coins"
+    /tellraw @a[tag=buy_diamond] "You bought a diamond"
     /tag @a remove buy_diamond
+    /tag @a remove buyer_diamond
 
 ### In a function
 This is more optimized compared to using command blocks as functions keep the selector
 
     # function example:buy/diamond
-    execute as @p at @s[scores={coins=10..}] run function example:buy/diamond/success
+    execute if entity @s[scores={coins=10..}] run function example:buy/diamond/success
+    tellraw @s[scores={coins=..9}] {"text":"You don't have 10 coins","color":"red"}
 
     # function example:buy/diamond/success
     give @s diamond
     scoreboard players remove @s coins 10
-    ## you can add any command you want here
+    tellraw @s {"text":"You bought a diamond","color":"green"}
+
+> [!NOTE]
+> The function `example:buy/diamond` must be run `as` the player
