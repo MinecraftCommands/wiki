@@ -37,7 +37,8 @@ If you are using a datapack, then you can use the command above in the tick func
 
 ***
 
-**Note: The information below is outdated / inefficient. Use this only to better understand how the Scoreboard ID system works.**
+> [!NOTE]
+> The information below is outdated / inefficient. Use this only to better understand how the Scoreboard ID system works.
 
 First we need to set up a dummy scoreboard objective
 
