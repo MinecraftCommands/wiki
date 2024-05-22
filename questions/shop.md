@@ -5,7 +5,7 @@ This is a quick guide of how to make a shop where you can buy items with other i
 This method consists of buying items with other items, in this example, you will buy 1 netherite ingot with 5 diamonds.
 
 > [!NOTE]
-> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before, (`@a[tag=buy_netherite]` in this case)
+> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before, (`@a[tag=buy.netherite]` in this case)
 
 ### Java
 There are 2 methods, one for pre-1.20.5 and the other for 1.20.5 and above, this is due to the new `execute if items` subcommand.
@@ -25,15 +25,15 @@ To avoid the player from a loop we will remove the tag as we dont need it more.
 #### Pre-1.20.5
 
     # Command blocks
-    tag @p add buyer_netherite
-    execute as @p[tag=buyer_netherite] store result score @s diamonds run clear @s diamond 0
-    execute as @p[tag=buyer_netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
-    give @a[tag=buy_netherite] netherite_ingot 1
-    clear @a[tag=buy_netherite] diamond 5
-    tellraw @a[tag=buy_netherite] ["",{"text":"You bought a netherite ingot for 5 diamonds","color":"green"}]
-    tellraw @a[tag=buyer_netherite,tag=!buy_netherite] ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
-    tag @a remove buy_netherite
-    tag @a remove buyer_netherite
+    tag @p add buyer.netherite
+    execute as @p[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
+    execute as @p[tag=buyer.netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
+    give @a[tag=buy.netherite] netherite_ingot 1
+    clear @a[tag=buy.netherite] diamond 5
+    tellraw @a[tag=buy.netherite] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+    tellraw @a[tag=buyer.netherite,tag=!buy.netherite] {"text":"You don't have 5 diamonds","color":"dark_red"}
+    tag @a remove buy.netherite
+    tag @a remove buyer.netherite
 
 Or if you prefer a function:
 
@@ -43,12 +43,12 @@ Or if you prefer a function:
     # function example:buy/netherite
     execute store result score @s diamonds run clear @s diamond 0
     execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
-    execute unless entity @s[scores={diamonds=5..}] run tellraw @s ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
+    execute unless entity @s[scores={diamonds=5..}] run tellraw @s {"text":"You don't have 5 diamonds","color":"dark_red"}
 
     # function example:buy/netheirte/success
     give @s netherite_ingot 1
     clear @s diamond 5
-    tellraw @s ["",{"text":"You bought a netherite ingot for 5 diamonds","color":"green"}]
+    tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
     ## you can add any command you want here
 
 > [!NOTE]
@@ -57,15 +57,15 @@ Or if you prefer a function:
 #### 1.20.5 and above
 
     # Command blocks
-    tag @p add buyer_netherite
-    execute as @p[tag=buyer_netherite] store result score @s diamonds if items entity @s container.* diamond
-    execute as @p[tag=buyer_netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
-    give @a[tag=buy_netherite] netherite_ingot 1
-    clear @a[tag=buy_netherite] diamond 5
-    tellraw @a[tag=buy_netherite] ["",{"text":"You bought a netherite ingot for 5 diamonds","color":"green"}]
-    tellraw @a[tag=buyer_netherite,tag=!buy_netherite] ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
-    tag @a remove buy_netherite
-    tag @a remove buyer_netherite
+    tag @p add buyer.netherite
+    execute as @p[tag=buyer.netherite] store result score @s diamonds if items entity @s container.* diamond
+    execute as @p[tag=buyer.netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
+    give @a[tag=buy.netherite] netherite_ingot 1
+    clear @a[tag=buy.netherite] diamond 5
+    tellraw @a[tag=buy.netherite] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+    tellraw @a[tag=buyer.netherite,tag=!buy.netherite] {"text":"You don't have 5 diamonds","color":"dark_red"}
+    tag @a remove buy.netherite
+    tag @a remove buyer.netherite
     
 Or if you prefer a function:
 
@@ -87,13 +87,13 @@ Or if you prefer a function:
 ### Bedrock
 In bedrock we have the `hasitem` argument, in this case this command would be from an NPC, if you don't want to use a NPC you can make them in a chain of command blocks and change `@initiator` to `@p[r=10]`.
 
-    /execute as @initiator[hasitem={item=diamond, quantity=5..}] run tag @s add buy_netherite
-    /clear @initiator[tag=buy_netherite] diamond 5
-    /give @initiator[tag=buy_netherite] netherite_ingot 1
-    /execute as @initiator[tag=buy_netherite] at @s run <any command>
-    tellraw @initiatior[tag=buy_netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
-    /tag @initiator[tag=buy_netherite] remove buy_netherite
-    /tellraw @initiator[hasitem={item=diamond, quantity=..4}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
+    /execute as @initiator[hasitem={item=diamond,quantity=5..}] run tag @s add buy.netherite
+    /clear @initiator[tag=buy.netherite] diamond 5
+    /give @initiator[tag=buy.netherite] netherite_ingot 1
+    /execute as @initiator[tag=buy.netherite] at @s run <any command>
+    tellraw @initiatior[tag=buy.netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
+    /tag @initiator[tag=buy.netherite] remove buy.netherite
+    /tellraw @initiator[hasitem={item=diamond,quantity=..4}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
 
 ## Score shop
 This method uses a scoreboard as a currency (such as `coins` for this example) and you can buy items with that currency. In this example, you can buy a `diamond` with 10 `coins`.
