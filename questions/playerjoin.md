@@ -53,7 +53,16 @@ However, be aware that it will stop working after 3 years of the world being act
 ## Both
 
 ### Java
-We can detect when the leave game changes and use the execute store to reset the scoreboard, so we can avoid using another command.
+We can combine these two if you want the same thing to happen in both cases. The easiest here would of course be a function that's just run in both cases, but it'd be similarly easy to remove the tag from anyone with the score so you don't need to do everything twice but instead just need one additional command:
+
+    tag @a[scores={leave=1..}] remove init
+    execute as @a[tag=!init] ....
+    tag @a[tag=!init] add init
+    scoreboard players set @a[scores={leave=1..}] leave 0
+
+But it can be simplified to only 2 commands (and one for creating the scoreboard).
+First we detect if the player has no set score (so they are a new player) and we store the success of the tellraw, as that always success the value is set to 1 (before there was no value)
+Then if the value is not 1 (so it is 2, so they leaved the game) we will store the succes of another tellraw command in the scoreboard, because it is the success it will set it to 1.
 
     # In chat
     scoreboard objectives add join custom:leave_game
@@ -66,7 +75,7 @@ We can detect when the leave game changes and use the execute store to reset the
 
 In bedrock we don't have `execute store` so we will need to split the command in 2. 
 > [!Note]
-> This method is the same as the 2 others merged, nothing else changed
+> This method is the same as the 2 others merged, nothing else changed.
 
     # in chat
     /scoreboard objectives add online dummy
