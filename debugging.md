@@ -24,7 +24,7 @@ This page details information on common problems you might have with a command, 
   * `/execute run command` instead of `/command`, this is better because it works in vanilla servers too
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
 * Make sure command blocks are enabled in server.propieties
-* When using tutorials or [online generators](wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
+* When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 * Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command to force a chunk to be always loaded
 
 ## Functions
@@ -33,8 +33,8 @@ This page details information on common problems you might have with a command, 
 * [Check what errors you are receiving in the game log](https://i.imgur.com/vfwl8FX.png) (this isn't chat)
 * Commands cannot start with a `/` in functions (you'll get told this if you check the game log)
 * Macros lines **must** start with `$` and the values are specified using `$(example)`
-  * Macro commands **must** contain at least one insert macro.
-  * Inserting from a list/array or NBT path is not allowed.
+  * Macro commands **must** contain at least one insert macro
+  * Inserting from a list/array or NBT path is not allowed
 * Use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Make sure your file's encoding is UTF-8 (without BOM) - this is not the default in many programs! ([Notepad](http://i.imgur.com/R4yFjAQ.png), [Notepad++](http://i.imgur.com/8AsDJ3F.png), [Sublime](http://i.imgur.com/63rsYOB.png), [Code](http://i.imgur.com/dmOqy0y.png))
 * The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/<namespace>/functions/`
@@ -49,18 +49,18 @@ This page details information on common problems you might have with a command, 
     * [See this post for more details](https://www.reddit.com/r/MinecraftCommands/comments/5url0r/selector_bias_info/ddwdek9/)
 * Break down your selector into parts to see what is causing the issue. If you have `@e[type=zombie,tag=playing]`, try `@e[type=zombie]` and `@e[tag=playing]` separately
 * Try using `/say` to check whether its the selector or the rest of your command that's not working 
-* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem in [multipletags](wiki/questions/multipletags)
+* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem in [multipletags](/wiki/questions/multipletags)
 * Dropped item entities can have scoreboard values and tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard values and will lose all tags applied to it
 * [Selector arguments](http://minecraft.wiki/Commands#Target_selector_arguments) usually specify a maximum value, and adding `m` (or `_min` for scores) will specify a minimum value. E.G:
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
-     * This is not the case in newer versions since it uses [ranges](wiki/questions/ranges). E.G: `@a[scores={x=5..10}]`
+     * This is not the case in newer versions since it uses [ranges](/wiki/questions/ranges). E.G: `@a[scores={x=5..10}]`
 * `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players
      * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
-     * `as` and `at` have a diference in [command context](wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
+     * `as` and `at` have a diference in [command context](/wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
          * Scheduled functions will lose the context
 
 ## NBT
