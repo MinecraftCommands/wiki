@@ -26,13 +26,11 @@ To avoid the player from a loop we will remove the tag as we dont need it more.
 
     # Command blocks
     tag @p add buyer.netherite
-    execute as @p[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
-    execute as @p[tag=buyer.netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
-    give @a[tag=buy.netherite] netherite_ingot 1
-    clear @a[tag=buy.netherite] diamond 5
-    tellraw @a[tag=buy.netherite] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
-    tellraw @a[tag=buyer.netherite,tag=!buy.netherite] {"text":"You don't have 5 diamonds","color":"dark_red"}
-    tag @a remove buy.netherite
+    execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
+    give @a[tag=buyer.netherite,scores={diamonds=5..}] netherite_ingot 1
+    clear @a[tag=buyer.netherite,scores={diamonds=5..}] diamond 5
+    tellraw @a[tag=buyer.netherite,scores={diamonds=5..}] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+    tellraw @a[tag=buyer.netherite,scores={diamonds=..4}] {"text":"You don't have 5 diamonds","color":"dark_red"}
     tag @a remove buyer.netherite
 
 Or if you prefer a function:
@@ -59,12 +57,10 @@ Or if you prefer a function:
     # Command blocks
     tag @p add buyer.netherite
     execute as @p[tag=buyer.netherite] store result score @s diamonds if items entity @s container.* diamond
-    execute as @p[tag=buyer.netherite] run tag @s[scores={diamonds=5..}] add buy_netherite
-    give @a[tag=buy.netherite] netherite_ingot 1
-    clear @a[tag=buy.netherite] diamond 5
-    tellraw @a[tag=buy.netherite] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
-    tellraw @a[tag=buyer.netherite,tag=!buy.netherite] {"text":"You don't have 5 diamonds","color":"dark_red"}
-    tag @a remove buy.netherite
+    give @a[tag=buyer.netherite,scores={diamonds=5..}] netherite_ingot 1
+    clear @a[tag=buyer.netherite,scores={diamonds=5..}] diamond 5
+    tellraw @a[tag=buyer.netherite,scores={diamonds=5..}] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+    tellraw @a[tag=buyer.netherite,scores={diamonds=..4}] {"text":"You don't have 5 diamonds","color":"dark_red"}
     tag @a remove buyer.netherite
     
 Or if you prefer a function:
@@ -104,14 +100,13 @@ When the player wants to buy the item, run this commands in order. It can be arc
 
 ### With command blocks
 
-    /tag @p add buyer_diamond
-    /execute as @p[tag=buyer_diamond] run tag @s[scores={coins=10..}] add buy_diamond
-    /execute as @a[tag=buy_diamond] run <any command>
-    /scoreboard players remove @a[tag=buy_diamond] coins 10
-    /tellraw @a[tag=buyer_diamond,tag=!buy_diamond] "You need at least 10 coins"
-    /tellraw @a[tag=buy_diamond] "You bought a diamond"
-    /tag @a remove buy_diamond
-    /tag @a remove buyer_diamond
+    /tag @p add buyer.diamond
+    /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy_diamond
+    /scoreboard players remove @a[tag=buy.diamond] coins 10
+    /tellraw @a[tag=buyer_diamond,tag=!buy.diamond] "You need at least 10 coins"
+    /tellraw @a[tag=buy.diamond] "You bought a diamond"
+    /tag @a remove buy.diamond
+    /tag @a remove buyer.diamond
 
 ### In a function
 This is more optimized compared to using command blocks as functions keep the selector
