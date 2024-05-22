@@ -91,7 +91,7 @@ In bedrock we have the `hasitem` argument, in this case this command would be fr
     /clear @initiator[tag=buy_netherite] diamond 5
     /give @initiator[tag=buy_netherite] netherite_ingot 1
     /execute as @initiator[tag=buy_netherite] at @s run <any command>
-    tellraw @ainitiatior[tag=buy_netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
+    tellraw @initiatior[tag=buy_netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
     /tag @initiator[tag=buy_netherite] remove buy_netherite
     /tellraw @initiator[hasitem={item=diamond, quantity=..4}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
 
