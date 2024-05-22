@@ -83,13 +83,13 @@ Or if you prefer a function:
 ### Bedrock
 In bedrock we have the `hasitem` argument, in this case this command would be from an NPC, if you don't want to use a NPC you can make them in a chain of command blocks and change `@initiator` to `@p[r=10]`.
 
-    /execute as @initiator[hasitem={item=diamond,quantity=5..}] run tag @s add buy.netherite
-    /clear @initiator[tag=buy.netherite] diamond 5
-    /give @initiator[tag=buy.netherite] netherite_ingot 1
-    /execute as @initiator[tag=buy.netherite] at @s run <any command>
+    tag @initiator[hasitem={item=diamond,quantity=5..}] add buy.netherite
+    clear @initiator[tag=buy.netherite] diamond 5
+    give @initiator[tag=buy.netherite] netherite_ingot 1
     tellraw @initiatior[tag=buy.netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
-    /tag @initiator[tag=buy.netherite] remove buy.netherite
-    /tellraw @initiator[hasitem={item=diamond,quantity=..4}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
+    tellraw @initiator[tag=!buy.netherite] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
+    tag @initiator[tag=buy.netherite] remove buy.netherite
+    
 
 ## Score shop
 This method uses a scoreboard as a currency (such as `coins` for this example) and you can buy items with that currency. In this example, you can buy a `diamond` with 10 `coins`.
@@ -101,7 +101,7 @@ When the player wants to buy the item, run this commands in order. It can be arc
 ### With command blocks
 
     /tag @p add buyer.diamond
-    /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy_diamond
+    /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
     /scoreboard players remove @a[tag=buy.diamond] coins 10
     /tellraw @a[tag=buyer_diamond,tag=!buy.diamond] "You need at least 10 coins"
     /tellraw @a[tag=buy.diamond] "You bought a diamond"
