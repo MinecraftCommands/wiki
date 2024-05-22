@@ -7,7 +7,7 @@ For example, you want to check if a team has exactly 2 players.
 
 A command will still run (and potentially succeed once) even if `@a[team=red,limit=2]` only finds one player, and succeeding once is all that is needed for conditional blocks coming off of the command block to run.
 
-## Bedrock
+## Java and Bedrock
 
 The easiest way to do this in bedrock is to have the found entities count up the score of another entity or a [fake player](/wiki/questions/fakeplayer) (the later is currently a little harder to check for their score, so it is not used in this tutorial).
 
