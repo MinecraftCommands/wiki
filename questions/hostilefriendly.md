@@ -1,6 +1,9 @@
-# How to make hostile mobs friendly / disable PvP
+# How to make hostile mobs friendly? / disable PvP?
 
-## Teams (Java only)
+## Dissable both hostile and PvP
+This method can be used to make both, dissable PvP and make hostile mobs passive.
+
+### Teams (Java only)
 In java, we can create teams, and we can configure friendly fire to make people of that team unable to attack each other. This also works for mobs. In this example we are going to make zombies passive to players.
 
     # in chat / load function
@@ -11,7 +14,7 @@ In java, we can create teams, and we can configure friendly fire to make people 
     team join @e[team=!friendly,type=zombie] friendly
 
 
-## Weakness and resistance (Java and Bedrock)
+### Weakness and resistance (Java and Bedrock)
 If you can’t use the `/team` command (because you are using it for another thing or you are in bedrock) you can use effects. If we give resistance level 5 or higher the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob cause knockback.
 
 > [!NOTE]
@@ -28,7 +31,24 @@ And if we want the player unable to atack the zombie
 > [!NOTE]
 > You can still attack the player/entity if you have the sharpness enchantment, that’s what we use resistance too.
 
-## Interactions (Java only)
+## Only dissable hostile
+This method wont work to dissable PvP, it will only prevent the entity attacking the player.
+
+### Helmet
+Unsure if this is a bug but as show [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) constantly using `/item` on the mob will mess up the AI and will not attack the player.
+
+    # Java syntax
+    /item replace entity @e[type=skeleton] armor.helmet with iron_helmet
+    # Bedrock syntax
+    replaceitem entity @e[type=skeleton] slot.armor.head	0 iron_helmet]
+
+### Follow range
+You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, or mob heads.
+
+## Only dissable PvP
+This method will not make hostile mobs passive but it will prevent players from attacking other entities or players.
+
+### Interactions (Java only)
 If it is for only one mob you can add an `interaction` entity that constantly teleports to the mob or rides it and the player will attack the interaction instead of the mob, this will make the mob unkillable with attacks
 
 Important things to keep in mind when using this method:
@@ -38,10 +58,8 @@ Important things to keep in mind when using this method:
 * Hacked clients can override this method, and attack directly the entity with hacks such as killaura.
 * Arrows and other projectiles will be able to attack the entity
 
-## Helmet
-Unsure if this is a bug but as show [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) constantly using `/item` on the mob will mess up the AI and will not attack the player.
+### Distance attribute (Java only)
+In java edition there are 2 attributes related to the range that players can interacti with the world. we can reduce this range and set it to `-4.5` to make them unable to interact with other entities.
 
-    # Java syntax
-    /item replace entity @e[type=skeleton] armor.helmet with iron_helmet
-    # Bedrock syntax
-    replaceitem entity @e[type=skeleton] slot.armor.head	0 iron_helmet]
+> [!NOTE]
+> Thos will affect right click too so they won't be able to trade with villagers for example.
