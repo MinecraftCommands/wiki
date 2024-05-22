@@ -122,6 +122,9 @@ The models/item/carrot_on_a_stick.json file within the resource pack might end u
         ]
     }
 
+> [!NOTE]
+> You can make the item completly invisible if using the custom model data of a chest.
+
 ### Make item food method
 
 From version 1.20.5 you can add a right click check for any item that does not already use a right click event.
