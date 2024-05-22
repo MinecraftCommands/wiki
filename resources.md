@@ -83,6 +83,7 @@ Submit a pull request or create a GitHub issue if you've found a useful tool or 
 
 - [Generator](http://commandcreator.com/advancements/) (Command Creator)
 - [Generator](https://advancements.thedestruc7i0n.ca/) (destruc7i0n)
+- [Generator](https://misode.github.io/advancement/) (Misode)
 - [Evaluator](https://sourceblock.net/beta/tools/advancement-evaluator) (Skylinerw)
 - [Empty vanilla advancements, for overwriting default ones](http://www.mediafire.com/file/oku6p2tje0vv9lc/Impossible%20Advancements.zip) (18w22c)
 - [VSCode Schema](https://marketplace.visualstudio.com/items?itemName=Levertion.mcjson) (Levertion)
