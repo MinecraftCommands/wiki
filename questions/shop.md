@@ -81,7 +81,9 @@ Or if you prefer a function:
 > The function `example:buy/netherite` must be run `as` the player
 
 ### Bedrock
-In bedrock we have the `hasitem` argument, in this case this command would be from an NPC, if you don't want to use a NPC you can make them in a chain of command blocks and change `@initiator` to `@p[r=10]`.
+In bedrock we have the `hasitem` argument, so it uses less commands than in Java.
+
+#### With an NPC
 
     tag @initiator[hasitem={item=diamond,quantity=5..}] add buy.netherite
     clear @initiator[tag=buy.netherite] diamond 5
@@ -89,7 +91,15 @@ In bedrock we have the `hasitem` argument, in this case this command would be fr
     tellraw @initiatior[tag=buy.netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
     tellraw @initiator[tag=!buy.netherite] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
     tag @initiator[tag=buy.netherite] remove buy.netherite
-    
+
+#### Without an NPC
+
+    tag @p add buyer.netherite
+    give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
+    tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
+    tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
+    clear @a[tag=buy.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
+    tag @a remove buyer.netherite
 
 ## Score shop
 This method uses a scoreboard as a currency (such as `coins` for this example) and you can buy items with that currency. In this example, you can buy a `diamond` with 10 `coins`.
