@@ -27,6 +27,9 @@ This page details information on common problems you might have with a command, 
 * Make sure command blocks are enabled in server.propieties
 * When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 * Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command in Java or the `/tickingarea` command in Bedrock to force a chunk to be always loaded
+* Maybe you set the command to conditional accidentaly and it should be uncoditional, double check that
+* The command block must be `always active` or have redstone powering in order for it to run the command
+* Make sure to capitalize the correct leters in the command, for example `/Say` will not work but `/say` will do (in bedrock edition works different, as you can capitalize commands)
 
 ## Functions
 
@@ -41,8 +44,10 @@ This page details information on common problems you might have with a command, 
 * The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/<namespace>/functions/`
 * Don't forget to save changes if editing directly the datapack (with programs like VScode), normaly `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
 * Don't forget to use `/reload` to reload the functions after making changes
+  * Make sure you have the datapack enabled. You can enable the datapack by typing `/datapack enable "<datapack name>"`
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
+* Make sure the tick/load function tag is specifing the correct function
 
 ## Selectors
 
@@ -57,19 +62,19 @@ This page details information on common problems you might have with a command, 
      * `score_x=5` will select anyone with score x of 5 and **below**, `score_x_min=5` will select anyone with score x of 5 and **above**
      * Specify both min and max to test for an exact value: `l=5,lm=5`
      * This is not the case in newer versions since it uses [ranges](/wiki/questions/ranges). E.G: `@a[scores={x=5..10}]`
-* `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players
+* `@a` can select dead players if none of `dx`,`dy`, `dz` or `r` are specified. No other selector can select dead players (for example `@e[type=player]` will only select living players)
      * Be careful with commands like: `/execute at @a[tag=x] run kill @p`
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
-     * `as` and `at` have a diference in [command context](/wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
+* `as` and `at` have a diference in [command context](/wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
      * Scheduled functions will lose the context
 * Some commands like `/data` or `/damage` in Java edition can only select one target
   * The command `/data merge entity @e[type=armor_stand] {Invisible:1b}` will **not** work
-    * You can use `/execute` instead, so `/execute as @e[type=armor_stand] run data merge entity @s {Invisible:1b}` will work
-  * You can add a `limit`, so `/data merge entity @e[limit=1,sort=nearset] {Invisible:1b}` will work
-    * In 1.21 you can use `@n` to select the nearest entity
+    * You can use `/execute` to select more than one entity, so `/execute as @e[type=armor_stand] run data merge entity @s {Invisible:1b}` will work and modify the data of every loaded `armor_stand`
+  * You can add a `limit`, so `/data merge entity @e[type=armor_stand,limit=1,sort=nearset] {Invisible:1b}` will work and will select the nearest `armor_stand`
+    * In 1.21 you can use `@n` to select the nearest entity, it is more optimized than using `@e[limit=1,sort=nearest]`
 * `sort` has no effect if `limit` is not specified
-  * The selector `@e[sort=nearest]` is the same as `@e`, you will need to use `@e[limit=1,sort=nearest]` in order to select the nearest entity
+  * The selector `@e[sort=nearest]` is the same as `@e`, you will need to use `@e[limit=1,sort=nearest]` (or `@n` in 1.21+) in order to select the nearest entity
 
 
 ## NBT
