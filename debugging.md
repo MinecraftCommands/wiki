@@ -62,7 +62,15 @@ This page details information on common problems you might have with a command, 
      * If any player has the tag, they'll kill themself, then kill the next nearest player (as `@p` no longer select them), then the next nearest, etc., despite only one player having the tag
      * `@s` can be used instead to select themself even if they're dead: `/execute as @a[tag=x] run kill @s`
      * `as` and `at` have a diference in [command context](/wiki/questions/commandcontext). `as` change the executor entity and `at` changes the position.
-       * Scheduled functions will lose the context
+     * Scheduled functions will lose the context
+* Some commands like `/data` or `/damage` in Java edition can only select one target
+  * The command `/data merge entity @e[type=armor_stand] {Invisible:1b}` will **not** work
+    * You can use `/execute` instead, so `/execute as @e[type=armor_stand] run data merge entity @s {Invisible:1b}` will work
+  * You can add a `limit`, so `/data merge entity @e[limit=1,sort=nearset] {Invisible:1b}` will work
+    * In 1.21 you can use `@n` to select the nearest entity
+* `sort` has no effect if `limit` is not specified
+  * The selector `@e[sort=nearest]` is the same as `@e`, you will need to use `@e[limit=1,sort=nearest]` in order to select the nearest entity
+
 
 ## NBT
 
