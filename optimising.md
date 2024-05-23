@@ -152,6 +152,8 @@ Be aware that some selector arguments, such as large values of `dx`/`dy`/`dz` (w
 
 Consider also whether you actually need a selector. If you're selecting the same one entity that always exists, you could get its UUID and target it with that instead.
 
+In 1.21+ you can use `@n` instead of `@e[limit=1,sort=nearest]` as it is more optimized.
+
 ## Optimize entities
 
 Using armor stands as markers? Strongly consider switching to area effect clouds or, even better, the marker entity instead. [Here's a good video showing just how much difference this makes.](https://www.youtube.com/watch?v=RKXzWGQfIcg) You can summon an area effect cloud that acts as a marker with:
