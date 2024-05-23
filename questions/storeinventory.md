@@ -12,6 +12,9 @@ For this, you need to put them somewhere in a confined space, so the items don't
 
 Same for the return part, as you only want to give the player who owns the items those items back. You also need to consider that a completely full inventory (including armor) will not be able to be picked up instantly by the player without them manually equipping their armor.
 
+> [!CAUTION]
+> You will lose any item with the curse of vanishing enchantment
+
 ### Custom Hopper Entity
 
 This method requires you to make a custom entity that has both an `minecraft:inventory` and `minecraft:item_hopper` component.
