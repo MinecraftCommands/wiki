@@ -1,10 +1,8 @@
 # Find an entity with the same score as another entity or player
 
-related: [Check if a score is equal to, greater than, or less than another score](/wiki/questions/scorecompare)
+Related: [Check if a score is equal to, greater than, or less than another score](/wiki/questions/scorecompare)
 
-## Java
-
-_For a 1.12 and below solution, have a look at the bedrock solution below._
+## Java 1.13+
 
 ### Method 1: Compare directly
 
@@ -67,7 +65,9 @@ In this method we change the execution _location_ to be the player(s) and the ex
 
     execute at @a as @e if score @s id = @p id run ...
 
-## Bedrock (before new execute) and Java Pre-1.12
+## Java Pre-1.12
+> [!NOTE]
+> This method also works in bedrock before new execute.
 
 In bedrock this whole endeavour requires a few more commands, as execute doesn't have any subcommands like that and `/scoreboard players test` only allows for hardcoded ranges. Instead the way to go here is to remove the score from all the entities that need to be checked and then checking whether their score is 0.
 
