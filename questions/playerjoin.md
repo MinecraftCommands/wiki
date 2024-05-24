@@ -26,7 +26,7 @@ Another way to do this is using an advancement in a datapack, this advancement w
     }
     
     # function example:first_join
-    tellraw @a ["",{"selector":"@s"},{"text":" just logged in for the first time!"}]
+    tellraw @a [{"selector":"@s"}," just logged in for the first time!"]
 
 ## Consecutive Time
 
