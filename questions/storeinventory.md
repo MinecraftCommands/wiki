@@ -489,7 +489,7 @@ This method consist on using `/item` (on Java) or  `/replaceitem` (on Bedrock) t
     item replace block ~ ~ ~ container.9 with entity @s armor.head
     item replace block ~ ~ ~ container.10 with entity @s armor.chest
     item replace block ~ ~ ~ container.11 with entity @s armor.legs
-    item replace block ~ ~ ~ container.12  with entity @s armor.feet
+    item replace block ~ ~ ~ container.12 with entity @s armor.feet
     item replace block ~ ~ ~ container.13 with entity @s weapon.offhand
 
 And now we stored the entire inventory in 2 chest (or barrels). To give it back (restoring the inventory) we will need to do the same but replacing the player slots with the container's slots.
