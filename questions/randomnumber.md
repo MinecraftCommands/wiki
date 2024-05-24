@@ -32,7 +32,7 @@ And now we need to check the value of the scoreboard, in this case we used numbe
 Or we can use [ranges](wiki/questions/ranges) to detect more of one number.
 
     execute if score #command random matches 1..3 run say 1, 2 or 3
-    execute if score #command random matches 4..5 run say 4 or 4
+    execute if score #command random matches 4..5 run say 4 or 5
 
 ## without /random command (Pre-1.20.2)
 
