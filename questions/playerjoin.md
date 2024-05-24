@@ -32,7 +32,8 @@ Another way to do this is using an advancement in a datapack, this advancement w
 
 ### Java 
  
-You can set up an objective of type `minecraft.custom:minecraft.leave_game`, which will count up the moment a player leaves the server, which you can then detect the moment they come back. Assuming you called the objective `leave`, it could look like this:  
+You can set up an objective of type `minecraft.custom:minecraft.leave_game`, which will count up the moment a player leaves the server, which you can then detect the moment they come back, because, even if the score has been updated, the player is not online and we can't target it with `@a[scores={leave=1}]`.
+Assuming you called the objective `leave`, it could look like this:  
 
     execute as @a[scores={leave=1..}] run tellraw @a ["",{"selector":"@s"},{"text":" just came back to us!"}]
     scoreboard players reset @a[scores={leave=1..}] leave
@@ -61,7 +62,7 @@ We can combine these two if you want the same thing to happen in both cases. The
     scoreboard players set @a[scores={leave=1..}] leave 0
 
 But it can be simplified to only 2 commands (and one for creating the scoreboard).
-First we detect if the player has no set score (so they are a new player) and we store the success of the tellraw, as that always success the value is set to 1 (before there was no value)
+First we detect if the player has no set score (so they are a new player) and we store the success of the tellraw, as that always success the value is set to 1 (before there was no value).
 Then if the value is not 1 (so it is 2, so they leaved the game) we will store the succes of another tellraw command in the scoreboard, because it is the success it will set it to 1.
 
     # In chat
