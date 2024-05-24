@@ -92,7 +92,7 @@ This page details information on common problems you might have with a command, 
 * A dropped item entity stores its item data [in an `Item` compound tag](http://minecraft.wiki/Chunk_format#Items_and_XPOrbs), not directly in the entity's root compound tag
 * If you need to include quotes in a string, you'll need to "escape" them by putting \ in front of them. E.G: `{Command:"/say My name is \"\"!"}`
 * If you need to escape a second level, you need to escape both the quotes and the previous backslash E.G: `{Command:"/setblock ~ ~ ~ wall_sign 0 replace {Text1:\"{\\\"text\\\":\\\"hello!\\\"}\"}"}`
-* [Generators are handy](https://mcstacker.bimbimma.com) you can find some [in the resources page](/wiki/resources) or [Bedrock resources page](/wiki/ncresources)
+* [Generators are handy](https://mcstacker.com) you can find some [in the resources page](/wiki/resources) or [Bedrock resources page](/wiki/bcresources)
 * Text editors like [Notepad++](http://i.imgur.com/7XnrEJP.png) can highlight pairs of brackets, helping you put tags in the right place and keep brackets balanced
 * As of 1.12, strings containing characters that aren't `a`-`z`, `A`-`Z`, `0`-`9`, `.`, `_`, `+`, or `-` now need to be quoted. 
     * For example, `Command:say test` contains a space, so would need to be `Command:"say test"`
