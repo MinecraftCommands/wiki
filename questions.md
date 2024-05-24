@@ -75,4 +75,4 @@ For a list of how item components are structured, see [this article on the minec
 
 ## Still needed articles
 
-*Found something that should be added? Maybe even want to contribute an article? Submit a pull request or create a GitHub issue.*
+*Found something that should be added? Maybe even want to contribute an article? Submit a pull request or create a GitHub issue [here](https://github.com/MinecraftCommands/wiki).*
