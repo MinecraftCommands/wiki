@@ -45,6 +45,7 @@ This page details information on common problems you might have with a command, 
 * Don't forget to save changes if editing directly the datapack (with programs like VScode), normaly `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
 * Don't forget to use `/reload` to reload the functions after making changes
   * Make sure you have the datapack enabled. You can enable the datapack by typing `/datapack enable "<datapack name>"`
+  * When edition world generation you need to leave and rejoin the world in order to save changes (or restart the server).
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
 * Make sure the tick/load function tag is specifing the correct function
