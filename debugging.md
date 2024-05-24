@@ -137,3 +137,5 @@ This page details information on common problems you might have with a command, 
 * There are scoreboards criterias that can **not** be edited such as hunger or health.
 * In order to people to use the `/trigger` command, the scoreboard **must** be enabled for that player, you can enable a trigger with this command: `/scoreboard players enable <player_selector> <objective>`.
   * If you reset the scoreboard the player will no longer has the objective enabled
+  * When you use the `/trigger` command that scoreboard no loner is enabled
+* Scoreboard values are linked to the username **not** to the player `UUID`
