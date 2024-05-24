@@ -38,7 +38,7 @@ This method wont work to dissable PvP, it will only prevent the entity attacking
 Unsure if this is a bug but as show [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) constantly using `/item` on the mob will mess up the AI and will not attack the player.
 
     # Java syntax
-    /item replace entity @e[type=skeleton] armor.helmet with iron_helmet
+    /item replace entity @e[type=skeleton] armor.head with iron_helmet
     # Bedrock syntax
     replaceitem entity @e[type=skeleton] slot.armor.head	0 iron_helmet]
 
