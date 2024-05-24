@@ -15,7 +15,7 @@ This page details information on common problems you might have with a command, 
   * The coordinates before the NBT data in `/summon`
   * The coordinates before the command in `/execute`
   * The old block handling mode (replace, keep, etc.) before NBT data in `/setblock` or `/fill`
-  * The block state/datavalue in `/setblock`, `/execute if block` or `/fill`
+  * The block state/datavalue in `/setblock`, `/execute if block` (or in pre-1.12 `/execute ~ ~ ~ detect`) or `/fill`
 * Watch out for `“smart quotes”` that word processors might auto-add, only `"normal quotes"` will work. You should use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Narrow down your problem as much as possible. Remove parts slowly (or build up your command slowly in the first place) until you have just the part that's causing the issue
 * Macs add weird characters that are invisible in-game when the arrow keys are pressed. These will stop the command from working
