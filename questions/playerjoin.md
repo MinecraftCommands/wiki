@@ -38,6 +38,9 @@ Assuming you called the objective `leave`, it could look like this:
     execute as @a[scores={leave=1..}] run tellraw @a ["",{"selector":"@s"},{"text":" just came back to us!"}]
     scoreboard players reset @a[scores={leave=1..}] leave
 
+> [!NOTE]
+> This method counts exits from the game, but not joins to the server, because the score increases when the player leaves, but since you cannot target an offline player using the target selector, we cannot check that the score has been changed and this can only be done when the player joins to the server again.
+
 ### Bedrock
 
 In Bedrock we don't have the luxury of the `leave_game` objective, so we'll need to find a workaround. One such workaround could be to have a fake player count up a score every tick/second, then check whether the player has the same score, if not run whatever you want on them, then set the score to the same score as the fake player. Example with a dummy scoreboard objective called "online":
@@ -66,11 +69,11 @@ First we detect if the player has no set score (so they are a new player) and we
 Then if the value is not 1 (so it is 2, so they leaved the game) we will store the succes of another tellraw command in the scoreboard, because it is the success it will set it to 1.
 
     # In chat
-    scoreboard objectives add join custom:leave_game
+    scoreboard objectives add leave custom:leave_game
     
     # command blocks
-    execute as @a unless score @s join = @s join store success score @s join run tellraw @a [{"selector":"@s"}," just logged in for the first time!"]
-    execute as @a unless score @s join matches 1 store success score @s join run tellraw @a [{"selector":"@s"}," just came back to us!"]
+    execute as @a unless score @s leave = @s leave store success score @s leave run tellraw @a [{"selector":"@s"}," just logged in for the first time!"]
+    execute as @a unless score @s leave matches 1 store success score @s leave run tellraw @a [{"selector":"@s"}," just came back to us!"]
 
 ### Bedrock
 
