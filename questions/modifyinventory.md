@@ -67,7 +67,7 @@ item modify entity <player> weapon.mainhand example:add_knockback
 
 ## 1.16 and below
 
-_As of 1.15, MC-123307, which allowed execute store and data modify commands to edit a player's inventory or ender chest items, has been fixed. The offical replacement was introduced in early 1.17 snapshots. However, there is still a trick dating back to 1.14 that makes use of the loot command with a modified shulker box loot table._
+_As of 1.15, [MC-123307](https://bugs.mojang.com/browse/MC-123307), which allowed execute store and data modify commands to edit a player's inventory or ender chest items, has been fixed. The offical replacement was introduced in early 1.17 snapshots. However, there is still a trick dating back to 1.14 that makes use of the loot command with a modified shulker box loot table._
 
 ### The method:
 
