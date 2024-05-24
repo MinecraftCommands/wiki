@@ -30,6 +30,7 @@ This page details information on common problems you might have with a command, 
 * Maybe you set the command to conditional accidentaly and it should be uncoditional, double check that
 * The command block must be `always active` or have redstone powering in order for it to run the command
 * Make sure to capitalize the correct leters in the command, for example `/Say` will not work but `/say` will do (in bedrock edition works different, as you can capitalize commands)
+* The `commandModificationBlockLimit` gamerule (defaults to 32768) specifies the limit of blocks that can be selected with the `/fill`, `/fillbiome` and `/clone` commands
 
 ## Functions
 
