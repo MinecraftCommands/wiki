@@ -100,7 +100,7 @@ If you don't want to use an NPC you canuse this method, is very similar to Java 
     give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
     tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
     tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
-    clear @a[tag=buy.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
+    clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
     tag @a remove buyer.netherite
 
 ## Score shop
