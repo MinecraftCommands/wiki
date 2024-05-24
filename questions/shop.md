@@ -5,7 +5,7 @@ This is a quick guide of how to make a shop where you can buy items with other i
 This method consists of buying items with other items, in this example, you will buy 1 netherite ingot with 5 diamonds.
 
 > [!NOTE]
-> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before, (`@a[tag=buy.netherite]` in this case)
+> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before.
 
 ### Java
 There are 2 methods, one for pre-1.20.5 and the other for 1.20.5 and above, this is due to the new `execute if items` subcommand.
@@ -84,6 +84,7 @@ Or if you prefer a function:
 In bedrock we have the `hasitem` argument, so it uses less commands than in Java.
 
 #### With an NPC
+This commands must be run in this order in an NPC
 
     tag @initiator[hasitem={item=diamond,quantity=5..}] add buy.netherite
     clear @initiator[tag=buy.netherite] diamond 5
@@ -93,6 +94,7 @@ In bedrock we have the `hasitem` argument, so it uses less commands than in Java
     tag @initiator[tag=buy.netherite] remove buy.netherite
 
 #### Without an NPC
+If you don't want to use an NPC you canuse this method, is very similar to Java but it uses the `hasitem` selector instead.
 
     tag @p add buyer.netherite
     give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
@@ -107,8 +109,12 @@ You can adjust the items and the prices by editing the command item and quantity
 
 ## Java and Bedrock
 When the player wants to buy the item, run this commands in order. It can be archived with a button, an impulse command block and a chain of command blocks behind as an example.
+In this example the currency is a `dummy` scoreboard called `coins`.
 
 ### With command blocks
+
+> [!NOTE]
+> This example uses Java syntax for the message that tells that appears when the player buys the item
 
     /tag @p add buyer.diamond
     /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
@@ -119,7 +125,7 @@ When the player wants to buy the item, run this commands in order. It can be arc
     /tag @a remove buyer.diamond
 
 ### In a function
-This is more optimized compared to using command blocks as functions keep the selector
+This is more optimized compared to using command blocks as functions keep the context
 
     # function example:buy/diamond
     execute if entity @s[scores={coins=10..}] run function example:buy/diamond/success
