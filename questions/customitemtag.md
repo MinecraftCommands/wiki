@@ -1,5 +1,7 @@
 # Give an item a custom tag to identify it by
 
+## Java
+
 For example, you want to give/summon/item an item, then later easily check if a player is wearing it on their head. 
 
 First, check out [this](https://drive.google.com/file/d/0B5GBricpOPLnSEJ2YW1ocldHVkE/view?usp=sharing&resourcekey=0-xlxvTptTpoQF-TTlFKaT_g) to get an understanding of an item's NBT structure. Note that scoreboard tags (like `@e[tag=blah]`) belong to the *dropped item entity*, and **not** the inventory item that it contains. Inventory items cannot have scoreboard tags, only the entities that contain them can (players, mules, item frames, dropped item entities, etc.). 
@@ -153,3 +155,9 @@ For example, the crafting recipe below (1.20.5+), which will give an item with t
   }
 }
 ```
+## Bedrock
+
+In bedrock we will need use a workarround, because we can't use custom tags. As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, wich is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
+
+    kill @e[type=item, name="§r§fApple"]
+
