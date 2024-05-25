@@ -2,13 +2,17 @@
 
 Related: [Check if a score is equal to, greater than, or less than another score](/wiki/questions/scorecompare)
 
-## Java 1.13+
+## Java 1.13+ and Bedrock
+
+> [!NOTE]
+> In bedrock edition use `c=` instead of `limit=`.
+> The method that consist on using predicates can **not** be replicated in bedrock
 
 ### Method 1: Compare directly
 
 For this method to work, we need to make sure that the entity that we want to compare to has to be unique in some way, so it can be found and is the only possible entity to result from its target selector. In this case we assume that it has been tagged with the `compare` tag and is the only entity to have that. Furthermore, the objective we're comparing is called `points`.
 
-    execute as @a if score @s points = @e[tag=compare,limit=1] points run I have the same points
+    execute as @a if score @s points = @e[tag=compare,limit=1] points run say I have the same points
 
 This method works by changing the executor to all entities that need to be checked (in this case all players, `@a`) and then using the `execute if score` subcommand to check every executors score against the entities score.
 
