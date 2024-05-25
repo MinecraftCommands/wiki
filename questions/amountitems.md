@@ -54,4 +54,4 @@ Here are some examples for this:
 
 In the **1.18.20 beta** they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/wiki/questions/range)) of items in entities inventories. Below is an example (using 1.19.50 execute), check the link above for more information.
 
-    execute as @a[hasitem={item:apple,quantity=5..}] run say I have 5 or more apples in my inventory
+    execute as @a[hasitem={item=apple,quantity=5..}] run say I have 5 or more apples in my inventory
