@@ -35,7 +35,7 @@ This page details information on common problems you might have with a command, 
 ## Functions
 
 * Make sure file extensions are not hidden ([Windows](http://i.imgur.com/FJ9x9Yg.png), [Mac](http://i.imgur.com/xDdYbXL.png)), otherwise a file that looks like `function.mcfunction` might actually be `function.mcfunction.txt`
-* [Check what errors you are receiving in the game log](https://i.imgur.com/vfwl8FX.png) (this isn't chat)
+* [Check what errors you are receiving in the game log](https://imgur.com/a/HWQUUjX) (this isn't chat). It can be enabled on the launcher settings.
 * Commands cannot start with a `/` in functions (you'll get told this if you check the game log)
 * Macros lines **must** start with `$` and the values are specified using `$(example)`
   * Macro commands **must** contain at least one insert macro
