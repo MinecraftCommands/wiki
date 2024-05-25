@@ -37,10 +37,11 @@ This method wont work to dissable PvP, it will only prevent the entity attacking
 ### Helmet
 Unsure if this is a bug but as show [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) constantly using `/item` on the mob will mess up the AI and will not attack the player.
 
+> [!NOTE]
+> This does **not** work in Bedrock
+
     # Java syntax
     /item replace entity @e[type=skeleton] armor.head with iron_helmet
-    # Bedrock syntax
-    replaceitem entity @e[type=skeleton] slot.armor.head	0 iron_helmet]
 
 ### Follow range
 You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, or mob heads.
