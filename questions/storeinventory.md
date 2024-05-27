@@ -451,13 +451,11 @@ We often see something like `Inventory[0]` in this article. This is an array sel
 
 It is possible to select an item from the array based on its Slot like this: `Inventory[{Slot:10b}]`. We could use this for the "correct slot" method, if it weren't for the fact that we can't use `/item replace` with arbitrary data but we need to use something that is guaranteed to be an item. So we can't skip the step of first putting it into a container / entity inventory first.
 
-## Java and Bedrock
-
 ### storing in a chest
 >  [!NOTE]
-> This method is not effective (unless you don't want to use an addon) and it is **not** multiplyer compatible (unless using 2 chests for every player)
+> This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)
 
-This method consist on using `/item` (on Java) or  `/replaceitem` (on Bedrock) to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
+This method consist on using `/item` (on Java) or to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
 
 > [!NOTE]
 > You must run this function `as` the player
@@ -492,7 +490,7 @@ This method consist on using `/item` (on Java) or  `/replaceitem` (on Bedrock) t
     item replace block ~ ~ ~ container.12 with entity @s armor.feet
     item replace block ~ ~ ~ container.13 with entity @s weapon.offhand
 
-And now we stored the entire inventory in 2 chest (or barrels). To give it back (restoring the inventory) we will need to do the same but replacing the player slots with the container's slots.
+And now we stored the entire inventory in 2 chest (or barrels). To give it back (returning the inventory) we will need to do the same but replacing the player slots with the container's slots.
 
     # function example:returning
     execute positioned <pos1> run function example:returning/container_1
