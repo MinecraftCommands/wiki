@@ -1,6 +1,12 @@
 # Generate a random number
 
-This article talks about the Java Edition of the game. In Bedrock, you can just use `scoreboard players random` to get a random number into your scoreboard and don't need to go through all this hassle.
+This article talks about the Java Edition of the game. In Bedrock, you can just use `scoreboard players random` to get a random number into your scoreboard and don't need to go through all this hassle, the command is the following one:
+
+    scoreboard players random <player: target> <objective: string> <min: int> <max: int>
+
+So for example, from 1 to 10 in a score called `some_score`
+
+    scoreboard players random @p some_score 1 10
 
 > [!NOTE]
 > **None of these numbers are truly random**. They are all only "pseudo" random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out.
