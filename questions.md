@@ -59,7 +59,8 @@ For a list of how item components are structured, see [this article on the minec
 [Do raycasting?](/wiki/questions/raycast)   
 [Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)  
-[Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)
+[Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)  
+[Setup, configure and add multiple dialogues to NPCs?](wiki/questions/npc)
 
 ## What is...
 
