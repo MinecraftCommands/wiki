@@ -26,10 +26,11 @@ This page details information on common problems you might have with a command, 
     * Make sure you don't have a mod that dissables command blocks
 * Make sure command blocks are enabled in server.propieties
 * When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
-* Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command in Java or the `/tickingarea` command in Bedrock to force a chunk to be always loaded
+* Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command in Java or the [`/tickingarea`](https://minecraft.wiki/w/Commands/tickingarea) command in Bedrock to force a chunk to be always loaded
 * Maybe you set the command to conditional accidentaly and it should be uncoditional, double check that
 * The command block must be `always active` or have redstone powering in order for it to run the command
 * Make sure to capitalize the correct leters in the command, for example `/Say` will not work but `/say` will do (in bedrock edition works different, as you can capitalize commands)
+  * Same goes for scoreboard values, if you capitalized it when creating it, it should be capitalized when you use it
 * The `commandModificationBlockLimit` gamerule (defaults to 32768) specifies the limit of blocks that can be selected with the `/fill`, `/fillbiome` and `/clone` commands
 
 ## Functions
@@ -50,6 +51,15 @@ This page details information on common problems you might have with a command, 
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
 * Make sure the tick/load function tag is specifing the correct function
+* In snapshot [24w21b](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) Some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
+  * `structures` -> `structure`
+  * `advancements` -> `advancement`
+  * `recipes` -> `recipe`
+  * `loot_tables` -> `loot_table`
+  * `predicates` -> `predicate`
+  * `item_modifiers` -> `item_modifier`
+  * `functions` -> `function`
+  * `tags/functions` -> `tags/function`
 
 ## Selectors
 
@@ -57,7 +67,7 @@ This page details information on common problems you might have with a command, 
     * [See this post for more details](https://www.reddit.com/r/MinecraftCommands/comments/5url0r/selector_bias_info/ddwdek9/)
 * Break down your selector into parts to see what is causing the issue. If you have `@e[type=zombie,tag=playing]`, try `@e[type=zombie]` and `@e[tag=playing]` separately
 * Try using `/say` to check whether its the selector or the rest of your command that's not working, make sure you have chat enabled in client options
-* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem in [multipletags](/wiki/questions/multipletags)
+* In 1.12 and below, you cannot include more than one argument of the same type in a selector. `@e[tag=x,tag=y,tag=z]` will act the same as just `@e[tag=z]`, ignoring the previous arguments. You can find a solution to this problem [cheking nbt](/wiki/questions/multipletags)
 * Dropped item entities can have scoreboard values and tags, items in an inventory cannot. An item picked up then dropped will no longer have scoreboard values and will lose all tags applied to it
 * [Selector arguments](http://minecraft.wiki/Commands#Target_selector_arguments) usually specify a maximum value, and adding `m` (or `_min` for scores) will specify a minimum value. E.G (in older versions):
      * `l=9` will select anyone level 9 and **below**, `lm=9` will select anyone with level 9 and **above**
@@ -74,7 +84,7 @@ This page details information on common problems you might have with a command, 
   * The command `/data merge entity @e[type=armor_stand] {Invisible:1b}` will **not** work
     * You can use `/execute` to select more than one entity, so `/execute as @e[type=armor_stand] run data merge entity @s {Invisible:1b}` will work and modify the data of every loaded `armor_stand`
   * You can add a `limit`, so `/data merge entity @e[type=armor_stand,limit=1,sort=nearset] {Invisible:1b}` will work and will select the nearest `armor_stand`
-    * In 1.21 you can use `@n` to select the nearest entity, it is more optimized than using `@e[limit=1,sort=nearest]`
+    * In 1.21 you can use `@n` to select the nearest entity instead of `@e[limit=1,sort=nearest]`
 * `sort` has no effect if `limit` is not specified
   * The selector `@e[sort=nearest]` is the same as `@e`, you will need to use `@e[limit=1,sort=nearest]` (or `@n` in 1.21+) in order to select the nearest entity
 
@@ -92,7 +102,7 @@ This page details information on common problems you might have with a command, 
 * A dropped item entity stores its item data [in an `Item` compound tag](http://minecraft.wiki/Chunk_format#Items_and_XPOrbs), not directly in the entity's root compound tag
 * If you need to include quotes in a string, you'll need to "escape" them by putting \ in front of them. E.G: `{Command:"/say My name is \"\"!"}`
 * If you need to escape a second level, you need to escape both the quotes and the previous backslash E.G: `{Command:"/setblock ~ ~ ~ wall_sign 0 replace {Text1:\"{\\\"text\\\":\\\"hello!\\\"}\"}"}`
-* [Generators are handy](https://mcstacker.com) you can find some [in the resources page](/wiki/resources) or [Bedrock resources page](/wiki/bcresources)
+* [Generators are handy](https://mcstacker.com) you can find some in the [Java resources page](/wiki/resources) or in the [Bedrock resources page](/wiki/bcresources)
 * Text editors like [Notepad++](http://i.imgur.com/7XnrEJP.png) can highlight pairs of brackets, helping you put tags in the right place and keep brackets balanced
 * As of 1.12, strings containing characters that aren't `a`-`z`, `A`-`Z`, `0`-`9`, `.`, `_`, `+`, or `-` now need to be quoted. 
     * For example, `Command:say test` contains a space, so would need to be `Command:"say test"`
@@ -114,7 +124,7 @@ This page details information on common problems you might have with a command, 
 * Make sure all file names are lowercase
 * The majority of textures, if not animated, need to be perfectly square (if they are animated, the height must be a multiple of the width)
 * Check that all coordinates in models are between `-16` and `32`
-* Check [what errors you are receiving in the game log](http://i.imgur.com/q3vhNGR.png)
+* Check [what errors you are receiving in the game log](https://imgur.com/a/HWQUUjX)
 * Don't forget to press `F3+T` to reload the resource pack after making changes
 * Check if you have the resource pack enabled
 * Macs add invisible layers of folders to zip files. These will stop zipped resources from working
