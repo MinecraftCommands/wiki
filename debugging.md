@@ -51,7 +51,7 @@ This page details information on common problems you might have with a command, 
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
 * Make sure the tick/load function tag is specifing the correct function
-* In snapshot [24w21b](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) Some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
+* In snapshot [24w21b](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
   * `structures` -> `structure`
   * `advancements` -> `advancement`
   * `recipes` -> `recipe`
