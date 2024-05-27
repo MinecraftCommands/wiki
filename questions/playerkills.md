@@ -6,7 +6,27 @@ _Related: [Detect Player Deaths](/wiki/questions/playerdeaths)_
 
 In Java this is easy, as there is a whole lot of [scoreboard objectives criteria](https://minecraft.wiki/Scoreboard#Criteria) for every entity you can kill in the game, using the format `minecraft.killed:minecraft.<entity>`, where `<entity>` is a valid type of entity.
 
-Alternatively you can use a [custom advancement using the `player_killed_entity` advancement trigger](https://minecraft.wiki/wiki/Advancement/JSON_format#minecraft:player_killed_entity) if you're using a datapack.
+Alternatively you can use a [custom advancement using the `player_killed_entity` advancement trigger](https://minecraft.wiki/wiki/Advancement/JSON_format#minecraft:player_killed_entity) if you're using a datapack that looks like this:
+
+```
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:pig"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "example:kill_entity"
+  }
+}
+
+```
+When the player kills a pig, they will run the funcion `example:kill_entity` as it is set as a reward.
 
 ## Bedrock
 
