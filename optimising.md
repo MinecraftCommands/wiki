@@ -152,15 +152,13 @@ Be aware that some selector arguments, such as large values of `dx`/`dy`/`dz` (w
 
 Consider also whether you actually need a selector. If you're selecting the same one entity that always exists, you could get its UUID and target it with that instead.
 
-In 1.21+ you can use `@n` instead of `@e[limit=1,sort=nearest]` as it is more optimized.
-
 ## Optimize entities
 
 Using armor stands as markers? Strongly consider switching to area effect clouds or, even better, the marker entity instead. [Here's a good video showing just how much difference this makes.](https://www.youtube.com/watch?v=RKXzWGQfIcg) You can summon an area effect cloud that acts as a marker with:
 
     summon area_effect_cloud ~ ~ ~ {Duration:2147483647}
 
-These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item or using `Motion`.
+These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item (In pre-1.19.4, as you can use item displays in newer versions) or using `Motion`.
 
 [Marker entities](https://minecraft.wiki/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client (unless using [a mod](https://modrinth.com/mod/visiblebarriers), so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
 Additionally they can store any kind of NBT data in their `data` NBT component (though storing abritrary data is probably better stored in the `storage` anyways).
@@ -195,6 +193,6 @@ This means that instead of evaluating `@e[tag=blah]` many times, it is only eval
 
 ## More in-depth optimization
 
-/u/Wooden_chest created an in-depth analysis of a lot of small things that can improve your performance, like what order to put your execute subcommands into or that depending on the circumstance it might actually be faster to copy NBT you want to test to the storage first before testing it instead of testing it on the entity/player directly.
+[/u/Wooden_chest](https://www.reddit.com/user/Wooden_chest/) created an in-depth analysis of a lot of small things that can improve your performance, like what order to put your execute subcommands into or that depending on the circumstance it might actually be faster to copy NBT you want to test to the storage first before testing it instead of testing it on the entity/player directly.
 
 Read their full post here: https://www.reddit.com/r/MinecraftCommands/comments/w4vjs3/whenever_i_create_datapacks_i_sometimes_do/
