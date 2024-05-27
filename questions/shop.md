@@ -7,6 +7,7 @@ This method consists of buying items with other items, in this example, you will
 > [!NOTE]
 > You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before.
 
+
 ### Java
 There are 2 methods, one for pre-1.20.5 and the other for 1.20.5 and above, this is due to the new `execute if items` subcommand.
 > [!NOTE]
@@ -104,6 +105,26 @@ If you don't want to use an NPC you canuse this method, is very similar to Java 
     tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
     clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
     tag @a remove buyer.netherite
+
+### Add more than one items
+In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has buth items.
+Then when we clear the items we are going to clear them for the player with that tag.
+
+In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you are in Java you will need one scoreboard for each item, assuming you already store the items result in it.
+
+    # Example
+    tag @p add buyer.example
+    execute as @a[tag=buyer.example] run tag @s[scores={diamonds=5..,emeralds=2..}] add buy.example
+    # run any tellraw to the player with the tag buy.example
+    clear @a[tag=buy.example] diamond 5
+    clear @a[tag=buy.example] emerald 2
+    give @a[tag=buy.example] gold_block 1
+And then we remove all the previus used tags:
+
+    tag @a remove buy.example
+    tag @a remove buy.example
+
+In bedrock use the `hasitem` argument instead of `scores`
 
 ## Score shop
 This method uses a scoreboard as a currency (such as `coins` for this example) and you can buy items with that currency. In this example, you can buy a `diamond` with 10 `coins`.
