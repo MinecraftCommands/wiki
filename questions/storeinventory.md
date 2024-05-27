@@ -455,7 +455,7 @@ It is possible to select an item from the array based on its Slot like this: `In
 
 ### storing in a chest
 >  [!NOTE]
-> This method is not effective (unless you don't want to use an addon) and it is **not** multiplyer compatible
+> This method is not effective (unless you don't want to use an addon) and it is **not** multiplyer compatible (unless using 2 chests for every player)
 
 This method consist on using `/item` (on Java) or  `/replaceitem` (on Bedrock) to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
 
