@@ -1,7 +1,7 @@
+# Raycast
+
 > [!NOTE]
 > If you're trying to check whether an entity / player is looking at a specific entity / position, you might be able to use a more streamlined method [described here](/wiki/questions/lookat). 
-
-# Raycast
 
 ## What is a raycast?
 
