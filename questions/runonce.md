@@ -16,9 +16,18 @@ For this method our first command checks two things: Your condition for running 
     execute as @a[scores={matched=0},x=73,y=10,z=3,distance=..1] run say I just entered the area!
     execute as @a store success score @s matched if entity @s[x=73,y=10,z=3,distance=..1]
 
-**Note:** The order in which the commands are executed is important here. In the first command you check your condition and execute the command, and the second command store the success of executing your condition.
+> [!NOTE]
+> The order in which the commands are executed is important here. In the first command you check your condition and execute the command, and the second command store the success of executing your condition.
 
-Besides the player, this could be some kind of global event, for example, it started to rain (1.20.5+):
+In order for it to work in Bedrock Edition too, the commands should be:
+
+    scoreboard players add @a matched 0
+    # if possible the command above run only on first join
+    execute as @a[scores={matched=0},x=73,y=10,z=3,distance=..1] run say I just entered the area!
+    scoreboard players set @a[scores={matched=0},x=73,y=10,z=3,distance=..1] matched 1
+    execute as @a unless entity @s[scores={matched=1},x=73,y=10,z=3,distance=..1] run scoreboard players set @s matched 0
+    
+Besides the player, this could be some kind of global event, for example, it started to rain (Java 1.20.5+):
 
     # Command blocks / tick function
     execute if score #raining matched matches 0 if predicate {condition:"weather_check",raining:true} run say It's starting to rain!
