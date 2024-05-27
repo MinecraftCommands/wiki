@@ -107,7 +107,7 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
     advancement revoke @s only example:spawn/enter
     tellraw @s "You leave spawn!"
 
-_Note: In the predicate `example:at_spawn` omits the Y position check, so a player at any height in the specified area will match the conditions of the predicate._
+> [!NOTE] In the predicate `example:at_spawn` omits the Y position check, so a player at any height in the specified area will match the conditions of the predicate.
 
 Such a check may seem very large, but this method allows you not to check the same condition 2 times per tick, but only 1 time per second (because the `minecraft:location` advancement trigger only runs once per second), which can be important with a large online number of players.
 
