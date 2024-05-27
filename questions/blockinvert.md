@@ -5,6 +5,9 @@
 
 (This is for command blocks only. For functions, [see here](/wiki/questions/functionconditions))
 
+> [!NOTE]
+> You could use a redstone torch and a comparator, but it is **not*** recomended as it causes more lag than the other methods described below.
+
 When a command block runs, its `SuccessCount` tag is updated. This is the value used by comparators to decide how strong a signal to output from that command block. If the command block does not succeed, its `SuccessCount` will be `0`.
 
 We can use another command block to check whether the first block has `SuccessCount:0` after running, so that this second block will be successful when the first block fails, then run our conditionals off of this second block. The commands would look like:
