@@ -499,24 +499,24 @@ And now we stored the entire inventory in 2 chest (or barrels). To give it back 
 
     # function example:returning/container_1
     # First we store the hotbar
-    item replace entity @s hotbar.0 with block ~ ~ ~ container.0
-    item replace entity @s hotbar.1 with block ~ ~ ~ container.1
+    item replace entity @s container.0 with block ~ ~ ~ container.0
+    item replace entity @s container.1 with block ~ ~ ~ container.1
     [...]
-    item replace entity @s hotbar.8 with block ~ ~ ~ container.8
+    item replace entity @s container.8 with block ~ ~ ~ container.8
     # Now we store the inventory
-    item replace entity @s inventory.0 with block ~ ~ ~ container.9
+    item replace entity @s container.9 with block ~ ~ ~ container.9
     [...]
-    item replace entity @s inventory.17 with block ~ ~ ~ container.26
+    item replace entity @s container.26 with block ~ ~ ~ container.26
     # Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
     # We will need to run the second function in the position of the second chest
     execute positioned <pos2> run function example:returning/container_2
 
     # function example:returning/container_2
-    item replace entity @s inventory.19 with block ~ ~ ~ container.0
-    item replace entity @s inventory.20 with block ~ ~ ~ container.1
-    item replace entity @s inventory.21 with block ~ ~ ~ container.2
+    item replace entity @s container.27 with block ~ ~ ~ container.0
+    item replace entity @s container.28 with block ~ ~ ~ container.1
+    item replace entity @s container.29 with block ~ ~ ~ container.2
     [...]
-    item replace entity @s inventory.26 with block ~ ~ ~ container.8
+    item replace entity @s container.35 with block ~ ~ ~ container.8
     # now we will store the armor and offhand
     item replace entity @s armor.head with block ~ ~ ~ container.9
     item replace entity @s armor.chest with block ~ ~ ~ container.10
