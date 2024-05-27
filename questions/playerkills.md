@@ -24,8 +24,8 @@ Alternatively you can use a [custom advancement using the `player_killed_entity`
     "function": "example:kill_entity"
   }
 }
-
 ```
+
 When the player kills a pig, they will run the funcion `example:kill_entity` as it is set as a reward.
 
 ## Bedrock
