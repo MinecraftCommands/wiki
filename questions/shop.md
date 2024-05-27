@@ -93,8 +93,10 @@ This commands must be run in this order in an NPC
     tellraw @initiator[tag=!buy.netherite] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
     tag @initiator[tag=buy.netherite] remove buy.netherite
 
+_Related: [How to setup a NPC](wiki/questions/npc)_
+
 #### Without an NPC
-If you don't want to use an NPC you canuse this method, is very similar to Java but it uses the `hasitem` selector instead.
+If you don't want to use an NPC you canuse this method, is very similar to Java but it uses the `hasitem` argument instead.
 
     tag @p add buyer.netherite
     give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
