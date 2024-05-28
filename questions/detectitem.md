@@ -262,7 +262,23 @@ A player with a diamond in the first 10 slots of their enderchest
 
     @a[hasitem={item=diamond,location=slot.enderchest,slot=0..9}]
 
+
+But we can use a `data` of 5, for example, as show in [give a tag to identify the item](wiki/questions/customitemtag)
+
+for example with the command:
+
+```
+give @s stick 1 5
+```
+That can be detected with the `hasitem` agrument too, like this:
+```
+effect @a[hasitem={item=stick,data=5}] speed
+```
+
 #### before 1.18.20
+
+> [!NOTE]
+> This information is outaded and it is not useful for the actual version of the game.
 
 Using the `clear` command with a max count of 0 will return a successful result if the item is in the players inventory, without actually removing the item, which can be picked up by either a conditional commandblock or a comparator. **You can only do this for 1 player at a time though, as if you use `@a` you have no way of knowing which one of the players has the item in their inventory.**
 
