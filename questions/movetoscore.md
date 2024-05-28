@@ -1,7 +1,7 @@
 ## Summon an entity at the position set in a score
 
 > [!NOTE]
-> This article is about Java Edition, except for binary tp, foudn at the end of the article.
+> This article is about Java Edition, except for binary tp, found at the end of the article.
 
 Since version 1.20.2 you can summon the entity directly at the position of the score using a [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) in the datapack. If you are using an earlier version, or do not use a datapack, then you cannot summon the entity directly at the position of the score, instead you have to summon the entity and then teleport it to your desired position.
 
