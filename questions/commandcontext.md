@@ -22,8 +22,8 @@ When a command is run, it will get some default values depending on how it is ru
 - A command **run from a function** can have various values, as functions themselves keep context. See below.
    - A scheduled command do **not** keep context, it will be run in world spawn.
    - Tick and load function are run at world spawn.
-- A command run from the server console is executed in world spawn.
-- A command run from an [NPC](wiki/questions/npc)<sup>\[Bedrock Edition Only\] </sup> is run `as` and `at` the `NPC`
+- A command run from the **server console** is executed in world spawn.
+- A command run from an [**NPC**](wiki/questions/npc) <sup>\[Bedrock Edition Only\] </sup> is run `as` and `at` the `NPC`
 
 ## Context in Functions
 
