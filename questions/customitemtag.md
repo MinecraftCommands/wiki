@@ -171,7 +171,7 @@ This stick will have a data of 5, that we can detect it with the `hasitem` argum
 
     /effect @a[hasitem={item=stick,data=5}] speed
 
-
+### Name with color codes
 As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, wich is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
 
     kill @e[type=item, name="§r§fApple"]
