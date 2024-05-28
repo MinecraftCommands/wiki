@@ -6,7 +6,7 @@
 
 For example, if you have a function or chain of command blocks that control an arena, you probably only need those running when someone is actually in the arena.
 
-Consider a "branching" structure of checks. You could start with just `/execute if entity @a`. If and only if that succeeds you'd run checks to do with players, such as whether a player is holding *any* special item. If a player is holding any special item, run checks to see what kind of special item it is. Only then off of these last checks would you run the commands that make that item work.
+Consider a "branching" structure of checks. You could start with just `/execute if entity @a` (Or `/testfor @a` in pre-1.13). If and only if that succeeds you'd run checks to do with players, such as whether a player is holding *any* special item. If a player is holding any special item, run checks to see what kind of special item it is. Only then off of these last checks would you run the commands that make that item work.
 
 **Don't** achieve this by repeatedly using `/execute` as a condition (e.g: `/execute as @a[tag=holdItem] ...`) while still having all the blocks/commands running, as this will still need to repeatedly evaluate the selector for each command. Instead, you want the commands to not be running at all if the previous check failed.
 
@@ -169,7 +169,7 @@ Using armor stands as markers? Strongly consider switching to area effect clouds
 
 These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item (In pre-1.19.4, as you can use item displays in newer versions) or using `Motion`.
 
-[Marker entities](https://minecraft.wiki/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client (unless using [a mod](https://modrinth.com/mod/visiblebarriers), so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
+[Marker entities](https://minecraft.wiki/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client (unless using [a mod](https://modrinth.com/mod/visiblebarriers), that needs to be on the server as well), so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
 Additionally they can store any kind of NBT data in their `data` NBT component (though storing abritrary data is probably better stored in the `storage` anyways).
 
 Remember from the previous section that selectors work by getting a list of all loaded entities, then narrowing that down. This means that extra entities increase the workload of every selector in your commands. In some cases, you could be able to use static coordinates rather than executing off of a marker entity. 
