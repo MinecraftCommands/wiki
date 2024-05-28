@@ -6,8 +6,9 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 
 ## Why is my give command broken (java)?
 In 1.20.5 a new system for storing item data has been introduced to Java Edition in [Snapshot 24w09a](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w09a).
-This means that anything relating to items (such as /give, /item or loot tables) have a different format now.
-The gist of it is this: Unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components' that go in [] and are comma separated. For example: /give @p diamond_pickaxe[damage=10,custom_model_data=7]
+Anything relating to items (such as /give, /item or loot tables) have a different format now.
+The gist of it is this: Unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components' that go in [] and are comma separated.
+For example: /give @p diamond_pickaxe[damage=10,custom_model_data=7]
 For a list of how item components are structured, see [this article on the minecraft.wiki](https://minecraft.wiki/w/Item_format/1.20.5).
 
 ## How do I...
