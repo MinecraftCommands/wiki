@@ -41,6 +41,8 @@ Or we can use [ranges](wiki/questions/ranges) to detect more of one number.
     execute if score #command random matches 4..5 run say 4 or 5
 
 ## without /random command (Pre-1.20.2)
+> [!NOTE]
+> This information is outdated and should **not** be used in the current version of the game.
 
 There are many ways to get a random number in minecraft. the first two are arguably the best as they have the least limitations and require the least work to set up.
 
