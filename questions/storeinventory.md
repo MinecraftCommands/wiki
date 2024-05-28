@@ -62,9 +62,6 @@ This has the **disadvantage** that structure names cannot be dynamic, so you hav
 
 Please note that while an add-on isn't necessarily required for this solution, using functions is still very much recommended.
 
-## Storing in a container
-If you don't want to use an addon and you wan't to keep the slot when storing use `/replaceitem` in a chest or barrel, see [the solution at the end of this article](#Java-and-Bedrock)
-
 -----------
 
 ## Java
