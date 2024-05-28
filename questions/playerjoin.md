@@ -1,9 +1,9 @@
 # Detect a player joining
 
-For this, we'll have to differentiate between players joining for the first time and players rejoining the world for the Nth time, as the approaches are slightly different.
+For this, we'll have to differentiate between players joining for the first time and players _re_joining the world for the Nth time, as the approaches are slightly different.
 
 ## First time
-A player that joins a world for the first time is a blank slate, they have no scores no tags no nothing on them. We can use this to detect the lack of an initialisation tag on the player, apply all our actions to them, then give them the tag.
+A player that joins a world for the first time is a blank slate, they have no scores, no tags, no advancements, no nothing on them. We can use this to detect the lack of an initialisation tag on the player, apply all our actions to them, then give them the tag.
 
 ### Tags
 
