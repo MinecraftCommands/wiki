@@ -157,7 +157,22 @@ For example, the crafting recipe below (1.20.5+), which will give an item with t
 ```
 ## Bedrock
 
-In bedrock we will need use a workarround, because we can't use custom tags. As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, wich is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
+In bedrock we will need use a workarround, because we can't use custom tags.
+
+### Item data
+To get a item with a specified data, a number between `2,147,483,647` and `-2,147,483,648`.
+
+    give <target> <item> <amount> <data>
+So for example:
+
+    give @s stick 1 5
+
+This stick will have a data of 5, that we can detect it with the `hasitem` argument like this:
+
+    /effect @a[hasitem={item=stick,data=5}] speed
+
+
+As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, wich is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
 
     kill @e[type=item, name="§r§fApple"]
 
