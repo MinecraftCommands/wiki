@@ -90,6 +90,15 @@ These cause no block updates and require no entities, but will require an object
 ### Falling blocks or entities
 Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.
 
+In this example we use an armor stand with the tag `loop`, we will place a pressure plate with an impulse command block below with the following command:
+```
+execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
+```
+To add more commands, just add a chain one to the previus impulse.
+
+> [!IMPORTANT]
+> It is not recomended to use this method
+
 ### Schedule
 **Functions** can be even easier to run on slower speeds, as the `schedule` command allows you to run functions after a certain amount of time has passed. You can use this for functions to schedule themselves to essentially create a slower clock.
 
