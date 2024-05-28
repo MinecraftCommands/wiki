@@ -19,6 +19,18 @@ Using a dummy scoreboard objective named `result` and an entity with the `counte
     execute as @a[team=red] run scoreboard players add @e[tag=counter] result 1
     execute as @e[tag=counter,scores={result=2}] run say there are exactly 2 people on the red team
 
+You can also use [ranges](wiki/questions/ranges)
+
+    execute as @e[tag=counter,scores={result=2..}] run say there are 2 or more people on the red team
+    execute as @e[tag=counter,scores={result=..2}] run say there are 2 or less people on the red team
+    execute as @e[tag=counter,scores={result=2..9}] run say there are between 2 and 9 people on the red team
+
+## Bedrock
+> [!NOTE]
+> It is not recomended to use this method
+
+You can use a comparator with the `/testfor` command, the output, in signal strengh, is the same as the number of online players.
+
 ## Java 
 
 ### Method 1: Storing the found entities using `execute store`
@@ -32,6 +44,11 @@ Using a dummy scoreboard objective name `result` and the [fake player](/wiki/que
 The fake player can be replaced by an entity, which then changes the second command to  
 
     execute if entity @e[<your entity>,scores={result=2}] run say there are exactly 2 players on team red.
+
+It also works with [ranges](wiki/questions/ranges)
+
+    execute if score #count result matches 2.. run say there are 2 or more players on team red.
+    execute if score #count result matches ..2 run say there are 2 or less players on team red.
 
 ### Method 2: Checking the command block's `SuccessCount`
 
