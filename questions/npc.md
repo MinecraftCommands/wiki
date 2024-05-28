@@ -2,7 +2,7 @@
 This article will explain how to create NPCs and add commands to it.
 
 > [!NOTE]
-> This is for the entity in Bedrock edition called `NPC`
+> This is for the entity in Bedrock edition called [`NPC`](https://minecraft.wiki/w/NPC)
 
 ## Basics of an NPC
 
