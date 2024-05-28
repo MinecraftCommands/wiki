@@ -6,7 +6,7 @@
 (This is for command blocks only. For functions, [see here](/wiki/questions/functionconditions))
 
 > [!NOTE]
-> You could use a redstone torch and a comparator, but it is **not*** recomended as it causes more lag than the other methods described below.
+> You could use a redstone torch and a comparator, but it is **not** recomended as it causes more lag than the other methods described below.
 
 When a command block runs, its `SuccessCount` tag is updated. This is the value used by comparators to decide how strong a signal to output from that command block. If the command block does not succeed, its `SuccessCount` will be `0`.
 
