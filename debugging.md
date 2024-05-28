@@ -8,7 +8,8 @@ This page details information on common problems you might have with a command, 
     * Put `/say test` in the command block to check whether it is running when you want it to run. Make sure you have chat activated in the client options
     * Or open and close the command block. If the time on the [previous output message](http://i.imgur.com/k2rmrXS.png) is not updating, the command block is not running
     * If there is no previous output, the command may have never ran, or you have its output turned off. Turn the command block's output [on](http://i.imgur.com/s4DYa9L.png) when you are debugging
-    * You can fix this by turning the command block to *Needs Redstone*, pressing *Done*, turning it back to *Always Active*, then pressing *Done* again 
+    * You can fix this by turning the command block to *Needs Redstone*, pressing *Done*, turning it back to *Always Active*, then pressing *Done* again
+    * You can turn on `commandBlockOutput`, to see if it is running
 * Check for double &nbsp;spaces between arguments, especially after copy pasting a part of the command. These are ignored in chat, but not elsewhere
 * Check for a space at the end of the command, command should **not** end with a space
 * Don't miss out arguments. Common ones to forget are:
@@ -23,7 +24,7 @@ This page details information on common problems you might have with a command, 
   * `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
   * `/execute run command` instead of `/command`, this is better because it works in vanilla servers too
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
-    * Make sure you don't have a mod that dissables command blocks
+    * Make sure you don't have a mod that dissables command blocks or functions
 * Make sure command blocks are enabled in server.propieties
 * When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
 * Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command in Java or the [`/tickingarea`](https://minecraft.wiki/w/Commands/tickingarea) command in Bedrock to force a chunk to be always loaded
@@ -32,6 +33,13 @@ This page details information on common problems you might have with a command, 
 * Make sure to capitalize the correct leters in the command, for example `/Say` will not work but `/say` will do (in bedrock edition works different, as you can capitalize commands)
   * Same goes for scoreboard values, if you capitalized it when creating it, it should be capitalized when you use it
 * The `commandModificationBlockLimit` gamerule (defaults to 32768) specifies the limit of blocks that can be selected with the `/fill`, `/fillbiome` and `/clone` commands
+* Make sure you are **not** using per-1.13 execute in newer versions
+  * Or viceversa, using 1.13+ execute in pre-1.13
+  * The same goes for bedrock new execute
+* Command blocks can only run commands of level permission of 1 or 2
+  * The can **not** ban, kick or deop, for example
+* Make sure you are **not** using item components in pre-1.20.5 or item `nbt` in 1.20.5+
+* execute does not allow the use of commands for plugins, so the command `/execute as @a run tpa ...` will **not** work
 
 ## Functions
 
@@ -50,8 +58,14 @@ This page details information on common problems you might have with a command, 
   * When edition world generation you need to leave and rejoin the world in order to save changes (or restart the server).
 * Check that you're saving to the place you think you're saving to (right world, right namespace), and running the function you intend to
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
+  * To check if a function did **not** end (so it has been cut off by this gamerule) you can set a scoreboard value of a [fakeplayer](wiki/questions/fakeplayer) to 1, run all commands and set it to 0 after that (that command should be the last one in the whole tick). In the next tick you can check if the value is 1 or 0, if its 1, the function has been cutted.
 * Make sure the tick/load function tag is specifing the correct function
-* In snapshot [24w21b](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
+* Functions can run any command that requires a higher level permission than 2.
+  * You can override this if you set `function-level-permission` in `server.propieties` to a higher number
+* If a function has a syntax error, it will **not** show up in the autocomplete and it will flail, if you try to run it
+  * All commands must have a correct syntax in order to run the function
+  * You can start the function with a `/say` command, so you will know if the function has been executed
+* In snapshot [24w21b](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) (for 1.21) some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
   * `structures` -> `structure`
   * `advancements` -> `advancement`
   * `recipes` -> `recipe`
@@ -150,3 +164,4 @@ This page details information on common problems you might have with a command, 
   * If you reset the scoreboard the player will no longer has the objective enabled
   * When you use the `/trigger` command that scoreboard no loner is enabled
 * Scoreboard values are linked to the username **not** to the player `UUID`
+* When you pick up an item and drop it again, it will lose all the scoreboard values
