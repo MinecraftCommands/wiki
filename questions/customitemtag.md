@@ -1,5 +1,8 @@
 # Give an item a custom tag to identify it by
 
+* [Java](#Java)
+* [Bedrock](#Bedrock)
+
 ## Java
 
 For example, you want to give/summon/item an item, then later easily check if a player is wearing it on their head. 
