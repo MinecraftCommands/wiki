@@ -33,7 +33,9 @@ If for some reason you want to keep commandBlockOutput on and don't want your ou
 
 ## Anchor entities
 
-If you need to check if the player is in one of several spherical areas, for example to switch gamemode to adventure, then you can use some kind of entity as an anchor to check if the player is nearby. For versions before 1.17 you can use armor_stand or area_effect_cloud, but since version 1.17 it is strongly recommended to use an [marker entity](https://minecraft.wiki/w/Marker) to mark a place.
+If you need to check if the player is in one of several spherical areas, for example to switch gamemode to adventure, then you can use some kind of entity as an anchor to check if the player is nearby.
+
+For versions before 1.17 you can use armor_stand or area_effect_cloud, but since version 1.17 it is strongly recommended to use an [marker entity](https://minecraft.wiki/w/Marker) to mark a place.
 
     # Summon marker
     summon marker <pos> {Tags:["adventure_area"]}
@@ -52,6 +54,8 @@ To make placing markers more convenient, you can give a spawn_egg containing a m
     # 1.20.5+
     give @s minecraft:bat_spawn_egg[entity_data={id:"minecraft:marker",Tags:["adventure_area"]},item_name='"Adventure Area Marker"']
 
+Because in bedrock edition we can't give a custom spawn egg (some exceptions apply, see [give custom item in Bedrock](wiki/questions/giveitembedrock)), you will need to manualy tag the entity with the `/tag` command and use `armor_stand` instead of `marker`.
+    
 ## Block layer
 
 If you need to execute a command when a player enters a very randomly shaped area, then you can place under the map, for example, at a height of Y=-63, a layer of some block that you will check under the player.
