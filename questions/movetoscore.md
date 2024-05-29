@@ -1,7 +1,7 @@
 ## Summon an entity at the position set in a score
 
 > [!NOTE]
-> This article is about Java Edition, except for binary tp, found at the end of the article.
+> This article is about Java Edition, except for binary teleport, found at the end of the article.
 
 > [!IMPORTANT]
 > If the coordinate is inside a block and below it there isn't a solid block, the entity will clip trought and fall, this is common if you are storing the scoreboard value by storing the `Pos` value, when the player is not in a full block (for example a slab)
