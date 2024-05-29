@@ -107,7 +107,7 @@ Since version 1.20.5, the `ExitPortal` Compound tag has been replaced by the [In
 
 ### 3: Use an entity
 
-Summon an entity, use the above method to teleport the entity to the position and then teleport the player to the entity. Here it is also important that the entity is @s from the moment you move it, in case it goes into unloaded chunks.  
+Summon an entity, use the above method to teleport the entity to the position and then teleport the player to the entity. Here it is also important that the entity is `@s` from the moment you move it, in case it goes into unloaded chunks.  
 See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about this [here](https://www.reddit.com/r/MinecraftCommands/comments/fd1lds/new_method_to_tp_to_scoreboard_values).
 
 ### 4: Binary Teleportation
