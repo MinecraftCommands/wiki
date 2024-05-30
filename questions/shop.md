@@ -4,6 +4,8 @@ This is a quick guide of how to make a shop where you can buy items with other i
 ## Item shop
 This method consists of buying items with other items, in this example, you will buy 1 netherite ingot with 5 diamonds.
 
+_Related:_ [Count how much of X item the player has](wiki/questions/amountitems)
+
 > [!NOTE]
 > You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before.
 
