@@ -48,7 +48,6 @@ Or if you prefer a function:
     give @s netherite_ingot 1
     clear @s diamond 5
     tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
-    ## you can add any command you want here
 
 > [!NOTE]
 > The function `example:buy/netherite` must be run `as` the player
@@ -72,11 +71,12 @@ Or if you prefer a function:
     # function example:buy/netherite
     execute store result score @s diamonds if items entity @s container.* diamond
     execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
-    execute unless entity @s[scores={diamonds=5..}] run tellraw @s ["",{"text":"You don't have 5 diamonds","color":"dark_red"}]
+    execute unless entity @s[scores={diamonds=5..}] run tellraw @s {"text":"You don't have 5 diamonds","color":"dark_red"}]
     
     # function example:buy/netherite/success
     give @s netherite_ingot 1
     clear @s diamond 5
+    tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
 
 > [!NOTE]
 > The function `example:buy/netherite` must be run `as` the player
