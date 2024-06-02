@@ -20,7 +20,7 @@ The NPC will be staring at the nearest player that is not in spectator, if it’
 
 ## Dialogues and commands
 
-When you interact with the NPC in creative, you will find a button called “Edit Dialog”. When you click it, you will be able to edit the dialogue. The maximum of characters you can have is 307.
+When you interact with the NPC in creative, you will find a button called `Edit Dialog`. When you click it, you will be able to edit the dialogue. The maximum of characters you can have is 307.
 You can **not** use target selectors in the dialog, for example, if the dialog is `@p`, the dialog will be `@p`, not the nearest player.
 
 At the bottom of the edit screen, there is a button called “Advanced Settings”, when you press it you will find a screen similar to the command block one, there you will write the command.
