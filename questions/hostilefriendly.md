@@ -31,7 +31,7 @@ And if we want the player to be unable to attack the zombie
 > [!NOTE]
 > You can still attack the player/entity if you have the sharpness enchantment, that's why we use resistance.
 
-## Only dissable hostile
+## Only disable hostile
 This method wont work to dissable PvP, it will only prevent the entity attacking the player.
 
 ### Helmet
@@ -46,7 +46,7 @@ Unsure if this is a bug but as show [in this Reddit post](https://new.reddit.com
 ### Follow range
 You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, or mob heads.
 
-## Only dissable PvP
+## Only disable PvP
 This method will not make hostile mobs passive but it will prevent players from attacking other entities or players.
 
 ### Interactions (Java only)
