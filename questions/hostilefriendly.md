@@ -29,7 +29,7 @@ And if we want the player unable to atack the zombie
     /effect give @a weakness 60 127
 
 > [!NOTE]
-> You can still attack the player/entity if you have the sharpness enchantment, that’s what we use resistance too.
+> You can still attack the player/entity if you have the sharpness enchantment, that's why we use resistance.
 
 ## Only dissable hostile
 This method wont work to dissable PvP, it will only prevent the entity attacking the player.
