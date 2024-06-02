@@ -11,7 +11,8 @@ For spawning an NPC, you will need to use the `/summmon` or `/give` command:
     /summon npc
     /give @s spawn_egg 1 51
 
-For removing the NPC just left click it while you are in creative, an NPC is invulnerable if you try to kill it with other methods (unless when falling into the void), but it can be moved with water or pistons.
+For removing the NPC just left click it while you are in creative, or use the `/kill` command.
+A NPC is invulnerable if you try to kill it with other methods (unless when falling into the void), but it can be moved with water, lava, breeze's wind charges, explosions or pistons.
 
 To edit an NPC right click it in creative, you will open a GUI that allows you to edit the display name and the skin.
 
