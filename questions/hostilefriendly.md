@@ -60,7 +60,7 @@ Important things to keep in mind when using this method:
 * Arrows and other projectiles will be able to attack the entity
 
 ### Distance attribute (Java only)
-In java edition there are 2 attributes related to the range that players can interacti with the world. we can reduce this range and set it to `-4.5` to make them unable to interact with other entities.
+In java edition there are 2 attributes related to the range that players can interact with the world. we can reduce this range and set it to `-4.5` to make them unable to interact with other entities.
 
 > [!NOTE]
 > This will affect right click too so they won't be able to trade with villagers for example.
