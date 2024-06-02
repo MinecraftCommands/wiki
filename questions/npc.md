@@ -23,7 +23,7 @@ When you interact with the NPC in creative, you will find a button called “Edi
 You can **not** use target selectors in the dialog, for example, if the dialog is `@p`, the dialog will be `@p`, not the nearest player.
 
 At the bottom of the edit screen, there is a button called “Advanced Settings”, when you press it you will find a screen similar to the command block one, there you will write the command.
-You can use a target selector variable to target the player that is “talking” to the NPC, it is “@initiator”, for example the command `/kill @initiator` will kill the player that is talking to the NPC.
+You can use a target selector variable to target the player that is “talking” to the NPC, it is `@initiator`, for example the command `/kill @initiator` will kill the player that is talking to the NPC.
 
 For that command there are 3 options: “On Enter” to run the command when the player right clicks it, “On Exit” to run the command when the player leaves the NPC screen and “Button Mode”. 
 This option will show a button in the dialog screen when the player interacts with it. You can change the button’s text by typing it in the text box below the options.
