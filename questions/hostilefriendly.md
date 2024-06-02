@@ -1,7 +1,7 @@
 # How to make hostile mobs friendly? / disable PvP?
 
-## Dissable both hostile and PvP
-This method can be used to make both, dissable PvP and make hostile mobs passive.
+## Disable both hostile and PvP
+This method can be used to make both, disable PvP and make hostile mobs passive.
 
 ### Teams (Java only)
 In java, we can create teams, and we can configure friendly fire to make people of that team unable to attack each other. This also works for mobs. In this example we are going to make zombies passive to players.
