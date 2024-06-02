@@ -65,7 +65,7 @@ We can combine these two if you want the same thing to happen in both cases. The
     scoreboard players set @a[scores={leave=1..}] leave 0
 
 But it can be simplified to only 2 commands (and one for creating the scoreboard).
-First we detect if the player has no set score (so they are a new player) and we store the success of the tellraw, as that always success the value is set to 1 (before there was no value).
+First we detect if the player has no set score (so they are a new player) and we store the success of the tellraw. The score is now set to 1 (from no score at all), because the tellraw always succeeds.
 Then if the value is not 1 (so it is 2, so they leaved the game) we will store the succes of another tellraw command in the scoreboard, because it is the success it will set it to 1.
 
     # In chat
