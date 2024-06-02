@@ -18,7 +18,7 @@ In java, we can create teams, and we can configure friendly fire to make people 
 If you can’t use the `/team` command (because you are using it for another thing or you are in bedrock) you can use effects. If we give resistance level 5 or higher the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob cause knockback.
 
 > [!NOTE]
-> The entity will be invulnerable even to things as fall damage or entity craming, attacks that aren’t caused by the player
+> The entity will be invulnerable even to other damage sources, such as fall damage, entity cramming or attacks that aren’t caused by the player.
 
 In this example we are going to make all zombies unable to attack the player for one minute
 
