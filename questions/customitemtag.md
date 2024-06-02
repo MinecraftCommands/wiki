@@ -170,7 +170,7 @@ So for example:
 
     give @s stick 1 5
 
-This stick will have a data of 5, that we can detect it with the `hasitem` argument like this:
+This stick will have a data of 5, that we can detect with the `hasitem` argument like this:
 
     /effect @a[hasitem={item=stick,data=5}] speed
 
