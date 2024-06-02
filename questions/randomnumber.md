@@ -21,7 +21,7 @@ This command is used to generate a random number specifying the maximum and the 
 First we need to create a scoreboard where we will store the random number.
 
     /scoreboard objectives add random dummy
-We need to store the result of the /random command to a fake player
+We need to store the result of the [`/random`](https://minecraft.wiki/w/random) command to a fake player
 
     /execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
     
