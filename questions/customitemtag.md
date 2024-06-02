@@ -163,7 +163,7 @@ For example, the crafting recipe below (1.20.5+), which will give an item with t
 In bedrock we will need use a workarround, because we can't use custom tags.
 
 ### Item data
-To get a item with a specified data, a number between `2,147,483,647` and `-2,147,483,648`.
+To get a item with a specified data, you can use a number between `2,147,483,647` and `-2,147,483,648`.
 
     give <target> <item> <amount> <data>
 So for example:
