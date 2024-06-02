@@ -278,7 +278,7 @@ effect @a[hasitem={item=stick,data=5}] speed
 #### before 1.18.20
 
 > [!NOTE]
-> This information is outaded and it is not useful for the actual version of the game.
+> This information is outaded and it is not useful for the current version of the game.
 
 Using the `clear` command with a max count of 0 will return a successful result if the item is in the players inventory, without actually removing the item, which can be picked up by either a conditional commandblock or a comparator. **You can only do this for 1 player at a time though, as if you use `@a` you have no way of knowing which one of the players has the item in their inventory.**
 
