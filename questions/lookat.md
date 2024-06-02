@@ -7,7 +7,7 @@ _This method describes how to check whether the player / an entity is **looking 
 in Java and later Bedrock versions this can actually be achieved in a single command, thanks to the versatility of the `execute` command. We'll use the following subcommands to achieve our goal:
 
 - `as @a at @s` to modify the execution entity and position.  
-- `anchored eyes` to move the execution position up to the players eyes. See this related bug [MC-169665](https://bugs.mojang.com/browse/MC-169665)
+- `anchored eyes` to move the execution position up to the players eyes. For it to take effect, you'll need a positioned ^ ^ ^ subcommand at some point after this subcommand (which we have 2 subcommands later). See this related bug [MC-169665](https://bugs.mojang.com/browse/MC-169665).
 - `facing <entity / coordinates>` to change the execution rotation to be facing our object / entity of desire  
 - `positioned ^ ^ ^1` to move 1 block in the direction of the object  
 - `anchored feet` to move the anchor back down to the players feet (due to a bug in the game which would otherwise apply the eye height modification with each position change, which we don't want, as well as to be able to check for the players existence in the last subcommand).
