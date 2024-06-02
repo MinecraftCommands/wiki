@@ -35,7 +35,7 @@ And if we want the player to be unable to attack the zombie
 This method wont work to dissable PvP, it will only prevent the entity attacking the player.
 
 ### Helmet
-Unsure if this is a bug but as show [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) constantly using `/item` on the mob will mess up the AI and will not attack the player.
+It is unclear whether this is a bug, but it is shown [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) that constantly using /item on the mob will mess up the AI and will thus prevent it from attacking the player.
 
 > [!NOTE]
 > This does **not** work in Bedrock
