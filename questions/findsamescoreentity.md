@@ -6,7 +6,7 @@ Related: [Check if a score is equal to, greater than, or less than another score
 
 > [!NOTE]
 > In bedrock edition use `c=` instead of `limit=`.
-> The method that consist on using predicates can **not** be replicated in bedrock
+> The method that involves using predicates can **not** be replicated in bedrock
 
 ### Method 1: Compare directly
 
