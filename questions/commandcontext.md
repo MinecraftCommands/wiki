@@ -23,7 +23,7 @@ When a command is run, it will get some default values depending on how it is ru
    - A scheduled command does not keep context
    - Tick and load functions run at world spawn
 - A command run from the server console is executed at world spawn.
-- A command run from an [**NPC**](wiki/questions/npc) <sup>\[Bedrock Edition Only\] </sup> is run `as` and `at` the `NPC`
+- A command run from an [**NPC**](/wiki/questions/npc) <sup>\[Bedrock Edition Only\] </sup> is run `as` and `at` the `NPC`
 
 ## Context in Functions
 
@@ -33,4 +33,4 @@ So a function run in chat will have the same defaults as any other command run f
 
 A command run from either the `#minecraft:load` or `#minecraft:tick` [function tags](https://minecraft.wiki/wiki/Tag#Function_tags) will run positioned at world spawn (at the lowest end of the block, unlike the commandblock), rotated `0 0` and without an executing entity.
 
-This allows a lot of [optimization](/optimising) since you can use a selector once, running the function as that entity and then refer to that entity as `@s` for the rest of the function. It also allows for [entityless raycasting](/wiki/questions/raycast#wiki_without_an_entity) as the position and rotation is preserved between function calls.
+This allows a lot of [optimization](wiki/optimising) since you can use a selector once, running the function as that entity and then refer to that entity as `@s` for the rest of the function. It also allows for [entityless raycasting](/wiki/questions/raycast#wiki_without_an_entity) as the position and rotation is preserved between function calls.
