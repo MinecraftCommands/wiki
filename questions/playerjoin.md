@@ -1,6 +1,6 @@
 # Detect a player joining
 
-For this, we'll have to differentiate between players joining for the first time and players _re_joining the world for the Nth time, as the approaches are slightly different.
+For this, we'll have to differentiate between players joining for the first time and players *re*joining the world for the Nth time, as the approaches are slightly different.
 
 ## First time
 A player that joins a world for the first time is a blank slate, they have no scores, no tags, no advancements, no nothing on them. We can use this to detect the lack of an initialisation tag on the player, apply all our actions to them, then give them the tag.
@@ -11,7 +11,7 @@ A player that joins a world for the first time is a blank slate, they have no sc
     tag @a[tag=!init] add init
 
 ### Advancements
-Another way to do this is using an advancement in a datapack, this advancement will we garanted every tick, so new players (that don't have this advancement) wil, recive it, and will run a function specified in the reward.
+Another way to do this is using an advancement in a datapack, this advancement will we garanted every tick, so new players (that don't have this advancement) will receive it and will run the function specified in the reward.
 
     # advancement example:first_join
     {
