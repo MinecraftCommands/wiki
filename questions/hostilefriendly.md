@@ -44,7 +44,7 @@ It is unclear whether this is a bug, but it is shown [in this Reddit post](https
     /item replace entity @e[type=skeleton] armor.head with iron_helmet
 
 ### Follow range
-You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, or mob heads.
+You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, use mob heads or you change a mobs behavior file to change their follow range that way.
 
 ## Only disable PvP
 This method will not make hostile mobs passive but it will prevent players from attacking other entities or players.
