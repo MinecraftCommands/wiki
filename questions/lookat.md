@@ -52,7 +52,7 @@ There is a predicate that allows us to detect when a player is looking at an ent
 
 ### Advancement
 This example is the same advancement as the vanilla ones but without any display.
-You can find (and edit) the preset in [misode](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast))
+You can find (and edit) the preset in [misode's advancement generator](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast))
 
     # advancement example:lookat/cow
     {
