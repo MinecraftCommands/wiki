@@ -24,7 +24,7 @@ In this example we are going to make all zombies unable to attack the player for
 
     /effect give @e[type=zombie] weakness 60 127 true
 
-And if we want the player unable to atack the zombie
+And if we want the player to be unable to attack the zombie
 
     /effect give @a weakness 60 127
 
