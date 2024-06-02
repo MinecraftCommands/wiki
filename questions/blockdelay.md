@@ -135,7 +135,6 @@ This has several limitations:
 2. Scheduling the same function before it is successfully ran will by default overwrite the previous schedule: if you schedule a function to happen in 5 seconds, then schedule the same function again before the 5 seconds are up, the new schedule will be the one that happens. **Since 1.15 you can now add the `append` argument as the last argument in the command, which circumvents this problem**.  
 3. It requires functions and thus datapacks to work.
 4. It will be executed at position Y = -64 under the world spawn.
-5. It will stop the scheduled function when (re)loading the world
 
 ```
 # In chat
