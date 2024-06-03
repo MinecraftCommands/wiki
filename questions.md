@@ -22,7 +22,7 @@ For a list of how item components are structured, see [this article on the minec
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
 [Do custom crafting?](/wiki/questions/customcrafting)  
-[Make a shop? / Buy items?](wiki/questions/shop)
+[Make a shop? / Buy items?](/wiki/questions/shop)
 
 ### Scores
 
@@ -61,7 +61,7 @@ For a list of how item components are structured, see [this article on the minec
 [Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)  
 [Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)  
-[Setup, configure and add multiple dialogues to NPCs?](wiki/questions/npc)
+[Setup, configure and add multiple dialogues to NPCs?](/wiki/questions/npc)
 
 ## What is...
 
