@@ -42,35 +42,6 @@ Not everything needs to be running at 20Hz. If you can run some commands at 10Hz
 
 In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround that you can find in the questions ["How to add delay to a command"](/wiki/questions/blockdelay)
 
-### Scoreboard timer
-More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated.
-
-    ## pre-1.12
-    # in chat
-    scoreboard objectives add timer dummy
-
-    # command block
-    scoreboard players add FakePlayerA TimerScore 1    
-    scoreboard players test FakePlayerA TimerScore 60
-    # Chain conditional
-    scoreboard players set FakePlayerA TimerScore 0
-    # Conditional repeating command
-    <any command>
-
-[Here's an example setup image pre-1.13](http://i.imgur.com/fGyA294.png)
-
-    ## 1.13+
-    # in chat
-    scoreboard objectives add timer dummy
-
-    # command blocks / tick function
-    scoreboard players add t.5sec timer 1
-    execute if score t.5sec timer matches 100.. run <command/function>
-    execute if score t.5sec timer matches 100.. run scoreboard players reset t.5sec timer
-
-These cause no block updates and require no entities, but will require an objective, and a new fake player for each timer. Scoreboard timers can also be used in functions.
-
-
 ### Schedule
 **Functions** can be even easier to run on slower speeds, as the `schedule` command allows you to run functions after a certain amount of time has passed. You can use this for functions to schedule themselves to essentially create a slower clock.
 
