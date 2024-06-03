@@ -77,7 +77,7 @@ In addition to the marker, you need to use a scoreboard timer, which each tick w
     execute as @e[type=marker,tag=delay,scores={delay=100..}] at @s store success score @s delay run summon zombie
 
 ### Scoreboard
-
+#### Java 1.13+ and Bedrock
 For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependant events/delays) or "[fake player](/wiki/questions/fakeplayer)" scores (set "fake" values for player names, recommended for player independant delays).
 
     # Setup
@@ -110,6 +110,19 @@ You can also make the delay more dynamic by setting a score of a fake player and
     
     # Command block / tick function
     execute as @a if score @s timer >= #delay timer store success score @s timer run say Custom delay command.
+
+#### Java pre-1.13
+Before 1.13 we didn't have `execute if score` so we will need to use `scoreboard players test` for that.
+
+    # command block
+    scoreboard players add FakePlayerA TimerScore 1    
+    scoreboard players test FakePlayerA TimerScore 60
+    # Chain conditional
+    scoreboard players set FakePlayerA TimerScore 0
+    # Conditional repeating command
+    <any command>
+
+[Here's an example setup image](http://i.imgur.com/fGyA294.png)
 
 ### Schedule
 
