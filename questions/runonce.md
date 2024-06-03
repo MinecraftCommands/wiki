@@ -19,10 +19,9 @@ For this method our first command checks two things: Your condition for running 
 > [!NOTE]
 > The order in which the commands are executed is important here. In the first command you check your condition and execute the command, and the second command store the success of executing your condition.
 
-In order for it to work in Bedrock Edition too, the commands should be:
+This example is for Java, but it works in bedrock too if you change `distance=..X` to `rm=X`:
 
-    scoreboard players add @a matched 0
-    # if possible the command above run only on first join
+
     execute as @a[scores={matched=0},x=73,y=10,z=3,distance=..1] run say I just entered the area!
     scoreboard players set @a[scores={matched=0},x=73,y=10,z=3,distance=..1] matched 1
     execute as @a unless entity @s[scores={matched=1},x=73,y=10,z=3,distance=..1] run scoreboard players set @s matched 0
