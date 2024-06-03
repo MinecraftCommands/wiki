@@ -42,15 +42,7 @@ Not everything needs to be running at 20Hz. If you can run some commands at 10Hz
 
 In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround that you can find in the questions ["How to add delay to a command"](/wiki/questions/blockdelay)
 
-### Schedule
-**Functions** can be even easier to run on slower speeds, as the `schedule` command allows you to run functions after a certain amount of time has passed. You can use this for functions to schedule themselves to essentially create a slower clock.
-
-`code/slow_function.mcfunction`
-
-    schedule function slow_function 10t
-    say this will run twice per second
-
-you just need to start the function at some point (e.g. in the `#minecraft:load` function tag) and it will run at a slower speed.
+If you are using command blocks it is recomended to use the `SuccessCount` method to make them at half speed but if you are using datapacks, use schedule functions.
 
 ## Avoid chunk updates
 
