@@ -112,7 +112,7 @@ If you don't want to use an NPC you canuse this method, is very similar to Java 
 In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has buth items.
 Then when we clear the items we are going to clear them for the player with that tag.
 
-In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you are in Java you will need one scoreboard for each item, assuming you already store the items result in it.
+In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you are in Java you will need one scoreboard for each item, assuming you already store the items result in each one.
 
     # Example
     tag @p add buyer.example
@@ -124,7 +124,7 @@ In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you 
 And then we remove all the previus used tags:
 
     tag @a remove buy.example
-    tag @a remove buy.example
+    tag @a remove buyer.example
 
 In bedrock use the `hasitem` argument instead of `scores`
 
