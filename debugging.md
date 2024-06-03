@@ -65,7 +65,7 @@ This page details information on common problems you might have with a command, 
 * If a function has a syntax error, it will **not** show up in the autocomplete and it will flail, if you try to run it
   * All commands must have a correct syntax in order to run the function
   * You can start the function with a `/say` command, so you will know if the function has been executed
-* In snapshot [24w21b](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) (for 1.21) some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
+* In snapshot [24w21a](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w21a) (for 1.21) some registry types that used legacy datapack directory names (based on plural name of element) have been renamed to match registry name. Affected directories:
   * `structures` -> `structure`
   * `advancements` -> `advancement`
   * `recipes` -> `recipe`
@@ -74,6 +74,12 @@ This page details information on common problems you might have with a command, 
   * `item_modifiers` -> `item_modifier`
   * `functions` -> `function`
   * `tags/functions` -> `tags/function`
+* In snapshot [24w19a](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w19a) (for 1.21) tag directories were also renamed.
+  * tags/items -> tags/item
+  * tags/blocks -> tags/block
+  * tags/entity_types -> tags/entity_type
+  * tags/fluids -> tags/fluid
+  * tags/game_events -> tags/game_event
 
 ## Selectors
 
