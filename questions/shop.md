@@ -11,23 +11,15 @@ _Related:_ [Count how much of X item the player has](wiki/questions/amountitems)
 
 
 ### Java
-There are 2 methods, one for pre-1.20.5 and the other for 1.20.5 and above, this is due to the new `execute if items` subcommand.
-> [!NOTE]
-> The method for pre-1.20.5 will still work in 1.20.5 and above.
 
-Both methods will require this setup:
-
-    # In chat / Load function
-    scoreboard objectives add diamonds dummy
-
+#### Using commands
 Both methods work the same, the just differ slightly in how they get the diamond count:
 First we figure out how many diamonds the player has and store the value in a scoreboard. If the player has the required number of diamonds we give the netherite ingot and clear the diamonds from them.
 
-Using commandblocks we need to make sure we select the correct player every time, so with the first command we tag the relevant player to later limit our selector to that player.
-To avoid the player getting unintentionally re-selected we remove the tag at the end.
-Using functions we can rely on @s instead, assuming the function is executed as the relevant player.
+Using command blocks we need to make sure we select the correct player every time, so with the first command we tag the relevant player to later limit our selector to that player.
 
-#### Pre-1.20.5
+To avoid the player getting unintentionally re-selected we remove the tag at the end.
+Using functions we can rely on `@s` instead, assuming the function is executed `as` the relevant player.
 
     # Command blocks
     tag @p add buyer.netherite
@@ -56,34 +48,25 @@ Or if you prefer a function:
 > [!NOTE]
 > The function `example:buy/netherite` must be run `as` the player
 
-#### 1.20.5 and above
+In 1.20.5 `execute if items` was added, which allows to count items in a diferent way.
+To use this method, all command remains the same, as the previus example except the one for counting items that is this one:
 
-    # Command blocks
-    tag @p add buyer.netherite
+    execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
+
+That we can replace it for this one:
+
     execute as @p[tag=buyer.netherite] store result score @s diamonds if items entity @s container.* diamond
-    give @a[tag=buyer.netherite,scores={diamonds=5..}] netherite_ingot 1
-    clear @a[tag=buyer.netherite,scores={diamonds=5..}] diamond 5
-    tellraw @a[tag=buyer.netherite,scores={diamonds=5..}] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
-    tellraw @a[tag=buyer.netherite,scores={diamonds=..4}] {"text":"You don't have 5 diamonds","color":"dark_red"}
-    tag @a remove buyer.netherite
     
-Or if you prefer a function:
+Or if you are using the example function, you need to replace this command
 
-    # function example:load
-    scoreboard objectives add diamonds dummy
-    
-    # function example:buy/netherite
+    execute store result score @s diamonds run clear @s diamond 0
+
+With this command:
+
     execute store result score @s diamonds if items entity @s container.* diamond
-    execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
-    execute unless entity @s[scores={diamonds=5..}] run tellraw @s {"text":"You don't have 5 diamonds","color":"dark_red"}]
-    
-    # function example:buy/netherite/success
-    give @s netherite_ingot 1
-    clear @s diamond 5
-    tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
 
 > [!NOTE]
-> The function `example:buy/netherite` must be run `as` the player
+> The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`)
 
 ### Bedrock
 In bedrock we have the `hasitem` argument, so it uses less commands than in Java.
