@@ -7,7 +7,7 @@ In the Bedrock edition of the game, you can just give a commandblock a delay dir
 
 ## Java 
 
-Using repeaters with command blocks (or a hopper clock) is considered bad practice, it causes more lag, and is often impractical for long delays. Alternatives include area effect cloud timers, scoreboard timers and the `schedule` command (requires functions). They all have their respective use cases, but the most commonly used one is the scoreboard timer.
+Using repeaters with command blocks (or a hopper clock) is considered bad practice, it causes more lag, and is often impractical for long delays. Alternatives include area effect cloud timers, scoreboard timers and the `schedule` command (requires functions). They all have their respective use cases, but the most commonly used one are the scoreboard timer for delaying a specific command or the `schedule` one for global commands (as they don't keep context).
 
 ### Area Effect Clouds
 
