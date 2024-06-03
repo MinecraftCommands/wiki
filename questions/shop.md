@@ -66,7 +66,7 @@ With this command:
     execute store result score @s diamonds if items entity @s container.* diamond
 
 > [!NOTE]
-> The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`)
+> The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`, that will not work below 1.20.5).
 
 ### Bedrock
 In bedrock we have the `hasitem` argument, so it uses less commands than in Java.
