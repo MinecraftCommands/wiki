@@ -133,7 +133,7 @@ This method uses a scoreboard as a currency (such as `coins` for this example) a
 You can adjust the items and the prices by editing the command item and quantity.
 
 ### Java and Bedrock
-When the player wants to buy the item, run this commands in order. It can be archived with a button, an impulse command block and a chain of command blocks behind as an example.
+When the player wants to buy the item, run this commands in order. It can be achieved with a button, an impulse command block and a chain of command blocks behind as an example.
 In this example the currency is a `dummy` scoreboard called `coins`.
 
 #### With command blocks
