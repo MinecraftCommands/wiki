@@ -107,6 +107,8 @@ If you don't want to use an NPC can use this method, it is very similar to Java 
     tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
     clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
     tag @a remove buyer.netherite
+> [!NOTE]
+> It is super important to clear the diamonds in the last step before removing the tag
 
 ### Add more than one items
 In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has buth items.
