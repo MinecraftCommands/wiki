@@ -26,7 +26,9 @@ We need to store the result of the [`/random`](https://minecraft.wiki/w/random) 
     /execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
     
 For example:
-execute store result score #command random run random value 1..5
+
+    execute store result score #command random run random value 1..5
+
 And now we need to check the value of the scoreboard, in this case we used numbers from 1 to 5 so we use one command to check every possible scoreboard value.
 
     execute if score #command random matches 1 run <command 1>
