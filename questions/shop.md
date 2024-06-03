@@ -20,10 +20,12 @@ Both methods will require this setup:
     # In chat / Load function
     scoreboard objectives add diamonds dummy
 
-Both methods works the same:
-First we are going to know how many diamonds the player has storing the value in a scoreboard and if the player has that that number of diamonds we will add a tag (first and second command) or we will run a function instead if using a datapack.
-After that we are going to give the netherite ingot to the player with the tag and we will clear the diamonds from it.
-To avoid the player from a loop we will remove the tag as we dont need it more.
+Both methods work the same, the just differ slightly in how they get the diamond count:
+First we figure out how many diamonds the player has and store the value in a scoreboard. If the player has the required number of diamonds we give the netherite ingot and clear the diamonds from them.
+
+Using commandblocks we need to make sure we select the correct player every time, so with the first command we tag the relevant player to later limit our selector to that player.
+To avoid the player getting unintentionally re-selected we remove the tag at the end.
+Using functions we can rely on @s instead, assuming the function is executed as the relevant player.
 
 #### Pre-1.20.5
 
