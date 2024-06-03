@@ -159,3 +159,34 @@ Read the current gametime and store it in the score of the selected entity and a
 
 > [!NOTE]
 > If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one.
+
+### Success Count
+An easy trick with command blocks to make a clock run at half its speed is the following command:
+
+    # pre-1.13 syntax
+    testforblock ~ ~ ~ repeating_command_block * {SuccessCount:0}
+    # 1.13+ syntax
+    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0}
+    # 1.13+ syntax (only run one command)
+    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0} run <command>
+
+Set up [like this](http://i.imgur.com/OULTCZx.png) (unless running only one command), the command will alternate between succeeding (as it failed last time so has `SuccessCount:0`) and failing (as it succeeded last time so has `SuccessCount:1`), and the conditional repeating block coming off of it will thus activate every other tick.
+
+These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
+
+
+### Command block minecart
+The entity [`command_block_minecart`](https://minecraft.wiki/w/Minecart_with_Command_Block) execute the written command every 4 ticks. Keep in mind that people can break the minecart (but it will **not** drop the command block).
+
+### Falling blocks or entities
+Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.
+
+In this example we use an armor stand with the tag `loop`, we will place a pressure plate with an impulse command block below with the following command:
+```
+execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
+```
+To add more commands, just add a chain one to the previus impulse.
+
+> [!IMPORTANT]
+> It is not recomended to use this method
+
