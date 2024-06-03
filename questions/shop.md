@@ -139,7 +139,7 @@ In this example the currency is a `dummy` scoreboard called `coins`.
 #### With command blocks
 
 > [!NOTE]
-> This example uses Java syntax for the message that tells that appears when the player buys the item
+> This example uses Java syntax for the message that appears when the player buys the item
 
     /tag @p add buyer.diamond
     /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
