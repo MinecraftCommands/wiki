@@ -132,11 +132,11 @@ In bedrock use the `hasitem` argument instead of `scores`
 This method uses a scoreboard as a currency (such as `coins` for this example) and you can buy items with that currency. In this example, you can buy a `diamond` with 10 `coins`.
 You can adjust the items and the prices by editing the command item and quantity.
 
-## Java and Bedrock
+### Java and Bedrock
 When the player wants to buy the item, run this commands in order. It can be archived with a button, an impulse command block and a chain of command blocks behind as an example.
 In this example the currency is a `dummy` scoreboard called `coins`.
 
-### With command blocks
+#### With command blocks
 
 > [!NOTE]
 > This example uses Java syntax for the message that tells that appears when the player buys the item
@@ -149,7 +149,7 @@ In this example the currency is a `dummy` scoreboard called `coins`.
     /tag @a remove buy.diamond
     /tag @a remove buyer.diamond
 
-### In a function
+#### In a function
 This is more optimized compared to using command blocks as functions keep the context
 
     # function example:buy/diamond
