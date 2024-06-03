@@ -8,7 +8,26 @@ In Java this is easy, as there is a whole lot of [scoreboard objectives criteria
 This method for command blocks cannot check any NBT data, including the tag of the killed mob. 
 
 But this can be done using advancement using the [`player_killed_entity`](https://minecraft.wiki/wiki/Advancement/JSON_format#minecraft:player_killed_entity) advancement trigger, if you're using a datapack that looks like this:
+```
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:pig",
+          "nbt": "{Tags:[\"example\"]}"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "example:kill_entity"
+  }
+}
+```
 
+The advancement from above will check if the entity that the player killed has that NBT (so it has the tag `example` in this case) if you don't want to check NBT you can just use:
 ```
 {
   "criteria": {
