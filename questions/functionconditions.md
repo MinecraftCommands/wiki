@@ -24,7 +24,7 @@ First, set up a dummy scoreboard objective:
 
     scoreboard objectives add success_score dummy
 
-We're going to use the executing entity to store the result. This can of course be substituted for a [fake player](wiki/questions/fakeplayer) (because it's about checking a block, independently of an entity, it's recomended using it) or a different entity as well.
+We're going to use the executing entity to store the result. This can of course be substituted for a [fake player](/wiki/questions/fakeplayer) (because it's about checking a block, independently of an entity, it's recomended using it) or a different entity as well.
 
 Then, whenever you want to perform a conditional command:
 
