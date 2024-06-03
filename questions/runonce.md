@@ -19,7 +19,7 @@ For this method our first command checks two things: Your condition for running 
 > [!NOTE]
 > The order in which the commands are executed is important here. In the first command you check your condition and execute the command, and the second command store the success of executing your condition.
 
-This example is for Java, but it works in bedrock too if you change `distance=..X` to `rm=X`:
+The previous example doesn't work in Bedrock Edition. Here is a setup that works in both Java and Bedrock Edition (if you change `distance=..X` to `rm=X`):
 
 
     execute as @a[scores={matched=0},x=73,y=10,z=3,distance=..1] run say I just entered the area!
