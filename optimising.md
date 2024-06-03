@@ -38,26 +38,9 @@ These commands should be conditional blocks on the chain that performs the condi
 In 1.13+ you can check more things apart from selectors with [`execute if/unless`](https://minecraft.wiki/w/Commands/execute#Condition_subcommands)
 
 ## Slow down your commands
+Not everything needs to be running at 20Hz. If you can run some commands at 10Hz instead, you've halved the impact those commands were having.
 
-Not everything needs to be running at 20Hz. If you can run some commands at 10Hz instead, you've halved the impact those commands were having. In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround.
-
-### Success Count
-An easy trick with command blocks to make a clock run at half its speed is the following command:
-
-    # pre-1.13 syntax
-    testforblock ~ ~ ~ repeating_command_block * {SuccessCount:0}
-    # 1.13+ syntax
-    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0}
-    # 1.13+ syntax (only run one command)
-    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0} run <command>
-
-Set up [like this](http://i.imgur.com/OULTCZx.png) (unless running only one command), the command will alternate between succeeding (as it failed last time so has `SuccessCount:0`) and failing (as it succeeded last time so has `SuccessCount:1`), and the conditional repeating block coming off of it will thus activate every other tick.
-
-These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
-
-
-### Command block minecart
-The entity [`command_block_minecart`](https://minecraft.wiki/w/Minecart_with_Command_Block) execute the written command every 4 ticks. Keep in mind that people can break the minecart (but it will **not** drop the command block).
+In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround that you can find in the questions ["How to add delay to a command"](/wiki/questions/blockdelay)
 
 ### Scoreboard timer
 More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated.
@@ -87,17 +70,6 @@ More flexible and commonly used are scoreboard timers. One command continually i
 
 These cause no block updates and require no entities, but will require an objective, and a new fake player for each timer. Scoreboard timers can also be used in functions.
 
-### Falling blocks or entities
-Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.
-
-In this example we use an armor stand with the tag `loop`, we will place a pressure plate with an impulse command block below with the following command:
-```
-execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
-```
-To add more commands, just add a chain one to the previus impulse.
-
-> [!IMPORTANT]
-> It is not recomended to use this method
 
 ### Schedule
 **Functions** can be even easier to run on slower speeds, as the `schedule` command allows you to run functions after a certain amount of time has passed. You can use this for functions to schedule themselves to essentially create a slower clock.
