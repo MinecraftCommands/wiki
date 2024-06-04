@@ -13,7 +13,6 @@ _Related:_ [Count how much of X item the player has](wiki/questions/amountitems)
 ### Java
 
 #### Using commands
-Both methods work the same, the just differ slightly in how they get the diamond count:
 First we figure out how many diamonds the player has and store the value in a scoreboard. If the player has the required number of diamonds we give the netherite ingot and clear the diamonds from them.
 
 Using command blocks we need to make sure we select the correct player every time, so with the first command we tag the relevant player to later limit our selector to that player.
@@ -68,20 +67,50 @@ With this command:
 > [!NOTE]
 > The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`, that will not work below 1.20.5).
 
+#### Using a villager
+Villagers are a passive mob that can be interacted with, and will open the trading GUI.
+
+We can use this vanilla functionality to add our custom trades.
+
+This can be done by manually typing the command, but it is recomeneded to use an [online generator](https://mcstacker.net) to generate the command with ease.
+
+This method has some advantages and disadvantages.
+
+**Advantages:**
+* Easy to set up, it only require a summon command.
+* It does not cause performance issues, as we don't run any commands.
+
+**Disadvantages:**
+* Need to be interacted. You can't force the player to buy that item.
+* Limited to give 2 items to get one (workarrounds are possible, like giving a shulker box with items in it).
+* You can't show a succes message (workarrounds are possible).
+* It is linked to a place, unless you teleport the villager to the player.
+* 2 players can't acces the trading screen at the same time.
+
+Here is an example command:
+```
+/summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",count:1},buyB:{id:"minecraft:emerald",count:1},sell:{id:"minecraft:netherite_ingot",count:1}}]}}
+```
+Let's break it donw:
+* Inside `Offers` we have `Recipes`, there will be all listed trades.
+* This trade has `rewardExp:0b` so the player will not get any experience when buying it (you can enable it if you want).
+* `maxUses:2147483647` is the maximum times it can be traded, this is the maximum value we can set.
+* Inside `buy` and `buyB` we are going to specify what items the player will spend.
+* In `sell` we specify what item the player will get.
+
+We can use item components or nbt for both the item the player will spend and the item the player will get, here is an example for 1.20.5+, every item needs to have a `custom_data` of `special:true`
+
+```
+/summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",count:1,components:{"minecraft:custom_data":{special:true}}},buyB:{id:"minecraft:emerald",count:1,components:{"minecraft:custom_data":{special:true}}},sell:{id:"minecraft:netherite_ingot",count:1,components:{"minecraft:custom_model_data":special:true}}}]}}
+```
+Here is the same command but for pre-1.20.5, using nbt data instead:
+
+```
+/summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",Count:1b,tag:{special:true}},buyB:{id:"minecraft:emerald",Count:1b,tag:{special:true}},sell:{id:"minecraft:netherite_ingot",Count:1b,tag:{special:true}}}]}}
+```
+
 ### Bedrock
 In bedrock we have the `hasitem` argument, so it uses less commands than in Java.
-
-#### With an NPC
-This commands must be run in this order in an NPC
-
-    tag @initiator[hasitem={item=diamond,quantity=5..}] add buy.netherite
-    clear @initiator[tag=buy.netherite] diamond 5
-    give @initiator[tag=buy.netherite] netherite_ingot 1
-    tellraw @initiatior[tag=buy.netherite] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
-    tellraw @initiator[tag=!buy.netherite] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
-    tag @initiator[tag=buy.netherite] remove buy.netherite
-
-_Related: [How to setup a NPC?](wiki/questions/npc)_
 
 #### Without an NPC
 If you don't want to use an NPC can use this method, it is very similar to Java but it uses the `hasitem` argument instead.
@@ -92,11 +121,16 @@ If you don't want to use an NPC can use this method, it is very similar to Java 
     tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
     clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
     tag @a remove buyer.netherite
+
+> [!NOTE]
+> in order for it to work with npc, change `@p` to `@initiator`
+> _Related: [How to setup a NPC?](wiki/questions/npc)
+
 > [!NOTE]
 > It is super important to clear the diamonds in the last step before removing the tag
 
 ### Add more than one items
-In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has buth items.
+In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has both items.
 Then when we clear the items we are going to clear them for the player with that tag.
 
 In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you are in Java you will need one scoreboard for each item, assuming you already store the items result in each one.
