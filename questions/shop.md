@@ -112,7 +112,6 @@ Here is the same command but for pre-1.20.5, using nbt data instead:
 ### Bedrock
 In bedrock we have the `hasitem` argument, so it uses less commands than in Java.
 
-#### Without an NPC
 If you don't want to use an NPC can use this method, it is very similar to Java but it uses the `hasitem` argument instead.
 
     tag @p add buyer.netherite
@@ -124,7 +123,7 @@ If you don't want to use an NPC can use this method, it is very similar to Java 
 
 > [!NOTE]
 > in order for it to work with npc, change `@p` to `@initiator`
-> _Related: [How to setup a NPC?](wiki/questions/npc)
+> _Related: [How to setup a NPC?](wiki/questions/npc)_
 
 > [!NOTE]
 > It is super important to clear the diamonds in the last step before removing the tag
