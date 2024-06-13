@@ -1,7 +1,7 @@
 # Activate a command *once* when a player does something (e.g: enters an area)
 
 > [!NOTE]
-> In bedrock `distance` does not exist so instead of `distance=..X` use `r=X` and instead of `distance=X..` use `rm=X` and instead of `distance=X..Y` use `rm=X,r=Y`
+> In bedrock `distance` does not exist so instead of `distance=..X` use `r=X` and instead of `distance=X..` use `rm=X` and instead of `distance=X..Y` use `rm=X,r=Y`, all methods only work in Java unless stated otherwise.
 
 This makes a command act as if it was on a comparator, without the lag and multiplayer incompatibility that comes from using a comparator. The general idea here is to select players that match a selector, but did **not** match that same selector in the previous tick. For example, players who have just entered an area (with `@a[x=73,y=10,z=3,distance=..1]`), just gained level 5 (with `@a[level=5]`), just entered creative (with `@a[gamemode=creative]`), etc.  
 
@@ -112,6 +112,9 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
 Such a check may seem very large, but this method allows you not to check the same condition 2 times per tick, but only 1 time per second (because the `minecraft:location` advancement trigger only runs once per second), which can be important with a large online number of players.
 
 ## Add/remove tag
+
+> [!NOTE]
+> This method will work in Bedrock too
 
 The following commands, running in this order, will keep track of whether a player matched the selector `@a[x=73,y=10,z=3,distance=..1]`:
 
