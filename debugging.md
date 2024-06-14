@@ -75,11 +75,11 @@ This page details information on common problems you might have with a command, 
   * `functions` -> `function`
   * `tags/functions` -> `tags/function`
 * In snapshot [24w19a](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w19a) (for 1.21) tag directories were also renamed.
-  * tags/items -> tags/item
-  * tags/blocks -> tags/block
-  * tags/entity_types -> tags/entity_type
-  * tags/fluids -> tags/fluid
-  * tags/game_events -> tags/game_event
+  * `tags/items` -> `tags/item`
+  * `tags/blocks` -> `tags/block`
+  * `tags/entity_types` -> `tags/entity_type`
+  * `tags/fluids` -> `tags/fluid`
+  * `tags/game_events` -> `tags/game_event`
 
 ## Selectors
 
