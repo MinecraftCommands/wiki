@@ -302,6 +302,6 @@ Detecting a specific item on the ground involves using its name.
 **This method is language specific and won't work if your hosting player is not playing in english!** A way to circumvent that problem would be to either rename the item if possible, or to change every language file the game has to make the name of the item the same across all languages, which will require you to include a resourcepack.
 
 > [!NOTE]
-> You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, consists of changing the name with color codes, which can not be differentiate from the normal name.
+> You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name.
 
     kill @e[type=item, name="§r§Dirt"]
