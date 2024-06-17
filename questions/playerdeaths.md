@@ -89,7 +89,7 @@ The best way to do this in bedrock is with the following commands, in this order
 
 Set up a dummy scoreboard called `deathCount` and it will count up every time a player dies.  
 
-This works because the `@a` selector selects all players, but the `@e` selector can only select living entities.
+This works because the `@a` selector selects all players, but the `@e` selector can only select living entities. You can find more information on [the Bedrock wiki](https://wiki.bedrock.dev/commands/on-player-death.html#top).
 
 _This system was first suggested on the subreddit by /u/Sprunkles137 [here](https://old.reddit.com/r/MinecraftCommands/comments/g5b4n8/challenge_1/fo3p5p0/)._
 

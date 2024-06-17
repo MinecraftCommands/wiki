@@ -12,6 +12,9 @@ For this, you need to put them somewhere in a confined space, so the items don't
 
 Same for the return part, as you only want to give the player who owns the items those items back. You also need to consider that a completely full inventory (including armor) will not be able to be picked up instantly by the player without them manually equipping their armor.
 
+> [!CAUTION]
+> You will lose any item with the curse of vanishing enchantment
+
 ### Custom Hopper Entity
 
 This method requires you to make a custom entity that has both an `minecraft:inventory` and `minecraft:item_hopper` component.
@@ -444,3 +447,76 @@ So yes, a part of the solution could be to keep the slots around for the first 2
 We often see something like `Inventory[0]` in this article. This is an array selector notation, and means that we're selecting the first item out of the array called `Inventory`. Note that any item can be in this position in the array, and it's not guaranteed to be the one that was `Slot:0b`. Only items that are actually in your inventory are saved in this list, so anything that is empty (or air I guess) will not be in this list. So if the only item in your inventory is in the last hotbar slot, it will be the only item in the list, eventhough it has `Slot:8b`.
 
 It is possible to select an item from the array based on its Slot like this: `Inventory[{Slot:10b}]`. We could use this for the "correct slot" method, if it weren't for the fact that we can't use `/item replace` with arbitrary data but we need to use something that is guaranteed to be an item. So we can't skip the step of first putting it into a container / entity inventory first.
+
+### storing in a chest
+>  [!NOTE]
+> This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)
+
+This method consist on using `/item` (on Java) or to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
+
+> [!NOTE]
+> You must run this function `as` the player
+
+    # function example:storing
+    execute positioned <pos1> run function example:storing/container_1
+
+    # function example:storing/container_1
+    # First we store the hotbar
+    item replace block ~ ~ ~ container.0 with entity @s hotbar.0
+    item replace block ~ ~ ~ container.1 with entity @s hotbar.1
+    [...]
+    item replace block ~ ~ ~ container.8 with entity @s hotbar.8
+    # Now we store the inventory
+    item replace block ~ ~ ~ container.9 with entity @s inventory.0
+    [...]
+    item replace block ~ ~ ~ container.26 with entity @s inventory.17
+    # Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
+    # We will need to run the second function in the position of the second chest
+    execute positioned <pos2> run function example:storing/container_2
+
+    # function example:storing/container_2
+    item replace block ~ ~ ~ container.0 with entity @s inventory.19
+    item replace block ~ ~ ~ container.1 with entity @s inventory.20
+    item replace block ~ ~ ~ container.2 with entity @s inventory.21
+    [...]
+    item replace block ~ ~ ~ container.8 with entity @s inventory.26
+    # now we will store the armor and offhand
+    item replace block ~ ~ ~ container.9 with entity @s armor.head
+    item replace block ~ ~ ~ container.10 with entity @s armor.chest
+    item replace block ~ ~ ~ container.11 with entity @s armor.legs
+    item replace block ~ ~ ~ container.12 with entity @s armor.feet
+    item replace block ~ ~ ~ container.13 with entity @s weapon.offhand
+
+And now we stored the entire inventory in 2 chest (or barrels). To give it back (returning the inventory) we will need to do the same but replacing the player slots with the container's slots.
+
+    # function example:returning
+    execute positioned <pos1> run function example:returning/container_1
+
+    # function example:returning/container_1
+    # First we store the hotbar
+    item replace entity @s container.0 with block ~ ~ ~ container.0
+    item replace entity @s container.1 with block ~ ~ ~ container.1
+    [...]
+    item replace entity @s container.8 with block ~ ~ ~ container.8
+    # Now we store the inventory
+    item replace entity @s container.9 with block ~ ~ ~ container.9
+    [...]
+    item replace entity @s container.26 with block ~ ~ ~ container.26
+    # Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
+    # We will need to run the second function in the position of the second chest
+    execute positioned <pos2> run function example:returning/container_2
+
+    # function example:returning/container_2
+    item replace entity @s container.27 with block ~ ~ ~ container.0
+    item replace entity @s container.28 with block ~ ~ ~ container.1
+    item replace entity @s container.29 with block ~ ~ ~ container.2
+    [...]
+    item replace entity @s container.35 with block ~ ~ ~ container.8
+    # now we will store the armor and offhand
+    item replace entity @s armor.head with block ~ ~ ~ container.9
+    item replace entity @s armor.chest with block ~ ~ ~ container.10
+    item replace entity @s armor.legs with block ~ ~ ~ container.11
+    item replace entity @s armor.feet with block ~ ~ ~ container.12
+    item replace entity @s weapon.offhand with block ~ ~ ~ container.13
+
+As you can see it takes 40 commands for storing and 40 for returning, so it is a very ineficient way to store the inventory.

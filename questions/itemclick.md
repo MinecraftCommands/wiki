@@ -19,7 +19,8 @@ Here's a simple example for command blocks:
 
 **Note:** Do not create an interaction entity that is too large, otherwise click detection will be inconsistent.
 
-_Hint: To see interaction entity press `F3 + B` to show hitboxes._
+> [!TIP]
+> To see interaction entity press `F3 + B` to show hitboxes.
 
 If you need to check left/right clicks in a large area (or anywhere), then use multiple interaction entities or create a separate interaction entity for each player and teleport to the player every tick, and use the [scoreboard ID system](/wiki/questions/linkentity) for linking.
 
@@ -121,6 +122,9 @@ The models/item/carrot_on_a_stick.json file within the resource pack might end u
             {"predicate": {"custom_model_data":4}, "model": "item/black_dye"}
         ]
     }
+
+> [!NOTE]
+> You can make the item completly invisible if using the custom model data of a chest.
 
 ### Make item food method
 

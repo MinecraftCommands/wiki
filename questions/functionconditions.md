@@ -10,6 +10,10 @@ Easiest way to do this is by prefixing the command with an `execute if entity`:
 
     execute if entity @a[tag=TeamChange,limit=1] run say test
 
+    # another example
+    execute if entity @a[tag=TeamChange,limit=1] run function code:team_change
+    execute unless entity @a[tag=!Ready,limit=1] run function code:ready
+
 Notice the `limit=1` in the above command, this is purely for performance reasons so the game stops after the first matching entity it found. [If you want to check whether there are an exact amount of entities found with a selector, click here](/wiki/questions/numplayers).
 
 ### My condition is whether or not another command succeeds
@@ -20,19 +24,13 @@ First, set up a dummy scoreboard objective:
 
     scoreboard objectives add success_score dummy
 
-We're going to use the executing entity to store the result. This can of course be substituted for a fake player or a different entity as well.
-
-Make sure the score is initiated (not null). Easy way to do this is by adding 0:
-
-    scoreboard players add @s success_score 0
-
-----
+We're going to use a [fake player](/wiki/questions/fakeplayer) (because it's about checking a block, independently of an entity, it's recomended to use it) to store the result. This can of course be substituted for the executing entity or a different entity as well.
 
 Then, whenever you want to perform a conditional command:
 
-    execute store success @s success_score if block 73 10 31 stone
-    execute if score @s success_score=1 run say Stone found!
-    execute if score @s success_score=0 run say Stone not found!
+    execute store success #success success_score if block 73 10 31 stone
+    execute if score #success success_score matches 1 run say Succes!!
+    execute unless score #success success_score matches 1 run say Not success!!
 
 ## 1.12
 

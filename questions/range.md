@@ -10,4 +10,5 @@ Either one can be left out to signify an open-ended range. Leaving writing a sin
 
 Some selectors (like `distance`) also allow for decimal numbers. `0.5..0.9` works fine in those instances.
 
-**Ranges are not useable when checking for NBT!**
+> [!IMPORTANT]
+> Ranges are not useable when checking for NBT!

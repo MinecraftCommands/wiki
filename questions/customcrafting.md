@@ -369,3 +369,70 @@ If you only need a custom item as a result of crafting, then now you can use onl
     }
 
 **Note:** If you use a custom tag for an item like `custom:1`, then the recipe will give you an item with the tag `custom:1b` due to the conversion of JSON to NBT format.
+
+## Bedrock edition addon
+In bedrock edition, you can use addons to make custom recepies, all recipes are stored in the recipes folder in the behavior pack root.
+
+You can make a custom recepie for the following blocks:
+* Crafting:
+  * crafting_table
+  * stonecutter
+  * smithing_table
+* Cooking and Smelting:
+  * furnace
+  * blast_furnace
+  * smoker
+  * campfire
+  * soul_campfire
+* Brewing:
+  * brewing_stand
+* Education:
+  * material_reducer
+
+You can also make [custom crafting tables](https://wiki.bedrock.dev/blocks/block-components.html#crafting-table)
+
+Here is an example of a shaped recipe from the bedrock wiki:
+
+	{
+		"format_version": "1.17.41",
+		"minecraft:recipe_shaped": {
+			"description": {
+				"identifier": "wiki:cold_steel_sword"
+			},
+			"tags": ["crafting_table", "altar"],
+			"pattern": [
+				"X",
+				"X",
+				"I"
+			],
+			"key": {
+				"X": "wiki:cold_steel",
+				"I": "minecraft:stick"
+			},
+			"unlock": [
+				{
+					"item": "wiki:cold_steel"
+				},
+				{
+					"item": "minecraft:wool",
+					"data":  3
+				},
+				{
+					"context": "PlayerInWater"
+				}
+			],
+			"result": "wiki:cold_steel_sword"
+		}
+	}
+
+
+A quick explanation:
+* `format_version` is the minecraft version, it is recomended to use the last relase.
+* The `description` holds the holds the `identifier` of a recipe
+* `tags` are the list of interfaces were the crafting can be used
+* `pattern` is the position of the ingridients in order to get the result
+* `key` specifies what item is fro every letter from `pattern`
+* `unlock` specifies what will unlock the recipe
+* `result` specifies what item you will get when crafting this recipe
+
+You can find a detailed tutorial [in the bedrock wiki](https://wiki.bedrock.dev/loot/recipes.html) that contains information about other blocks such as furnances or brewing stands.

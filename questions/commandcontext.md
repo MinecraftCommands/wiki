@@ -17,9 +17,13 @@ See [the Minecraft wiki on the execute command](https://minecraft.wiki/wiki/Comm
 
 When a command is run, it will get some default values depending on how it is run.
 
-- A command **run from chat** is executed _as_ and _at_ (so positioned and rotated as) the player who runs it.
+- A command **run from chat** is executed `as` and `at` (so positioned and rotated as) the player who runs it.
 - A command **run from a commandblock** is executed with the position set to the center of the commandblock in all three axis. It is always rotated `0 0`, so facing straight forward in south (positive z) direction. _There is no executing entity_.  
 - A command **run from a function** can have various values, as functions themselves keep context. See below.
+   - A scheduled command does not keep context
+   - Tick and load functions run at world spawn
+- A command run from the server console is executed at world spawn.
+- A command run from an [**NPC**](/wiki/questions/npc) <sup>\[Bedrock Edition Only\] </sup> is run `as` and `at` the `NPC`
 
 ## Context in Functions
 
@@ -29,4 +33,4 @@ So a function run in chat will have the same defaults as any other command run f
 
 A command run from either the `#minecraft:load` or `#minecraft:tick` [function tags](https://minecraft.wiki/wiki/Tag#Function_tags) will run positioned at world spawn (at the lowest end of the block, unlike the commandblock), rotated `0 0` and without an executing entity.
 
-This allows a lot of [optimization](/optimising) since you can use a selector once, running the function as that entity and then refer to that entity as `@s` for the rest of the function. It also allows for [entityless raycasting](/wiki/questions/raycast#wiki_without_an_entity) as the position and rotation is preserved between function calls.
+This allows a lot of [optimization](/wiki/optimising) since you can use a selector once, running the function as that entity and then refer to that entity as `@s` for the rest of the function. It also allows for [entityless raycasting](/wiki/questions/raycast#wiki_without_an_entity) as the position and rotation is preserved between function calls.

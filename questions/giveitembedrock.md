@@ -1,8 +1,11 @@
 # How to give a special item (Bedrock)
 
-This article is for **Bedrock only**, as Java can just use NBT to give the special items directly.
+This article is for **Bedrock only**, as Java can just use NBT or item components to give the special items directly.
 
 Using `/give` on bedrock only works for "basic" items, without any alterations like change of names or enchantments.
+
+> [!NOTE]
+> You can use external programs (such as world editors or "hacks") to get custom items, that are impossible to get, such as items with impossible enchantments.
 
 Thus, a different method needs to be followed, of which there are two (three) common ones. The last one in the list is probably the best one currently available.
 
@@ -12,7 +15,7 @@ Either use step 4 or step 6, reasons and problems see below
 
 1. put item into a container (e.g. chest) of your choice in a location out of sight
 2. clone container to a 1x1 hole
-3. use /setblock or /fill to destroy the container, making it drop its contents (and itself)
+3. use `/setblock` or `/fill` to destroy the container, making it drop its contents (and itself)
 4. **either** `/kill` the dropped container item
 5. tp the dropped items to the player
 6. **or** if you didn't do #4, you can /clear the container from the players inventory instead
@@ -36,6 +39,6 @@ It has the disadvantage that it can take a tick or two for the structure to be l
 
 **_Probably the best method currently available_**
 
-Same as the structure block method, but instead of loading it with a structureblock, you load it using the [/structure](https://minecraft.wiki/Commands/structure) command. It has the advantage over the block method that you don't need to worry about the whole redstone block setting and the issues that come with that, you can just load the structure directly at the player in question and be done with it.
+Same as the structure block method, but instead of loading it with a structureblock, you load it using the [`/structure`](https://minecraft.wiki/Commands/structure) command. It has the advantage over the block method that you don't need to worry about the whole redstone block setting and the issues that come with that, you can just load the structure directly at the player in question and be done with it.
 
 Make sure to save the structure with a structure void block inside, or the air might override whatever block the player is currently standing on.

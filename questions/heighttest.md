@@ -14,8 +14,9 @@ Instead, we'll need to `execute at` the player, so that the `x` and `z` will def
 
     execute as @a at @s run say @s[y=200,dy=500]
 
-or for bedrock
-
-    execute @a ~ ~ ~ say @s[y=200,dy=500]
-
 The same technique can be used to find players above/below any `x`/`y`/`z` coordinate.
+
+To detect below a certain height, you can make the `dy` negative.
+
+    /execute at @a at @s run say @s[y=-30,dz=-500]
+this will detect any players below `-30`

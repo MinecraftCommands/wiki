@@ -1,8 +1,50 @@
 # Generate a random number
 
-This article talks about the Java Edition of the game. In Bedrock, you can just use `scoreboard players random` to get a random number into your scoreboard and don't need to go through all this hassle.
+This article talks about the Java Edition of the game. In Bedrock, you can just use `scoreboard players random` to get a random number into your scoreboard and don't need to go through all this hassle, the command is the following one:
 
-_Disclaimer: **None of these numbers are truly random**. They are all only "pseudo"-random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out._
+    scoreboard players random <player: target> <objective: string> <min: int> <max: int>
+
+So for example, from 1 to 10 in a score called `some_score`
+
+    scoreboard players random @p some_score 1 10
+
+> [!NOTE]
+> **None of these numbers are truly random**. They are all only "pseudo" random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out.
+
+## /random command
+**This method is, currently, the best, there is no reason to use the others**
+
+Effective Range [-2'147'483'648 to 2'147'483'647]
+
+This command is used to generate a random number specifying the maximum and the minimum, this is the best method of all because it is the easiest to make. More information can be found on the wiki.
+
+First we need to create a scoreboard where we will store the random number.
+
+    /scoreboard objectives add random dummy
+We need to store the result of the [`/random`](https://minecraft.wiki/w/random) command to a fake player
+
+    /execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
+    
+For example:
+
+    execute store result score #command random run random value 1..5
+
+And now we need to check the value of the scoreboard, in this case we used numbers from 1 to 5 so we use one command to check every possible scoreboard value.
+
+    execute if score #command random matches 1 run <command 1>
+    execute if score #command random matches 2 run <command 2>
+    execute if score #command random matches 3 run <command 3>
+    execute if score #command random matches 4 run <command 4>
+    execute if score #command random matches 5 run <command 5>
+
+Or we can use [ranges](wiki/questions/ranges) to detect more of one number.
+
+    execute if score #command random matches 1..3 run say 1, 2 or 3
+    execute if score #command random matches 4..5 run say 4 or 5
+
+## without /random command (Pre-1.20.2)
+> [!NOTE]
+> This information is outdated and should **not** be used in the current version of the game.
 
 There are many ways to get a random number in minecraft. the first two are arguably the best as they have the least limitations and require the least work to set up.
 
@@ -99,11 +141,11 @@ Effective Range: [0, 360]
 
 A way to get a random number before 1.13 in the range of up to 360 numbers was to summon an entity like a squid, kill it and check the rotation of the inksac item entity it just dropped, since that rotation is always random. It's very much deprecated now though, thanks to Number 2 in this list.
 
-## 5: @r
+## 5: @r / @e[sort=random]
 
 Effective Range: [0, 10] (theoretically infinite, but practically anything above 10 is not worth it)
 
-Before we got the (arguably much better) solutions above, we could use minecrafts `@r` to select a random entity, which we would've each given their respective scoreboard score (or put the commandblock to be triggered below them or something similar). This has the obvious disadvantage, that you'll need one entity per possible score. as long as it's below 10 this is still doable, anything above does get tedious.
+Before we got the (arguably much better) solutions above, we could use `@e[limit=1,sort=random,tag=randomizer]` to select a random entity, which we would've each given their respective scoreboard score (or put the commandblock to be triggered below them or something similar). This has the obvious disadvantage, that you'll need one entity per possible score. as long as it's below 10 this is still doable, anything above does get tedious. To avoid performance issues, use a [marker entity](https://minecraft.wiki/w/Marker).
 
 ## 6: spreadplayers
 

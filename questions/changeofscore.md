@@ -1,6 +1,6 @@
 # Detect a change of score
 
-_Both Java and Bedrock. Java Syntax used if not stated otherwise._  
+_Both Java and Bedrock_
 
 If you need to detect when and if a score of a player has changed, there are two ways to go about this. This is generally most useful if you're using a scoreboard objective that changes because of something the player is doing (e.g. clicking, attacking, sneaking) or the game is doing to the player (e.g. taking damage, change of health and hunger).
 
@@ -15,6 +15,7 @@ So lets assume you have a score that detects a players death and want to do some
 
     execute as @a[scores={deaths=1..}] run say I died :(
     scoreboard players set @a[scores={dead=1..}] deaths 0
+    
 
 You can either `set` the score back to 0, or `reset` the score, whichever one fits your system better. In most cases either one will work fine.
 
@@ -25,10 +26,12 @@ Sometimes you have an objective you don't want to or cannot change. In those cas
     execute unless score @s tmp = @s deaths run say My score has changed in the last tick!
     scoreboard players operation @s tmp = @s deaths
 
-In Bedrock we lack the `if/unless score` argument, so we'll need to do a slightly different and longer approach:
-    
-    scoreboard players operation @s tmp -= @s deaths
-    tag @s[scores={tmp=0}] add noChange
-    execute @s[tag=!noChange] ~ ~ ~ say My score has changed in the last tick!
-    tag @s remove noChange
-    scoreboard players operation @s tmp = @s deaths
+This also allows us to know if the scoreboard value has incremented or decreased, here is an example using health
+
+    # Command blocks
+    execute as @a unless score @s health = @s health.tmp run say My health has changed!
+    execute as @a if score @s health < @s health.tmp run say My health has decreased!
+    execute as @a if score @s health > @s health.tmp run say My health has increased!
+    execute as @a run scoreboard players operation @s health.tmp = @s health
+
+The first command detects if the health is not the same as the value in the last tick and the second and third command detects if the value incremented or decreased. The last command updates the `health.tpm` scoreboard to be the same as the current health.

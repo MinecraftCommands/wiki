@@ -1,6 +1,7 @@
 # Find player / entity with the highest score
 
-_Please note, this only works with online players / loaded entities. If you want to accomodate offline players / unloaded entities, you'll need a much more complicated system!_
+> [!NOTE]
+> This only works with online players / loaded entities. If you want to accomodate offline players / unloaded entities, you'll need a much more complicated system!
 
 Thanks to `scoreboard player operations` this is a fairly easy question to answer, as the `>` operator will ensure the left score is at least as high as the right score.
 
@@ -17,3 +18,11 @@ then you execute as all the entities you want to compare, running the scoreboard
 And now you can find whoever has the same score as the fake player ([using Method #2 from here](/wiki/questions/findsamescoreentity/)) to name your winner.
 
     execute as @a if score @s score = #max score run I have the highest score!
+
+## Lowest score
+
+This can be used to detect the player with the lowest score, just instead of `>` use `<` and instead of `-2147483648` use positive `2147483648`, E.G:
+
+    scoreboard players set #min score 2147483648
+    execute as @a run scoreboard players operation #min score < @s score
+    execute as @a if score @s score = #min score run I have the lowest score!

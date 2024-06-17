@@ -6,7 +6,7 @@
 
 For example, if you have a function or chain of command blocks that control an arena, you probably only need those running when someone is actually in the arena.
 
-Consider a "branching" structure of checks. You could start with just `/testfor @a`. If and only if that succeeds you'd run checks to do with players, such as whether a player is holding *any* special item. If a player is holding any special item, run checks to see what kind of special item it is. Only then off of these last checks would you run the commands that make that item work.
+Consider a "branching" structure of checks. You could start with just `/execute if entity @a` (Or `/testfor @a` in pre-1.13). If and only if that succeeds you'd run checks to do with players, such as whether a player is holding *any* special item. If a player is holding any special item, run checks to see what kind of special item it is. Only then off of these last checks would you run the commands that make that item work.
 
 **Don't** achieve this by repeatedly using `/execute` as a condition (e.g: `/execute as @a[tag=holdItem] ...`) while still having all the blocks/commands running, as this will still need to repeatedly evaluate the selector for each command. Instead, you want the commands to not be running at all if the previous check failed.
 
@@ -23,7 +23,7 @@ You can alternatively use the following commands to activate an impulse command 
 
 These commands should be conditional blocks on the chain that performs the condition test. Your setup might look [something like this](http://i.imgur.com/vyhnmTH.png).
 
-**Functions** make this even easier and more efficient. You can run a different function only if a selector succeeds/fails, for example:
+**Functions** make this even easier and more efficient. You can run a different function only if a condition (for example, if a specified selector exist) succeeds/fails, for example:
 
     # pre-1.13 syntax
     function code:arena_events if @a[tag=in_arena]
@@ -31,38 +31,18 @@ These commands should be conditional blocks on the chain that performs the condi
     # 1.13+ syntax
     execute if entity @a[tag=in_arena] run function code:arena_events
     execute unless entity @a[tag=winner] run function code:check_winner
+    # 1.13+ syntax (block condition)
+    execute if block 0 60 0 air run function code:missing_block
+    execute unless block 0 90 0 grass_block run function code:place_block
+
+In 1.13+ you can check more things apart from selectors with [`execute if/unless`](https://minecraft.wiki/w/Commands/execute#Condition_subcommands)
 
 ## Slow down your commands
+Not everything needs to be running at 20Hz. If you can run some commands at 10Hz instead, you've halved the impact those commands were having.
 
-Not everything needs to be running at 20Hz. If you can run some commands at 10Hz instead, you've halved the impact those commands were having. In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround.
+In Bedrock you can just add a delay to a repeating commandblock into the block directly, in Java you need some workaround that you can find in the questions ["How to add delay to a command"](/wiki/questions/blockdelay)
 
-An easy trick with command blocks to make a clock run at half its speed is the following command:
-
-    # pre-1.13 syntax
-    testforblock ~ ~ ~ repeating_command_block * {SuccessCount:0}
-    # 1.13+ syntax
-    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0}
-
-Set up [like this](http://i.imgur.com/OULTCZx.png), the command will alternate between succeeding (as it failed last time so has `SuccessCount:0`) and failing (as it succeeded last time so has `SuccessCount:1`), and the conditional repeating block coming off of it will thus activate every other tick.
-
-These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
-
-More flexible and commonly used are scoreboard timers. One command continually increments a value, another tests when this value reaches a certain number, then the value is reset and a chain of commands is activated. 
-
-[Here's an example setup image.](http://i.imgur.com/fGyA294.png)
-
-These cause no block updates and require no entities, but will require an objective, and a new fake player for each timer. Scoreboard timers can also be used in functions.
-
-Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.
-
-**Functions** can be even easier to run on slower speeds, as the `schedule` command allows you to run functions after a certain amount of time has passed. You can use this for functions to schedule themselves to essentially create a slower clock.
-
-`code/slow_function.mcfunction`
-
-    schedule function slow_function 10t
-    say this will run twice per second
-
-you just need to start the function at some point (e.g. in the `#minecraft:load` function tag) and it will run at a slower speed.
+If you are using command blocks it is recomended to use the `SuccessCount` method to make them at half speed but if you are using datapacks, use schedule functions.
 
 ## Avoid chunk updates
 
@@ -106,7 +86,7 @@ Selectors are used a lot in commands. To make sure you're not causing extra work
 
 Your main aim here is to narrow down the list as much as possible before getting to the expensive distance-sorting/shuffling and especially the super expensive NBT checks. You shouldn't however unnecessarily check arguments that won't narrow down the list before distance-sorting/shuffling. For example, don't check `@e[type=zombie,tag=IsUndeadMob]` if all zombies will have that tag. You shouldn't make your selector imprecise so that it applies to more entities than it needs to, either. 
 
-`nbt` is the least efficient target selector, as it has to do a lot of converting and comparing, and as such should be avoided at (almost) all costs, or at least limited to the absolute minimum required.
+`nbt` is the least efficient target selector, as it has to do a lot of converting and comparing, and as such should be avoided at (almost) all costs, or at least limited to the absolute minimum required. [Predicates](https://minecraft.wiki/w/Predicate), in the other hand, can archive the same causing less performance impact only when not using NBT checks but built-in checks. If using NBT checks it actually performs worse. 
 
 `@s` is the most efficient selector, directly grabbing the command sender. See the section on **function-specific optimisations** for how you can make use of it to cut down on use of other selectors.
 
@@ -122,9 +102,9 @@ Using armor stands as markers? Strongly consider switching to area effect clouds
 
     summon area_effect_cloud ~ ~ ~ {Duration:2147483647}
 
-These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item or using `Motion`.
+These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item (In pre-1.19.4, as you can use item displays in newer versions) or using `Motion`.
 
-[Marker entities](https://minecraft.wiki/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client, so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
+[Marker entities](https://minecraft.wiki/wiki/Marker) on the other hand are impossible to see, as they aren't even sent to the client (unless using [a mod](https://modrinth.com/mod/visiblebarriers), that needs to be on the server as well), so you'd need to resort to other options to debug them. This however means that they have a competitive advantage when it comes to performance and should be used as a marker over the other options wherever possible.  
 Additionally they can store any kind of NBT data in their `data` NBT component (though storing abritrary data is probably better stored in the `storage` anyways).
 
 Remember from the previous section that selectors work by getting a list of all loaded entities, then narrowing that down. This means that extra entities increase the workload of every selector in your commands. In some cases, you could be able to use static coordinates rather than executing off of a marker entity. 
@@ -157,6 +137,6 @@ This means that instead of evaluating `@e[tag=blah]` many times, it is only eval
 
 ## More in-depth optimization
 
-/u/Wooden_chest created an in-depth analysis of a lot of small things that can improve your performance, like what order to put your execute subcommands into or that depending on the circumstance it might actually be faster to copy NBT you want to test to the storage first before testing it instead of testing it on the entity/player directly.
+[/u/Wooden_chest](https://www.reddit.com/user/Wooden_chest/) created an in-depth analysis of a lot of small things that can improve your performance, like what order to put your execute subcommands into or that depending on the circumstance it might actually be faster to copy NBT you want to test to the storage first before testing it instead of testing it on the entity/player directly.
 
 Read their full post here: https://www.reddit.com/r/MinecraftCommands/comments/w4vjs3/whenever_i_create_datapacks_i_sometimes_do/

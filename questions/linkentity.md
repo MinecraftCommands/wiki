@@ -2,6 +2,8 @@
 
 _Also known as a **scoreboard ID system**_.
 
+## Java
+
 Sometimes there is a need to link two entites together in a logical fashion. In Minecraft, we can achieve this by giving both entities the same scoreboard score. In this article we'll be linking an entity to a player.
 
 For example, let's create a dummy scoreboard for player/entity IDs.
@@ -37,7 +39,10 @@ If you are using a datapack, then you can use the command above in the tick func
 
 ***
 
-**Note: The information below is outdated / inefficient. Use this only to better understand how the Scoreboard ID system works.**
+## Java and Bedrock
+
+> [!NOTE]
+> The information below is outdated / inefficient for java. Use this only to better understand how the Scoreboard ID system works.
 
 First we need to set up a dummy scoreboard objective
 
@@ -77,7 +82,5 @@ If for some reason you cannot use a function, use this code for your commandbloc
 
     # remove tag so we're ready for the next player
     tag @a remove addId
-
-_If you're on bedrock, replace `execute as @a[tag=addId] run` with `execute @a[tag=addId] ~~~`._
 
 **And we're done, every player has a unique ID**. Now we can just copy the id score to whatever entity we want to link up using `scoreboard players operation`, and use [this method](/wiki/questions/findsamescoreentity) to find the entity with the same score (aka the linked entity).

@@ -1,6 +1,7 @@
-If you're trying to check whether an entity / player is looking at a specific entity / position, you might be able to use a more streamlined method [described here](/wiki/questions/lookat). 
-
 # Raycast
+
+> [!NOTE]
+> If you're trying to check whether an entity / player is looking at a specific entity / position, you might be able to use a more streamlined method [described here](/wiki/questions/lookat). 
 
 ## What is a raycast?
 
@@ -10,7 +11,7 @@ A raycast is possible due to the introduction of [local coordinates](https://min
 
 In all of the below examples we'll use a step-size of 0.1 blocks at a time. This is a reasonable compromise between error margin and performance hit, but depending on the usecase a smaller or larger step size is absolutely thinkable.
 
-Due to the way these raycasts tend to be implemented, they move forward until they hit the desired target (e.g. a block that is not air). However, this way it is possible that a ray will never find its terminating condition, so a second ending condition is added: The maximum step amount. This generally consists of a scoreboard value that is increased/decreased with every step, counting the number of steps thus stopping the ray after a certain distance.
+Due to the way these raycasts tend to be implemented, they move forward until they hit the desired target (e.g. a block that is not air, but you may also want to not detect other non-solid blocks as water). However, this way it is possible that a ray will never find its terminating condition, so a second ending condition is added: The maximum step amount. This generally consists of a scoreboard value that is increased/decreased with every step, counting the number of steps thus stopping the ray after a certain distance.
 
 Please remember that a raycast _can_ (depending on the exact implementation) be a somewhat performance intensive procedure, so you need to try to find a balance between accuracy, distance and frequency of your raycast to avoid lag.
 
@@ -97,7 +98,7 @@ Thanks to the new execute syntax introduced in 1.19.50, you can use the same sys
 
 #### Do it all in one tick with commands (using XP orbs)
 
-A technique first brought up by /u/VentedMCBE allows us to do a full raycast using only commandblocks and doing it in a single tick. It is, as most advanced minecraft techniques, somewhat hacky, but it works well.
+A technique first brought up by [/u/VentedMCBE](https://www.reddit.com/u/VentedMCBE) allows us to do a full raycast using only commandblocks and doing it in a single tick. It is, as most advanced minecraft techniques, somewhat hacky, but it works well.
 
 As mentioned, this works with just commandblocks, so for the following commands you can either put them into a repeating-chain of commandblocks or in a function.
 

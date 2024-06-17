@@ -4,6 +4,13 @@
 
 Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/minecraft/creator/documents/commandsnewexecute) became mandatory, so you'll need to switch to that. See also [this information on bedrock.dev](https://wiki.bedrock.dev/commands/new-execute.html).
 
+## Why is my give command broken (java)?
+In 1.20.5 a new system for storing item data has been introduced to Java Edition in [Snapshot 24w09a](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w09a).
+Anything relating to items (such as /give, /item or loot tables) have a different format now.
+The gist of it is this: Unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components' that go in [] and are comma separated.
+For example: /give @p diamond_pickaxe[damage=10,custom_model_data=7]
+For a list of how item components are structured, see [this article on the minecraft.wiki](https://minecraft.wiki/w/Item_format/1.20.5).
+
 ## How do I...
 
 ### Items
@@ -14,7 +21,8 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 [Detect rightclick or leftclick (on an item)?](/wiki/questions/itemclick)  
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
-[Do custom crafting](/wiki/questions/customcrafting)
+[Do custom crafting?](/wiki/questions/customcrafting)  
+[Make a shop? / Buy items?](/wiki/questions/shop)
 
 ### Scores
 
@@ -25,7 +33,7 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 [Summon/Teleport an entity/player at/to a position defined in a score?](/wiki/questions/movetoscore)  
 [Detect a change in score?](/wiki/questions/changeofscore)  
 [Link an entity to another entity through scoreboards?](/wiki/questions/linkentity)  
-[Find the player / entity with the highest score?](/wiki/questions/highestscore/)   
+[Find the player / entity with the highest / lowest score?](/wiki/questions/highestscore)   
 
 ### Players
 
@@ -50,8 +58,10 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 [Make a scoreboard ID system?](/wiki/questions/linkentity)  
 [Make one mob attack another mob/player?](/wiki/questions/angermob)  
 [Do raycasting?](/wiki/questions/raycast)   
-[Make a circle (of blocks / entities)?](/wiki/questions/makecircle/)
-[Detect when a mob has died](/wiki/questions/mobdeaths)
+[Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
+[Detect when a mob has died](/wiki/questions/mobdeaths)  
+[Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)  
+[Setup, configure and add multiple dialogues to NPCs?](/wiki/questions/npc)
 
 ## What is...
 
@@ -67,4 +77,4 @@ Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/m
 
 ## Still needed articles
 
-*Found something that should be added? Maybe even want to contribute an article? Submit a pull request or create a GitHub issue.*
+*Found something that should be added? Maybe even want to contribute an article? Submit a pull request or create a GitHub issue [here](https://github.com/MinecraftCommands/wiki).*

@@ -3,11 +3,11 @@
 
 ## Bedrock
 
-In the Bedrock edition of the game, you can just give a commandblock a delay direcly through its interface, no need for any workarounds.
+In the Bedrock edition of the game, you can just give a commandblock a delay direcly through its interface, no need for any workarounds, unless you want to make a timer for every player, see the method using a [scoreboard](#scoreboard)
 
 ## Java 
 
-Using repeaters with command blocks is considered bad practice, and is often impractical for long delays. Alternatives include area effect cloud timers, scoreboard timers and the `schedule` command (requires functions). They all have their respective use cases, but the most commonly used one is the scoreboard timer.
+Using repeaters with command blocks (or a hopper clock) is considered bad practice, it causes more lag, and is often impractical for long delays. Alternatives include area effect cloud timers, scoreboard timers and the `schedule` command (requires functions). They all have their respective use cases, but the most commonly used one are the scoreboard timer for delaying a specific command or the `schedule` one for global commands (as they don't keep context).
 
 ### Area Effect Clouds
 
@@ -17,7 +17,8 @@ For example, the following creates an AEC that will disappear in 100 ticks (5 se
 
     summon area_effect_cloud ~ ~ ~ {Duration:100}
 
-_Note: To see area_effect_cloud press `F3 + B` to show hitboxes._
+> [!NOTE]
+> To see area_effect_cloud press `F3 + B` to show hitboxes.
 
 You can set the `Duration` tag as a positive value or the `Age` tag as a negative value, but then you need to set the `Particle` tag to `"block air"` (1.20.4 and below) or `{type:"block",block_state:"minecraft:air"}` (1.20.5 and above) to prevent it from creating particles.
 
@@ -47,7 +48,8 @@ However, if you want to use spawn_egg to simply create an AEC's for delay, then 
     # 1.20.5+
     give @s bat_spawn_egg[entity_data={id:"minecraft:area_effect_cloud",Tags:["delay"],Duration:100,Radius:0f,WaitTime:0}]
 
-_Note: You can use any spawn_egg, but not just `bat_spawn_egg`._
+> [!NOTE]
+> You can use any `spawn_egg`, but not just `bat_spawn_egg`
 
     # Command block / tick function
     execute at @e[type=area_effect_cloud,tag=delay,nbt={Age:99}] run summon zombie
@@ -56,13 +58,13 @@ This is a simple way to execute any command at a specified position once with a 
 
 ### Marker
 
-If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use the invisible armor_stand.
+If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use an [`area_effect_cloud`](https://minecraft.wiki/w/Lingering_Potion#Area_effect_cloud) that will not despawn or an invisible [`armor_stand`](https://minecraft.wiki/w/Armor_Stand).
 
     # Summon
     summon marker ~ ~ ~ {Tags:["delay"]}
     
     # Spawn egg
-    ## 1.13 - 1.20.4
+    ## 1.17 - 1.20.4
     give @s bat_spawn_egg{EntityTag:{id:"minecraft:marker",Tags:["delay"]}}
     
     ## 1.20.5+
@@ -75,7 +77,7 @@ In addition to the marker, you need to use a scoreboard timer, which each tick w
     execute as @e[type=marker,tag=delay,scores={delay=100..}] at @s store success score @s delay run summon zombie
 
 ### Scoreboard
-
+#### Java 1.13+ and Bedrock
 For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependant events/delays) or "[fake player](/wiki/questions/fakeplayer)" scores (set "fake" values for player names, recommended for player independant delays).
 
     # Setup
@@ -93,7 +95,7 @@ For a scoreboard timer you can have a repeating commandblock somewhere that's co
     execute if score $FakePlayer timer matches 120 run say This command has 6 seconds delay.
     execute if score $FakePlayer timer matches 120.. run scoreboard players reset $FakePlayer timer
 
-Or, if you do not create additional conditions, you can immediately reset the score in one command using `store success score`:
+Or, if you do not create additional conditions, you can immediately reset the score in one command using `store success score` (only java edition):
 
     # Command blocks
     execute as @a[scores={timer=101..}] store success score @s timer run say This command has 5 seconds delay.
@@ -108,6 +110,19 @@ You can also make the delay more dynamic by setting a score of a fake player and
     
     # Command block / tick function
     execute as @a if score @s timer >= #delay timer store success score @s timer run say Custom delay command.
+
+#### Java pre-1.13
+Before 1.13 we didn't have `execute if score` so we will need to use `scoreboard players test` for that.
+
+    # command block
+    scoreboard players add FakePlayerA TimerScore 1    
+    scoreboard players test FakePlayerA TimerScore 60
+    # Chain conditional
+    scoreboard players set FakePlayerA TimerScore 0
+    # Conditional repeating command
+    <any command>
+
+[Here's an example setup image](http://i.imgur.com/fGyA294.png)
 
 ### Schedule
 
@@ -124,11 +139,12 @@ So you can create a simple way to run your commands not every tick, but, for exa
     schedule function example:loops/10s 10s
     say This will run every 10 second.
 
-_Note: Do not run the schedule function in a tick function, without any conditions. This will overwrite the schedule every tick and the schedule function will never run._
+> [!NOTE]
+> Do not run the schedule function in a tick function, without any conditions. This will overwrite the schedule every tick and the schedule function will never run.
 
 This has several limitations:
 
-1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity.  
+1. Even when using `/execute as`, the scheduled function will always run as the Server, but not as the selected entity. See [command context](/wiki/questions/commandcontext)
 2. Scheduling the same function before it is successfully ran will by default overwrite the previous schedule: if you schedule a function to happen in 5 seconds, then schedule the same function again before the 5 seconds are up, the new schedule will be the one that happens. **Since 1.15 you can now add the `append` argument as the last argument in the command, which circumvents this problem**.  
 3. It requires functions and thus datapacks to work.
 4. It will be executed at position Y = -64 under the world spawn.
@@ -154,4 +170,36 @@ Read the current gametime and store it in the score of the selected entity and a
     execute store result score #this timer run time query gametime
     execute as @e if score @s timer = #this timer run say Example Command.
 
-**Note:** If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one.
+> [!NOTE]
+> If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one.
+
+### Success Count
+An easy trick with command blocks to make a clock run at half its speed is the following command:
+
+    # pre-1.13 syntax
+    testforblock ~ ~ ~ repeating_command_block * {SuccessCount:0}
+    # 1.13+ syntax
+    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0}
+    # 1.13+ syntax (only run one command)
+    execute if block ~ ~ ~ repeating_command_block{SuccessCount:0} run <command>
+
+Set up [like this](http://i.imgur.com/OULTCZx.png) (unless running only one command), the command will alternate between succeeding (as it failed last time so has `SuccessCount:0`) and failing (as it succeeded last time so has `SuccessCount:1`), and the conditional repeating block coming off of it will thus activate every other tick.
+
+These cause no block updates and require no entities or scoreboard objectives, but are limited to halving the speed of the first block.
+
+
+### Command block minecart
+The entity [`command_block_minecart`](https://minecraft.wiki/w/Minecart_with_Command_Block) execute the written command every 4 ticks. Keep in mind that people can break the minecart (but it will **not** drop the command block).
+
+### Falling blocks or entities
+Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.
+
+In this example we use an armor stand with the tag `loop`, we will place a pressure plate with an impulse command block below with the following command:
+```
+execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
+```
+To add more commands, just add a chain one to the previus impulse.
+
+> [!IMPORTANT]
+> It is not recomended to use this method
+
