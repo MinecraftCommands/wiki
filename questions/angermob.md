@@ -6,8 +6,9 @@ The basic principle for this method is that a mob that can attack will get angry
 
 ### Using /damage
 
-> [!IMPORTANT]
-> In bedrock a lot of entities have a very defined set of other entities they can attack, as defined in their behavior pack. So if the below method doesn't work to anger them, make sure they're actually able to attack the target entity and change the behavior files accordingly!
+| ⚠️ Important |
+|--------------|
+|In bedrock a lot of entities have a very defined set of other entities they can attack, as defined in their behavior pack. So if the below method doesn't work to anger them, make sure they're actually able to attack the target entity and change the behavior files accordingly!|
 
 Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wiki/Commands/damage) (in 1.18.10 Bedrock and 1.19.4 Java) we can use this command to inflict fake damage from one entity onto another with relative ease:
 
@@ -39,8 +40,10 @@ In this example we're using `0` as the amount of damage, as we just want to pret
 The way the game knows who got attacked by whom is by tracking the owner of a projectile through the projectiles `Owner` tag, which represents the owners UUID. We can use this to make a projectile that pretends to be from a specific entity by modifying this NBT tag.
 
 For example you can use a snowball, as this projectile only deal damage to blazes. The snowball is summoned 2.3 blocks above the target so their hitboxes don't overlap (which would cause the snowball to ignore the target). 
-> [!IMPORTANT]
-> If the player is crawnling or it has a block above them, it wont work.
+
+| ⚠️ Important |
+|--------------|
+|If the player is crawnling or it has a block above them, it won't work|
 
 In the following example a skeleton tagged `attacker` is tricked into attacking a zombie tagged `target`.
 

@@ -41,8 +41,9 @@ If you are using a datapack, then you can use the command above in the tick func
 
 ## Java and Bedrock
 
-> [!NOTE]
-> The information below is outdated / inefficient for java. Use this only to better understand how the Scoreboard ID system works.
+| 📝 Note |
+|---------|
+|The information below is outdated / inefficient for java. Use this only to better understand how the Scoreboard ID system works|
 
 First we need to set up a dummy scoreboard objective
 

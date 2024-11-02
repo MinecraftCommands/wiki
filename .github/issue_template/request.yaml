@@ -1,0 +1,30 @@
+name: Request
+description: Make a request.
+title: "[REQUEST]: "
+labels: ["request"]
+projects: [""]
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: What would you like to request?
+      description: Write your suggestion here.
+      placeholder: "I would like to request…"
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Screenshots / Files
+      description: You can copy and paste or drag and drop to add files.
+      placeholder: "files"
+    validations:
+      required: false
+  - type: textarea
+    id: issues
+    attributes:
+      label: What issues will be solved with this request?
+      description: You can skip this question if none are solved.
+      placeholder: "#Issues ID"
+    validations:
+      required: false

@@ -1,10 +1,14 @@
 ## Summon an entity at the position set in a score
 
-> [!NOTE]
-> This article is about Java Edition, except for binary teleport, found at the end of the article.
+| 📝 Note |
+|---------|
+|This article is about Java Edition, except for binary teleport, found at the end of the article, that will work in bedrock too|
 
-> [!IMPORTANT]
-> If the coordinate is inside a block and below it there isn't a solid block, the entity will clip trought and fall, this is common if you are storing the scoreboard value by storing the `Pos` value, when the player is not in a full block (for example a slab)
+| ⚠️ Important |
+|--------------|
+|If the coordinate is inside a block and below it there isn't a solid block, the entity will clip trought and fall, this is common if you are storing the scoreboard value by storing the `Pos` value, when the player is not in a full block (for example a slab)|
+
+If you want to store the position of the player see this [transfer nbt to score](wiki/questions/nbttransfer)
 
 Since version 1.20.2 you can summon the entity directly at the position of the score using a [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) in the datapack. If you are using an earlier version, or do not use a datapack, then you cannot summon the entity directly at the position of the score, instead you have to summon the entity and then teleport it to your desired position.
 
@@ -72,7 +76,9 @@ Since version 1.20.2 you can also use the [macro](https://minecraft.wiki/w/Funct
     # function example:tp/macro
     $tp @s $(x) $(y) $(z)
 
-**Note:** A macro cannot be read from a List/Array, but only from an object. Therefore, if you received a list (like Pos tag) as a tag for teleportation, you must convert this into objects:
+| 📝 Note |
+|---------|
+|A macro cannot be read from a List/Array, but only from an object. Therefore, if you received a list (like `Pos` tag) as a tag for teleportation, you must convert this into objects|
 
     # Example input pos as List
     data merge storage example:data {Pos:[25d,100d,65d]}
@@ -115,8 +121,9 @@ See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about thi
 
 ### 4: Binary Teleportation
 
-> [!NOTE]
-> This method works with bedrock too
+| 📝 Note |
+|---------|
+|This method works in bedrock too|
 
 You basically copy their score to some temporary score so you don't loose it when you modify it, and then you go through the different powers of 2 (hence the name), check if their score is above that and then teleport them relatively that far.
 

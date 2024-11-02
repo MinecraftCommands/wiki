@@ -252,7 +252,7 @@ In the 1.18.20 beta they added the [`hasitem`](https://minecraft.wiki/wiki/Targe
 
 A player with 5 or more apples in their inventory
 
-    @a[hasitem={item:apple,quantity=5..}]
+    @a[hasitem={item=apple,quantity=5..}]
 
 A player with an iron pickaxe in their mainhand
 
@@ -277,8 +277,9 @@ effect @a[hasitem={item=stick,data=5}] speed
 
 #### before 1.18.20
 
-> [!NOTE]
-> This information is outaded and it is not useful for the current version of the game.
+| 📝 Note |
+|---------|
+|This information is outaded and it is not useful for the current version of the game|
 
 Using the `clear` command with a max count of 0 will return a successful result if the item is in the players inventory, without actually removing the item, which can be picked up by either a conditional commandblock or a comparator. **You can only do this for 1 player at a time though, as if you use `@a` you have no way of knowing which one of the players has the item in their inventory.**
 
@@ -301,7 +302,8 @@ Detecting a specific item on the ground involves using its name.
 
 **This method is language specific and won't work if your hosting player is not playing in english!** A way to circumvent that problem would be to either rename the item if possible, or to change every language file the game has to make the name of the item the same across all languages, which will require you to include a resourcepack.
 
-> [!NOTE]
-> You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name.
+| 📝 Note |
+|---------|
+|You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name|
 
     kill @e[type=item, name="§r§Dirt"]

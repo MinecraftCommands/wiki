@@ -17,8 +17,9 @@ For example, the following creates an AEC that will disappear in 100 ticks (5 se
 
     summon area_effect_cloud ~ ~ ~ {Duration:100}
 
-> [!NOTE]
-> To see area_effect_cloud press `F3 + B` to show hitboxes.
+| 📝 Note |
+|---------|
+|To see area_effect_cloud press `F3 + B` to show hitboxes|
 
 You can set the `Duration` tag as a positive value or the `Age` tag as a negative value, but then you need to set the `Particle` tag to `"block air"` (1.20.4 and below) or `{type:"block",block_state:"minecraft:air"}` (1.20.5 and above) to prevent it from creating particles.
 
@@ -48,8 +49,9 @@ However, if you want to use spawn_egg to simply create an AEC's for delay, then 
     # 1.20.5+
     give @s bat_spawn_egg[entity_data={id:"minecraft:area_effect_cloud",Tags:["delay"],Duration:100,Radius:0f,WaitTime:0}]
 
-> [!NOTE]
-> You can use any `spawn_egg`, but not just `bat_spawn_egg`
+| 📝 Note |
+|---------|
+|You can use any `spawn_egg`, but not just `bat_spawn_egg`|
 
     # Command block / tick function
     execute at @e[type=area_effect_cloud,tag=delay,nbt={Age:99}] run summon zombie
@@ -139,8 +141,9 @@ So you can create a simple way to run your commands not every tick, but, for exa
     schedule function example:loops/10s 10s
     say This will run every 10 second.
 
-> [!NOTE]
-> Do not run the schedule function in a tick function, without any conditions. This will overwrite the schedule every tick and the schedule function will never run.
+| 📝 Note |
+|---------|
+|Do not run the schedule function in a tick function, without any conditions. This will overwrite the schedule every tick and the schedule function will never run|
 
 This has several limitations:
 
@@ -170,8 +173,9 @@ Read the current gametime and store it in the score of the selected entity and a
     execute store result score #this timer run time query gametime
     execute as @e if score @s timer = #this timer run say Example Command.
 
-> [!NOTE]
-> If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one.
+| 📝 Note |
+|---------|
+|If you frequently run the schedule function to delay, then use `append` mode to run the schedule function so that each run does not overwrite the previous one|
 
 ### Success Count
 An easy trick with command blocks to make a clock run at half its speed is the following command:
@@ -200,6 +204,7 @@ execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
 ```
 To add more commands, just add a chain one to the previus impulse.
 
-> [!IMPORTANT]
-> It is not recomended to use this method
+| ⚠️ Important |
+|--------------|
+|It is not recomended to use this method|
 

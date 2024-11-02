@@ -1,8 +1,9 @@
 # How to create / customize an NPC?
 This article will explain how to create NPCs and add commands to it.
 
-> [!NOTE]
-> This is for the entity in Bedrock edition called [`NPC`](https://minecraft.wiki/w/NPC)
+| 📝 Note |
+|---------|
+|This is for the entity in Bedrock edition called [`NPC`](https://minecraft.wiki/w/NPC)|
 
 ## Basics of an NPC
 
@@ -19,10 +20,10 @@ To edit an NPC right click it in creative, you will open a GUI that allows you t
 The NPC will be staring at the nearest player that is not in spectator, if it’s in a 6 block radius.
 
 ## Dialogues and commands
-> [!NOTE]
-> You can find useful information in [Wiki Bedrock Dev](https://wiki.bedrock.dev/entities/npc-dialogs.html).
->
-> You can use [this tool](https://jannisx11.github.io/dialogue-designer/) by [jannisx11](https://github.com/jannisx11) to add dialogue and commands easily.
+| 📝 Note |
+|---------|
+|You can find useful information in [Wiki Bedrock Dev](https://wiki.bedrock.dev/entities/npc-dialogs.html)|
+|You can use [this tool](https://jannisx11.github.io/dialogue-designer/) by [jannisx11](https://github.com/jannisx11) to add dialogue and commands easily|
 
 When you interact with the NPC in creative, you will find a button called `Edit Dialog`. When you click it, you will be able to edit the dialogue. The maximum of characters you can have is 307.
 You can **not** use target selectors in the dialog, for example, if the dialog is `@p`, the dialog will be `@p`, not the nearest player.

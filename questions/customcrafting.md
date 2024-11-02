@@ -1,10 +1,14 @@
 # Do custom crafting (with NBT)
 
+* [Java](#bedrock-edition-addon)
+* [Bedorck](#bedrock-edition-addon)
+
+## Java
 The vanilla crafting system does not support NBT data. Although 1.20.5 added the ability to create recipes with custom crafting data, it still does not support custom data for ingredients. This article provides several ways to create custom crafts that support custom items for both the result and the ingredients.
 
 ----
 
-## Floor Crafting
+### Floor Crafting
 
 The easiest way to create a custom craft is to use floor crafting. You can create crafting recipes with any ingredients and for each recipe you only need 1 command block, which makes it easy to create many recipes without creating an excessive load on the server.
 
@@ -81,7 +85,7 @@ Since version 1.20.5 NBT tags have been replaced with [components](https://minec
 
 ----
 
-## Custom Dropper Crafting
+### Custom Dropper Crafting
 
 Another popular way to create custom crafts that support NBT data is to use custom dropper crafting. This method uses a dropper / dispenser interface to simulate the crafting grid as the crafting\_table. This method is more difficult to implement, but looks much better than floor crafting.
 
@@ -140,9 +144,9 @@ Now you can create a ready-made command for the recipe. Below is an example of c
 
 ----
 
-## Custom Knowledge Book Crafting
+### Custom Knowledge Book Crafting
 
-### Before 1.20
+#### Before 1.20
 
 Before version 1.20 you could create custom crafts using the Knowledge Book method, however **this method does not support creating custom crafts with NBT data for ingredients, only for the result**.
 
@@ -251,7 +255,7 @@ Below is an example of how to implement this approach:
 
 The obvious disadvantages of this method are the inability to create a craft with custom ingredients, and if you give yourself all the recipes, it will give you all the custom items, but you still won’t be able to have your custom crafts in the recipe book.
 
-### After 1.20
+#### After 1.20
 
 Starting with version 1.20, a new advancement trigger was added - `recipe_crafted`. This one triggers when you have crafted the specified craft, but not just unlocked it. Therefore you don't need to take recipes and you can have your crafts in the craft book, although these crafts will appear as knowledge\_book.
 
@@ -334,7 +338,7 @@ Below is an example for creating an advancement for a custom craft, which must h
 
 **Important!** The player can still use regular items in crafting, but then the advancement will not work and the player will only craft the knowledge\_book. To avoid this, you need to create a more complex crafting system.
 
-### 1.20.5 and above
+#### 1.20.5 and above
 
 Version 1.20.5 also added the ability to create crafts with custom data, but only for the craft result - NOT for ingredients. Therefore, if you want to use custom items in crafting, then in this version it will be the same as described for the previous version.
 

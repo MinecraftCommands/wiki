@@ -6,8 +6,9 @@ This method consists of buying items with other items, in this example, you will
 
 _Related:_ [Count how much of X item the player has](wiki/questions/amountitems)
 
-> [!NOTE]
-> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before.
+| 📝 Note |
+|--------------|
+|You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before|
 
 
 ### Java
@@ -44,8 +45,9 @@ Or if you prefer a function:
     clear @s diamond 5
     tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
 
-> [!NOTE]
-> The function `example:buy/netherite` must be run `as` the player
+| 📝 Note |
+|--------------|
+|The function `example:buy/netherite` must be run `as` the player|
 
 In 1.20.5 `execute if items` was added, which allows to count items in a diferent way.
 To use this method, all command remains the same, as the previus example except the one for counting items that is this one:
@@ -64,8 +66,9 @@ With this command:
 
     execute store result score @s diamonds if items entity @s container.* diamond
 
-> [!NOTE]
-> The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`, that will not work below 1.20.5).
+| 📝 Note |
+|--------------|
+|The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`, that will not work below 1.20.5)|
 
 #### Using a villager
 Villagers are a passive mob that can be interacted with, and will open the trading GUI.
@@ -121,12 +124,14 @@ If you don't want to use an NPC can use this method, it is very similar to Java 
     clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
     tag @a remove buyer.netherite
 
-> [!NOTE]
-> in order for it to work with npc, change `@p` to `@initiator`
-> _Related: [How to setup a NPC?](wiki/questions/npc)_
+| 📝 Note |
+|--------------|
+|in order for it to work with npc, change `@p` and `@a` to `@initiator`|
+|_Related: [How to setup a NPC?](wiki/questions/npc)_|
 
-> [!NOTE]
-> It is super important to clear the diamonds in the last step before removing the tag
+| 📝 Note |
+|--------------|
+|It is super important to clear the diamonds in the last step before removing the tag|
 
 ### Add more than one items
 In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has both items.
@@ -158,8 +163,9 @@ In this example the currency is a `dummy` scoreboard called `coins`.
 
 #### With command blocks
 
-> [!NOTE]
-> This example uses Java syntax for the message that appears when the player buys the item
+| 📝 Note |
+|--------------|
+|This example uses Java syntax for the message that appears when the player buys the item|
 
     /tag @p add buyer.diamond
     /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
@@ -181,5 +187,6 @@ This is more optimized compared to using command blocks as functions keep the co
     scoreboard players remove @s coins 10
     tellraw @s {"text":"You bought a diamond","color":"green"}
 
-> [!NOTE]
-> The function `example:buy/diamond` must be run `as` the player
+| 📝 Note |
+|--------------|
+|The function `example:buy/diamond` must be run `as` the player|

@@ -1,7 +1,8 @@
 # Activate a command *once* when a player does something (e.g: enters an area)
 
-> [!NOTE]
-> In bedrock `distance` does not exist so instead of `distance=..X` use `r=X` and instead of `distance=X..` use `rm=X` and instead of `distance=X..Y` use `rm=X,r=Y`, all methods only work in Java unless stated otherwise.
+| 📝 Note |
+|--------------|
+|In bedrock `distance` does not exist so instead of `distance=..X` use `r=X` and instead of `distance=X..` use `rm=X` and instead of `distance=X..Y` use `rm=X,r=Y`, all methods only work in Java unless stated otherwise|
 
 This makes a command act as if it was on a comparator, without the lag and multiplayer incompatibility that comes from using a comparator. The general idea here is to select players that match a selector, but did **not** match that same selector in the previous tick. For example, players who have just entered an area (with `@a[x=73,y=10,z=3,distance=..1]`), just gained level 5 (with `@a[level=5]`), just entered creative (with `@a[gamemode=creative]`), etc.  
 
@@ -16,8 +17,9 @@ For this method our first command checks two things: Your condition for running 
     execute as @a[scores={matched=0},x=73,y=10,z=3,distance=..1] run say I just entered the area!
     execute as @a store success score @s matched if entity @s[x=73,y=10,z=3,distance=..1]
 
-> [!NOTE]
-> The order in which the commands are executed is important here. In the first command you check your condition and execute the command, and the second command store the success of executing your condition.
+| 📝 Note |
+|--------------|
+|The order in which the commands are executed is important here. In the first command you check your condition and execute the command, and the second command store the success of executing your condition|
 
 The previous example doesn't work in Bedrock Edition. Here is a setup that works in both Java and Bedrock Edition (if you change `distance=..X` to `rm=X`):
 
@@ -106,15 +108,17 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
     advancement revoke @s only example:spawn/enter
     tellraw @s "You leave spawn!"
 
-> [!NOTE]
-> In the predicate `example:at_spawn` omits the Y position check, so a player at any height in the specified area will match the conditions of the predicate.
+| 📝 Note |
+|--------------|
+|In the predicate `example:at_spawn` omits the Y position check, so a player at any height in the specified area will match the conditions of the predicate|
 
 Such a check may seem very large, but this method allows you not to check the same condition 2 times per tick, but only 1 time per second (because the `minecraft:location` advancement trigger only runs once per second), which can be important with a large online number of players.
 
 ## Add/remove tag
 
-> [!NOTE]
-> This method will work in Bedrock too
+| 📝 Note |
+|--------------|
+|This method will work in Bedrock too|
 
 The following commands, running in this order, will keep track of whether a player matched the selector `@a[x=73,y=10,z=3,distance=..1]`:
 

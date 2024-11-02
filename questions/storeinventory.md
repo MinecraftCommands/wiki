@@ -12,8 +12,9 @@ For this, you need to put them somewhere in a confined space, so the items don't
 
 Same for the return part, as you only want to give the player who owns the items those items back. You also need to consider that a completely full inventory (including armor) will not be able to be picked up instantly by the player without them manually equipping their armor.
 
-> [!CAUTION]
-> You will lose any item with the curse of vanishing enchantment
+| ⚠️ Caution |
+|------------|
+|You will lose any item with the curse of vanishing enchantment|
 
 ### Custom Hopper Entity
 
@@ -449,13 +450,15 @@ We often see something like `Inventory[0]` in this article. This is an array sel
 It is possible to select an item from the array based on its Slot like this: `Inventory[{Slot:10b}]`. We could use this for the "correct slot" method, if it weren't for the fact that we can't use `/item replace` with arbitrary data but we need to use something that is guaranteed to be an item. So we can't skip the step of first putting it into a container / entity inventory first.
 
 ### storing in a chest
->  [!NOTE]
-> This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)
+| 📝 Note |
+|---------|
+|This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)|
 
 This method consist on using `/item` (on Java) or to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
 
-> [!NOTE]
-> You must run this function `as` the player
+| 📝 Note |
+|---------|
+|You must run this function `as` the player|
 
     # function example:storing
     execute positioned <pos1> run function example:storing/container_1

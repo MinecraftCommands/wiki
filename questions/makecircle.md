@@ -4,13 +4,13 @@ Creating perfect (or as perfect as they can be with minecrafts blocky nature) ci
 
 ## The idea
 
-The idea of how to achieve this is pretty simple: Have an entity in the center that slowly rotates, then place what you want X blocks in front of it using the local coordinates (`^ ^ ^X)`.
+The idea of how to achieve this is pretty simple: Have an entity in the center that slowly rotates, then place what you want X blocks in front of it using the local coordinates (`^ ^ ^X`).
 
 ## Implementation
 
-For the example we're assuming that we want to make a block outline. You can easily adjust this to summon entities or make a filled circle by swapping the `/setblock` command for something else (e.g. summon / fill).
+For the example we're assuming that we want to make a block outline. You can easily adjust this to summon entities or make a filled circle by swapping the `/setblock` command for something else (e.g. `/summon`, `/ fill`).
 
-1. Summon your center entity. We're using an armorstand for parity, but in Java you can use other things like a marker or any NoAI entity.
+1. Summon your center entity. We're using an armorstand for parity, but in Java you can use other things like a [`marker`](https://minecraft.wiki/w/Marker) (for better performance) or any NoAI entity.
 
         /summon armor_stand ~ ~ ~
 
@@ -18,8 +18,10 @@ For the example we're assuming that we want to make a block outline. You can eas
 
         # Bedrock
         /tag @e[type=armor_stand,c=1] add center
-        # Java
+        # Java 1.13+
         /tag @e[type=armor_stand,sort=nearest,limit=1] add center
+        # Java 1.21+
+        /tag @n[type=armor_stand] add center
 
 3. now, to automatically place the blocks, we'll want to put the following command into a repeating commandblock and the ones after that into chain commandblocks attached to the repeating one. Starting off with placing the block in front of the armorstand.
 

@@ -1,7 +1,8 @@
 # Find player / entity with the highest score
 
-> [!NOTE]
-> This only works with online players / loaded entities. If you want to accomodate offline players / unloaded entities, you'll need a much more complicated system!
+| 📝 Note |
+|---------|
+|This only works with online players / loaded entities. If you want to accomodate offline players / unloaded entities, you'll need a much more complicated system!|
 
 Thanks to `scoreboard player operations` this is a fairly easy question to answer, as the `>` operator will ensure the left score is at least as high as the right score.
 

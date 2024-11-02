@@ -5,11 +5,7 @@
 Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/minecraft/creator/documents/commandsnewexecute) became mandatory, so you'll need to switch to that. See also [this information on bedrock.dev](https://wiki.bedrock.dev/commands/new-execute.html).
 
 ## Why is my give command broken (java)?
-In 1.20.5 a new system for storing item data has been introduced to Java Edition in [Snapshot 24w09a](https://www.minecraft.net/en-us/article/minecraft-snapshot-24w09a).
-Anything relating to items (such as /give, /item or loot tables) have a different format now.
-The gist of it is this: Unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components' that go in [] and are comma separated.
-For example: /give @p diamond_pickaxe[damage=10,custom_model_data=7]
-For a list of how item components are structured, see [this article on the minecraft.wiki](https://minecraft.wiki/w/Item_format/1.20.5).
+In 1.20.5 unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components'. Anything related to items have a diferent format. For a list of how item components are structured, see [this article on The Minecraft Wiki](https://minecraft.wiki/w/Item_format/1.20.5).
 
 ## How do I...
 
@@ -46,29 +42,34 @@ For a list of how item components are structured, see [this article on the minec
 [Store a players inventory (and give it back later)?](/wiki/questions/storeinventory)  
 [Detect a player looking at something (entity / position)](/wiki/questions/lookat)  
 
-### Misc
+### Conditions
 
-[Do something if a command block *wasn't* successful?](/wiki/questions/blockinvert)  
-[Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)?](/wiki/questions/tagentity)  
-[Add a delay to a command block?](/wiki/questions/blockdelay)  
-[Check if there are exactly X players matching a selector?](/wiki/questions/numplayers)  
 [Do conditions with functions?](/wiki/questions/functionconditions)  
-[Point a compass towards a player?](/wiki/questions/compasstoplayer)  
+[Do something if a command block *wasn't* successful?](/wiki/questions/blockinvert)  
+[Check if there are exactly X players (or entities) matching a selector?](/wiki/questions/numplayers)  
+
+### Entities
+
+[Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)?](/wiki/questions/tagentity)  
+[Make one mob attack another mob/player?](/wiki/questions/angermob) 
 [Summon an entity/projectile flying in the direction the player is looking?](/wiki/questions/shootfacing)  
-[Make a scoreboard ID system?](/wiki/questions/linkentity)  
-[Make one mob attack another mob/player?](/wiki/questions/angermob)  
-[Do raycasting?](/wiki/questions/raycast)   
-[Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)  
 [Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)  
 [Setup, configure and add multiple dialogues to NPCs?](/wiki/questions/npc)
+
+### Misc
+
+[Add a delay to a command block?](/wiki/questions/blockdelay)  
+[Point a compass towards a player/location?](/wiki/questions/compasstoplayer)  
+[Make a scoreboard ID system?](/wiki/questions/linkentity)   
+[Do raycasting?](/wiki/questions/raycast)   
+[Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
 
 ## What is...
 
 [a fake player?](/wiki/questions/fakeplayer)  
 [a range? / those two dots `..`?](/wiki/questions/range)  
 [command context?](/wiki/questions/commandcontext)  
-
 
 ## How do I... (1.12 and below only)
 
@@ -77,4 +78,4 @@ For a list of how item components are structured, see [this article on the minec
 
 ## Still needed articles
 
-*Found something that should be added? Maybe even want to contribute an article? Submit a pull request or create a GitHub issue [here](https://github.com/MinecraftCommands/wiki).*
+*Found something that should be added? Maybe even want to contribute an article? Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or create a [GitHub issue](https://github.com/MinecraftCommands/wiki/issues)*

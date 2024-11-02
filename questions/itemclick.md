@@ -1,10 +1,15 @@
 # Item Click Detection
 
+* [Java](#java)
+* [Java and Bedorck](#java-and-bedrock)
+
+## Java
+
 For item clicks we have to differentiate between leftclick and rightclick detection in the hotbar / offhand as well as clicking on the item while it is in the inventory. Clicking on the item while it is in the inventory works since version 1.20.5 with the addition of a player cursor slot (`player.cursor`) for checking.
 
-## Left / right clicks in / on specific areas
+### Left / right clicks in / on specific areas
 
-### Interaction entity
+#### Interaction entity
 
 Added in 1.19.4, the [interaction entity](https://minecraft.wiki/w/Interaction) now makes it easier to detect left/right clicks as it uses fewer commands and the hitbox size can be adjusted, making it less likely to miss a click, but otherwise has the same disadvantages as the [Hurt entity method](#hurt-entity).
 
@@ -19,15 +24,16 @@ Here's a simple example for command blocks:
 
 **Note:** Do not create an interaction entity that is too large, otherwise click detection will be inconsistent.
 
-> [!TIP]
-> To see interaction entity press `F3 + B` to show hitboxes.
+| 💡 Tip |
+|--------|
+|To see interaction entity press `F3 + B` to show hitboxes|
 
 If you need to check left/right clicks in a large area (or anywhere), then use multiple interaction entities or create a separate interaction entity for each player and teleport to the player every tick, and use the [scoreboard ID system](/wiki/questions/linkentity) for linking.
 
 You can also check what the player is holding in his hand, but then removing the `interaction` / `attack` tag must be done in a separate command:
 
     # Command blocks
-    ## 1.19.4 - 1.20.4
+    ### 1.19.4 - 1.20.4
     execute as @e[type=interaction,tag=click_scan] on target if entity @s[nbt={SelectedItem:{tag:{right_click:true}}}] run say Right Click!
     # 1.20.5+
     execute as @e[type=interaction,tag=click_scan] on target if items entity @s weapon *[custom_data~{right_click:true}] run say Right Click!
@@ -68,9 +74,9 @@ say Right Click!
 execute as @e[type=interaction,tag=click_scan] run data remove entity @s interaction
 ```
 
-## Left-click
+### Left-click
 
-### Hurt entity
+#### Hurt entity
 
 This one is as easily explained as it is flawed: You can only detect left clicks, if you put something in front of the player to hit. Teleport some form of entity or mob that can take damage and has a hitbox directly in the players face or even over their head, so they have no other chance but to hit that entity. You can then "detect" the clicks either using an advancement with the `player_hurt_entity` trigger ([see here](https://minecraft.wiki/Advancements/JSON_format#minecraft:player_hurt_entity)) or with a scoreboard objective of type `minecraft.custom:minecraft.damage_dealt` ([see here](https://minecraft.wiki/Scoreboard#Criteria)). This method however has many obvious flaws:  
 
@@ -80,11 +86,11 @@ This one is as easily explained as it is flawed: You can only detect left clicks
 
 While you can use this method more reliably if this is about hitting some special mobs with a special item or something (the advancement method is really good at that), **general leftclick detection is discouraged unless you have a very controlled environment**.
 
-## Right-click
+### Right-click
 
-For rightclick detection we have [a lot of different ways](https://i.imgur.com/8gKEdp1.png) (image by [u/Dieuwt](https://www.reddit.com/u/Dieuwt)), and different situations might call for different solutions. Since we cannot write a detailed guide on all these methods, we'll only describe the two most common solutions here. A rundown of the knowledge book method can be found [here](https://www.reddit.com/r/MinecraftCommands/comments/g4jxzy/simple_rightclick_detection_without_sacrificing) (by [u/U2106_Later](https://www.reddit.com/u/U2106_Later).
+For rightclick detection we have [a lot of different ways](https://i.imgur.com/8gKEdp1.png) (image by [u/Dieuwt](https://www.reddit.com/u/Dieuwt)), and different situations might call for different solutions. Since we cannot write a detailed guide on all these methods, we'll only describe the two most common solutions here. A rundown of the knowledge book method can be found [here](https://www.reddit.com/r/MinecraftCommands/comments/g4jxzy/simple_rightclick_detection_without_sacrificing) (by [u/U2106_Later](https://www.reddit.com/u/U2106_Later)).
 
-### Carrot on a stick method
+#### Carrot on a stick method
 
 _Note: This works the same with the warped fungus on a stick._
 
@@ -103,7 +109,9 @@ Cons:
 - Looks like a carrot on a stick (fix see below).
 - Has unremovable Damage NBT tag. This can be somewhat negated by making the CoaS unbreakable.
 
-#### Make the CoaS look like any item
+##### Make the CoaS look like any item
+
+###### 1.13+
 
 People tend to use a carrot on a stick and then use a resource pack to remodel them for various CustomModelData tags. This way the CoaS looks like your desired item while still providing the same rightclick functionality.
 
@@ -123,10 +131,19 @@ The models/item/carrot_on_a_stick.json file within the resource pack might end u
         ]
     }
 
-> [!NOTE]
-> You can make the item completly invisible if using the custom model data of a chest.
+| 💡 Tip |
+|---------|
+|You can make the item completly invisible if using the custom model data of a chest|
 
-### Make item food method
+###### 1.21.2+
+
+The new `item_model` component allows you to make any item look like any other item without a resource pack. See this example command of a carrot on a stick that looks like a nether star
+
+    give @p carrot[item_model="nether_star"] 1
+
+#### Make item food method
+
+##### 1.20.5+
 
 From version 1.20.5 you can add a right click check for any item that does not already use a right click event.
 
@@ -182,7 +199,45 @@ Below is an example for this with a delay that is easy to configure:
 
 This method allows you to check a right click for almost any item and you do not need to use a resourcepack to change the texture as for the CoaS / FoaS method.
 
-### Villager method
+##### 1.21.2+
+
+In 1.21.2 some part of the `food` component has been separated into the `consumable` component. So we will need to change the `give` command, depending on what of the two methods you are using the `consume_seconds` will be set to `0`, that is now possible in 1.21.2+ (if using the scoreboard method) or to `2147483647` (if using an advancement)
+
+```
+# get item
+give @p stick[food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:2147483647}] 1
+```
+
+We can also add a cooldown (with the `use_cooldown` component) and use another animation instead of eating (it can be `none`, `eat`, `drink`, `block`, `bow`, `spear`, `crossbow`, `spyglass`, `toot_horn` or `brush`). Keep in mind that the item will be gone when using it. Here is a small example, detecting it using an advancement, of a nether star with the bow animation and a 5 second cooldown.
+
+```
+# function example:get_star
+give @p nether_star[use_cooldown={seconds:5},food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:1,animation:"bow"},custom_data={right_click:true}] 1
+
+# advancement example:use_nether_star
+{
+    "criteria": {
+        "requirement": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+                "item": {
+                    "predicates": {
+                        "minecraft:custom_data": "{right_click:true}"
+                    }
+                }
+            }
+        }
+    },
+    "rewards": {
+        "function": "example:right_click"
+    }
+}
+
+# function example:right_click
+say used nether star
+```
+
+#### Villager method
 
 Spawn an invisible, NoAI, Silent dummy villager in front of the player and test if the player's "talked to villager" score increases (`minecraft.custom:minecraft.talked_to_villager`, see [here](https://minecraft.wiki/Scoreboard#Criteria)).
 
@@ -196,7 +251,7 @@ Cons:
 
 _Parts of this post are taken and modified from [here](https://www.reddit.com/r/MinecraftCommands/comments/elnygk/item_abilities), which have been written by [u/Lemon_Lord1](https://www.reddit.com/u/Lemon_Lord1)_
 
-## Inventory click
+### Inventory click
 
 *Note:* This method works since version 1.20.5
 
@@ -211,3 +266,33 @@ This method is based on checking the player's cursor slot. To do this, need to c
     # Command blocks
     execute as @a[scores={hold.in_cursor=0}] if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}] run say Cursor Command.
     execute as @a store success score @s hold.in_cursor if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}]
+
+## Java and Bedrock
+
+### Bundles
+
+Right-clicking a bundle will take the first item that has. Because this item is an entity, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
+
+    # bedrock
+    execute at @e[type=item,name="right_click"] run tag @p add right_click
+    replaceitem entity @a[tag=right_click] slot.weapon 0 air
+    execute at @e[tag=right_click] run structure load right_click_bundle ~ ~ ~
+    execute as @e[tag=rigth_click] at @s run say Right click
+    kill @e[type=item,name="right_click"]
+    tag @a[tag=right_click] remove right_click
+
+Java
+
+Example item:
+
+    give @s bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
+
+Command blocks:
+
+    execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] on owner run tag @s run add right_click_bundle
+    execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] run kill @s
+    clear @a *[custom_data:{right_click_bundle:true}]
+    execute as @a[tag=right_click_bundle] run say example
+    execute as @a[tag=right_click_bundle] if items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
+    execute as @a[tag=right_click_bundle] unless items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
+    tag @a[tag=right_click_bundle] remove right_click_bundle

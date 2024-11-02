@@ -4,8 +4,9 @@ This article is for **Bedrock only**, as Java can just use NBT or item component
 
 Using `/give` on bedrock only works for "basic" items, without any alterations like change of names or enchantments.
 
-> [!NOTE]
-> You can use external programs (such as world editors or "hacks") to get custom items, that are impossible to get, such as items with impossible enchantments.
+| 📝 Note |
+|---------|
+|You can use external programs (such as world editors or "hacks") to get custom items, that are impossible to get, such as items with impossible enchantments|
 
 Thus, a different method needs to be followed, of which there are multiple common ones.
 

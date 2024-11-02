@@ -1,12 +1,16 @@
 # Do something if a command block *wasn't* successful
 
-> [!NOTE]
-> in 1.13+ we can use `execute unless ...` instead
+## Java
+
+| 📝 Note |
+|---------|
+|in 1.13+ we can use `execute unless ...` instead|
 
 (This is for command blocks only. For functions, [see here](/wiki/questions/functionconditions))
 
-> [!NOTE]
-> You could use a redstone torch and a comparator, but it is **not** recomended as it causes more lag than the other methods described below.
+| 📝 Note |
+|---------|
+|You could use a redstone torch and a comparator, but it is **not** recomended as it causes more lag than the other methods described below|
 
 When a command block runs, its `SuccessCount` tag is updated. This is the value used by comparators to decide how strong a signal to output from that command block. If the command block does not succeed, its `SuccessCount` will be `0`.
 
@@ -28,3 +32,7 @@ The first command is whatever you want to check wasn't successful.
 In the second command you must adjust `~ ~ ~1 command_block` to match the location and type of the first block. For example, it may be `~-1 ~ ~ chain_command_block`.  
 
 The third command is conditional, and is whatever you want to happen when the first command fails.
+
+## Bedrock
+
+Because we can't access the `SuccessCount` in bedrock we will need to use a comparator poiting into a block that has a wall redstone torch to invert the output. Keep in mind that redstone is not run every tick.

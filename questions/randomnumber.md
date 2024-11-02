@@ -8,8 +8,9 @@ So for example, from 1 to 10 in a score called `some_score`
 
     scoreboard players random @p some_score 1 10
 
-> [!NOTE]
-> **None of these numbers are truly random**. They are all only "pseudo" random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out.
+| 📝 Note |
+|---------|
+|**None of these numbers are truly random**. They are all only "pseudo" random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out|
 
 ## /random command
 **This method is, currently, the best, there is no reason to use the others**
@@ -43,8 +44,9 @@ Or we can use [ranges](wiki/questions/ranges) to detect more of one number.
     execute if score #command random matches 4..5 run say 4 or 5
 
 ## without /random command (Pre-1.20.2)
-> [!NOTE]
-> This information is outdated and should **not** be used in the current version of the game.
+| 📝 Note |
+|---------|
+|This information is outdated and should **not** be used in the current version of the game|
 
 There are many ways to get a random number in minecraft. the first two are arguably the best as they have the least limitations and require the least work to set up.
 

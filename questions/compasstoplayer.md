@@ -1,4 +1,6 @@
-# Make compass point towards player
+# Make compass point towards player/location
+
+## Java and Bedrock
 
 Since the compass will always point to the worldspawnpoint, your only option is to move the worldspawn to the player you want to point the compass towards. **This means it can only point to one player at a time and the pointing is global, meaning everyone sees the same compass pointing.**
 
@@ -6,10 +8,10 @@ Since the compass will always point to the worldspawnpoint, your only option is 
 
     execute at @p[<your target player>] run setworldspawn ~ ~ ~
 
-> [!NOTE]
-> If a player dies, they will respawn at the world spawn (unless they have an individual spawn set), which this method is moving around.
->
-> To avoid this issue, you need to detect when the players respawns to then teleport them to the intended respawn point. In Java edition you can use the scoreboard criteria `custom:time_since_last_death` but in bedrock you will need [a more complex way](https://wiki.bedrock.dev/commands/on-player-death).
+| 📝 Note |
+|---------|
+|If a player dies, they will respawn at the world spawn (unless they have an individual spawn set), which this method is moving around|
+|To avoid this issue, you need to detect when the players respawns to then teleport them to the intended respawn point. In Java edition you can use the scoreboard criteria `custom:time_since_last_death` but in bedrock you will need [a more complex way](https://wiki.bedrock.dev/commands/on-player-death)|
 
 ## 1.16+ (Java only)
 

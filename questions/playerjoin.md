@@ -38,8 +38,9 @@ Assuming you called the objective `leave`, it could look like this:
     execute as @a[scores={leave=1..}] run tellraw @a ["",{"selector":"@s"},{"text":" just came back to us!"}]
     scoreboard players reset @a[scores={leave=1..}] leave
 
-> [!NOTE]
-> This method counts exits from the game, but not joins to the server, because the score increases when the player leaves, but since you cannot target an offline player using the target selector, we cannot check that the score has been changed and this can only be done when the player joins to the server again.
+| 📝 Note |
+|---------|
+|This method counts exits from the game, but not joins to the server, because the score increases when the player leaves, but since you cannot target an offline player using the target selector, we cannot check that the score has been changed and this can only be done when the player joins the server again|
 
 ### Bedrock
 
@@ -78,8 +79,9 @@ Then if the value is not 1 (so it is 2, so they leaved the game) we will store t
 ### Bedrock
 
 In bedrock we don't have `execute store` so we will need to split the command in 2. 
-> [!Note]
-> This method is the same as the 2 others merged, nothing else changed.
+| 📝 Note |
+|---------|
+|This method is the same as the 2 others merged, nothing else changed|
 
     # in chat
     /scoreboard objectives add online dummy

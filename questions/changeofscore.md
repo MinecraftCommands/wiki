@@ -14,7 +14,7 @@ _Some objective types are read-only, such as Health or Hunger. Those won't work 
 So lets assume you have a score that detects a players death and want to do something with that player everytime they die once.
 
     execute as @a[scores={deaths=1..}] run say I died :(
-    scoreboard players set @a[scores={dead=1..}] deaths 0
+    scoreboard players reset @a[scores={dead=1..}] deaths
     
 
 You can either `set` the score back to 0, or `reset` the score, whichever one fits your system better. In most cases either one will work fine.
