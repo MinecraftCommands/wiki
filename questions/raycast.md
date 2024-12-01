@@ -24,7 +24,7 @@ You can generate a raycasting datapack using this generator: https://sourceblock
 
 ### Without an entity
 
-This is the preferred method of raycasting, as this entityless approach causes less strain on the server and you don't need to clean up the used entity afterwards. Of course you can still summon an entity to mark the position you've found for later useage, but it is often encouraged to do it all in a single tick.
+This is the preferred method of raycasting, as this entityless approach causes less strain on the server and you don't need to clean up the used entity afterwards. Of course you can still summon an entity to mark the position you've found for later usage, but it is often encouraged to do it all in a single tick.
 
 This method only works in a single tick, so if you need the raycast to be over a period of time instead of instantaneous, use the entity based method instead. It also requires functions to work, so if you're unable to use a datapack, you also need to use the other method.
 
