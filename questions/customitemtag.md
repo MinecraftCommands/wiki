@@ -1,7 +1,7 @@
 # Give an item a custom tag to identify it by
 
-* [Java](#Java)
-* [Bedrock](#Bedrock)
+* [Java](#java)
+* [Bedrock](#bedrock)
 
 ## Java
 
