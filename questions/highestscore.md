@@ -2,13 +2,13 @@
 
 | 📝 Note |
 |---------|
-|This only works with online players / loaded entities. If you want to accomodate offline players / unloaded entities, you'll need a much more complicated system!|
+|This only works with online players / loaded entities. If you want to accommodate offline players / unloaded entities, you'll need a much more complicated system!|
 
 Thanks to `scoreboard player operations` this is a fairly easy question to answer, as the `>` operator will ensure the left score is at least as high as the right score.
 
-Thus the way to do this is as follows (assuming you're trying to find the highest score in an objective named `score`).
+Thus, the way to do this is as follows (assuming you're trying to find the highest score in an objective named `score`).
 
-First you set up a [fake player](/wiki/questions/fakeplayer) with the smallest possible score you can reasonably have, or alternatively you can use the smallest possible number (`-2147483648`).
+First, you set up a [fake player](/wiki/questions/fakeplayer) with the smallest possible score you can reasonably have, or alternatively you can use the smallest possible number (`-2147483648`).
 
     scoreboard players set #max score -2147483648
 

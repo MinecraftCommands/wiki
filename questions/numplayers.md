@@ -11,9 +11,9 @@ A command will still run (and potentially succeed once) even if `@a[team=red,lim
 ## Java and Bedrock
 | 📝 Note |
 |---------|
-|This method will work in Java too, but its recomended to use the Java exclusive method|
+|This method will work in Java too, but it's recommended to use the Java exclusive method|
 
-The easiest way to do this in bedrock is to have the found entities count up the score of another entity or a [fake player](/wiki/questions/fakeplayer) (the later is currently a little harder to check for their score, so it is not used in this tutorial).
+The easiest way to do this in bedrock is to have the found entities count up the score of another entity or a [fake player](/wiki/questions/fakeplayer) (the latter is currently a little harder to check for their score, so it is not used in this tutorial).
 
 Using a dummy scoreboard objective named `result` and an entity with the `counter` tag, we can count how many players there are in team red:
 
@@ -30,9 +30,9 @@ You can also use [ranges](wiki/questions/ranges)
 ## Bedrock
 | 📝 Note |
 |---------|
-|It is not recomended to use this method|
+|It is not recommended to use this method|
 
-You can use a comparator with the `/testfor` command, the output, in signal strengh, is the same as the number of online players.
+You can use a comparator with the `/testfor` command, the output, in signal strength, is the same as the number of online players.
 
 ## Java 
 
@@ -69,7 +69,7 @@ For example, this will test for *exactly* 2 players on the red team (no more, no
 
 Change `<x> <y> <z>` in the second command block to the coordinates of the first command block. You may also need to change `command_block` to `chain_command_block` or `repeating_command_block`.
 
-The second command will only succeed if the first command has a SuccessCount of 1 (it found exactly 1 player). You can then run a conditional chain block off of that second command to activate whatever you want to happen when there are exactly 1 player:
+The second command will only succeed if the first command has a SuccessCount of 1 (it found exactly 1 player). You can then run a conditional chain block off of that second command to activate whatever you want to happen when there is exactly 1 player:
 
 ### Method 3: With `/stats` (1.8-1.12)
 

@@ -2,7 +2,7 @@
 
 _Both Java and Bedrock_
 
-If you need to detect when and if a score of a player has changed, there are two ways to go about this. This is generally most useful if you're using a scoreboard objective that changes because of something the player is doing (e.g. clicking, attacking, sneaking) or the game is doing to the player (e.g. taking damage, change of health and hunger).
+If you need to detect when and if a score of a player has changed, there are two ways to go about this. This is generally most useful if you're using a scoreboard objective that changes because of something the player is doing (e.g., clicking, attacking, sneaking) or the game is doing to the player (e.g., taking damage, change of health and hunger).
 
 If you are changing the score yourself, it is generally advised to also do the effects to the player yourself, as you're changing the score anyways (which is currently the case in 100% of the time in Bedrock), but in some edge cases this can still be useful to do anyways.
 
@@ -11,7 +11,7 @@ If you are changing the score yourself, it is generally advised to also do the e
 This is the more commonly used method, because in many use cases it's not important to know the total score, just that the score changed. It is generally used for [item click detection](/wiki/questions/itemclick), [player deaths](/wiki/questions/playerdeaths) in minigames and more and involves resetting the score back to 0 once it has been changed.  
 _Some objective types are read-only, such as Health or Hunger. Those won't work for this method._
 
-So lets assume you have a score that detects a players death and want to do something with that player everytime they die once.
+So lets assume you have a score that detects a player's death and want to do something with that player every time they die once.
 
     execute as @a[scores={deaths=1..}] run say I died :(
     scoreboard players reset @a[scores={dead=1..}] deaths

@@ -8,7 +8,7 @@ This makes a command act as if it was on a comparator, without the lag and multi
 
 ## Scoreboard
 
-For this method our first command checks two things: Your condition for running the command (e.g. `@a[x=73,y=10,z=3,distance=..1]`) and the condition that it didn't already match in the last tick (e.g. `[scores={matched=0}]`). We're storing the success of your condition in a scoreboard in the second command through a success check:
+For this method, our first command checks two things: Your condition for running the command (e.g. `@a[x=73,y=10,z=3,distance=..1]`) and the condition that it didn't already match in the last tick (e.g. `[scores={matched=0}]`). We're storing the success of your condition in a scoreboard in the second command through a success check:
 
     # In chat / load function
     scoreboard objectives add matched dummy
@@ -38,7 +38,7 @@ Besides the player, this could be some kind of global event, for example, it sta
 
 If you are using a datapack and need to do a lot of similar checks, then you can use [advancements](https://minecraft.wiki/w/Advancement/JSON_format) in the datapack for this.
 
-This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) that you check against the player, in this example we want to know whether the player is at the server spawn area (`predicate example:at_spawn`). Then we create two advancements - the first one checks the predicate (player is at spawn) and the second one inverts this check (player isn't at spawn). Then inside the run function you execute the desired command when the player enters / leaves spawn and revoke the opposite advancement.
+This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) that you check against the player, in this example, we want to know whether the player is at the server spawn area (`predicate example:at_spawn`). Then we create two advancements - the first one checks the predicate (player is at spawn), and the second one inverts this check (player isn't at spawn). Then, inside the run function, you execute the desired command when the player enters / leaves spawn and revoke the opposite advancement.
 
     # predicate example:at_spawn
     {

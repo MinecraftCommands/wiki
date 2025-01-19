@@ -15,7 +15,7 @@ In java, we can create teams, and we can configure friendly fire to make people 
 
 
 ### Weakness and resistance (Java and Bedrock)
-If you can’t use the `/team` command (because you are using it for another thing or you are in bedrock) you can use effects. If we give resistance level 5 or higher the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob cause knockback.
+If you can’t use the `/team` command (because you are using it for another thing or you are in bedrock) you can use effects. If we give resistance level 5 or higher the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob TO cause knockback.
 
 | 📝 Note |
 |---------|
@@ -34,7 +34,7 @@ And if we want the player to be unable to attack the zombie
 |You can still attack the player/entity if you have the sharpness enchantment, that's why we use resistance|
 
 ## Only disable hostile
-This method wont work to dissable PvP, it will only prevent the entity attacking the player.
+This method wont work to disable PvP, it will only prevent the entity attacking the player.
 
 ### Helmet
 It is unclear whether this is a bug, but it is shown [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) that constantly using /item on the mob will mess up the AI and will thus prevent it from attacking the player.
@@ -63,9 +63,10 @@ Important things to keep in mind when using this method:
 * Arrows and other projectiles will be able to attack the entity
 
 ### Distance attribute (Java only)
-In java edition there is an attribute related to the range that players can interact with other entities. we can reduce this range to make them unable to interact with other entities.
+In java edition, there is an attribute related to the range that players can interact with other entities. we can reduce this range to make them unable to interact with other entities.
 
     attribute <target> entity_interaction_range base set 0
 
-> [!NOTE]
-> This will affect right click too so they won't be able to trade with villagers, for example.
+| 📝 Note |
+|---------|
+|This will affect right click too so they won't be able to trade with villagers, for example.|

@@ -5,7 +5,10 @@
 Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/minecraft/creator/documents/commandsnewexecute) became mandatory, so you'll need to switch to that. See also [this information on bedrock.dev](https://wiki.bedrock.dev/commands/new-execute.html).
 
 ## Why is my give command broken (java)?
-In 1.20.5 unstructured NBT data attached to stacks of items (tag field) has been replaced with structured 'components'. Anything related to items have a diferent format. For a list of how item components are structured, see [this article on The Minecraft Wiki](https://minecraft.wiki/w/Item_format/1.20.5).
+In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with structured "components." Learn more in [this article](https://minecraft.wiki/w/Item_format/1.20.5).
+
+## Why is my `tellraw` or `/title` command broken (java)?
+In 1.21.5, Text Components now use SNBT instead of JSON. Learn more in [this article](https://minecraft.wiki/w/Text_component_format).
 
 ## How do I...
 
@@ -40,7 +43,7 @@ In 1.20.5 unstructured NBT data attached to stacks of items (tag field) has been
 [Detect when a player kills an entity/other player?](/wiki/questions/playerkills)  
 [Detect a player joining (for the first time)?](/wiki/questions/playerjoin)  
 [Store a players inventory (and give it back later)?](/wiki/questions/storeinventory)  
-[Detect a player looking at something (entity / position)](/wiki/questions/lookat)  
+[Detect a player looking at something (entity / position)?](/wiki/questions/lookat)  
 
 ### Conditions
 
@@ -51,10 +54,10 @@ In 1.20.5 unstructured NBT data attached to stacks of items (tag field) has been
 ### Entities
 
 [Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)?](/wiki/questions/tagentity)  
-[Make one mob attack another mob/player?](/wiki/questions/angermob) 
+[Make one mob attack another mob/player?](/wiki/questions/angermob)  
 [Summon an entity/projectile flying in the direction the player is looking?](/wiki/questions/shootfacing)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)  
-[Make hostile mobs friendly / dissable PvP](/wiki/questions/hostilefriendly)  
+[Make hostile mobs friendly / dissable PvP?](/wiki/questions/hostilefriendly)  
 [Setup, configure and add multiple dialogues to NPCs?](/wiki/questions/npc)
 
 ### Misc
@@ -70,6 +73,7 @@ In 1.20.5 unstructured NBT data attached to stacks of items (tag field) has been
 [a fake player?](/wiki/questions/fakeplayer)  
 [a range? / those two dots `..`?](/wiki/questions/range)  
 [command context?](/wiki/questions/commandcontext)  
+[escaping?](/wiki/questions/escaping)  
 
 ## How do I... (1.12 and below only)
 

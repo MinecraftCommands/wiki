@@ -76,7 +76,7 @@ In this method we change the execution _location_ to be the player(s) and the ex
 |---------|
 |This method also works in bedrock before new execute|
 
-In bedrock this whole endeavour requires a few more commands, as execute doesn't have any subcommands like that and `/scoreboard players test` only allows for hardcoded ranges. Instead the way to go here is to remove the score from all the entities that need to be checked and then checking whether their score is 0.
+In bedrock this whole endeavor requires a few more commands, as execute doesn't have any subcommands like that and `/scoreboard players test` only allows for hardcoded ranges. Instead the way to go here is to remove the score from all the entities that need to be checked and then checking whether their score is 0.
 
 Again, we're assuming that the scoreboard objective you want to compare is called `points`, that we want to find any player with the same score, and that the entity to compare to is the only entity tagged with `compare`.
 

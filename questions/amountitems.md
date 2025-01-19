@@ -19,7 +19,7 @@ That means we can use [`execute store`](https://minecraft.wiki/w/Commands/execut
 
 ### Execute if items
 
-Since version 1.20.5 you can also use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if|unless)_items) to count the number of items.
+Since version 1.20.5, you can also use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if|unless)_items) to count the number of items.
 
 The `if items` subcommand, when executed, returns the number of items that meet the specified conditions. For a quick example, running this command will show the count of all items in the player's inventory (except for armor and left hand slots):
 

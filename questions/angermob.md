@@ -1,4 +1,4 @@
-# Make a mob attack another specfic entity / player
+# Make a mob attack another specific entity / player
 
 The basic principle for this method is that a mob that can attack will get angry at whoever attacks them. _(some exceptions apply)_
 
@@ -43,7 +43,7 @@ For example you can use a snowball, as this projectile only deal damage to blaze
 
 | ⚠️ Important |
 |--------------|
-|If the player is crawnling or it has a block above them, it won't work|
+|If the player is crawling or it has a block above them, it won't work|
 
 In the following example a skeleton tagged `attacker` is tricked into attacking a zombie tagged `target`.
 

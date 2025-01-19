@@ -24,7 +24,7 @@ You can also use `matches` to check for a [range](/wiki/questions/range) if you 
 
 ### 1.12 and below
 
-To do this we must take one score from another, check if the score is now equal to/greater than/less than 0, then add the score back (to restore the first score's original value).
+To do this, we must take one score from another, check if the score is now equal to/greater than/less than 0, then add the score back (to restore the first score's original value).
 
 For example, select all players whose `kills` score is greater than their `deaths` score:
 
@@ -46,7 +46,7 @@ For example, select all players whose `kills` score is greater than their `death
 
 ### 1.20.5 and above
 
-Since version 1.20.5 can also compare values in storage directly, without copying values to scoreboard. Below is an example of using the `minecraft:value_check` condition to compare values in storage.
+Since version 1.20.5 can also compare values in storage directly, without copying values to the scoreboard. Below is an example of using the `minecraft:value_check` condition to compare values in storage.
 
     # Example storage
     data merge storage example:data {value:7.5f,min:0,max:10}
@@ -77,9 +77,9 @@ This now allows to compare values more accurately because it supports non-intege
 
 ### 1.15 and above
 
-Since version 1.15 you can also use [predicates](https://minecraft.wiki/w/Predicate) in a datapack to compare scores. Unlike using the `if score` subcommand, you cannot in most cases compare the score values between two entities. Basically this is only available in mob loot tables and you can only compare the score between the killed mob (`this`) and the entity that killed the mob (`killer` / `killer_player`), or the projectile that killed the mob (`direct_killer`). In other cases, you can only check the score of the selected entity (`this`) and score [fakename](/wiki/questions/fakeplayer).
+Since version 1.15 you can also use [predicates](https://minecraft.wiki/w/Predicate) in a datapack to compare scores. Unlike using the `if score` subcommand, you cannot, in most cases, compare the score values between two entities. Basically this is only available in mob loot tables and you can only compare the score between the killed mob (`this`) and the entity that killed the mob (`killer` / `killer_player`), or the projectile that killed the mob (`direct_killer`). In other cases, you can only check the score of the selected entity (`this`) and score [fakename](/wiki/questions/fakeplayer).
 
-You can compare score in a predicate using the `minecraft:entity_scores` condition to compare the score of the selected entity with a specific value or a specified range of values, as well as using the `minecraft:value_check` condition which does the same thing, but without using the entity.
+You can compare scores in a predicate using the `minecraft:entity_scores` condition to compare the score of the selected entity with a specific value or a specified range of values, as well as using the `minecraft:value_check` condition, which does the same thing, but without using the entity.
 
 But you can't just use comparison operators (=, >, <, >=, <=), but only compare whether the value is in the specified range.
 

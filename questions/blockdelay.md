@@ -3,7 +3,7 @@
 
 ## Bedrock
 
-In the Bedrock edition of the game, you can just give a commandblock a delay direcly through its interface, no need for any workarounds, unless you want to make a timer for every player, see the method using a [scoreboard](#scoreboard)
+In the Bedrock edition of the game, you can just give a commandblock a delay directly through its interface, no need for any workarounds, unless you want to make a timer for every player, see the method using a [scoreboard](#scoreboard)
 
 ## Java 
 
@@ -80,7 +80,7 @@ In addition to the marker, you need to use a scoreboard timer, which each tick w
 
 ### Scoreboard
 #### Java 1.13+ and Bedrock
-For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependant events/delays) or "[fake player](/wiki/questions/fakeplayer)" scores (set "fake" values for player names, recommended for player independant delays).
+For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependent events/delays) or "[fake player](/wiki/questions/fakeplayer)" scores (set "fake" values for player names, recommended for player independent delays).
 
     # Setup
     scoreboard objectives add timer dummy
@@ -202,9 +202,9 @@ In this example we use an armor stand with the tag `loop`, we will place a press
 ```
 execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
 ```
-To add more commands, just add a chain one to the previus impulse.
+To add more commands, just add a chain one to the previous impulse.
 
 | ⚠️ Important |
 |--------------|
-|It is not recomended to use this method|
+|It is not recommended to use this method|
 

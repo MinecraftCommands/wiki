@@ -4,7 +4,7 @@ _Also known as a **scoreboard ID system**_.
 
 ## Java
 
-Sometimes there is a need to link two entites together in a logical fashion. In Minecraft, we can achieve this by giving both entities the same scoreboard score. In this article we'll be linking an entity to a player.
+Sometimes there is a need to link two entities together in a logical fashion. In Minecraft, we can achieve this by giving both entities the same scoreboard score. In this article we'll be linking an entity to a player.
 
 For example, let's create a dummy scoreboard for player/entity IDs.
 

@@ -24,12 +24,12 @@ First, set up a dummy scoreboard objective:
 
     scoreboard objectives add success_score dummy
 
-We're going to use a [fake player](/wiki/questions/fakeplayer) (because it's about checking a block, independently of an entity, it's recomended to use it) to store the result. This can of course be substituted for the executing entity or a different entity as well.
+We're going to use a [fake player](/wiki/questions/fakeplayer) (because it's about checking a block, independently of an entity, it's recommended to use it) to store the result. This can of course be substituted for the executing entity or a different entity as well.
 
 Then, whenever you want to perform a conditional command:
 
     execute store success #success success_score if block 73 10 31 stone
-    execute if score #success success_score matches 1 run say Succes!!
+    execute if score #success success_score matches 1 run say Success!!
     execute unless score #success success_score matches 1 run say Not success!!
 
 ## 1.12
@@ -44,7 +44,7 @@ Easiest way to do this is by prefixing the command with an `execute`:
 
 ----
 
-If you want to run commands without changing the executer, or run a command if the selector **fails**, you can use `/function`'s `if` or `unless` arguments. For example:
+If you want to run commands without changing the executor, or run a command if the selector **fails**, you can use `/function`'s `if` or `unless` arguments. For example:
 
     function code:team_change if @a[tag=TeamChange]
     function code:ready unless @a[tag=!Ready]

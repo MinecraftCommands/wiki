@@ -34,7 +34,7 @@ Below is an example of summoning a pig according to the set value in the scorebo
 
 **Note: You cannot use macro data in the same function in which you set data for the macro command. You should always run a separate function to execute the macro command.**
 
-The macro allows you to insert any numeric or text data into any part of the command, however, before using these values in the command you need to set this data in storage, read the data from the entity / block, or you can manually set the values when running the function. Below is an example:
+The macro allows you to insert any numeric or text data into any part of the command; however, before using these values in the command you need to set this data in storage, read the data from the entity / block, or you can manually set the values when running the function. Below is an example:
 
     # In chat
     function example:macro_summon {id:"minecraft:pig",x:25.5d, y:65.5d, z:-15.5d}
@@ -125,7 +125,7 @@ See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about thi
 |---------|
 |This method works in bedrock too|
 
-You basically copy their score to some temporary score so you don't loose it when you modify it, and then you go through the different powers of 2 (hence the name), check if their score is above that and then teleport them relatively that far.
+You basically copy their score to some temporary score so you don't lose it when you modify it, and then you go through the different powers of 2 (hence the name), check if their score is above that and then teleport them relatively that far.
 
     execute as @a unless score @s xTmp matches 0 if score @s xTmp = @s xTmp run teleport @s 0 0 0
     

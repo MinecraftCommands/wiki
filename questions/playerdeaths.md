@@ -17,7 +17,7 @@ In Java, detecting a dead player is relatively easy. For simple death detection 
 
 ### Run command at death position
 
-To do this you can use the method described above, but if gamerule `doImmediateRespawn` is true, then the commands from the example above will actually be executed after respawn, which can be a problem if you want to do something at the player's death position.
+To do this, you can use the method described above, but if gamerule `doImmediateRespawn` is true, then the commands from the example above will actually be executed after respawn, which can be a problem if you want to do something at the player's death position.
 
 If you are limited to using command blocks, then you can read the [player data](https://minecraft.wiki/w/Player.dat_format) `LastDeathLocation` tag (1.19+) to get dimension (`dimension`) and position (`pos`). But since the `LastDeathLocation.pos` tag is an Int Array, but the Pos tag entity is a list, you need to first convert the Int Array to a Double list. Then check the `LastDeathLocation.dimension` in which dimension the player died and set this dimension [`execute in <dimension>`](https://minecraft.wiki/w/Commands/execute#in), summon area_effect_cloud and move to the death position and in the same tick execute the command on the position of this area_effect_cloud entity.
 
@@ -91,6 +91,6 @@ Set up a dummy scoreboard called `deathCount` and it will count up every time a 
 
 This works because the `@a` selector selects all players, but the `@e` selector can only select living entities. You can find more information on [the Bedrock wiki](https://wiki.bedrock.dev/commands/on-player-death.html#top).
 
-_This system was first suggested on the subreddit by /u/Sprunkles137 [here](https://old.reddit.com/r/MinecraftCommands/comments/g5b4n8/challenge_1/fo3p5p0/)._
+_This system was first suggested on the Subreddit by /u/Sprunkles137 [here](https://old.reddit.com/r/MinecraftCommands/comments/g5b4n8/challenge_1/fo3p5p0/)._
 
-There is a different way as well, which can only be used in a very controlled environment where players cannot set their own spawnpoints with beds but all spawning is controlled by the mapmaker. This way you can set everyone's spawnpoint to an otherwise inaccessible position in the world, then detect players respawning there, count up their death score and teleport them to the "actual" spawnpoint. **It is not advised to use this system anymore, as the first system is easier to do, requires less setup and has a wider range of applicable possibilities!**
+There is a different way as well, which can only be used in a very controlled environment where players cannot set their own spawnpoints with beds, but all spawning is controlled by the mapmaker. This way you can set everyone's spawnpoint to an otherwise inaccessible position in the world, then detect players respawning there, count up their death score, and teleport them to the "actual" spawnpoint. **It is not advised to use this system anymore, as the first system is easier to do, requires less setup and has a wider range of applicable possibilities!**

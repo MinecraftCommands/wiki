@@ -160,7 +160,7 @@ For example, the crafting recipe below (1.20.5+), which will give an item with t
 ```
 ## Bedrock
 
-In bedrock we will need use a workarround, because we can't use custom tags.
+In bedrock we will need use a workaround, because we can't use custom tags.
 
 ### Item data
 To get an item with specific data, you can use a number between `2,147,483,647` and `-2,147,483,648`.
@@ -175,7 +175,7 @@ This stick will have a data of 5, that we can detect with the `hasitem` argument
     /effect @a[hasitem={item=stick,data=5}] speed
 
 ### Name with color codes
-As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, wich is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
+As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this Reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, which is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
 
     kill @e[type=item, name="§r§fApple"]
 

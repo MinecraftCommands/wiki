@@ -12,7 +12,7 @@ For spawning an NPC, you will need to use the `/summmon` or `/give` command:
     /summon npc
     /give @s spawn_egg 1 51
 
-For removing the NPC just left click it while you are in creative, or use the `/kill` command.
+For removing the NPC just left-click it while you are in creative, or use the `/kill` command.
 A NPC is invulnerable if you try to kill it with other methods (unless when falling into the void), but it can be moved with water, lava, breeze's wind charges, explosions or pistons.
 
 To edit an NPC right click it in creative, you will open a GUI that allows you to edit the display name and the skin.
@@ -52,7 +52,7 @@ First NPC (The one player will interact with), with the dialog “Do you want a 
     dialogue open @e[tag=npc.confirm,type=npc] @initiator
     
     # Button mode with the text “No”
-    # This is empty as when pressing any button, the NPC dialogue will close.
+    # This is empty, as when pressing any button, the NPC dialogue will close.
 
 Now we will hide a second NPC underground (so player will **not** see it)  with the tag `npc.confirm`, With the dialogue “Are you sure?”
 
@@ -61,6 +61,6 @@ Now we will hide a second NPC underground (so player will **not** see it)  with 
     say here is your challenge
 
     # Button mode with the text “No”
-    # This is empty as when pressing any button, the NPC dialogue will close.
+    # This is empty, as when pressing any button, the NPC dialogue will close.
 
 And now you have a dialog that will pop up when you press a button. You can add more dialogues with more NPCs, but each one needs a different tag to identify it.

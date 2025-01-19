@@ -10,10 +10,10 @@ in Java and later Bedrock versions this can actually be achieved in a single com
 - `anchored eyes` to move the execution position up to the players eyes. For it to take effect, you'll need a positioned ^ ^ ^ subcommand at some point after this subcommand (which we have 2 subcommands later). See this related bug [MC-169665](https://bugs.mojang.com/browse/MC-169665).
 - `facing <entity / coordinates>` to change the execution rotation to be facing our object / entity of desire  
 - `positioned ^ ^ ^1` to move 1 block in the direction of the object  
-- `anchored feet` to move the anchor back down to the players feet (due to a bug in the game which would otherwise apply the eye height modification with each position change, which we don't want, as well as to be able to check for the players existence in the last subcommand, this is not the case in the current version of the game so it can be omited, see [MC-124140](https://bugs.mojang.com/browse/MC-124140))
+- `anchored feet` to move the anchor back down to the players feet (due to a bug in the game which would otherwise apply the eye height modification with each position change, which we don't want, as well as to be able to check for the players existence in the last subcommand, this is not the case in the current version of the game so it can be omitted, see [MC-124140](https://bugs.mojang.com/browse/MC-124140))
 - `rotated as @s` to change the execution rotation back to be the same as the executing player
 - `positioned ^ ^ ^-1` to move 1 block in the opposite direction of where the player is facing
-- `if entity @s[distance=..0.1]` to check whether after this back and forth we've arrived roughly back at the players position. To increase / decrease the tolerance for what is considered "close enough", change the distance parameter (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough. So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
+- `if entity @s[distance=..0.1]` to check whether after this back and forth we've arrived roughly back at the player's position. To increase / decrease the tolerance for what is considered "close enough", change the distance parameter (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough. So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
 
 So, to bring it all together, the full command is as follows:
 
@@ -97,7 +97,7 @@ In bedrock the process is the same as in Java, but due to a lack of advanced exe
 
 Also, due to how rotations work in bedrock, this tends to be somewhat inaccurate when the target is on a different y level than the player. Hopefully this will be resolved when the new execute arrives in 1.19.
 
-This setup can only happen to one player at a time, so either use functions to make this better scaleable or experiment with executing from the players and their closest armorstands (which will still lead to some issues, but less so). Hence this will use `@p` to signify this restriction.
+This setup can only happen to one player at a time, so either use functions to make this better scalable or experiment with executing from the players and their closest armorstands (which will still lead to some issues, but less so). Hence this will use `@p` to signify this restriction.
 
 
     # summon armorstand so we can do our check
@@ -118,7 +118,7 @@ This setup can only happen to one player at a time, so either use functions to m
     # remove entity
     kill @e[name=checker]
 
-To increase / decrease the tolerance for what is considered "close enough", change the radius (`r`) selector (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough. So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
+To increase / decrease the tolerance for what is considered "close enough", change the radius (`r`) selector (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough". So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
 
 ### Using Add-Ons
 

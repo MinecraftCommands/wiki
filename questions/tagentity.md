@@ -1,6 +1,6 @@
 # Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)
 
-If your execute if entity **does not rely on NBT data**, you can simply move the selector into the command you want to use. For example, if you have:
+If your `execute if entity` **does not rely on NBT data**, you can simply move the selector into the command you want to use. For example, if you have:
 
     execute if entity @a[team=red]
 

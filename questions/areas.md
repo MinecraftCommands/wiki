@@ -4,7 +4,7 @@
 |---------|
 |Java Syntax, but this can be applied to Bedrock just as well by changing the selector arguments to Bedrock Syntax. Instead of `distance=..X` use `r=X`, instead of `distance=X..Y` use `r=Y,rm=X` and instead of `distance=X..` use `rm=X`.|
 
-This mostly comes up as a question to change the gamemode in a certain area (e.g. spawn, safe zones, etc.), so we will focus on that, but this can be applied to any use case. For questions to do something once a player enters a single area, [look here](/wiki/questions/runonce).
+This mostly comes up as a question to change the gamemode in a certain area (e.g., spawn, safe zones, etc.), so we will focus on that, but this can be applied to any use case. For questions to do something once a player enters a single area, [look here](/wiki/questions/runonce).
 
 The naive approach would be to put everyone in a radius X around the worldspawn (e.g. at 0 0 0) to adventure mode and everyone outside of it to survival mode.
 
@@ -25,7 +25,7 @@ The best way to make sure players are in one of multiple areas without overwriti
     gamemode adventure @a[tag=inArea]
     gamemode survival @a[tag=!inArea]
 
-To prevent chatspam for the players and unnecessary gamemode changes, we suggest using the gamemode selector argument on the last two commands:
+To prevent chat spam for the players and unnecessary gamemode changes, we suggest using the gamemode selector argument on the last two commands:
 
     gamemode adventure @a[tag=inArea,gamemode=!adventure]
     gamemode survival @a[tag=!inArea,gamemode=!survival]
@@ -55,7 +55,7 @@ To make placing markers more convenient, you can give a spawn_egg containing a m
     # 1.20.5+
     give @s minecraft:bat_spawn_egg[entity_data={id:"minecraft:marker",Tags:["adventure_area"]},item_name='"Adventure Area Marker"']
 
-Because in bedrock edition we can't give a custom spawn egg (some exceptions apply, see [give custom item in Bedrock](wiki/questions/giveitembedrock)), you will need to manualy tag the entity with the `/tag` command and use `armor_stand` instead of `marker`.
+Because in bedrock edition we can't give a custom spawn egg (some exceptions apply, see [give custom item in Bedrock](wiki/questions/giveitembedrock)), you will need to manually tag the entity with the `/tag` command and use `armor_stand` instead of `marker`.
     
 ## Block layer
 

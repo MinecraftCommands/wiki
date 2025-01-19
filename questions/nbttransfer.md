@@ -12,9 +12,9 @@ Rather than printing out all data, you can specify a "path" to get one specific 
 
     data get entity @s Pos[0]
 
-Pos[0] means the first (indexes counting from 0) element of the `Pos` list, so the x coordinate  (you can access tags inside of compounds as `compound.tag`).
+Pos[0] means the first (indexes counting from 0) element of the `Pos` list, so the x coordinate (you can access tags inside of compounds as `compound.tag`).
 
-This is cast into an integer, meaining if you are at `x=73.1031`, the command's result will be just `73`.   
+This is cast into an integer, meaning if you are at `x=73.1031`, the command's result will be just `73`.   
 The optional `[<scale>]` factor lets you multiply the number by something before it's read to an integer, for more accuracy. For example, the following would have the result `7310` (100*x):
 
     data get entity @s Pos[0] 100

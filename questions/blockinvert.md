@@ -10,7 +10,7 @@
 
 | 📝 Note |
 |---------|
-|You could use a redstone torch and a comparator, but it is **not** recomended as it causes more lag than the other methods described below|
+|You could use a redstone torch and a comparator, but it is **not** recommended as it causes more lag than the other methods described below|
 
 When a command block runs, its `SuccessCount` tag is updated. This is the value used by comparators to decide how strong a signal to output from that command block. If the command block does not succeed, its `SuccessCount` will be `0`.
 
@@ -35,4 +35,4 @@ The third command is conditional, and is whatever you want to happen when the fi
 
 ## Bedrock
 
-Because we can't access the `SuccessCount` in bedrock we will need to use a comparator poiting into a block that has a wall redstone torch to invert the output. Keep in mind that redstone is not run every tick.
+Because we can't access the `SuccessCount` in bedrock we will need to use a comparator pointing into a block that has a wall redstone torch to invert the output. Keep in mind that redstone is not run every tick.

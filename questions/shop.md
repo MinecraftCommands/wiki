@@ -94,7 +94,7 @@ Here is an example command:
 ```
 /summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",count:1},buyB:{id:"minecraft:emerald",count:1},sell:{id:"minecraft:netherite_ingot",count:1}}]}}
 ```
-Let's break it donw:
+Let's break it down:
 * Inside `Offers` we have `Recipes`, there will be all listed trades.
 * This trade has `rewardExp:0b` so the player will not get any experience when buying it (you can enable it if you want).
 * `maxUses:2147483647` is the maximum times it can be traded, this is the maximum value we can set.

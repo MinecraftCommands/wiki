@@ -107,7 +107,7 @@ Pros:
 Cons:
 - Will attract pigs/boost pigs speed when riding a pig. _(or striders if using the wfoas instead)_
 - Looks like a carrot on a stick (fix see below).
-- Has unremovable Damage NBT tag. This can be somewhat negated by making the CoaS unbreakable.
+- Only in pre-1.20.5: Has unremovable Damage NBT tag. This can be somewhat negated by making the CoaS unbreakable.
 
 ##### Make the CoaS look like any item
 
@@ -201,7 +201,7 @@ This method allows you to check a right click for almost any item and you do not
 
 ##### 1.21.2+
 
-In 1.21.2 some part of the `food` component has been separated into the `consumable` component. So we will need to change the `give` command, depending on what of the two methods you are using the `consume_seconds` will be set to `0`, that is now possible in 1.21.2+ (if using the scoreboard method) or to `2147483647` (if using an advancement)
+In 1.21.2 some part of the `food` component has been separated into the `consumable` component. So we will need to change the `give` command, depending on what of the two methods you are using. The `consume_seconds` will be set to `0`, that is now possible in 1.21.2+ (if using the scoreboard method) or to `2147483647` (if using an advancement)
 
 ```
 # get item
@@ -211,10 +211,10 @@ give @p stick[food={nutrition:0,saturation:0,can_always_eat:true},consumable={co
 We can also add a cooldown (with the `use_cooldown` component) and use another animation instead of eating (it can be `none`, `eat`, `drink`, `block`, `bow`, `spear`, `crossbow`, `spyglass`, `toot_horn` or `brush`). Keep in mind that the item will be gone when using it. Here is a small example, detecting it using an advancement, of a nether star with the bow animation and a 5 second cooldown.
 
 ```
-# function example:get_star
+# Setup
 give @p nether_star[use_cooldown={seconds:5},food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:1,animation:"bow"},custom_data={right_click:true}] 1
 
-# advancement example:use_nether_star
+# advancement example:right_click/nether_star
 {
     "criteria": {
         "requirement": {
@@ -253,9 +253,10 @@ _Parts of this post are taken and modified from [here](https://www.reddit.com/r/
 
 ### Inventory click
 
-*Note:* This method works since version 1.20.5
-
-_Note: This will not work for creative players._
+| 📝 Note |
+|---------|
+|This method works since version 1.20.5|
+|This will not work for creative players.|
 
 This method is based on checking the player's cursor slot. To do this, need to check slot `player.cursor` using the `if items` subcommand or predicates. Below is an example for running a command when holding a custom item in the cursor.
 
@@ -271,7 +272,11 @@ This method is based on checking the player's cursor slot. To do this, need to c
 
 ### Bundles
 
-Right-clicking a bundle will take the first item that has. Because this item is an entity, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
+| 📝 Note |
+|---------|
+|In Java, it is recommended to use the other methods listed above|
+
+Right-clicking a bundle will take the first item that has. Because it will spawn an enitty, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
 
     # bedrock
     execute at @e[type=item,name="right_click"] run tag @p add right_click
