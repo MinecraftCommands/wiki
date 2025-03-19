@@ -15,12 +15,14 @@ Added in 1.19.4, the [interaction entity](https://minecraft.wiki/w/Interaction) 
 
 Here's a simple example for command blocks:
 
-    # Setup
-    summon minecraft:interaction ~ ~ ~ {Tags:["click_scan"],width:0.5f,height:0.5f}
-    
-    # Command blocks
-    execute as @e[type=interaction,tag=click_scan] store success entity @s attack.player[] int 0 on attacker run say Left Click!
-    execute as @e[type=interaction,tag=click_scan] store success entity @s interaction.player[] int 0 on target run say Right Click!
+```py
+# Setup
+summon minecraft:interaction ~ ~ ~ {Tags:["click_scan"],width:0.5f,height:0.5f}
+
+# Command blocks
+execute as @e[type=interaction,tag=click_scan] store success entity @s attack.player[] int 0 on attacker run say Left Click!
+execute as @e[type=interaction,tag=click_scan] store success entity @s interaction.player[] int 0 on target run say Right Click!
+```
 
 **Note:** Do not create an interaction entity that is too large, otherwise click detection will be inconsistent.
 
@@ -32,18 +34,24 @@ If you need to check left/right clicks in a large area (or anywhere), then use m
 
 You can also check what the player is holding in his hand, but then removing the `interaction` / `attack` tag must be done in a separate command:
 
-    # Command blocks
-    ### 1.19.4 - 1.20.4
-    execute as @e[type=interaction,tag=click_scan] on target if entity @s[nbt={SelectedItem:{tag:{right_click:true}}}] run say Right Click!
-    # 1.20.5+
-    execute as @e[type=interaction,tag=click_scan] on target if items entity @s weapon *[custom_data~{right_click:true}] run say Right Click!
-    execute as @e[type=interaction,tag=click_scan] run data remove entity @s interaction
+```py
+# Command blocks
+### 1.19.4 - 1.20.4
+execute as @e[type=interaction,tag=click_scan] on target if entity @s[nbt={SelectedItem:{tag:{right_click:true}}}] run say Right Click!
+
+### 1.20.5+
+execute as @e[type=interaction,tag=click_scan] on target if items entity @s weapon *[custom_data~{right_click:true}] run say Right Click!
+execute as @e[type=interaction,tag=click_scan] run data remove entity @s interaction
+```
 
 When using a datapack, you don't have to run these commands in a tick function, but only once when interacting using advancements:
 * Right click - `minecraft:player_interacted_with_entity` advancement trigger
 * Left click - `minecraft:entity_hurt_player` advancement trigger
 
-```
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
 # advancement example:interaction/right_click
 {
   "criteria": {
@@ -73,6 +81,7 @@ advancement revoke @s only example:interaction/right_click
 say Right Click!
 execute as @e[type=interaction,tag=click_scan] run data remove entity @s interaction
 ```
+</details>
 
 ### Left-click
 
@@ -88,7 +97,7 @@ While you can use this method more reliably if this is about hitting some specia
 
 ### Right-click
 
-For rightclick detection we have [a lot of different ways](https://i.imgur.com/8gKEdp1.png) (image by [u/Dieuwt](https://www.reddit.com/u/Dieuwt)), and different situations might call for different solutions. Since we cannot write a detailed guide on all these methods, we'll only describe the two most common solutions here. A rundown of the knowledge book method can be found [here](https://www.reddit.com/r/MinecraftCommands/comments/g4jxzy/simple_rightclick_detection_without_sacrificing) (by [u/U2106_Later](https://www.reddit.com/u/U2106_Later)).
+For rightclick detection we have [a lot of different ways](https://i.imgur.com/8gKEdp1.png) (image by [u/Dieuwt](https://www.reddit.com/u/Dieuwt), does not include 1.20.5+ methods), and different situations might call for different solutions. Since we cannot write a detailed guide on all these methods, we'll only describe the most common solutions here. A rundown of the knowledge book method can be found [here](https://www.reddit.com/r/MinecraftCommands/comments/g4jxzy/simple_rightclick_detection_without_sacrificing) (by [u/U2106_Later](https://www.reddit.com/u/U2106_Later)).
 
 #### Carrot on a stick method
 
@@ -115,21 +124,27 @@ Cons:
 
 People tend to use a carrot on a stick and then use a resource pack to remodel them for various CustomModelData tags. This way the CoaS looks like your desired item while still providing the same rightclick functionality.
 
-The models/item/carrot_on_a_stick.json file within the resource pack might end up looking like this:
+The `models/item/carrot_on_a_stick.json` file within the resource pack might end up looking like this:
 
-    {
-        "parent": "item/handheld",
-            "textures": {
-            "layer0": "item/carrot_on_a_stick"
-        },
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See file</summary>
+
+```json
+{
+    "parent": "item/handheld",
+        "textures": {
+        "layer0": "item/carrot_on_a_stick"
+    },
    
-        "overrides": [
-            {"predicate": {"custom_model_data":1}, "model": "item/blaze_powder"},
-            {"predicate": {"custom_model_data":2}, "model": "item/nether_star"},
-            {"predicate": {"custom_model_data":3}, "model": "item/blaze_rod"},
-            {"predicate": {"custom_model_data":4}, "model": "item/black_dye"}
-        ]
-    }
+    "overrides": [
+        {"predicate": {"custom_model_data":1}, "model": "item/blaze_powder"},
+        {"predicate": {"custom_model_data":2}, "model": "item/nether_star"},
+        {"predicate": {"custom_model_data":3}, "model": "item/blaze_rod"},
+        {"predicate": {"custom_model_data":4}, "model": "item/black_dye"}
+    ]
+}
+```
+</details>
 
 | 💡 Tip |
 |---------|
@@ -164,38 +179,45 @@ This method has obvious disadvantages, such as particles appearing when used, so
 But when using a datapack, there are none of these disadvantages. Then you want to change `eat_seconds` to something very large so that the eating animation can't start and use the advancement trigger [`minecraft:using_item`](https://minecraft.wiki/w/Custom_advancement#minecraft:using_item) to check the item's usage. Since this advancement trigger is triggered every tick while the player is using the item, you can execute the command up to 20 times per second. However, often you don't want to do this as often and want to add a delay between command runs.
 Below is an example for this with a delay that is easy to configure:
 
-    # Setup
-    give @s minecraft:stick[minecraft:custom_data={right_click:true},minecraft:food={nutrition:0,saturation:0f,eat_seconds:2147483648f,can_always_eat:true}]
-    scoreboard objectives add stick.cooldown dummy
-    
-    # advancement example:stick/right_click
-    {
-        "criteria": {
-            "requirement": {
-                "trigger": "minecraft:using_item",
-                "conditions": {
-                    "item": {
-                        "predicates": {
-                            "minecraft:custom_data": "{right_click:true}"
-                        }
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+# Example item
+give @s minecraft:stick[minecraft:custom_data={right_click:true},minecraft:food={nutrition:0,saturation:0f,eat_seconds:2147483648f,can_always_eat:true}]
+scoreboard objectives add stick.cooldown dummy
+
+# advancement example:stick/right_click
+{
+    "criteria": {
+        "requirement": {
+            "trigger": "minecraft:using_item",
+            "conditions": {
+                "item": {
+                    "predicates": {
+                        "minecraft:custom_data": "{right_click:true}"
                     }
                 }
             }
-        },
-        "rewards": {
-            "function": "example:right_click"
         }
+    },
+    "rewards": {
+        "function": "example:right_click"
     }
-    
-    # function example:right_click
-    execute store result score @s stick.cooldown run time query gametime
-    scoreboard players add @s stick.cooldown 10
-    schedule function example:reset_cooldown 10t append
-    say Right Click!
-    
-    # function example:reset_cooldown
-    execute store result score #reset stick.cooldown run time query gametime
-    execute as @a if score @s stick.cooldown = #reset stick.cooldown run advancement revoke @s only example:stick/right_click
+}
+
+# function example:right_click
+execute store result score @s stick.cooldown run time query gametime
+scoreboard players add @s stick.cooldown 10
+schedule function example:reset_cooldown 10t append
+say Right Click!
+
+# function example:reset_cooldown
+execute store result score #reset stick.cooldown run time query gametime
+execute as @a if score @s stick.cooldown = #reset stick.cooldown run advancement revoke @s only example:stick/right_click
+```
+
+</details>
 
 This method allows you to check a right click for almost any item and you do not need to use a resourcepack to change the texture as for the CoaS / FoaS method.
 
@@ -210,7 +232,10 @@ give @p stick[food={nutrition:0,saturation:0,can_always_eat:true},consumable={co
 
 We can also add a cooldown (with the `use_cooldown` component) and use another animation instead of eating (it can be `none`, `eat`, `drink`, `block`, `bow`, `spear`, `crossbow`, `spyglass`, `toot_horn` or `brush`). Keep in mind that the item will be gone when using it. Here is a small example, detecting it using an advancement, of a nether star with the bow animation and a 5 second cooldown.
 
-```
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
 # Setup
 give @p nether_star[use_cooldown={seconds:5},food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:1,animation:"bow"},custom_data={right_click:true}] 1
 
@@ -236,6 +261,7 @@ give @p nether_star[use_cooldown={seconds:5},food={nutrition:0,saturation:0,can_
 # function example:right_click
 say used nether star
 ```
+</details>
 
 #### Villager method
 
@@ -276,7 +302,7 @@ This method is based on checking the player's cursor slot. To do this, need to c
 |---------|
 |In Java, it is recommended to use the other methods listed above|
 
-Right-clicking a bundle will take the first item that has. Because it will spawn an enitty, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
+Right-clicking a bundle will take the first item that has. Because it will spawn an enitity, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
 
     # bedrock
     execute at @e[type=item,name="right_click"] run tag @p add right_click
@@ -288,12 +314,13 @@ Right-clicking a bundle will take the first item that has. Because it will spawn
 
 Java
 
-Example item:
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
+    # Example item
     give @s bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
 
-Command blocks:
-
+    # Command blocks:
     execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] on owner run tag @s run add right_click_bundle
     execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] run kill @s
     clear @a *[custom_data:{right_click_bundle:true}]
@@ -301,3 +328,4 @@ Command blocks:
     execute as @a[tag=right_click_bundle] if items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
     execute as @a[tag=right_click_bundle] unless items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
     tag @a[tag=right_click_bundle] remove right_click_bundle
+</details>

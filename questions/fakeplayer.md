@@ -2,8 +2,10 @@
 
 When people talk about "using a fake player" on the scoreboard, they're talking about just writing down a name of a fictional player name instead of using a selector. This has the advantage that it is very fast and convenient to store and use scoreboard values.
 
-    scoreboard players set total points 100
-    scoreboard players set 2 constant 2
+```py
+scoreboard players set total points 100
+scoreboard players set 2 constant 2
+```
 
 It's generally used for storing constants (e.g., when you need to divide a number by 20, you need to store that somewhere), global variables (e.g., for settings in a datapack or map), or temporary variables, but can be used whenever it seems helpful.
 

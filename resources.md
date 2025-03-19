@@ -10,7 +10,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 
 - [MCStacker](https://mcstacker.net): All commands generators
 - [Minecraft Tools](https://minecraft.tools): Mainly for books and titles
-- [Colorize Fun](https://colorize.fun/en/minecraft): for text gradients
+- [Colorize Fun](https://colorize.fun/en/minecraft): For text gradients
 - [Gamergeeks](https://www.gamergeeks.net): Almost all commands generators, it's better if MCStacker looks confusing for you
 
 ### References
@@ -37,7 +37,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 
 ### Utilities
 
-- [Datapack Helper+](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server): syntax hightlighter.
+- [Datapack Helper+](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server): syntax highlighter.
 - [Misode’s Generator](https://misode.github.io/advancement): loot table, predicate, item modifier, advancement, recipe, dimension, structure and tag generator, between others.
 - [Datapack Assembler](https://far.ddns.me): generate data pack from commands
 
@@ -47,7 +47,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 - [Loot Tables](http://minecraft.wiki/Loot_table), The Minecraft Wiki
 - [Predicates](http://minecraft.wiki/Predicate), The Minecraft Wiki
 - [Advancements](http://minecraft.wiki/Advancements#JSON_Format), The Minecraft Wiki
-- [Dimension](), The Minecraft Wiki
+- [Dimension](https://minecraft.wiki/w/Dimension_definition), The Minecraft Wiki
 - [Vanilla Data Pack](https://mcasset.cloud/)
 
 ## Misc

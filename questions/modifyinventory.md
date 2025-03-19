@@ -90,19 +90,25 @@ Initialisation
     # A shulker box is placed somewhere.
     setblock <pos> minecraft:yellow_shulker_box
 
-Editing an item 
+Editing an item
 
-    # First, we copy the item to a storage.
-    data modify storage lilith:example Item set from entity <player> SelectedItem
-    
-    # We can now modify what we want about the item here. Its 'Slot' is set to 0.
-    data modify storage lilith:example Item merge value {tag: {Enchantments: [{id: "minecraft:knockback", lvl: 1s}]}}
-    data modify storage lilith:example Item.Slot set value 0b
-    
-    # Third, we copy the storage item to the shulker box. Because 'Slot' is 0, the item will be in the first slot.
-    data modify block <pos> Items append from storage lilith:example Item
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-    # Then, we move the shulker box item back to the player's inventory.
-    loot replace entity <player> weapon.mainhand 1 mine <pos> minecraft:air{drop_contents: 1b}
+```py
+# First, we copy the item to a storage.
+data modify storage lilith:example Item set from entity <player> SelectedItem
+
+# We can now modify what we want about the item here. Its 'Slot' is set to 0.
+data modify storage lilith:example Item merge value {tag: {Enchantments: [{id: "minecraft:knockback", lvl: 1s}]}}
+data modify storage lilith:example Item.Slot set value 0b
+
+# Third, we copy the storage item to the shulker box. Because 'Slot' is 0, the item will be in the first slot.
+data modify block <pos> Items append from storage lilith:example Item
+
+# Then, we move the shulker box item back to the player's inventory.
+loot replace entity <player> weapon.mainhand 1 mine <pos> minecraft:air{drop_contents: 1b}
+```
+</details>
 
 _Credit to Lilith on our Discord for writing this explanation and posting it into the #resources channel on there._

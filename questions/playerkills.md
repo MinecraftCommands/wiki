@@ -2,13 +2,17 @@
 
 _Related: [Detect Player Deaths](/wiki/questions/playerdeaths)_
 
+* [Java](#java)
+* [Bedrock](#bedrock)
+
 ## Java
 
 In Java this is easy, as there is a whole lot of [scoreboard objective criteria](https://minecraft.wiki/Scoreboard#Criteria) for every entity you can kill in the game, using the format `minecraft.killed:minecraft.<entity>`, where `<entity>` is a valid type of entity.
 This method for command blocks cannot check any NBT data, including the tag of the killed mob. 
 
 But this can be done using advancement using the [`player_killed_entity`](https://minecraft.wiki/wiki/Advancement/JSON_format#minecraft:player_killed_entity) advancement trigger, if you're using a datapack that looks like this:
-```
+
+```json
 {
   "criteria": {
     "requirement": {
@@ -28,7 +32,8 @@ But this can be done using advancement using the [`player_killed_entity`](https:
 ```
 
 The advancement from above will check if the entity that the player killed has that NBT (so it has the tag `example` in this case); if you don't want to check NBT you can just use:
-```
+
+```json
 {
   "criteria": {
     "requirement": {
@@ -54,31 +59,40 @@ In Bedrock this is much more tricky, as there is only the dummy objective type.
 
 The best way this Subreddit has come up with so far is to use a modified loot table, making the entity drop a certain item on death that they otherwise wouldn't drop. _This also works for players, but only if the `keepInventory` gamerule is false._ To change an entities loot table, you will have to modify their behavior file and change the loot table to be your custom one or replace their default loot table if they have one. Find the `minecraft:loot` component (or add it if it doesn't exist) and give it your custom loot table.
 
-    "minecraft:loot": {
-        "table": "loot_tables/<your/loot/table>.json"
-    },
+```json
+"minecraft:loot": {
+    "table": "loot_tables/<your/loot/table>.json"
+},
+```
 
 Now, you of course need to create said loot table as well. Here is an example of a loot table that will always drop 1 dragon egg if the entity is killed by a player:
 
-    {
-        "pools": [
-            {
-                "conditions": [
-                    {
-                        "condition": "killed_by_player_or_pets"
-                    }
-                ],
-                "rolls": 1,
-                "entries": [
-                    {
-                        "type": "item",
-                        "name": "minecraft:dragon_egg",
-                        "weight": 1
-                    }
-                ]
-            }
-        ]
-    }
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+{
+    "pools": [
+        {
+            "conditions": [
+                {
+                    "condition": "killed_by_player_or_pets"
+                }
+            ],
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:dragon_egg",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}
+```
+
+</details>
 
 _This will overwrite the normal loot table for the entity. If you want the item to be dropped in addition to the normal loot, you will have to modify the entity's standard loot table._
 

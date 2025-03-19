@@ -6,7 +6,9 @@ Since the compass will always point to the worldspawnpoint, your only option is 
 
 **Java & Bedrock syntax:**
 
-    execute at @p[<your target player>] run setworldspawn ~ ~ ~
+```py
+execute at @p[<your target player>] run setworldspawn ~ ~ ~
+```
 
 | 📝 Note |
 |---------|
@@ -19,24 +21,26 @@ With 1.16 a new functionality has been introduced into the game: a Lodestone Com
 
 The give command for such a compass which doesn't need a lodestone to work looks like this:
 
-    /give @s compass{LodestoneTracked:0b,LodestonePos:{X:-460,Y:64,Z:-701},LodestoneDimension:"minecraft:overworld"}
+```py
+/give @s compass{LodestoneTracked:0b,LodestonePos:{X:-460,Y:64,Z:-701},LodestoneDimension:"minecraft:overworld"}
+```
 
 Now, using data merge we can modify those numbers dynamically. For example, lets say you want to drop the compass to make it point to the second-nearest player, assuming the nearest player is you. The commands for something like that could look like this (using the [custom item tag](/wiki/questions/customitemtag) `playertracker:1b` to identify such a compass):
 
-tick.mcfunction
+```py
+# Command block / tick function
+execute as @e[type=item,nbt={Item:{tag:{playertracker:1b}}}] at @s run function namespace:update_compass
 
-    execute as @e[type=item,nbt={Item:{tag:{playertracker:1b}}}] at @s run function namespace:update_compass
-
-update_compass.mcfunction
-
-    tag @p add closest
-    tag @p[tag=!closest] add target
-    data modify entity @s Item.tag.LodestonePos.X set from entity @p[tag=target] Pos[0]
-    data modify entity @s Item.tag.LodestonePos.Y set from entity @p[tag=target] Pos[1]
-    data modify entity @s Item.tag.LodestonePos.Z set from entity @p[tag=target] Pos[2]
-    tag @a remove closest
-    tag @a remove target
-    data modify entity @s PickupDelay set value 0s
+# function update_compass
+tag @p add closest
+tag @p[tag=!closest] add target
+data modify entity @s Item.tag.LodestonePos.X set from entity @p[tag=target] Pos[0]
+data modify entity @s Item.tag.LodestonePos.Y set from entity @p[tag=target] Pos[1]
+data modify entity @s Item.tag.LodestonePos.Z set from entity @p[tag=target] Pos[2]
+tag @a remove closest
+tag @a remove target
+data modify entity @s PickupDelay set value 0s
+```
 
 (this assumes that the original given compass has the relevant tags (`LodestoneDimension`, `LodestoneTracked`, `LodestonePos`) already set to initial/correct values, as well as the aforementioned custom tag.)
 

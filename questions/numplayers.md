@@ -17,16 +17,19 @@ The easiest way to do this in bedrock is to have the found entities count up the
 
 Using a dummy scoreboard objective named `result` and an entity with the `counter` tag, we can count how many players there are in team red:
 
-    scoreboard players set @e[tag=counter] result 0
-    execute as @a[team=red] run scoreboard players add @e[tag=counter] result 1
-    execute as @e[tag=counter,scores={result=2}] run say there are exactly 2 people on the red team
+```py
+scoreboard players set @e[tag=counter] result 0
+execute as @a[team=red] run scoreboard players add @e[tag=counter] result 1
+execute as @e[tag=counter,scores={result=2}] run say there are exactly 2 people on the red team
+```
 
 You can also use [ranges](wiki/questions/ranges)
 
-    execute as @e[tag=counter,scores={result=2..}] run say there are 2 or more people on the red team
-    execute as @e[tag=counter,scores={result=..2}] run say there are 2 or less people on the red team
-    execute as @e[tag=counter,scores={result=2..9}] run say there are between 2 and 9 people on the red team
-
+```py
+execute as @e[tag=counter,scores={result=2..}] run say there are 2 or more people on the red team
+execute as @e[tag=counter,scores={result=..2}] run say there are 2 or less people on the red team
+execute as @e[tag=counter,scores={result=2..9}] run say there are between 2 and 9 people on the red team
+```
 ## Bedrock
 | 📝 Note |
 |---------|
@@ -41,17 +44,22 @@ You can use a comparator with the `/testfor` command, the output, in signal stre
 Introduced in 1.13 and replacing the `/stats` command, the `store` subcommand of `execute` is able to store the result of the command after it in multiple ways, including into a scoreboard.  
 Using a dummy scoreboard objective name `result` and the [fake player](/wiki/questions/fakeplayer) `#count`, we can count the amount of entities a command finds and then execute off of that. Note that we can use [ranges](wiki/questions/ranges)
 
-    execute store result score #count result if entity @a[team=red]
-    execute if score #count result matches 2 run say there are exactly 2 players on team red.
+```py
+execute store result score #count result if entity @a[team=red]
+execute if score #count result matches 2 run say there are exactly 2 players on team red.
+```
 
 The fake player can be replaced by an entity, although it is not recommended, which then changes the second command to  
 
-    execute if entity @e[<your entity>,scores={result=2}] run say there are exactly 2 players on team red.
-
+```py
+execute if entity @e[<your entity>,scores={result=2}] run say there are exactly 2 players on team red.
+```
 It also works with [ranges](wiki/questions/ranges)
 
-    execute if score #count result matches 2.. run say there are 2 or more players on team red.
-    execute if score #count result matches ..2 run say there are 2 or less players on team red.
+```py
+execute if score #count result matches 2.. run say there are 2 or more players on team red.
+execute if score #count result matches ..2 run say there are 2 or less players on team red.
+```
 
 ### Method 2: Checking the command block's `SuccessCount`
 
@@ -64,8 +72,10 @@ When a `/testfor` command is run, the command block's `SuccessCount` NBT tag wil
 
 For example, this will test for *exactly* 2 players on the red team (no more, no less):
 
-    testfor @a[team=red]
-    testforblock <x> <y> <z> command_block -1 {SuccessCount:2}
+```py
+testfor @a[team=red]
+testforblock <x> <y> <z> command_block -1 {SuccessCount:2}
+```
 
 Change `<x> <y> <z>` in the second command block to the coordinates of the first command block. You may also need to change `command_block` to `chain_command_block` or `repeating_command_block`.
 

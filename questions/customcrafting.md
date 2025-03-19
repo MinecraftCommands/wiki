@@ -101,6 +101,9 @@ This crafting method consists of two parts: the controller and the recipes.
 
 The controller is a command block that detects the placement of a spawn_egg to install a dropper block, as well as to remove the support entity when the block is destroyed by the player and return a spawn_egg to the player.
 
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
+
     # Command blocks (controller) for 1.19.4 - 1.20.4
     execute at @e[type=item_display,tag=custom_crafting,tag=placing] run setblock ~ ~ ~ dropper[facing=up]{CustomName:'"Custom Crafting Table"'}
     tag @e[type=item_display,tag=custom_crafting,tag=placing] remove placing
@@ -113,6 +116,8 @@ The controller is a command block that detects the placement of a spawn_egg to i
     execute as @e[type=item_display,tag=custom_crafting] at @s unless block ~ ~ ~ dropper[facing=up] run data modify entity @e[type=item,distance=..1,nbt={Item:{id:"minecraft:dropper"}},limit=1] Item set value {id:"minecraft:bat_spawn_egg",count:1,components:{"item_name":'"Custom Crafting Table"',"minecraft:entity_data":{id:"minecraft:item_display",Tags:["custom_crafting","placing"],Rotation:[0f,0f],brightness:{sky:10,block:10},transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0.5f,0f],scale:[1.01f,1.01f,1.01f]},item:{id:"minecraft:crafting_table",count:1}}}}
     execute as @e[type=item_display,tag=custom_crafting] at @s unless block ~ ~ ~ dropper[facing=up] run kill @s
 
+</details>
+
 Recipes can be made as separate command blocks. Each recipe is a separate command block that checks the block data in the Items tag, and if the data matches, then replace the Items tag with your item as the crafting result.
 
 **Hint:** If you find it difficult to create a command to check block data, then put your recipe in a dropper / dispenser. Exit the block interface and press `F3 + I` to copy the block data. You will receive a /setblock command with the full block data. This command has all of the blocks data, including data that is irrelevant or even hindering our ability to properly detect the relevant items. Thus you should not use the NBT data (`{}`) as-is, but remove any and all unnecessary NBT data. This involves removing all but the defining attributes of the item: `id`, `count`, `Slot` and potentially the custom data you used to mark your custom items.
@@ -122,6 +127,9 @@ Below is a schematic representation of the command to check the recipe:
     execute at @e[type=item_display,tag=custom_crafting] if block ~ ~ ~ dropper{Items:[<check_recipe>]} run data modify block ~ ~ ~ Items set value [{Slot:<slot>},<result_craft_data>]
 
 Now you can create a ready-made command for the recipe. Below is an example of crafting without checking custom NBT tags for compactness, but you can add any NBT data for verification:
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
 
     # Example recipe
     [E][ ][E]
@@ -137,6 +145,8 @@ Now you can create a ready-made command for the recipe. Below is an example of c
     
     # Command block (recipe) for 1.20.5+
     execute at @e[type=item_display,tag=custom_crafting] if items block ~ ~ ~ container.0 emerald[custom_data~{some:true}] unless items block ~ ~ ~ container.1 * if items block ~ ~ ~ container.2 emerald[custom_data~{some:true}] if items block ~ ~ ~ container.3 redstone[custom_data~{data:true}] if items block ~ ~ ~ container.4 diamond[custom_data~{custom:true}] if items block ~ ~ ~ container.5 redstone[custom_data~{data:true}] if items block ~ ~ ~ container.6 redstone[custom_data~{data:true}] if items block ~ ~ ~ container.7 redstone[custom_data~{data:true}] if items block ~ ~ ~ container.8 redstone[custom_data~{data:true}] run data modify block ~ ~ ~ Items set value [{Slot:4b,id:"minecraft:ender_eye",count:1b,components:{"minecraft:custom_data":{custom_result:true},"minecraft:item_name":'"Some Custom Result"'}}]
+
+</details>
 
 **Note:** Empty slots that do not contain a recipe item will be ignored, so if the player leaves any items in these slots, then these items will be deleted. To avoid this, you can add, in addition to checking the block data, to check that there are no items in the empty slots using the `unless data block` subcommand. Each slot requires a separate subcommand:
 
@@ -163,6 +173,9 @@ When you craft an item, the corresponding advancement recipe immediately gives y
 And when creating all recipe advancements, you use recipe root advancement as the parent. This allows you to revoke all recipe advancements with one command.
 
 Below is an example of how to implement this approach:
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See datapck</summary>
 
     # recipe example:some_custom_result (1.15-1.20.4)
     {
@@ -253,6 +266,8 @@ Below is an example of how to implement this approach:
     recipe take @s example:more_custom_result
     ...
 
+</details>
+
 The obvious disadvantages of this method are the inability to create a craft with custom ingredients, and if you give yourself all the recipes, it will give you all the custom items, but you still won’t be able to have your custom crafts in the recipe book.
 
 #### After 1.20
@@ -263,6 +278,8 @@ You can now use this advancement trigger to check the NBT data of the ingredient
 
 Below is an example for creating an advancement for a custom craft, which must have ingredients with NBT data to get the craft result. Only the changes in this version are shown here, the rest of the code is unchanged:
 
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
     # advancement example:recipe/some_custom_result
     {
       "parent": "example:recipe/root",
@@ -336,6 +353,8 @@ Below is an example for creating an advancement for a custom craft, which must h
     advancement revoke @s from example:recipe/root
     clear @s minecraft:knowledge_book
 
+</details>
+
 **Important!** The player can still use regular items in crafting, but then the advancement will not work and the player will only craft the knowledge\_book. To avoid this, you need to create a more complex crafting system.
 
 #### 1.20.5 and above
@@ -343,6 +362,9 @@ Below is an example for creating an advancement for a custom craft, which must h
 Version 1.20.5 also added the ability to create crafts with custom data, but only for the craft result - NOT for ingredients. Therefore, if you want to use custom items in crafting, then in this version it will be the same as described for the previous version.
 
 If you only need a custom item as a result of crafting, then now you can use only one recipe file and you do not need to use advancements and functions:
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See datapck</summary>
 
     # recipe example:some_custom_result
     {
@@ -372,6 +394,8 @@ If you only need a custom item as a result of crafting, then now you can use onl
       }
     }
 
+</details>
+
 **Note:** If you use a custom tag for an item like `custom:1`, then the recipe will give you an item with the tag `custom:1b` due to the conversion of JSON to NBT format.
 
 ## Bedrock edition addon
@@ -396,6 +420,9 @@ You can make a custom recepie for the following blocks:
 You can also make [custom crafting tables](https://wiki.bedrock.dev/blocks/block-components.html#crafting-table)
 
 Here is an example of a shaped recipe from the bedrock wiki:
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 	{
 		"format_version": "1.17.41",
@@ -429,6 +456,7 @@ Here is an example of a shaped recipe from the bedrock wiki:
 		}
 	}
 
+</details>
 
 A quick explanation:
 * `format_version` is the minecraft version, it is recomended to use the last relase.

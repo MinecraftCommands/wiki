@@ -8,8 +8,10 @@ This mostly comes up as a question to change the gamemode in a certain area (e.g
 
 The naive approach would be to put everyone in a radius X around the worldspawn (e.g. at 0 0 0) to adventure mode and everyone outside of it to survival mode.
 
-    gamemode adventure @a[x=0,y=0,z=0,distance=..X]
-    gamemode survival @a[x=0,y=0,z=0,distance=X..]
+```py
+gamemode adventure @a[x=0,y=0,z=0,distance=..X]
+gamemode survival @a[x=0,y=0,z=0,distance=X..]
+```
 
 This method quickly falls apart if you have a non-spherical or non-box shaped area or you want this to apply to more than one area, because a player will always be outside of the other areas, even if they are inside one, so will always end up in survival.
 
@@ -17,18 +19,22 @@ This method quickly falls apart if you have a non-spherical or non-box shaped ar
 
 The best way to make sure players are in one of multiple areas without overwriting each other, is to use a tag: So instead of applying the desired effect to each area individually, you tag all players that are in one of the areas and apply the effect once to all of them (or everyone else). But this method requires a separate command block for each location. For a large number of locations, use the anchor entity method.
 
-    # Command blocks / tick function
-    tag @a remove inArea
-    tag @a[x=0,y=0,z=0,distance=..X] add inArea
-    tag @a[x=100,y=64,z=100,dx=70,dy=16,dz=28] add in Area
-    ....
-    gamemode adventure @a[tag=inArea]
-    gamemode survival @a[tag=!inArea]
+```py
+# Command blocks / tick function
+tag @a remove inArea
+tag @a[x=0,y=0,z=0,distance=..X] add inArea
+tag @a[x=100,y=64,z=100,dx=70,dy=16,dz=28] add inArea
+....
+gamemode adventure @a[tag=inArea]
+gamemode survival @a[tag=!inArea]
+```
 
 To prevent chat spam for the players and unnecessary gamemode changes, we suggest using the gamemode selector argument on the last two commands:
 
-    gamemode adventure @a[tag=inArea,gamemode=!adventure]
-    gamemode survival @a[tag=!inArea,gamemode=!survival]
+```py
+gamemode adventure @a[tag=inArea,gamemode=!adventure]
+gamemode survival @a[tag=!inArea,gamemode=!survival]
+```
 
 If for some reason you want to keep commandBlockOutput on and don't want your output to be spammed by this system, check out [this post](https://www.reddit.com/r/MinecraftCommands/comments/mw11xm/do_something_to_players_in_multiple_specific) by [u/Afanofall23](https://www.reddit.com/u/Afanofall23).
 
@@ -38,22 +44,26 @@ If you need to check if the player is in one of several spherical areas, for exa
 
 For versions before 1.17 you can use armor_stand or area_effect_cloud, but since version 1.17 it is strongly recommended to use an [marker entity](https://minecraft.wiki/w/Marker) to mark a place.
 
-    # Summon marker
-    summon marker <pos> {Tags:["adventure_area"]}
-    
-    # Command blocks / tick function
-    execute as @a[gamemode=survival] at @s if entity @e[type=marker,tag=adventure_area,distance=..X,limit=1] run gamemode adventure
-    execute as @a[gamemode=adventure] at @s unless entity @e[type=marker,tag=adventure_area,distance=..X,limit=1] run gamemode survival
-    
+```py
+# Summon marker
+summon marker <pos> {Tags:["adventure_area"]}
+
+# Command blocks / tick function
+execute as @a[gamemode=survival] at @s if entity @e[type=marker,tag=adventure_area,distance=..X,limit=1] run gamemode adventure
+execute as @a[gamemode=adventure] at @s unless entity @e[type=marker,tag=adventure_area,distance=..X,limit=1] run gamemode survival
+```
+
 `X - distance at which players should be switched into adventure mode.`
 
 To make placing markers more convenient, you can give a spawn_egg containing a marker with the tag:
 
-    # 1.17 - 1.20.4
-    give @s bat_spawn_egg{EntityTag:{id:"minecraft:marker",Tags:["adventure_area"]},display:{Name:'{"text":"Adventure Area Marker","italic":false}'}}
-    
-    # 1.20.5+
-    give @s minecraft:bat_spawn_egg[entity_data={id:"minecraft:marker",Tags:["adventure_area"]},item_name='"Adventure Area Marker"']
+```py
+# 1.17 - 1.20.4
+give @s bat_spawn_egg{EntityTag:{id:"minecraft:marker",Tags:["adventure_area"]},display:{Name:'{"text":"Adventure Area Marker","italic":false}'}}
+
+# 1.20.5+
+give @s minecraft:bat_spawn_egg[entity_data={id:"minecraft:marker",Tags:["adventure_area"]},item_name='"Adventure Area Marker"']
+```
 
 Because in bedrock edition we can't give a custom spawn egg (some exceptions apply, see [give custom item in Bedrock](wiki/questions/giveitembedrock)), you will need to manually tag the entity with the `/tag` command and use `armor_stand` instead of `marker`.
     
@@ -63,8 +73,10 @@ If you need to execute a command when a player enters a very randomly shaped are
 
 For example, you want to create an area on your map where the player will be detected if the player is not sneaking. This example will check the red_concrete block at Y=-63 for this area:
 
-    # Command block / tick function (1.20.5+)
-    execute as @a at @s if predicate {condition:"entity_properties",entity:"this",predicate:{flags:{is_sneaking:false}}} if block ~ -63 ~ minecraft:red_concrete run say You have been found!
+```py
+# Command block / tick function (1.20.5+)
+execute as @a at @s if predicate {condition:"entity_properties",entity:"this",predicate:{flags:{is_sneaking:false}}} if block ~ -63 ~ minecraft:red_concrete run say You have been found!
+```
 
 ## Predicates
 
@@ -74,65 +86,71 @@ In a predicate, you can use the `minecraft:alternative` (1.14-1.19.4) or `minecr
 
 Below is an example of a predicate for checking three cubic areas:
 
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">Example predicate</summary>
+
+```json
+{
+  "condition": "minecraft:any_of",
+  "terms": [
     {
-      "condition": "minecraft:any_of",
-      "terms": [
-        {
-          "condition": "minecraft:location_check",
-          "predicate": {
-            "position": {
-              "x": {
-                "min": 10,
-                "max": 20
-              },
-              "y": {
-                "min": 64,
-                "max": 70
-              },
-              "z": {
-                "min": 30,
-                "max": 40
-              }
-            }
-          }
-        },
-        {
-          "condition": "minecraft:location_check",
-          "predicate": {
-            "position": {
-              "x": {
-                "min": 60,
-                "max": 85
-              },
-              "y": {
-                "min": -20,
-                "max": 10
-              },
-              "z": {
-                "min": 10,
-                "max": 80
-              }
-            }
-          }
-        },
-        {
-          "condition": "minecraft:location_check",
-          "predicate": {
-            "position": {
-              "x": {
-                "min": -80,
-                "max": -20
-              },
-              "y": {
-                "min": 125,
-                "max": 155
-              },
-              "z": {
-                "min": 55,
-                "max": 78
-              }
-            }
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "position": {
+          "x": {
+            "min": 10,
+            "max": 20
+          },
+          "y": {
+            "min": 64,
+            "max": 70
+          },
+          "z": {
+            "min": 30,
+            "max": 40
           }
         }
-      ]
+      }
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "position": {
+          "x": {
+            "min": 60,
+            "max": 85
+          },
+          "y": {
+            "min": -20,
+            "max": 10
+          },
+          "z": {
+            "min": 10,
+            "max": 80
+          }
+        }
+      }
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "position": {
+          "x": {
+            "min": -80,
+            "max": -20
+          },
+          "y": {
+            "min": 125,
+            "max": 155
+          },
+          "z": {
+            "min": 55,
+            "max": 78
+          }
+        }
+      }
     }
+  ]
+}
+```
+</details>

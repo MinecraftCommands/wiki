@@ -73,6 +73,9 @@ When using a loot table since version 1.20.5, you need to use the `minecraft:set
 
 Below are examples of loot tables for different versions. **For version 1.20.5+, two ways to set custom data are shown, but you should only use one.**
 
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
 ```
 # 1.20.5 and above
 {
@@ -122,6 +125,7 @@ Below are examples of loot tables for different versions. **For version 1.20.5+,
   ]
 }
 ```
+</details>
 
 The new `set_custom_data` loot function is exactly the same as the `set_nbt` function, but sets data only to the `custom_data` component. But using `set_components` for set `custom_data` is different because it cannot be represented as a string with NBT data, but it must be a JSON object and follow [JSON formatting](https://minecraft.wiki/w/JSON). Thus, any text must be escaped, and numeric values must be specified without a variable type.
 

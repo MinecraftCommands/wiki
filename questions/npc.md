@@ -9,8 +9,10 @@ This article will explain how to create NPCs and add commands to it.
 
 For spawning an NPC, you will need to use the `/summmon` or `/give` command:
 
-    /summon npc
-    /give @s spawn_egg 1 51
+```py
+/summon npc
+/give @s spawn_egg 1 51
+```
 
 For removing the NPC just left-click it while you are in creative, or use the `/kill` command.
 A NPC is invulnerable if you try to kill it with other methods (unless when falling into the void), but it can be moved with water, lava, breeze's wind charges, explosions or pistons.
@@ -48,19 +50,23 @@ This is done thanks to the `/dialogue` command, that opens NPC dialogues.
 
 First NPC (The one player will interact with), with the dialog “Do you want a challenge?”
 
-    # Button mode with the text “Yes”
-    dialogue open @e[tag=npc.confirm,type=npc] @initiator
-    
-    # Button mode with the text “No”
-    # This is empty, as when pressing any button, the NPC dialogue will close.
+```py
+# Button mode with the text “Yes”
+dialogue open @e[tag=npc.confirm,type=npc] @initiator
+
+# Button mode with the text “No”
+# This is empty, as when pressing any button, the NPC dialogue will close.
+```
 
 Now we will hide a second NPC underground (so player will **not** see it)  with the tag `npc.confirm`, With the dialogue “Are you sure?”
 
-    # Button mode with the text “Yes”
-    execute at @initiator run summon zombie
-    say here is your challenge
+```py
+# Button mode with the text “Yes”
+execute at @initiator run summon zombie
+say here is your challenge
 
-    # Button mode with the text “No”
-    # This is empty, as when pressing any button, the NPC dialogue will close.
+# Button mode with the text “No”
+# This is empty, as when pressing any button, the NPC dialogue will close.
+```
 
 And now you have a dialog that will pop up when you press a button. You can add more dialogues with more NPCs, but each one needs a different tag to identify it.

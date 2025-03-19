@@ -1,5 +1,8 @@
 # Do something if a command block *wasn't* successful
 
+* [Java](#java)
+* [Bedrock](#bedrock)
+
 ## Java
 
 | 📝 Note |
@@ -16,15 +19,17 @@ When a command block runs, its `SuccessCount` tag is updated. This is the value 
 
 We can use another command block to check whether the first block has `SuccessCount:0` after running, so that this second block will be successful when the first block fails, then run our conditionals off of this second block. The commands would look like:
 
-    # pre 1.13
-    testfor @a[r=5]
-    testforblock ~ ~ ~1 command_block * {SuccessCount:0}
-    say Nobody is within 5 blocks!
-    
-    # 1.13+
-    <any command>
-    execute if block ~ ~ ~1 command_block{SuccessCount:0}
-    say Command didn't succed
+```py
+# pre 1.13
+testfor @a[r=5]
+testforblock ~ ~ ~1 command_block * {SuccessCount:0}
+say Nobody is within 5 blocks!
+
+# 1.13+
+<any command>
+execute if block ~ ~ ~1 command_block{SuccessCount:0}
+say Command didn't succed
+```
 
 [Example image](http://i.imgur.com/Syq4crm.png).
 

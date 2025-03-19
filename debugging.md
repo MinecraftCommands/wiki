@@ -49,8 +49,8 @@ This page details information on common problems you might have with a command, 
   * Inserting from a list/array or NBT path is not allowed
 * Use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Make sure your file's encoding is UTF-8 (without BOM) - this is not the default in many programs! ([Notepad](http://i.imgur.com/R4yFjAQ.png), [Notepad++](http://i.imgur.com/8AsDJ3F.png), [Sublime](http://i.imgur.com/63rsYOB.png), [Code](http://i.imgur.com/dmOqy0y.png))
-* The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/<namespace>/functions/`
-* Don't forget to save changes if editing directly the datapack (with programs like VScode), normaly `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
+* The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/<namespace>/functions/` (or in `data/<namespace>/function/` in 1.21+)
+* Don't forget to save changes if editing directly the datapack (with programs like VScode), normally `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
 * Don't forget to use `/reload` to reload the functions after making changes
   * Make sure you have the datapack enabled. You can enable the datapack by typing `/datapack enable "<datapack name>"`
   * When edition world generation you need to leave and rejoin the world in order to save changes (or restart the server).

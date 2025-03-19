@@ -4,13 +4,9 @@ Escaping is the process of marking special characters in a string to be interpre
 
 Escaping prevents errors and ensures that commands or JSON structures function as intended. It is essential for handling characters like quotes (`"`) or backslashes (`\`) that are part of the syntax.
 
-Pre-1.21.5 Syntax: Using JSON text components required escaping quotes with a backslash (`\`):
+Using JSON text components required escaping quotes with a backslash (`\`):
 
     /tellraw @a "I said \"Hi\" "
-
-In 1.21.5+, Minecraft switched to SNBT (Stringified NBT) for commands like /tellraw. Here, single quotes (') are used for strings, and escaping is done with backslashes for single quotes:
-
-    /tellraw @a 'I said \'Hi\' '
 
 If the backslash (`\`) is removed, the quotes would be misinterpreted as the end of the string, causing a syntax error. Escaping ensures special characters like quotes or backslashes are treated as part of the message rather than command syntax.
 
@@ -25,7 +21,7 @@ Escaping becomes more complex when dealing with nested strings, where one string
 
     give @p command_block[block_entity_data={id:"command_block",Command:"setblock ~ ~1 ~ command_block{Command:\"tellraw @a \\\\"Hi\\\\"\"}"}] 1
 
-The Command field is enclosed in quotes ("Command:..."), so the inner quotes within this string must be escaped.
+The Command field is enclosed in quotes (Command:"..."), so the inner quotes within this string must be escaped.
 
 Inside the Command, the tellraw command also contains a string (tellraw @a "Hi"). To ensure "Hi" is treated literally, the quotes around it are escaped with a backslash (\").
 
@@ -33,7 +29,11 @@ Since this entire tellraw string is itself nested within another string, the esc
 
 ## Escaping in JSON Files
 Escaping is also required in JSON files, such as for resource packs, advancements, or custom loot tables:
-```
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
 {
   "type": "minecraft:block",
   "pools": [
@@ -56,9 +56,11 @@ Escaping is also required in JSON files, such as for resource packs, advancement
     }
   ]
 }
+```
+
+</details>
 
 The "text" field contains The "Shiny" Diamond. The inner quotes around Shiny are escaped as \" to be treated as part of the string. Without escaping, the parser would misinterpret the quotes and throw an error.
-```
 
 ## Common errors
 
@@ -81,4 +83,3 @@ Not nesting strings:
     give @p command_block[block_entity_data={id:"command_block",Command:"setblock ~ ~1 ~ command_block{Command:\"tellraw @a \"Hi\"\"}"}] 1
 
 The string must be [nested](#nested-strings)
-

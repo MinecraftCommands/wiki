@@ -6,13 +6,14 @@ This method can be used to make both, disable PvP and make hostile mobs passive.
 ### Teams (Java only)
 In java, we can create teams, and we can configure friendly fire to make people of that team unable to attack each other. This also works for mobs. In this example we are going to make zombies passive to players.
 
-    # in chat / load function
-    team add Friendly
-    team join @a friendly
-    
-    # tick function / command blocks
-    team join @e[team=!friendly,type=zombie] friendly
+```py
+# in chat / load function
+team add Friendly
+team join @a friendly
 
+# tick function / command blocks
+team join @e[team=!friendly,type=zombie] friendly
+```
 
 ### Weakness and resistance (Java and Bedrock)
 If you can’t use the `/team` command (because you are using it for another thing or you are in bedrock) you can use effects. If we give resistance level 5 or higher the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob TO cause knockback.
@@ -23,11 +24,15 @@ If you can’t use the `/team` command (because you are using it for another thi
 
 In this example we are going to make all zombies unable to attack the player for one minute
 
-    /effect give @e[type=zombie] weakness 60 127 true
+```py
+/effect give @e[type=zombie] weakness 60 127 true
+```
 
 And if we want the player to be unable to attack the zombie
 
-    /effect give @a weakness 60 127
+```py
+/effect give @a weakness 60 127
+```
 
 | 📝 Note |
 |---------|
@@ -43,8 +48,10 @@ It is unclear whether this is a bug, but it is shown [in this Reddit post](https
 |---------|
 |This does **not** work in Bedrock|
 
-    # Java syntax
-    /item replace entity @e[type=skeleton] armor.head with iron_helmet
+```py
+# Java syntax
+/item replace entity @e[type=skeleton] armor.head with iron_helmet
+```
 
 ### Follow range
 You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, use mob heads or you change a mobs behavior file to change their follow range that way.

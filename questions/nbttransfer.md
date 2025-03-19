@@ -6,26 +6,36 @@ Any **numeric** NBT tag, even inside lists, can be set to, or gotten into, a sco
 
 The `/data get` command allows you to specify a block or entity, and retrieve NBT data from it. For example:
 
-    data get entity @s
+```py
+data get entity @s
+```
 
 Rather than printing out all data, you can specify a "path" to get one specific tag, like so:
 
-    data get entity @s Pos[0]
+```py
+data get entity @s Pos[0]
+```
 
 Pos[0] means the first (indexes counting from 0) element of the `Pos` list, so the x coordinate (you can access tags inside of compounds as `compound.tag`).
 
 This is cast into an integer, meaning if you are at `x=73.1031`, the command's result will be just `73`.   
 The optional `[<scale>]` factor lets you multiply the number by something before it's read to an integer, for more accuracy. For example, the following would have the result `7310` (100*x):
 
-    data get entity @s Pos[0] 100
+```py
+data get entity @s Pos[0] 100
+```
 
 Next we need to store the value of `/data get`'s result into a scoreboard objective, which is exactly what `/execute store` allows us to do:
 
-    execute store result score <target> <objective> run <command>
+```py
+execute store result score <target> <objective> run <command>
+```
 
 This will run `<command>`, and store the result into the the `<target>`'s `<objective>` score. So, putting it together, you could do something like this:
 
-    execute store result score @s y_pos run data get entity @s Pos[1] 100
+```py
+execute store result score @s y_pos run data get entity @s Pos[1] 100
+```
 
 Which will store 100 times the executer's y position into their `y_pos` score.
 
@@ -33,8 +43,10 @@ Which will store 100 times the executer's y position into their `y_pos` score.
 
 Using NBT paths mentioned in the previous section, `/execute store` will also allow us to store the result of a command into any numeric NBT tag (other than players, you still can't edit player data). The syntax is:
 
-    execute store result entity <target> <path> (byte|double|float|int|long|short) <scale> run <command>
-    execute store result block <pos> <path> (byte|double|float|int|long|short) <scale> run <command>
+```py
+execute store result entity <target> <path> (byte|double|float|int|long|short) <scale> run <command>
+execute store result block <pos> <path> (byte|double|float|int|long|short) <scale> run <command>
+```
 
 The `<command>` you'll want to run is `/scoreboard players get <target> <objective>`, which returns a specified score as its result.
 
@@ -44,7 +56,9 @@ The `<command>` you'll want to run is `/scoreboard players get <target> <objecti
 
 As an example, setting the nearest creeper's y-motion to 0.05 times the executer's `y_speed` score:
 
-    execute store result entity @e[type=creeper,limit=1,sort=nearest] Motion[1] double 0.05 run scoreboard players get @s y_speed
+```py
+execute store result entity @e[type=creeper,limit=1,sort=nearest] Motion[1] double 0.05 run scoreboard players get @s y_speed
+```
 
 ### NBT --> NBT
 
@@ -52,4 +66,6 @@ You can even store directly from an NBT path to another NBT path. Keep in mind t
 
 For example, to have the nearest pig copy the nearest chicken's x-pos:
 
-     execute store result entity @e[type=pig,limit=1,sort=nearest] Pos[0] double 0.01 run data get entity @e[type=chicken,limit=1,sort=nearest] Pos[0] 100
+```py
+execute store result entity @e[type=pig,limit=1,sort=nearest] Pos[0] double 0.01 run data get entity @e[type=chicken,limit=1,sort=nearest] Pos[0] 100
+```

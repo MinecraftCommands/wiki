@@ -1,5 +1,8 @@
 # Raycast
 
+* [Java](#java)
+* [Bedrock](#bedrock)
+
 | 📝 Note |
 |--------------|
 |If you're trying to check whether an entity / player is looking at a specific entity / position, you might be able to use a more streamlined method [described here](/wiki/questions/lookat)|
@@ -30,38 +33,85 @@ This method only works in a single tick, so if you need the raycast to be over a
 
 First, the command that will initiate a raycast. We're anchoring the execution point at the entities eyes (moving up from their feet), changing the execution position to the eye level, and then, due to a quirk in minecraft's keeping of context, move the anchor back to the feet to avoid the game reapplying the height of the eyes to every step. The subcommand `anchored feet` should not be used in recent versions of the game.
 
-    execute as <shooter> at @s anchored eyes positioned ^ ^ ^ anchored feet run function namespace:start_ray
+```py
+execute as <shooter> at @s anchored eyes positioned ^ ^ ^ anchored feet run function namespace:start_ray
+```
 
 Next up, the ray setup. We need to set a maximum amount of steps that we can go before we abort our search. This means we can just set a score to the maximum amount of steps. Here, a `dummy` scoreboard named `ray_steps` is used. It's set to 50 steps, so a maximum distance of 5 blocks considering our step distance is 0.1 blocks per step (which is also the reach distance of a player). We also want to store whether our ray successfully hit something, so we know whether to continue or to stop. In this case another `dummy` objective is used, called `ray_success`. Instead of two scoreboards you can also use a single scoreboard and use [fake players](/wiki/questions/fakeplayer) to store the scores.
 
-`namespace:start_ray`
-
-    scoreboard players set @s ray_steps 50
-    scoreboard players set @s ray_success 0
-    function namespace:ray
+```py
+# function example:start_ray
+scoreboard players set @s ray_steps 50
+scoreboard players set @s ray_success 0
+function example:ray
+```
 
 Next, the actual ray is being cast. For that, we first check whether our stopping condition has been achieved and run a success function if we did. Next, we count up the steps we can still take by 1. And lastly, we run the function again, moved forward by our step size, if we neither hit the stopping condition nor the maximum step size. In this example the stopping condition is hitting a block that is not air.
 
-`namespace:ray`
-
-    execute unless block ~ ~ ~ minecraft:air run function namespace:hit_block
-    scoreboard players remove @s ray_steps 1
-    execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 positioned ^ ^ ^0.1 run function namespace:ray
+```py
+# function example:ray
+execute unless block ~ ~ ~ minecraft:air run function example:hit_block
+scoreboard players remove @s ray_steps 1
+execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 positioned ^ ^ ^0.1 run function example:ray
+```
 
 Lastly, we can use the success function to run whatever we intend to do at the found place. In this case we'll just set a stone block. _Make sure to set the `ray_success` score to 1 at some point in the function though!_
 
-`namespace:hit_block`
-
-    scoreboard players set @s ray_success 1
-    setblock ~ ~ ~ stone
+```py
+# function example:hit_block
+scoreboard players set @s ray_success 1
+setblock ~ ~ ~ stone
+```
 
 And that's the basic skeleton of a raycast, which can now be extended to your heart's content.
 
-Since 1.20.2, we can use `return` to stop a function early. So the `namespace:ray` function does not need to check the value of the `ray_success` since we don't need this scoreboard anymore.
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
-    execute unless block ~ ~ ~ minecraft:air run return run function namespace:hit_block
-    scoreboard players remove @s ray_steps 1
-    execute if score @s ray_steps matches 1.. positioned ^ ^ ^0.1 run function namespace:ray
+```py
+# function example:start_ray
+scoreboard players set @s ray_steps 50
+scoreboard players set @s ray_success 0
+function example:ray
+
+# function example:ray
+execute unless block ~ ~ ~ minecraft:air run function example:hit_block
+scoreboard players remove @s ray_steps 1
+execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 positioned ^ ^ ^0.1 run function example:ray
+
+# function example:hit_block
+scoreboard players set @s ray_success 1
+setblock ~ ~ ~ stone
+```
+</details>
+
+Since 1.20.2, we can use `return` to stop a function early. So the `example:ray` function does not need to check the value of the `ray_success` since we don't need this scoreboard anymore.
+
+```py
+# function example:ray
+execute unless block ~ ~ ~ minecraft:air run return run function example:hit_block
+scoreboard players remove @s ray_steps 1
+execute if score @s ray_steps matches 1.. positioned ^ ^ ^0.1 run function example:ray
+```
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
+
+```py
+# function example:start_ray
+scoreboard players set @s ray_steps 50
+function example:ray
+
+# function example:ray
+execute unless block ~ ~ ~ minecraft:air run return run function example:hit_block
+scoreboard players remove @s ray_steps 1
+execute if score @s ray_steps matches 1.. positioned ^ ^ ^0.1 run function example:ray
+
+# function example:hit_block
+setblock ~ ~ ~ stone
+```
+</details>
+
 
 ### With an entity
 
@@ -69,25 +119,28 @@ Please see the [without an entity](#wiki_without_an_entity) section above for a 
 
 The main difference being that we are now moving an entity instead of just the execution context, so we also need to create said entity.
 
-`namespace:start_ray`
+```py
+# function example:start_ray
 
-    # summon entity to use as a marker
-    summon area_effect_cloud ~ ~ ~ {Tags:["ray_marker"]}
-    # make sure the marker entity is rotated in the same way as the executing entity
-    tp @e[tag=ray_marker] ~ ~ ~ ~ ~
-    
-    scoreboard players set @e[tag=ray_marker] ray_steps 50
-    scoreboard players set @e[tag=ray_marker] ray_success 0
-    execute as @e[tag=ray_marker] at @s run function namespace:ray
+# summon entity to use as a marker
+summon area_effect_cloud ~ ~ ~ {Tags:["ray_marker"]}
+# make sure the marker entity is rotated in the same way as the executing entity
+tp @e[tag=ray_marker] ~ ~ ~ ~ ~
+
+scoreboard players set @e[tag=ray_marker] ray_steps 50
+scoreboard players set @e[tag=ray_marker] ray_success 0
+execute as @e[tag=ray_marker] at @s run function example:ray
+```
 
 We are now executing the ray function as the marker entity instead of the executing entity. So, to move the execution position, we need to teleport the entity and make sure we re-align the function position to the entity at every step, instead of just repositioning the execution context.
 
-`namespace:ray` 
-
-    execute unless block ~ ~ ~ minecraft:air run function namespace:hit_block
-    scoreboard players remove @s ray_steps 1
-    tp @s ^ ^ ^0.1
-    execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 at @s run function namespace:ray
+```py
+# function example:ray
+execute unless block ~ ~ ~ minecraft:air run function example:hit_block
+scoreboard players remove @s ray_steps 1
+tp @s ^ ^ ^0.1
+execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 at @s run function example:ray
+```
 
 Make sure you kill the entity once it's done its job, for example, by putting the kill command into the success function or at the end of the `start_ray` function.
 
@@ -99,7 +152,7 @@ If you're doing this **without a datapack**, just using commands, then you just 
 
 ### Without an entity
 
-Thanks to the new execute syntax introduced in 1.19.50, you can use the same system as described in Java - without an entity.
+Thanks to the new execute syntax introduced in 1.19.50, you can use the same system as described in [Java - without an entity](#without-an-entity).
 
 ### With an entity
 
@@ -109,26 +162,39 @@ A technique first brought up by [/u/VentedMCBE](https://www.reddit.com/u/VentedM
 
 As mentioned, this works with just commandblocks, so for the following commands you can either put them into a repeating-chain of commandblocks or in a function.
 
-    # ignore non-specifically summoned xp orbs
-    tag @e[type=xp_orb] add ignore
-    # Summon ray marker per player
-    execute as @a at @s run summon xp_orb
-    # Rotate and relocate the ray marker
-    execute as @e[type=xp_orb] at @s at @p rotated as @p anchored eyes run tp @s ~~~ ~ ~
-    # Move the ray forwards
-    execute as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[type=xp_orb,tag=!ignore] at @s run tp @s ^^^0.1 true
-    # Run a command or display ray end point
-    execute at @e[type=xp_orb,tag=!ignore] run particle minecraft:basic_crit_particle ~~~
-    # Kill ray orbs
-    kill @e[type=xp_orb,tag=!ignore]
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
+
+```py
+# ignore non-specifically summoned xp orbs
+tag @e[type=xp_orb] add ignore
+# Summon ray marker per player
+execute as @a at @s run summon xp_orb
+# Rotate and relocate the ray marker
+execute as @e[type=xp_orb] at @s at @p rotated as @p anchored eyes run tp @s ~~~ ~ ~
+# Move the ray forwards
+execute as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[c=2] as @e[type=xp_orb,tag=!ignore] at @s run tp @s ^^^0.1 true
+# Run a command or display ray end point
+execute at @e[type=xp_orb,tag=!ignore] run particle minecraft:basic_crit_particle ~~~
+# Kill ray orbs
+kill @e[type=xp_orb,tag=!ignore]
+```
+
+</details>
 
 The 4th command is where the magic happens: Due to us splitting the execution path into 2, every time `as @e[c=2]` is called, we're essentially doubling the executions over and over. So because we're calling it 9 times, the rest of the command will be run 2^9 = 512 times. You can adjust this accordingly to your needs. In this case we're moving the ray forwards by 0.1 blocks (thus, to a maximum of 51.2 blocks), only if we can move into the block there (as denoted by the `true` at the end of the tp command). Thus, this command would cause us to find the next solid block the player is looking at (in a 51 block radius). 
 
 So, for different applications you'd modify the 4th command to find different things. For example, to stop moving if there is a creeper (feet) close by, going through blocks, the command could look like this:
 
-    execute as @e[c=2] ... as @e[c=2] as @e[type=xp_orb,tag=!ignore] at @s positioned ^^^0.1 unless entity @e[type=creeper,r=1] at @s run tp @s ^^^0.1
+```py
+execute as @e[c=2] ... as @e[c=2] as @e[type=xp_orb,tag=!ignore] at @s positioned ^^^0.1 unless entity @e[type=creeper,r=1] at @s run tp @s ^^^0.1
+```
 
-#### Using functions
+#### Using functions (Old execute)
+
+| ⚠️ Important |
+|--------------|
+|This is only for old execute versions, so it does not work in the last release|
 
 This is the same method as described in the "[with an entity](#wiki_with_an_entity)" section above, just using bedrock syntax. Please see above for an explanation on what is going on.
 
@@ -138,24 +204,25 @@ It is _highly_ recommended to use a custom entity for the raycast, as you not on
 
 Command to start the raycast (the execution point is moved up manually towards player standing eye level. This means that if the player is not standing up normally (e.g., crouching or swimming), this will produce unexpected results):
 
-    execute <shooter> ~ ~1.62 ~ function namespace:start_ray
+```py
+# Start ray
+execute <shooter> ~ ~1.62 ~ function example:start_ray
 
-`namespace:start_ray`
+# functio example:start_ray
+# summon entity to use as a marker
+summon custom:entity ray_marker ~ ~ ~
+# make sure the marker entity is rotated in the same way as the executing entity
+tp @e[name=ray_marker] ^ ^ ^-0.1 facing @s
+# set scoreboard values
+scoreboard players set @e[name=ray_marker] ray_steps 50
+scoreboard players set @e[name=ray_marker] ray_success 0
+execute @e[name=ray_marker] ~ ~ ~ function example:ray
 
-    # summon entity to use as a marker
-    summon custom:entity ray_marker ~ ~ ~
-    # make sure the marker entity is rotated in the same way as the executing entity
-    tp @e[name=ray_marker] ^ ^ ^-0.1 facing @s
-    
-    scoreboard players set @e[name=ray_marker] ray_steps 50
-    scoreboard players set @e[name=ray_marker] ray_success 0
-    execute @e[name=ray_marker] ~ ~ ~ function namespace:ray
+# function example:ray
+execute @s ~ ~ ~ detect ~ ~ ~ grass function example:hit_block
+scoreboard players remove @s ray_steps 1
+tp @s ^ ^ ^0.1
+execute @s[scores={ray_steps=1..,ray_success=0}] ~ ~ ~ function example:ray
+```
 
-checking for all but one block needs a few more steps in bedrock, so in this example we're instead checking for the block being grass.
-
-`namespace:ray` 
-
-    execute @s ~ ~ ~ detect ~ ~ ~ grass function namespace:hit_block
-    scoreboard players remove @s ray_steps 1
-    tp @s ^ ^ ^0.1
-    execute @s[scores={ray_steps=1..,ray_success=0}] ~ ~ ~ function namespace:ray
+Checking for all but one block needs a few more steps in bedrock, so in this example we're instead checking for the block being grass.
