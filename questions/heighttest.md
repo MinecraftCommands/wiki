@@ -18,5 +18,5 @@ The same technique can be used to find players above/below any `x`/`y`/`z` coord
 
 To detect below a certain height, you can make the `dy` negative.
 
-    /execute at @a at @s run say @s[y=-30,dy=-500]
+    /execute as @a at @s run say @s[y=-30,dy=-500]
 this will detect any players below `-30`
