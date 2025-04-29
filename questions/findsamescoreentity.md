@@ -13,7 +13,7 @@ Related: [Check if a score is equal to, greater than, or less than another score
 
 For this method to work, we need to make sure that the entity that we want to compare to has to be unique in some way, so it can be found and is the only possible entity to result from its target selector. In this case we assume that it has been tagged with the `compare` tag and is the only entity to have that. Furthermore, the objective we're comparing is called `points`.
 
-```py
+```mcfunction
 execute as @a if score @s points = @e[tag=compare,limit=1] points run say I have the same points
 ```
 
@@ -36,14 +36,16 @@ Below is an example of a function and predicate that selects an entity with the 
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```json
+```mcfunction
 # funtion example:some_function (run as player)
 scoreboard players operation #this ID = @s ID
 tag @s add this
 execute as @e[predicate=example:this_id,tag=!this] run say Some ID!
-tellraw @s ["ID "{"selector":"@s"}," = ",{"selector":"@e[predicate=example:this_id,tag=!this]"}]
+tellraw @s ["ID ",{"selector":"@s"}," = ",{"selector":"@e[predicate=example:this_id,tag=!this]"}]
 tag @s remove this
+```
 
+```json
 # predicate example:this_id
 {
     "condition": "minecraft:entity_scores",
@@ -79,7 +81,7 @@ tag @s remove this
 
 In this method we change the execution _location_ to be the player(s) and the execution _entity_ to be the entities to be compared to. That way `@p` is all the players respectively and `@s` is the entity to compare to. We can then get the player back into the execution chain using `@p`. 
 
-```py
+```mcfunction
 execute at @a as @e if score @s id = @p id run ...
 ```
 
@@ -95,7 +97,7 @@ Again, we're assuming that the scoreboard objective you want to compare is calle
 
 While we could just do the math operations on the original scores, we need to make sure to reset those afterwards if we want to keep the original scores around for one reason or another, so we're going to use a temporary scoreboard objective that we store the value in and can modify it without affecting the original score. This temporary objective is assumed to be called `pointsTmp`.
 
-```py
+```mcfunction
 # first we copy the score to the new objective
 execute @a ~~~ scoreboard players operation @s pointsTmp = @s points
 

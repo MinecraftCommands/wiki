@@ -1,6 +1,8 @@
 # Resources
 
-**Important: This page is outdated: some links won't work and the majority of sites are for older versions of minecraft (1.14 and older). To see rousources for newer versions see the [resources page](wiki/resources).**
+| ⚠️ Important |
+|--------------|
+|This page is outdated: some links won't work and the majority of sites are for older versions of minecraft (1.14 and older). To see rousources for newer versions see the [resources page](wiki/resources)|
 
 This page contains a list of links to utilities and references relating to commands and map making that you may find useful.
 

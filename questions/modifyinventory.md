@@ -81,7 +81,7 @@ A shulker box is placed somewhere out of sight of the player. Sometimes far away
 
 This yellow shulker box loot table was designed by Luetzie for Lantern, and is also used by Phi and AESTD. If you use the exact same loot table, you will have no conflicts with these data packs. **It has been established as the standard loot_table for this endeavour by this commands community, and it is highly suggested you use this one!**
 
-You can download it from here: https://lanternmc.com/yellow_shulker_box.json
+You can download it from here: [https://lanternmc.com/yellow_shulker_box.json](https://lanternmc.com/yellow_shulker_box.json)
 
 ### The commands:
 
@@ -95,7 +95,7 @@ Editing an item
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # First, we copy the item to a storage.
 data modify storage lilith:example Item set from entity <player> SelectedItem
 

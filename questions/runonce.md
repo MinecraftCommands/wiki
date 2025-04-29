@@ -10,7 +10,7 @@ This makes a command act as if it was on a comparator, without the lag and multi
 
 For this method, our first command checks two things: Your condition for running the command (e.g. `@a[x=73,y=10,z=3,distance=..1]`) and the condition that it didn't already match in the last tick (e.g. `[scores={matched=0}]`). We're storing the success of your condition in a scoreboard in the second command through a success check:
 
-```py
+```mcfunction
 # In chat / load function
 scoreboard objectives add matched dummy
 
@@ -25,7 +25,7 @@ execute as @a store success score @s matched if entity @s[x=73,y=10,z=3,distance
 
 The previous example doesn't work in Bedrock Edition. Here is a setup that works in both Java and Bedrock Edition (if you change `distance=..X` to `rm=X`):
 
-```py
+```mcfunction
 execute as @a[scores={matched=0},x=73,y=10,z=3,distance=..1] run say I just entered the area!
 scoreboard players set @a[scores={matched=0},x=73,y=10,z=3,distance=..1] matched 1
 execute as @a unless entity @s[scores={matched=1},x=73,y=10,z=3,distance=..1] run scoreboard players set @s matched 0
@@ -85,11 +85,13 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
     "function": "example:spawn/enter"
   }
 }
-
+```
+```mcfunction
 # function example:spawn/enter
 advancement revoke @s only example:spawn/leave
 tellraw @s "Welcome to spawn!"
 
+```json
 # advancement example:spawn/leave
 {
   "criteria": {
@@ -112,7 +114,8 @@ tellraw @s "Welcome to spawn!"
     "function": "example:spawn/leave"
   }
 }
-
+```
+```mcfunction
 # function example:spawn/leave
 advancement revoke @s only example:spawn/enter
 tellraw @s "You leave spawn!"
@@ -133,14 +136,14 @@ Such a check may seem very large, but this method allows you not to check the sa
 
 The following commands, running in this order, will keep track of whether a player matched the selector `@a[x=73,y=10,z=3,distance=..1]`:
 
-```py
+```mcfunction
 tag @a[tag=alreadyMatched] remove alreadyMatched
 tag @a[x=73,y=10,z=3,distance=..1] add alreadyMatched
 ```
 
 Players who matched the selector will get the `alreadyMatched` scoreboard tag (you can call this scoreboard tag whatever you want, so long as you're consistent with it). At the start of the next tick, players who matched the selector in the previous tick will have the `alreadyMatched` scoreboard tag. This means that we can select players who don't have the scoreboard tag (`tag=!alreadyMatched`, meaning they didn't match in the previous tick) but do *now* match the selector:
 
-```py
+```mcfunction
 # Command blocks / tick function
 execute as @a[x=73,y=10,z=3,distance=..1,tag=!alreadyMatched] run say I just entered the area!
 tag @a[tag=alreadyMatched] remove alreadyMatched

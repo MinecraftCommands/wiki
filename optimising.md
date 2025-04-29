@@ -102,7 +102,14 @@ Consider also whether you actually need a selector. If you're selecting the same
 
 Using armor stands as markers? Strongly consider switching to area effect clouds or, even better, the `marker` entity instead. [Here's a good video showing just how much difference this makes.](https://www.youtube.com/watch?v=RKXzWGQfIcg) You can summon an area effect cloud that acts as a marker with:
 
+    # 1.20.5+
+    summon area_effect_cloud ~ ~ ~ {Duration:-1}
+    # Pre-1.20.5
     summon area_effect_cloud ~ ~ ~ {Duration:2147483647}
+
+| 📝 Note |
+|---------|
+|Starting [in 1.21.5](https://www.minecraft.net/de-de/article/minecraft-java-edition-1-21-5), setting the `Duration` to `-1` causes the area effect cloud to never expire (this is now the default, so the `Duration` field can be omitted). Before that you'd set it to `2147483647` which made the cloud expire after over 3 years of ingame time.|
 
 These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item (In pre-1.19.4, as you can use item displays in newer versions) or using `Motion`.
 

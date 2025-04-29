@@ -9,13 +9,13 @@
 
 In Bedrock, you can use `scoreboard players random` to get a random number into your scoreboard, the command is the following one:
 
-```py
+```mcfunction
 scoreboard players random <player: target> <objective: string> <min: int> <max: int>
 ```
 
 So for example, from 1 to 10 in a score called `some_score`
 
-```py
+```mcfunction
 scoreboard players random @p some_score 1 10
 ```
 
@@ -30,13 +30,13 @@ This command is used to generate a random number specifying the maximum and the 
 
 First we need to create a scoreboard where we will store the random number.
 
-```py
+```mcfunction
 /scoreboard objectives add random dummy
 ```
 
 We need to store the result of the [`/random`](https://minecraft.wiki/w/random) command to a fake player
 
-```py
+```mcfunction
 /execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
 ```
 

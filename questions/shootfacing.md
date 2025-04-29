@@ -29,7 +29,7 @@ Or rather, make use of the fact that we can use the worlds zero position and pre
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # summon temporary entity "in front of the player", if the player was standing at 0 0 0
 execute positioned 0.0 0 0.0 run summon marker ^ ^ ^1 {Tags:["direction"]}
 
@@ -53,7 +53,7 @@ kill @e[tag=direction]
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # summon the temporary entity at the players position
 summon marker ~ ~ ~ {Tags:["direction"]}
 
@@ -91,7 +91,7 @@ Since version 1.19.4 you can use `summon` inside the `/execute` command, which a
 
 Now, instead of a marker that must be manually killed, you can use area_effect_cloud, which will disappear on its own on the next tick. Also, force loaded coordinates 0 0 0 are no longer required to work, since we are creating and using direction entities within one command, but it is still strongly recommended to load chunks [-1, -1] to [0, 0], since area_effect_cloud will not be deleted in unloaded chunks automatically.
 
-```py
+```mcfunction
 # Summon the projectile entity
 summon sheep ~ ~ ~ {Tags:["projectile"]}
 
@@ -106,7 +106,7 @@ tag @e[tag=projectile] remove projectile
 
 You can go ahead and do this using almost just one command block. You can perform all settings using `store success entity`. For example, for a fireball, you can immediately set ExplosionPower and power[1] so that the projectile does not fly in a straight line, but in an arc:
 
-```py
+```mcfunction
 # Command blocks
 tag @e[type=fireball,tag=!exist] add exist
 execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
@@ -125,7 +125,7 @@ This example will assume you have a dummy scoreboard objective set up that is na
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # summon the temporary entity
 summon marker ^ ^ ^1 {Tags:["direction"]}
 
@@ -166,7 +166,7 @@ Also, using this Method instead of Method 1, you can more easily modify the indi
 
 However, you may notice that some entities that you want to use may visually lag when summoned and fall in front of the player. This is due to the fact that the movement of this entity is not updated on the client, but this can be easily fixed by updating the NBT data **on the next tick** in any way. The simplest and "safest" thing is to update the `Air` store tag with some value.
 
-```py
+```mcfunction
 execute as @e[tag=projectile] store result entity @s Air short 1 run time query gametime
 ```
 
@@ -174,7 +174,7 @@ execute as @e[tag=projectile] store result entity @s Air short 1 run time query 
 
 If you are using command blocks, you can achieve this by running this command **before** summon and changing the `Motion` tag. Here is a complete example for command blocks:
 
-```py
+```mcfunction
 # In chat
 scoreboard objectives add click used:carrot_on_a_stick
 forceload add -1 -1 0 0
@@ -192,7 +192,7 @@ When using a datapack, you can use the schedule function to do this fix.
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:tick
 execute as @a[scores={click=1..}] at @s run function example:click
 

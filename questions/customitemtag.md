@@ -76,7 +76,7 @@ Below are examples of loot tables for different versions. **For version 1.20.5+,
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```
+```json
 # 1.20.5 and above
 {
   "pools": [

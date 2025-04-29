@@ -2,13 +2,13 @@
 
 If your `execute if entity` **does not rely on NBT data**, you can simply move the selector into the command you want to use. For example, if you have:
 
-```py
+```mcfunction
 execute if entity @a[team=red]
 ```
 
 You can also use:
 
-```py
+```mcfunction
 kill @a[team=red]
 ```
 
@@ -16,19 +16,19 @@ kill @a[team=red]
 
 If your testfor **relies on NBT data**, you will need to use either `scoreboard players set` or `scoreboard players tag` to give them a scoreboard score/tag, then select them based off of that. For example if you have:
 
-```py
+```mcfunction
 testfor @a {OnGround:1b}
 ```
 
 You can give them a tag like this:
 
-```py
+```mcfunction
 scoreboard players tag @a add IsGrounded {OnGround:1b}
 ```
 
 Then select them with `@a[tag=IsGrounded]`. You'll probably want to remove this tag afterwards, so that people who match the data once won't always have the tag:
 
-```py
+```mcfunction
 scoreboard players tag @a[tag=IsGrounded] remove IsGrounded
 ```
 
@@ -36,6 +36,6 @@ scoreboard players tag @a[tag=IsGrounded] remove IsGrounded
 
 In 1.13, you can specify NBT data directly in a selector, for example:
 
-```py
+```mcfunction
 kill @a[nbt={OnGround:1b}]
 ```

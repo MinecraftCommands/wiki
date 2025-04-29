@@ -51,10 +51,11 @@ Since version 1.20.5 can also compare values in storage directly, without copyin
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```json
+```mcfunction
 # Example storage
 data merge storage example:data {value:7.5f,min:0,max:10}
 
+```json
 # predicate example:storage_compire
 {
   "condition": "minecraft:value_check",

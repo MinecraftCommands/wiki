@@ -9,6 +9,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 ### Utilities
 
 - [MCStacker](https://mcstacker.net): All commands generators
+- [MinecraftJSON](https://minecraftjson.com): All things text
 - [Minecraft Tools](https://minecraft.tools): Mainly for books and titles
 - [Colorize Fun](https://colorize.fun/en/minecraft): For text gradients
 - [Gamergeeks](https://www.gamergeeks.net): Almost all commands generators, it's better if MCStacker looks confusing for you
@@ -38,7 +39,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 ### Utilities
 
 - [Datapack Helper+](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server): syntax highlighter.
-- [Misode’s Generator](https://misode.github.io/advancement): loot table, predicate, item modifier, advancement, recipe, dimension, structure and tag generator, between others.
+- [Misode’s Generator](https://misode.github.io): loot table, predicate, item modifier, advancement, recipe, dimension, structure and tag generator, between others.
 - [Datapack Assembler](https://far.ddns.me): generate data pack from commands
 
 ### References

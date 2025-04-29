@@ -230,9 +230,6 @@ Here is an example of a predicate and its use in a target selector:
   <summary style="color: #e67e22; font-weight: bold;">See predicate</summary>
 
 ```json
-execute as @a[predicate=example:has/awesome_stick] run say Example Command. 
-
-# predicate example:has/awesome_stick
 {
   "condition": "minecraft:entity_properties",
   "entity": "this",

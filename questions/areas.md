@@ -8,7 +8,7 @@ This mostly comes up as a question to change the gamemode in a certain area (e.g
 
 The naive approach would be to put everyone in a radius X around the worldspawn (e.g. at 0 0 0) to adventure mode and everyone outside of it to survival mode.
 
-```py
+```mcfunction
 gamemode adventure @a[x=0,y=0,z=0,distance=..X]
 gamemode survival @a[x=0,y=0,z=0,distance=X..]
 ```
@@ -19,7 +19,7 @@ This method quickly falls apart if you have a non-spherical or non-box shaped ar
 
 The best way to make sure players are in one of multiple areas without overwriting each other, is to use a tag: So instead of applying the desired effect to each area individually, you tag all players that are in one of the areas and apply the effect once to all of them (or everyone else). But this method requires a separate command block for each location. For a large number of locations, use the anchor entity method.
 
-```py
+```mcfunction
 # Command blocks / tick function
 tag @a remove inArea
 tag @a[x=0,y=0,z=0,distance=..X] add inArea
@@ -31,7 +31,7 @@ gamemode survival @a[tag=!inArea]
 
 To prevent chat spam for the players and unnecessary gamemode changes, we suggest using the gamemode selector argument on the last two commands:
 
-```py
+```mcfunction
 gamemode adventure @a[tag=inArea,gamemode=!adventure]
 gamemode survival @a[tag=!inArea,gamemode=!survival]
 ```
@@ -44,7 +44,7 @@ If you need to check if the player is in one of several spherical areas, for exa
 
 For versions before 1.17 you can use armor_stand or area_effect_cloud, but since version 1.17 it is strongly recommended to use an [marker entity](https://minecraft.wiki/w/Marker) to mark a place.
 
-```py
+```mcfunction
 # Summon marker
 summon marker <pos> {Tags:["adventure_area"]}
 
@@ -57,7 +57,7 @@ execute as @a[gamemode=adventure] at @s unless entity @e[type=marker,tag=adventu
 
 To make placing markers more convenient, you can give a spawn_egg containing a marker with the tag:
 
-```py
+```mcfunction
 # 1.17 - 1.20.4
 give @s bat_spawn_egg{EntityTag:{id:"minecraft:marker",Tags:["adventure_area"]},display:{Name:'{"text":"Adventure Area Marker","italic":false}'}}
 
@@ -73,7 +73,7 @@ If you need to execute a command when a player enters a very randomly shaped are
 
 For example, you want to create an area on your map where the player will be detected if the player is not sneaking. This example will check the red_concrete block at Y=-63 for this area:
 
-```py
+```mcfunction
 # Command block / tick function (1.20.5+)
 execute as @a at @s if predicate {condition:"entity_properties",entity:"this",predicate:{flags:{is_sneaking:false}}} if block ~ -63 ~ minecraft:red_concrete run say You have been found!
 ```

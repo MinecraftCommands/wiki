@@ -24,7 +24,7 @@ This page details information on common problems you might have with a command, 
   * `/execute run command` instead of `/command`, no longer works, as `execute` can run plugin commands
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
     * Make sure you don't have a mod that dissables command blocks or functions
-* Make sure command blocks are enabled in `server.propieties`
+* Make sure command blocks are enabled in `server.properties`
 * When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20...)
 * Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command in Java or the [`/tickingarea`](https://minecraft.wiki/w/Commands/tickingarea) command in Bedrock to force a chunk to be always loaded
 * Maybe you set the command to conditional accidentaly and it should be uncoditional, double check that
@@ -59,7 +59,7 @@ This page details information on common problems you might have with a command, 
   * To check if a function did **not** end (so it has been cut off by this gamerule) you can set a scoreboard value of a [fakeplayer](wiki/questions/fakeplayer) to 1, run all commands and set it to 0 after that (that command should be the last one in the whole tick). In the next tick you can check if the value is 1 or 0, if its 1, the function has been cutted.
 * Make sure the tick/load function tag is specifing the correct function
 * Functions can not run any command that requires a higher level permission than 2.
-  * You can override this if you set `function-level-permission` in `server.propieties` to a higher number
+  * You can override this if you set `function-level-permission` in `server.properties` to a higher number
 * If a function has a syntax error, it will **not** show up in the autocomplete and it will flail, if you try to run it
   * All commands must have a correct syntax in order to run the function
   * You can start the function with a `/say` command, so you will know if the function has been executed

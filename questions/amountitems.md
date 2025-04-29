@@ -10,7 +10,7 @@
 Using the [`clear`](https://minecraft.wiki/Commands/clear) command with a `[<maxCount>]` of 0 will return the amount of items a player has, without actually clearing any of them.  
 That means we can use [`execute store`](https://minecraft.wiki/w/Commands/execute#Store_subcommand) to save that number somewhere and then execute depending on that:
 
-```py
+```mcfunction
 # Setup
 scoreboard objectives add diamonds dummy
 
@@ -28,7 +28,7 @@ Since version 1.20.5, you can also use [`execute if items`](https://minecraft.wi
 
 The `if items` subcommand, when executed, returns the number of items that meet the specified conditions. For a quick example, running this command will show the count of all items in the player's inventory (except for armor and left hand slots):
 
-```py
+```mcfunction
 # In chat
 execute if items entity @s container.* *
 ```
@@ -37,7 +37,7 @@ You can find out more details on how to detect specific items here: [Detect a sp
 
 Below is an example for getting the amount of a custom item and executing some command depending on the result:
 
-```py
+```mcfunction
 # Example item
 give @s diamond[minecraft:custom_data={diamond:true},minecraft:item_name="'Custom Diamond'"]
 
@@ -53,7 +53,7 @@ Although you can use `/clear` on a player, `if items` can also count the number 
 
 Here are some examples for this:
 
-```py
+```mcfunction
 # Counting items in chest or any container
 execute store result score #container diamonds if items block <pos> container.* *[custom_data~{diamond:true}]
 
@@ -65,6 +65,6 @@ execute as @a store result score @s diamonds if items entity @s enderchest.* *[c
 
 In the **1.18.20 beta** they added the [`hasitem`](https://minecraft.wiki/wiki/Target_selectors#Selecting_targets_by_items) target selector, which allows you to check for specific amounts (as [ranges](/wiki/questions/range)) of items in entities inventories. Below is an example (using 1.19.50 execute), check the link above for more information.
 
-```py
+```mcfunction
 execute as @a[hasitem={item=apple,quantity=5..}] run say I have 5 or more apples in my inventory
 ```

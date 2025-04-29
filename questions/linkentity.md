@@ -3,7 +3,7 @@
 _Also known as a **scoreboard ID system**_.
 
 * [Java](#java)
-* [Java and Bedrock](#bJava-and-bedrock)
+* [Java and Bedrock](#java-and-bedrock)
 
 ## Java
 
@@ -23,7 +23,7 @@ This command selects all players who do not have a score `ID`, then increases th
 
 If you are using a datapack, then you can use the command above in the tick function, or create a simple advancement that will only run once for each player:
 
-```py
+```json
 # advancement example:first_join
 {
   "criteria": {
@@ -35,7 +35,8 @@ If you are using a datapack, then you can use the command above in the tick func
     "function": "example:set_id"
   }
 }
-  
+```
+```mcfunction
 # function example:set_id
 execute store result score @s ID run scoreboard players add #new ID 1
 ```
@@ -52,7 +53,7 @@ execute store result score @s ID run scoreboard players add #new ID 1
 
 First we need to set up a dummy scoreboard objective
 
-```py
+```mcfunction
 scoreboard objectives add id dummy
 ```
 
@@ -62,7 +63,7 @@ Next, to make sure that every player gets a unique id, we need a system that ass
 
 Next, to assign a unique id to every player that does not have an ID yet, it's best to use a function so that every new player get treated individually.
 
-```py
+```mcfunction
 # function example:tick
 # add 0 to all players' id score. This ensures that every player 
 # has a score (of 0) while not changing any existing scores
@@ -81,7 +82,7 @@ scoreboard players add $total id 1
 
 If for some reason you cannot use a function, use this code for your commandblocks instead. This means that it will take `n` ticks for `n` amount of players that need an id, while the other system is instant:
 
-```py
+```mcfunction
 scoreboard players add @a id 0
 
 # select one random unassigned player to assign the id to

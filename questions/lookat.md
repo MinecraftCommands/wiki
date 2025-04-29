@@ -17,19 +17,19 @@ in Java and later Bedrock versions this can actually be achieved in a single com
 
 So, to bring it all together, the full command is as follows:
 
-```py
+```mcfunction
 execute as @a at @s anchored eyes facing <entity / coordinates> anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run
 ```
 
 Example 1: looking at the eyes of the closest cow with the tag "target":
 
-```py
+```mcfunction
 execute as @a at @s anchored eyes facing entity @e[type=cow,tag=target,limit=1,sort=nearest] eyes anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello cow!
 ```
 
 Example 2: looking at the position 10 20 30
 
-```py
+```mcfunction
 execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello block
 ```
 
@@ -41,11 +41,11 @@ There is a predicate that allows us to detect when a player is looking at an ent
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```json
+```mcfunction
 # function example:tick
 execute as @a[predicate=example:looking_cow] run say Hi, cow!
-
-
+```
+```json
 # predicate example:looking_cow
 {
   "condition": "minecraft:entity_properties",
@@ -100,7 +100,8 @@ You can find (and edit) the preset in [misode's advancement generator](https://m
     "function": "example:lookat/cow"
   }
 }
-
+```
+```mcfunction
 # function example:lookat/cow
 advancement revoke @s only example:lookat/cow
 say I am looking at a cow
@@ -120,7 +121,7 @@ This setup can only happen to one player at a time, so either use functions to m
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
 
-```py
+```mcfunction
 # summon armorstand so we can do our check
 execute @p ~~~ summon armor_stand ~~~ none checker
 # tp armorstand to player including rotations
@@ -179,7 +180,7 @@ In this example the entity will (without cooldown) fire the `custom:ive_been_loo
 
 To approximate the distance/radius you want to use based on your viewing angle, you can use the following formula, where `α` is the angle that you want this method to trigger inside of, left and right of the target:
 
-$r = 2 \cdot \sin \left( \frac{\alpha}{2} \right)$
+$r = 2 \times \sin \left( \frac{\alpha}{2} \right)$
 
 or, the inverse to calculate what viewing angle a certain radius / distance (`r`) value will give you
 

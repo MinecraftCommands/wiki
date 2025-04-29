@@ -1,10 +1,14 @@
 # Do custom crafting (with NBT)
 
-* [Java](#bedrock-edition-addon)
+* [Java](#Java)
 * [Bedorck](#bedrock-edition-addon)
 
 ## Java
 The vanilla crafting system does not support NBT data. Although 1.20.5 added the ability to create recipes with custom crafting data, it still does not support custom data for ingredients. This article provides several ways to create custom crafts that support custom items for both the result and the ingredients.
+
+| 📝 Note |
+|--------------|
+|In 1.20.5 this became partially accessible|
 
 ----
 

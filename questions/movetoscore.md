@@ -17,7 +17,7 @@ Below is an example of summoning a pig according to the set value in the scorebo
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # Setup
 scoreboard objectives add pos dummy
 scoreboard players set X pos 10
@@ -42,7 +42,7 @@ $tellraw @a "Pig summoning at $(x) $(y) $(z)"
 
 The macro allows you to insert any numeric or text data into any part of the command; however, before using these values in the command you need to set this data in storage, read the data from the entity / block, or you can manually set the values when running the function. Below is an example:
 
-```py
+```mcfunction
 # In chat
 function example:macro_summon {id:"minecraft:pig",x:25.5d, y:65.5d, z:-15.5d}
 
@@ -54,7 +54,7 @@ $summon $(id) $(x) $(y) $(z)
 
 Assuming your desired position is stored in the entity's posX, posY and posZ value, you can just run `execute store` to save the score into the Position like this:
 
-```py
+```mcfunction
 execute store result entity @s Pos[0] double 1 run scoreboard players get @s posX
 execute store result entity @s Pos[1] double 1 run scoreboard players get @s posY
 execute store result entity @s Pos[2] double 1 run scoreboard players get @s posZ
@@ -64,7 +64,7 @@ execute store result entity @s Pos[2] double 1 run scoreboard players get @s pos
 
 But you can easily avoid unloading the entity if you do not change each axis separately, but first do it in storage and then copy the ready `Pos` tag from storage to the entity data:
 
-```py
+```mcfunction
 data merge storage example:data {Pos:[0d,0d,0d]}
 execute store result storage example:data Pos[0] double 1 run scoreboard players get @s posX
 execute store result storage example:data Pos[1] double 1 run scoreboard players get @s posY
@@ -80,7 +80,7 @@ The problem with the player is that the player NBT data cannot be modified and t
 
 Since version 1.20.2 you can also use the [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) to teleport to specified coordinates. Here is an example of running a macro function with data from `storage example:macro pos`:
 
-```py
+```mcfunction
 execute store result storage example:macro pos.x int 1 run scoreboard players get X pos
 execute store result storage example:macro pos.y int 1 run scoreboard players get Y pos
 execute store result storage example:macro pos.z int 1 run scoreboard players get Z pos
@@ -94,7 +94,7 @@ $tp @s $(x) $(y) $(z)
 |---------|
 |A macro cannot be read from a List/Array, but only from an object. Therefore, if you received a list (like `Pos` tag) as a tag for teleportation, you must convert this into objects|
 
-```py
+```mcfunction
 # Example input pos as List
 data merge storage example:data {Pos:[25d,100d,65d]}
 function example:tp/convert
@@ -112,7 +112,7 @@ You can use end gateways to teleport the players to an exact location, see [this
 
 Basically you can set its block NBT Data to `ExactTeleport:1b,ExitPortal:{X:1,Y:2,X:3}` using `data merge block` or `execute store` and then teleport the player into said portal. Thanks to `execute store` you can set the Exit Portal NBT dynamically:
 
-```py
+```mcfunction
 # 1.13 - 1.20.4
 setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,ExitPortal:{X:0,Y:0,Z:0},Age:-9223372036854775808L}
 execute store result block 0 5 0 ExitPortal.X int 1 run scoreboard players get @s MapX
@@ -125,7 +125,7 @@ Make sure the position you're using for the endgateway is in the loaded chunks. 
 
 Since version 1.20.5, the `ExitPortal` Compound tag has been replaced by the [Int Array](https://minecraft.wiki/w/NBT_format#Data_types) `exit_portal` tag (not a List).
 
-```py
+```mcfunction
 # 1.20.5+
 setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,exit_portal:[I;0,0,0],Age:-9223372036854775808L}
 execute store result block 0 5 0 exit_portal[0] int 1 run scoreboard players get @s MapX
@@ -150,7 +150,7 @@ You basically copy their score to some temporary score so you don't lose it when
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 execute as @a unless score @s xTmp matches 0 if score @s xTmp = @s xTmp run teleport @s 0 0 0
 
 execute as @a[scores={xTmp=128..}] at @s run tp @s ~128 ~ ~

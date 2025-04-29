@@ -91,7 +91,7 @@ Below is an example of storing a player's inventory in storage using the [scoreb
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:storing
 data remove storage example:inv this
 execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
@@ -106,7 +106,7 @@ $data modify storage example:inv players[{ID:$(ID)}] merge from storage example:
 
 This player data storage system will create an in storage `example:inv` object for each player in the `players` list that will look something like:
 
-```py
+```mcfunction
 # storage example:inv players[{ID:5}]
 {ID:5,Inventory:[{Slot:0b,id:"minecraft:stick",Count:1b}]}
 ```
@@ -122,7 +122,7 @@ So, assume we want to **store** a players inventory then. This part is the easy 
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:new_marker
 # summon marker
 summon marker ~ ~ ~ {Tags:["inv_store","inv_new"]}
@@ -165,7 +165,7 @@ Below is an example for versions 1.20.2 - 1.20.4. To do this need to run functio
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:load
 scoreboard objectives add Slot dummy
 
@@ -247,7 +247,7 @@ Below is an updated example for version 1.20.5 without comments, since otherwise
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
-```py
+```mcfunction
 # function example:load
 scoreboard objectives add Slot dummy
 
@@ -290,7 +290,7 @@ Running this function `as` the marker entity and having the target player marked
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # count the amount of items in the array so we know how often to repeat
 execute store result score #items temp run data get entity @s data.Inventory
 
@@ -304,7 +304,7 @@ kill @s
 
 `return_item.mcfunction`
 
-```py
+```mcfunction
 # get the slot number into a scoreboard so we can use it later
 execute store result score #slot temp run data get entity @s data.Inventory[0].Slot
 # remove the Slot data so it doesn't get removed from the chest
@@ -325,7 +325,7 @@ scoreboard players remove #items temp 1
 execute if score #items temp matches 1.. run function namespace:return_item
 ```
 `give_correct_slot.mcfunction`
-```py
+```mcfunction
 # based on the previously stored slotnumber copy the item to the correct slot
 
 # offhand
@@ -365,7 +365,7 @@ Thankfully we can just recursively run through all the entries/items in the arra
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # count the amount of items in the array so we know how often to repeat
 execute store result score #items temp run data get entity @s data.Inventory
 
@@ -379,7 +379,7 @@ kill @s
 
 `return_items.mcfunction`
 
-```py
+```mcfunction
 # summon a new item entity
 summon item ~ ~ ~ {Item:{id:"minecraft:stone",Count:1b},Tags:["new_item"]}
 # copy the info about the entity from the marker entity
@@ -410,7 +410,7 @@ Next, run this function `as` the marker, where the target player is `@a[tag=targ
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # count the amount of items in the array so we know how often to repeat
 execute store result score #items temp run data get entity @s data.Inventory
 # if there is at least one item, start the process.
@@ -422,7 +422,7 @@ kill @s
 ```
 
 `restore_shulker.mcfunction`
-```py
+```mcfunction
 # reset the shulkerbox
 data merge block ~ ~ ~ {Items:[]}
 # remove Slot data from item
@@ -460,7 +460,7 @@ For this we assume the two chests of the double chest are located at `~ ~ ~` and
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # reset/empty the chests
 data merge block ~ ~ ~ {Items:[]}
 data merge block ~1 ~ ~ {Items:[]}
@@ -476,7 +476,7 @@ kill @s
 
 `into_chest.mcfunction`
 
-```py
+```mcfunction
 # reset the shulkerbox
 data merge block <pos> {Items:[]}
 # remove Slot data from item
@@ -530,7 +530,7 @@ This method consist on using `/item` (on Java) or to replace all slots in 2 cont
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:storing
 execute positioned <pos1> run function example:storing/container_1
 

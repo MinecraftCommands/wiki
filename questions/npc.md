@@ -9,7 +9,7 @@ This article will explain how to create NPCs and add commands to it.
 
 For spawning an NPC, you will need to use the `/summmon` or `/give` command:
 
-```py
+```mcfunction
 /summon npc
 /give @s spawn_egg 1 51
 ```
@@ -50,7 +50,7 @@ This is done thanks to the `/dialogue` command, that opens NPC dialogues.
 
 First NPC (The one player will interact with), with the dialog “Do you want a challenge?”
 
-```py
+```mcfunction
 # Button mode with the text “Yes”
 dialogue open @e[tag=npc.confirm,type=npc] @initiator
 
@@ -60,7 +60,7 @@ dialogue open @e[tag=npc.confirm,type=npc] @initiator
 
 Now we will hide a second NPC underground (so player will **not** see it)  with the tag `npc.confirm`, With the dialogue “Are you sure?”
 
-```py
+```mcfunction
 # Button mode with the text “Yes”
 execute at @initiator run summon zombie
 say here is your challenge

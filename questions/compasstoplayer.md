@@ -6,7 +6,7 @@ Since the compass will always point to the worldspawnpoint, your only option is 
 
 **Java & Bedrock syntax:**
 
-```py
+```mcfunction
 execute at @p[<your target player>] run setworldspawn ~ ~ ~
 ```
 
@@ -21,13 +21,13 @@ With 1.16 a new functionality has been introduced into the game: a Lodestone Com
 
 The give command for such a compass which doesn't need a lodestone to work looks like this:
 
-```py
+```mcfunction
 /give @s compass{LodestoneTracked:0b,LodestonePos:{X:-460,Y:64,Z:-701},LodestoneDimension:"minecraft:overworld"}
 ```
 
 Now, using data merge we can modify those numbers dynamically. For example, lets say you want to drop the compass to make it point to the second-nearest player, assuming the nearest player is you. The commands for something like that could look like this (using the [custom item tag](/wiki/questions/customitemtag) `playertracker:1b` to identify such a compass):
 
-```py
+```mcfunction
 # Command block / tick function
 execute as @e[type=item,nbt={Item:{tag:{playertracker:1b}}}] at @s run function namespace:update_compass
 

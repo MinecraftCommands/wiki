@@ -8,7 +8,7 @@ For example, you want to execute a command when `@a[tag=TeamChange]` finds somet
 
 Easiest way to do this is by prefixing the command with an `execute if entity`:
 
-```py
+```mcfunction
 execute if entity @a[tag=TeamChange,limit=1] run say test
 
 # another example
@@ -24,7 +24,7 @@ For this you will need to use `/execute store`.
 
 First, set up a dummy scoreboard objective:
 
-```py
+```mcfunction
 scoreboard objectives add success_score dummy
 ```
 
@@ -46,7 +46,7 @@ For example, you want to execute a command when `@a[tag=TeamChange]` finds somet
 
 Easiest way to do this is by prefixing the command with an `execute`:
 
-```py
+```mcfunction
 execute @a[tag=TeamChange,c=1] ~ ~ ~ say test
 ```
 
@@ -54,7 +54,7 @@ execute @a[tag=TeamChange,c=1] ~ ~ ~ say test
 
 If you want to run commands without changing the executor, or run a command if the selector **fails**, you can use `/function`'s `if` or `unless` arguments. For example:
 
-```py
+```mcfunction
 function code:team_change if @a[tag=TeamChange]
 function code:ready unless @a[tag=!Ready]
 ```
@@ -65,13 +65,13 @@ For this you will need to use `/stats`. If you have not used `/stats` in the pas
 
 First, set up a dummy scoreboard objective:
 
-```py
+```mcfunction
 scoreboard objectives add success_score dummy
 ```
 
 For the entity on which you will be executing the command you want to use as a conditional, set its `SuccessCount` stat to store in its `success_score`:
 
-```py
+```mcfunction
 stats entity @e[tag=main] set SuccessCount @s success_score
 ```
 
@@ -79,7 +79,7 @@ stats entity @e[tag=main] set SuccessCount @s success_score
 
 Make sure the score is initiated (not null). Easy way to do this is by adding 0:
 
-```py
+```mcfunction
 scoreboard players add @e[tag=main] success_score 0
 ```
 
@@ -87,7 +87,7 @@ scoreboard players add @e[tag=main] success_score 0
 
 Then, whenever you want to perform a conditional command:
 
-```py
+```mcfunction
 testforblock 73 10 31 stone *
 execute @s[score_success_score_min=1] ~ ~ ~ say Stone found!
 execute @s[score_success_score=0] ~ ~ ~ say Stone not found!
@@ -95,7 +95,7 @@ execute @s[score_success_score=0] ~ ~ ~ say Stone not found!
 
 Alternatively, if you're **not** running this function off of the entity storing its `Successcount`:
 
-```py
+```mcfunction
 execute @e[tag=main] ~ ~ ~ testforblock 73 10 31 stone *
 execute @e[tag=main,score_success_score_min=1] ~ ~ ~ say Stone found!
 execute @e[tag=main,score_success_score=0] ~ ~ ~ say Stone not found!
@@ -103,7 +103,7 @@ execute @e[tag=main,score_success_score=0] ~ ~ ~ say Stone not found!
 
 Be careful here of the order and affect that subsequent commands may have on the entity's `Successcount`. **For example, the following will not work**:
 
-```py
+```mcfunction
 testforblock 73 10 31 stone *
 execute @s[score_success_score=0] ~ ~ ~ say Stone not found!
 execute @s[score_success_score_min=1] ~ ~ ~ say Stone found!

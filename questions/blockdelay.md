@@ -18,7 +18,7 @@ Area effect clouds (AECs) have a `Duration` tag and an `Age` tag. Their `Age` wi
 
 For example, the following creates an AEC that will disappear in 100 ticks (5 seconds), as their `Age` defaults to 0:
 
-```py
+```mcfunction
 summon area_effect_cloud ~ ~ ~ {Duration:100}
 ```
 
@@ -29,7 +29,7 @@ summon area_effect_cloud ~ ~ ~ {Duration:100}
 You can set the `Duration` tag as a positive value or the `Age` tag as a negative value, but then you need to set the `Particle` tag to `"block air"` (1.20.4 and below) or `{type:"block",block_state:"minecraft:air"}` (1.20.5 and above) to prevent it from creating particles.
 
 We can also summon it with a tag to select it with later:
-```py
+```mcfunction
 # 1.20.4 and below
 summon area_effect_cloud ~ ~ ~ {Tags:["delay"],Age:-100,Particle:"block air"} 
 
@@ -39,7 +39,7 @@ summon area_effect_cloud ~ ~ ~ {Tags:["delay"],Age:-100,Particle:{type:"block",b
 
 The following 3 commands, in this order on a repeating-chain clock, will tag any AEC that's reached `Age:-1` with `delayActivating`, then make them activate (by turning on/off) an impulse command block at their position:
 
-```py
+```mcfunction
 tag @e[type=area_effect_cloud,tag=delay,nbt={Age:-1}] add delayActivating
 execute at @e[type=area_effect_cloud,tag=delayActivating] run data merge block ~ ~ ~ {auto:true}
 execute at @e[type=area_effect_cloud,tag=delayActivating] run data merge block ~ ~ ~ {auto:false}
@@ -47,13 +47,13 @@ execute at @e[type=area_effect_cloud,tag=delayActivating] run data merge block ~
 
 That means that if you have those 3 commands repeating somewhere in your world, the command `/summon area_effect_cloud X Y Z {Tags:[delay],Age:-##,Particle:{type:"block",block_state:"minecraft:air"}}` can be used to activate the command block at (X, Y, Z) in ## ticks. An example, that'll activate the block at (10, 64, 30) in 70 ticks:
 
-```py
+```mcfunction
 summon area_effect_cloud 10 64 30 {Tags:["delay"],Age:-70,Particle:{type:"block",block_state:"minecraft:air"}}
 ```
 
 However, if you want to use spawn_egg to simply create an AEC's for delay, then you need to add Radius and WaitTime:
 
-```py
+```mcfunction
 # 1.13 - 1.20.4
 give @s bat_spawn_egg{EntityTag:{id:"minecraft:area_effect_cloud",Tags:["delay"],Duration:100,Radius:0f,WaitTime:0}}
 
@@ -64,7 +64,7 @@ give @s bat_spawn_egg[entity_data={id:"minecraft:area_effect_cloud",Tags:["delay
 | 📝 Note |
 |---------|
 |You can use any `spawn_egg`, but not just `bat_spawn_egg`|
-```py
+```mcfunction
 # Command block / tick function
 execute at @e[type=area_effect_cloud,tag=delay,nbt={Age:99}] run summon zombie
 ```
@@ -75,7 +75,7 @@ This is a simple way to execute any command at a specified position once with a 
 
 If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use an [`area_effect_cloud`](https://minecraft.wiki/w/Lingering_Potion#Area_effect_cloud) that will not despawn or an invisible [`armor_stand`](https://minecraft.wiki/w/Armor_Stand).
 
-```py
+```mcfunction
 # Summon
 summon marker ~ ~ ~ {Tags:["delay"]}
 
@@ -88,7 +88,7 @@ give @s bat_spawn_egg[entity_data={id:"minecraft:marker",Tags:["delay"]}]
 ```
 
 In addition to the marker, you need to use a scoreboard timer, which each tick will add 1 to the score marker.
-```py
+```mcfunction
 # Command blocks / tick function
 scoreboard players add @e[type=marker,tag=delay] timer 1
 execute as @e[type=marker,tag=delay,scores={delay=100..}] at @s store success score @s delay run summon zombie
@@ -98,7 +98,7 @@ execute as @e[type=marker,tag=delay,scores={delay=100..}] at @s store success sc
 #### Java 1.13+ and Bedrock
 For a scoreboard timer you can have a repeating commandblock somewhere that's counting up/down in a particular scoreboard objective and then use `execute if score` in the commandblock that should have the delay. You can either use individual player scores (recommended for player dependent events/delays) or "[fake player](/wiki/questions/fakeplayer)" scores (set "fake" values for player names, recommended for player independent delays).
 
-```py
+```mcfunction
 # Setup
 scoreboard objectives add timer dummy
 
@@ -117,7 +117,7 @@ execute if score $FakePlayer timer matches 120.. run scoreboard players reset $F
 
 Or, if you do not create additional conditions, you can immediately reset the score in one command using `store success score` (only java edition):
 
-```py
+```mcfunction
 # Command blocks
 execute as @a[scores={timer=101..}] store success score @s timer run say This command has 5 seconds delay.
 execute if score $FakePlayer timer matches 121.. store success score $FakePlayer timer run say This command has 6 seconds delay.
@@ -127,7 +127,7 @@ This command will not only execute the command, it also works as a timer reset c
 
 You can also make the delay more dynamic by setting a score of a fake player and comparing it to the players score:
 
-```py
+```mcfunction
 # Set delay
 scoreboard players set #delay timer 300
 
@@ -138,7 +138,7 @@ execute as @a if score @s timer >= #delay timer store success score @s timer run
 #### Java pre-1.13
 Before 1.13 we didn't have `execute if score` so we will need to use `scoreboard players test` for that.
 
-```py
+```mcfunction
 # command block
 scoreboard players add FakePlayerA TimerScore 1
 scoreboard players test FakePlayerA TimerScore 60
@@ -154,13 +154,13 @@ scoreboard players set FakePlayerA TimerScore 0
 
 Using functions the [schedule command](https://minecraft.wiki/Commands/schedule) can be used to make a function run in ## amount of ticks.
 
-```py
+```mcfunction
 schedule function <function> <time> [append|replace]
 ```
 
 So you can create a simple way to run your commands not every tick, but, for example, once a second:
 
-```py
+```mcfunction
 # function example:load
 function example:loops/10s
 
@@ -180,7 +180,7 @@ This has several limitations:
 3. It requires functions and thus datapacks to work.
 4. It will be executed at position Y = -64 under the world spawn.
 
-```py
+```mcfunction
 # In chat
 execute as @a run schedule function example:some_function 5s
 
@@ -192,7 +192,7 @@ If you want to schedule a function to execute as an entity, here is a method tha
 
 Read the current gametime and store it in the score of the selected entity and add your delay to this score. Then run the schedule function and count the gametime again and find the entities with the same score value.
 
-```py
+```mcfunction
 # Run shedule function (as entity)
 execute store result score @s timer run time query gametime
 scoreboard players add @s timer 150
@@ -210,7 +210,7 @@ execute as @e if score @s timer = #this timer run say Example Command.
 ### Success Count
 An easy trick with command blocks to make a clock run at half its speed is the following command:
 
-```py
+```mcfunction
 # pre-1.13 syntax
 testforblock ~ ~ ~ repeating_command_block * {SuccessCount:0}
 # 1.13+ syntax
@@ -232,7 +232,7 @@ Other methods such as a falling block clock exist and can be convenient, but cau
 
 In this example we use an armor stand with the tag `loop`, we will place a pressure plate with an impulse command block below with the following command:
 
-```py
+```mcfunction
 execute as @e[tag=loop,distance=..3,type=armor_stand] at @s run tp @s ~ ~5 ~
 ```
 To add more commands, just add a chain one to the previous impulse.

@@ -15,7 +15,7 @@ Added in 1.19.4, the [interaction entity](https://minecraft.wiki/w/Interaction) 
 
 Here's a simple example for command blocks:
 
-```py
+```mcfunction
 # Setup
 summon minecraft:interaction ~ ~ ~ {Tags:["click_scan"],width:0.5f,height:0.5f}
 
@@ -34,7 +34,7 @@ If you need to check left/right clicks in a large area (or anywhere), then use m
 
 You can also check what the player is holding in his hand, but then removing the `interaction` / `attack` tag must be done in a separate command:
 
-```py
+```mcfunction
 # Command blocks
 ### 1.19.4 - 1.20.4
 execute as @e[type=interaction,tag=click_scan] on target if entity @s[nbt={SelectedItem:{tag:{right_click:true}}}] run say Right Click!
@@ -75,7 +75,8 @@ When using a datapack, you don't have to run these commands in a tick function, 
     "function": "example:click/right"
   }
 }
-
+```
+```mcfunction
 # function example:click/right
 advancement revoke @s only example:interaction/right_click
 say Right Click!
@@ -166,13 +167,15 @@ This method involves adding the [`minecraft:food component`](https://minecraft.w
 
 When using only command blocks, you need to actually consume this item in order for the usage statistics of your item to change. So it might make sense to set the `eat_seconds` tag to a small value, such as 0.05 seconds (1 tick). Here is a small example for command blocks:
 
-    # Setup
-    give @s minecraft:stick[minecraft:food={nutrition:0,saturation:0f,eat_seconds:0.05f,can_always_eat:true}]
-    scoreboard objectives add click.stick used:stick
-    
-    # Command blocks
-    execute as @a[scores={click.stick=1..}] run say Right Click!
-    scoreboard players reset @a click.stick
+```mcfunction
+# Setup
+give @s minecraft:stick[minecraft:food={nutrition:0,saturation:0f,eat_seconds:0.05f,can_always_eat:true}]
+scoreboard objectives add click.stick used:stick
+
+# Command blocks
+execute as @a[scores={click.stick=1..}] run say Right Click!
+scoreboard players reset @a click.stick
+```
 
 This method has obvious disadvantages, such as particles appearing when used, sounds and the fact that the item is actually used.
 
@@ -182,11 +185,12 @@ Below is an example for this with a delay that is easy to configure:
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```json
+```mcfunction
 # Example item
 give @s minecraft:stick[minecraft:custom_data={right_click:true},minecraft:food={nutrition:0,saturation:0f,eat_seconds:2147483648f,can_always_eat:true}]
 scoreboard objectives add stick.cooldown dummy
-
+```
+```json
 # advancement example:stick/right_click
 {
     "criteria": {
@@ -235,10 +239,11 @@ We can also add a cooldown (with the `use_cooldown` component) and use another a
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```json
+```mcfunction
 # Setup
 give @p nether_star[use_cooldown={seconds:5},food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:1,animation:"bow"},custom_data={right_click:true}] 1
-
+```
+```json
 # advancement example:right_click/nether_star
 {
     "criteria": {
@@ -304,13 +309,15 @@ This method is based on checking the player's cursor slot. To do this, need to c
 
 Right-clicking a bundle will take the first item that has. Because it will spawn an enitity, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
 
-    # bedrock
-    execute at @e[type=item,name="right_click"] run tag @p add right_click
-    replaceitem entity @a[tag=right_click] slot.weapon 0 air
-    execute at @e[tag=right_click] run structure load right_click_bundle ~ ~ ~
-    execute as @e[tag=rigth_click] at @s run say Right click
-    kill @e[type=item,name="right_click"]
-    tag @a[tag=right_click] remove right_click
+```mcfunction
+# bedrock
+execute at @e[type=item,name="right_click"] run tag @p add right_click
+replaceitem entity @a[tag=right_click] slot.weapon 0 air
+execute at @e[tag=right_click] run structure load right_click_bundle ~ ~ ~
+execute as @e[tag=rigth_click] at @s run say Right click
+kill @e[type=item,name="right_click"]
+tag @a[tag=right_click] remove right_click
+```
 
 Java
 

@@ -33,13 +33,13 @@ This method only works in a single tick, so if you need the raycast to be over a
 
 First, the command that will initiate a raycast. We're anchoring the execution point at the entities eyes (moving up from their feet), changing the execution position to the eye level, and then, due to a quirk in minecraft's keeping of context, move the anchor back to the feet to avoid the game reapplying the height of the eyes to every step. The subcommand `anchored feet` should not be used in recent versions of the game.
 
-```py
+```mcfunction
 execute as <shooter> at @s anchored eyes positioned ^ ^ ^ anchored feet run function namespace:start_ray
 ```
 
 Next up, the ray setup. We need to set a maximum amount of steps that we can go before we abort our search. This means we can just set a score to the maximum amount of steps. Here, a `dummy` scoreboard named `ray_steps` is used. It's set to 50 steps, so a maximum distance of 5 blocks considering our step distance is 0.1 blocks per step (which is also the reach distance of a player). We also want to store whether our ray successfully hit something, so we know whether to continue or to stop. In this case another `dummy` objective is used, called `ray_success`. Instead of two scoreboards you can also use a single scoreboard and use [fake players](/wiki/questions/fakeplayer) to store the scores.
 
-```py
+```mcfunction
 # function example:start_ray
 scoreboard players set @s ray_steps 50
 scoreboard players set @s ray_success 0
@@ -48,7 +48,7 @@ function example:ray
 
 Next, the actual ray is being cast. For that, we first check whether our stopping condition has been achieved and run a success function if we did. Next, we count up the steps we can still take by 1. And lastly, we run the function again, moved forward by our step size, if we neither hit the stopping condition nor the maximum step size. In this example the stopping condition is hitting a block that is not air.
 
-```py
+```mcfunction
 # function example:ray
 execute unless block ~ ~ ~ minecraft:air run function example:hit_block
 scoreboard players remove @s ray_steps 1
@@ -57,7 +57,7 @@ execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 posi
 
 Lastly, we can use the success function to run whatever we intend to do at the found place. In this case we'll just set a stone block. _Make sure to set the `ray_success` score to 1 at some point in the function though!_
 
-```py
+```mcfunction
 # function example:hit_block
 scoreboard players set @s ray_success 1
 setblock ~ ~ ~ stone
@@ -68,7 +68,7 @@ And that's the basic skeleton of a raycast, which can now be extended to your he
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
-```py
+```mcfunction
 # function example:start_ray
 scoreboard players set @s ray_steps 50
 scoreboard players set @s ray_success 0
@@ -87,7 +87,7 @@ setblock ~ ~ ~ stone
 
 Since 1.20.2, we can use `return` to stop a function early. So the `example:ray` function does not need to check the value of the `ray_success` since we don't need this scoreboard anymore.
 
-```py
+```mcfunction
 # function example:ray
 execute unless block ~ ~ ~ minecraft:air run return run function example:hit_block
 scoreboard players remove @s ray_steps 1
@@ -97,7 +97,7 @@ execute if score @s ray_steps matches 1.. positioned ^ ^ ^0.1 run function examp
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
-```py
+```mcfunction
 # function example:start_ray
 scoreboard players set @s ray_steps 50
 function example:ray
@@ -119,7 +119,7 @@ Please see the [without an entity](#wiki_without_an_entity) section above for a 
 
 The main difference being that we are now moving an entity instead of just the execution context, so we also need to create said entity.
 
-```py
+```mcfunction
 # function example:start_ray
 
 # summon entity to use as a marker
@@ -134,7 +134,7 @@ execute as @e[tag=ray_marker] at @s run function example:ray
 
 We are now executing the ray function as the marker entity instead of the executing entity. So, to move the execution position, we need to teleport the entity and make sure we re-align the function position to the entity at every step, instead of just repositioning the execution context.
 
-```py
+```mcfunction
 # function example:ray
 execute unless block ~ ~ ~ minecraft:air run function example:hit_block
 scoreboard players remove @s ray_steps 1
@@ -165,7 +165,7 @@ As mentioned, this works with just commandblocks, so for the following commands 
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
 
-```py
+```mcfunction
 # ignore non-specifically summoned xp orbs
 tag @e[type=xp_orb] add ignore
 # Summon ray marker per player
@@ -186,7 +186,7 @@ The 4th command is where the magic happens: Due to us splitting the execution pa
 
 So, for different applications you'd modify the 4th command to find different things. For example, to stop moving if there is a creeper (feet) close by, going through blocks, the command could look like this:
 
-```py
+```mcfunction
 execute as @e[c=2] ... as @e[c=2] as @e[type=xp_orb,tag=!ignore] at @s positioned ^^^0.1 unless entity @e[type=creeper,r=1] at @s run tp @s ^^^0.1
 ```
 
@@ -204,7 +204,7 @@ It is _highly_ recommended to use a custom entity for the raycast, as you not on
 
 Command to start the raycast (the execution point is moved up manually towards player standing eye level. This means that if the player is not standing up normally (e.g., crouching or swimming), this will produce unexpected results):
 
-```py
+```mcfunction
 # Start ray
 execute <shooter> ~ ~1.62 ~ function example:start_ray
 

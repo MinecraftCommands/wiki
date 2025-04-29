@@ -12,13 +12,13 @@ For the example we're assuming that we want to make a block outline. You can eas
 
 1. Summon your center entity. We're using an armorstand for parity, but in Java you can use other things like a [`marker`](https://minecraft.wiki/w/Marker) (for better performance) or any NoAI entity.
 
-```py
+```mcfunction
 /summon armor_stand ~ ~ ~
 ```
 
 2. tag the armorstand so we can reference it easily.
 
-```py
+```mcfunction
 # Bedrock
 /tag @e[type=armor_stand,c=1] add center
 # Java 1.13+

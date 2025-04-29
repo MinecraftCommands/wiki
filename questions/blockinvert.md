@@ -19,7 +19,7 @@ When a command block runs, its `SuccessCount` tag is updated. This is the value 
 
 We can use another command block to check whether the first block has `SuccessCount:0` after running, so that this second block will be successful when the first block fails, then run our conditionals off of this second block. The commands would look like:
 
-```py
+```mcfunction
 # pre 1.13
 testfor @a[r=5]
 testforblock ~ ~ ~1 command_block * {SuccessCount:0}

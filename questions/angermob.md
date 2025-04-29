@@ -12,7 +12,7 @@ The basic principle for this method is that a mob that can attack will get angry
 
 Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wiki/Commands/damage) (in 1.18.10 Bedrock and 1.19.4 Java) we can use this command to inflict fake damage from one entity onto another with relative ease:
 
-```py
+```mcfunction
 # bedrock
 /damage <target> <amount> entity_attack entity <source entity>
 # java
@@ -21,7 +21,7 @@ Thanks to the introduction of the [`/damage` command](https://minecraft.wiki/wik
 
 so for example, to make a single wolf attack a player, you can run this command
 
-```py
+```mcfunction
 # bedrock
 /damage @e[type=wolf,c=1] 0 entity_attack entity @p
 # java
@@ -29,7 +29,7 @@ so for example, to make a single wolf attack a player, you can run this command
 ```
 or to make all skeleton skeleton attack a zombie
 
-```py
+```mcfunction
 # bedrock
 /damage @e[type=skeleton] 0 entity_attack entity @e[type=zombie]
 # java
@@ -52,7 +52,7 @@ For example you can use a snowball, as this projectile only deal damage to blaze
 
 In the following example a skeleton tagged `attacker` is tricked into attacking a zombie tagged `target`.
 
-```py
+```mcfunction
 # summon the snowball
 execute at @e[type=skeleton,tag=attacker] run summon minecraft:snowball ~ ~2.3 ~ {Tags:["atk_target"]}
 # make the snowball owner the zombie

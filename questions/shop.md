@@ -24,6 +24,7 @@ Using command blocks we need to make sure we select the correct player every tim
 To avoid the player getting unintentionally re-selected we remove the tag at the end.
 Using functions we can rely on `@s` instead, assuming the function is executed `as` the relevant player.
 
+```mcfunction
 # Command blocks
 tag @p add buyer.netherite
 execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
@@ -32,9 +33,11 @@ clear @a[tag=buyer.netherite,scores={diamonds=5..}] diamond 5
 tellraw @a[tag=buyer.netherite,scores={diamonds=5..}] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
 tellraw @a[tag=buyer.netherite,scores={diamonds=..4}] {"text":"You don't have 5 diamonds","color":"dark_red"}
 tag @a remove buyer.netherite
+```
 
 Or if you prefer a function:
 
+```mcfunction
 # function example:load
 scoreboard objectives add diamonds dummy
 
@@ -47,6 +50,7 @@ execute unless entity @s[scores={diamonds=5..}] run tellraw @s {"text":"You don'
 give @s netherite_ingot 1
 clear @s diamond 5
 tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+```
 
 | 📝 Note |
 |--------------|
@@ -55,16 +59,17 @@ tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"
 In 1.20.5 `execute if items` was added, which allows to count items in a diferent way.
 To use this method, all command remains the same, as the previus example except the one for counting items that is this one:
 
+```mcfunction
 execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
-
+```
 That we can replace it for this one:
-
+```mcfunction
 execute as @p[tag=buyer.netherite] store result score @s diamonds if items entity @s container.* diamond
-
+```
 Or if you are using the example function, you need to replace this command
-
+```mcfunction
 execute store result score @s diamonds run clear @s diamond 0
-
+```
 With this command:
 
 execute store result score @s diamonds if items entity @s container.* diamond
@@ -121,7 +126,7 @@ In bedrock we have the `hasitem` argument, so it uses less commands than in Java
 
 If you don't want to use an NPC can use this method, it is very similar to Java but it uses the `hasitem` argument instead.
 
-```py
+```mcfunction
 # Command blocks
 tag @p add buyer.netherite
 give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
@@ -134,7 +139,7 @@ tag @a remove buyer.netherite
 | 📝 Note |
 |--------------|
 |in order for it to work with npc, change `@p` and `@a` to `@initiator`|
-|_Related: [How to setup a NPC?](wiki/questions/npc)_|
+|_Related: [How to setup a NPC?](/wiki/questions/npc)_|
 
 | 📝 Note |
 |--------------|
@@ -146,7 +151,7 @@ Then when we clear the items we are going to clear them for the player with that
 
 In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you are in Java you will need one scoreboard for each item, assuming you already store the items result in each one.
 
-```py
+```mcfunction
 # Command blocks
 tag @p add buyer.example
 execute as @a[tag=buyer.example] run tag @s[scores={diamonds=5..,emeralds=2..}] add buy.example
@@ -176,7 +181,7 @@ In this example the currency is a `dummy` scoreboard called `coins`.
 |--------------|
 |This example uses Java syntax for the message that appears when the player buys the item|
 
-```py
+```mcfunction
 tag @p add buyer.diamond
 execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
 scoreboard players remove @a[tag=buy.diamond] coins 10
@@ -189,7 +194,7 @@ tag @a remove buyer.diamond
 #### In a function
 This is more optimized compared to using command blocks as functions keep the context
 
-```py
+```mcfunction
 # function example:buy/diamond
 execute if entity @s[scores={coins=10..}] run function example:buy/diamond/success
 tellraw @s[scores={coins=..9}] {"text":"You don't have 10 coins","color":"red"}

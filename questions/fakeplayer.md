@@ -2,7 +2,7 @@
 
 When people talk about "using a fake player" on the scoreboard, they're talking about just writing down a name of a fictional player name instead of using a selector. This has the advantage that it is very fast and convenient to store and use scoreboard values.
 
-```py
+```mcfunction
 scoreboard players set total points 100
 scoreboard players set 2 constant 2
 ```

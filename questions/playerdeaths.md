@@ -11,7 +11,7 @@ _Related: [Detect Player Kills](/wiki/questions/playerkills)_
 
 In Java, detecting a dead player is relatively easy. For simple death detection you can use [`deathCount`](https://minecraft.wiki/w/Scoreboard#Single_criteria) / [`custom:deaths`](https://minecraft.wiki/w/Statistics#List_of_custom_statistic_names) scoreboard criteria and whenever that one increases, the player just died (and is likely still dead).
 
-```py
+```mcfunction
 # In chat / load function
 scoreboard objectives add death deathCount
 
@@ -31,7 +31,7 @@ Below is an example for 1.19.4 and above versions:
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # Setup
 data merge storage example:data {pos:{list:[0d,0d,0d],int_array:[I;0,0,0]}}
 
@@ -78,7 +78,8 @@ Using a datapack will make executing any command in the death position much easi
     "function": "example:death"
   }
 }
-
+```
+```mcfunction
 # function example:death
 advancement revoke @s only example:death
 summon zombie ~ ~ ~ {PersistenceRequired:true,CanPickUpLoot:true}
@@ -92,7 +93,7 @@ You can also use a loot table to drop items in player death, located in `data/mi
 
 Likewise, using `minecraft.custom:minecraft.time_since_death` you can detect a player who just respawned, since this objective will stay 0 during the death screen and start counting up the moment the player clicks "Respawn".
 
-```py
+```mcfunction
 # Setup
 scoreboard objectives add respawn custom:time_since_death
 
@@ -106,7 +107,7 @@ In Bedrock the same question is more difficult to answer, since at the time of w
 
 The best way to do this in bedrock is with the following commands, in this order:
 
-```py
+```mcfunction
 /tag @a add dead
 /tag @e[type=player] remove dead
 /scoreboard players add @a[tag=dead,tag=!still_dead] deathCount 1

@@ -19,7 +19,7 @@ Key points:
 
 Here's a quick example to detect if a zombie was killed by a player:
 
-```py
+```mcfunction
 # In chat / load function
 scoreboard objectives add killed.zombie killed:zombie
 
@@ -71,7 +71,8 @@ Here's a quick example to detect if a any skeleton type with the tag some\_tag w
     "function": "example:skeleton_death"
   }
 }
-
+```
+```mcfunction
 # function example:skeleton_death
 advancement revoke @s only example:killed_skeleton
 say Skeleton with tag some_tag has died.
@@ -98,13 +99,13 @@ Key points:
 
 This method requires preliminary setup of the mob, for example, you can summon a mob with an entity marker as a passenger:
 
-```py
+```mcfunction
 summon husk ~ ~ ~ {Tags:["some_tag"],Passengers:[{id:"minecraft:marker",Tags:["death_detector"]}]}
 ```
 
 From version 1.19.4 you can also add a marker entity as passenger to an existing mob using the [/ride command](https://minecraft.wiki/w/Commands/ride):
 
-```py
+```mcfunction
 summon marker ~ ~ ~ {Tags:["death_detector","set_ride"]}
 ride @e[type=marker,tag=death_detector,tag=set_ride,limit=1] mount <mob>
 tag @e[type=marker,tag=set_ride] remove set_ride
@@ -115,7 +116,7 @@ On versions 1.16 - 1.19.3, the only way to check this mob is to use the [predica
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:tick
 execute as @e[type=marker,tag=death_detector,predicate=example:death_mob] run function example:death_mob
 execute as @e[type=marker,tag=death_detector,predicate=example:despawn_mob] run function example:despawn_mob
@@ -127,7 +128,8 @@ kill @s
 # function example:despawn_mob
 say Mob is despawn!
 kill @s
-
+```
+```json
 # predicate example:death_mob
 {
   "condition": "minecraft:entity_properties",
@@ -137,7 +139,7 @@ kill @s
       "nbt": "{DeathTime:1s}"
     }
   }
-    }
+}
 
 # predicate example:despawn_mob
 {
@@ -156,7 +158,7 @@ kill @s
 
 As of version 1.19.4, you can use the [execute](https://minecraft.wiki/w/Commands/execute#on) `on vehicle` subcommand to select a dying mob:
 
-```py
+```mcfunction
 # Command blocks
 execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} run say This mob is dying!
 execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} on passengers run kill @s
@@ -167,7 +169,7 @@ However, this implementation on command blocks may cause lags due to NBT checks 
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:load
 function example:loops/1s
 
@@ -216,7 +218,7 @@ Below is an example to check the death of any mob that has the `death_check` tag
 <details>
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-```py
+```mcfunction
 # function example:load
 function example:loops/1s
 
