@@ -54,7 +54,7 @@ Since version 1.20.5 can also compare values in storage directly, without copyin
 ```mcfunction
 # Example storage
 data merge storage example:data {value:7.5f,min:0,max:10}
-
+```
 ```json
 # predicate example:storage_compire
 {
