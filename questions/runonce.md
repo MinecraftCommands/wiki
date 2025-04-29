@@ -33,7 +33,7 @@ execute as @a unless entity @s[scores={matched=1},x=73,y=10,z=3,distance=..1] ru
 
 Besides the player, this could be some kind of global event, for example, it started to rain (Java 1.20.5+):
 
-```
+```mcfunction
 # Command blocks / tick function
 execute if score #raining matched matches 0 if predicate {condition:"weather_check",raining:true} run say It's starting to rain!
 execute store result score #raining matched if predicate {condition:"weather_check",raining:true}
@@ -45,7 +45,7 @@ If you are using a datapack and need to do a lot of similar checks, then you can
 
 This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) that you check against the player, in this example, we want to know whether the player is at the server spawn area (`predicate example:at_spawn`). Then we create two advancements - the first one checks the predicate (player is at spawn), and the second one inverts this check (player isn't at spawn). Then, inside the run function, you execute the desired command when the player enters / leaves spawn and revoke the opposite advancement.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -90,6 +90,7 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
 # function example:spawn/enter
 advancement revoke @s only example:spawn/leave
 tellraw @s "Welcome to spawn!"
+```
 
 ```json
 # advancement example:spawn/leave

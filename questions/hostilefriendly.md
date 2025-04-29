@@ -72,7 +72,9 @@ Important things to keep in mind when using this method:
 ### Distance attribute (Java only)
 In java edition, there is an attribute related to the range that players can interact with other entities. we can reduce this range to make them unable to interact with other entities.
 
-    attribute <target> entity_interaction_range base set 0
+```mcfunction
+attribute <target> entity_interaction_range base set 0
+```
 
 | 📝 Note |
 |---------|
@@ -82,4 +84,6 @@ In java edition, there is an attribute related to the range that players can int
 
 You can use the gamerule `pvp` but you can specify which players so it will take effect on everybody
 
-    gamerule pvp false
+```mcfunction
+gamerule pvp false
+```

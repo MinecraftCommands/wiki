@@ -66,7 +66,7 @@ As mentioned above, what entities can and cannot be attacked by another entity i
 
 Here is the relevant component in the vanilla skeleton behavior file (1.17):
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See skeleton behavior</summary>
 
 ```json

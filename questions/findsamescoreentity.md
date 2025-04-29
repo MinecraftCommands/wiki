@@ -23,7 +23,7 @@ This method works by changing the executor to all entities that need to be check
 
 This method has the advantage over the first one that it only need to evaluate the selector for the special entity once, but it has the disadvantage that it needs 2 commands. ([what is a fake player?](/wiki/questions/fakeplayer))
 
-```
+```mcfunction
 scoreboard players operation #fakeplayer points = @e[tag=compare,limit=1] points
 execute as @a if score @s points = #fakeplayer points run I have the same points
 ```
@@ -33,11 +33,11 @@ One command copies the `ID` score from the selected player to [fake player](/wik
 
 Below is an example of a function and predicate that selects an entity with the same `ID` score as the selected player:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
-# funtion example:some_function (run as player)
+# function example:some_function (run as player)
 scoreboard players operation #this ID = @s ID
 tag @s add this
 execute as @e[predicate=example:this_id,tag=!this] run say Some ID!

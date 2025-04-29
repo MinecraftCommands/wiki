@@ -26,7 +26,7 @@ So, we can get the players location using its `Pos` NBT values and we can summon
 
 Or rather, make use of the fact that we can use the worlds zero position and pretend the player is there. And because X - 0 = X, we don't need to do the math ourselves but can directly store the result into the entity. Here is how it works (running `as` and `at` the player):
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -50,7 +50,7 @@ kill @e[tag=direction]
 
 **This method requires the worlds `0 0 0` point to be loaded to work. If that is not the case or cannot be guaranteed, use the following modification instead (still `as` and `at` the player).** It ensures that the marker entity doesn't get lost along the way by being teleported to unloaded chunks. Luckily the `@s` selector is able to still select the entity even if it was unloaded, which means we can do it as follows.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -122,7 +122,7 @@ However, you may notice that this projectile lags in flight. Read about how to f
 
 This example will assume you have a dummy scoreboard objective set up that is named `pos` and that you're running these commands `as` and `at` the player (in a function). Whenever you see `#<something>` this is a [fake player](/wiki/questions/fakeplayer) that we use for convenient value storage. Because scoreboards can only hold integer values (whole numbers), we scale up the values by 1000 when storing them and down by 0.001 when putting them back into the Motion tag so we don't lose too much accuracy. We need to use scoreboards however, because we need to do some subtractions which is only conveniently possible with scoreboard operations. (This means that the system will stop working once you go above a position of 2'000'000 on either axis, if that is a concern, change it to 100/0.01, that way you can reach 2/3 to the worldborder without issues.)
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -189,7 +189,7 @@ scoreboard players reset @a click
 
 When using a datapack, you can use the schedule function to do this fix.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction

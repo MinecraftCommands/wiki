@@ -15,11 +15,13 @@ Normally Minecraft will remove any unknown NBT data (e.g: `data merge entity @e[
 
 Below is the general syntax for the give item with some data for the new and previous versions:
 
-    # 1.20.5 and above
-    give @s <item>[<component>=<data>]
-    
-    # 1.20.4 and below
-    give @s <item>{<nbt_data>}
+```mcfunction
+# 1.20.5 and above
+give @s <item>[<component>=<data>]
+
+# 1.20.4 and below
+give @s <item>{<nbt_data>}
+```
 
 Now you can’t immediately specify your custom data, but you must first specify the `minecraft:custom_data` component (in the /give command you can omit namespace `minecraft:`) and specify your data inside this component.
 
@@ -27,43 +29,53 @@ The item's `tag` tag / `custom_data` component is also where all data from clear
 
 So, if you were to `give` an item like this:
 
-    # 1.20.5 and above
-    give @s minecraft:stick[minecraft:custom_data={my_custom_tag:true}]
+```mcfunction
+# 1.20.5 and above
+give @s minecraft:stick[minecraft:custom_data={my_custom_tag:true}]
 
-    # 1.20.4 and below
-    give @s minecraft:stick{my_custom_tag:true}
+# 1.20.4 and below
+give @s minecraft:stick{my_custom_tag:true}
+```
 
 Or like this if you want to `summon` item:
 
-    # 1.20.5 and above
-    summon item ~ ~ ~ {Item:{id:"minecraft:stick",components:{"minecraft:custom_data":{my_custom_tag:true}}}}
+```mcfunction
+# 1.20.5 and above
+summon item ~ ~ ~ {Item:{id:"minecraft:stick",components:{"minecraft:custom_data":{my_custom_tag:true}}}}
 
-    # 1.20.4 and below
-    summon item ~ ~ ~ {Item:{id:"minecraft:stick",Count:1b,tag:{my_custom_tag:true}}}
+# 1.20.4 and below
+summon item ~ ~ ~ {Item:{id:"minecraft:stick",Count:1b,tag:{my_custom_tag:true}}}
+```
 
 You can later test if it's in a players inventory like this:
 
-    # 1.20.5 and above
-    @a[nbt={Inventory:[{components:{"minecraft:custom_data":{my_custom_tag:true}}}]}]
+```mcfunction
+# 1.20.5 and above
+@a[nbt={Inventory:[{components:{"minecraft:custom_data":{my_custom_tag:true}}}]}]
 
-    # 1.20.4 and below
-    @a[nbt={Inventory:[{tag:{my_custom_tag:true}}]}]
-    
+# 1.20.4 and below
+@a[nbt={Inventory:[{tag:{my_custom_tag:true}}]}]
+```
+
 Or test if it's dropped as an item entity like this:
 
-    # 1.20.5 and above
-    execute as @e[type=item] if items entity @s contents *[custom_data~{my_custom_tag:true}]
-    execute if entity @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{my_custom_tag:true}}}}]
+```mcfunction
+# 1.20.5 and above
+execute as @e[type=item] if items entity @s contents *[custom_data~{my_custom_tag:true}]
+execute if entity @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{my_custom_tag:true}}}}]
 
-    # 1.20.4 and below
-    execute if entity @e[type=item,nbt={Item:{tag:{my_custom_tag:true}}}]
+# 1.20.4 and below
+execute if entity @e[type=item,nbt={Item:{tag:{my_custom_tag:true}}}]
+```
 
 [How to detect a specific item in more detail](/wiki/questions/detectitem).
 
 The key can be any string and the value of this tag can be any [NBT](https://minecraft.wiki/w/NBT_format), so long as you test for it in the same way:
 
-    give @s stick[custom_data={BlahBlahBlah:"string value!"}]
-    give @s stick{BlahBlahBlah:"string value!"}
+```mcfunction
+give @s stick[custom_data={BlahBlahBlah:"string value!"}]
+give @s stick{BlahBlahBlah:"string value!"}
+```
 
 ([Want to then select the player/dropped item/whatever you found with testfor (1.5-1.12)?](/wiki/questions/tagentity))
 
@@ -73,7 +85,7 @@ When using a loot table since version 1.20.5, you need to use the `minecraft:set
 
 Below are examples of loot tables for different versions. **For version 1.20.5+, two ways to set custom data are shown, but you should only use one.**
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -146,7 +158,7 @@ It follows from this that when creating a loot table / recipe with custom data, 
 
 For example, the crafting recipe below (1.20.5+), which will give an item with the custom tag `my_custom_stick:1b`, but not `my_custom_stick:1`, as indicated in the recipe due to the implicit conversion.
 
-```
+```json
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
@@ -169,17 +181,24 @@ In bedrock we will need use a workaround, because we can't use custom tags.
 ### Item data
 To get an item with specific data, you can use a number between `2,147,483,647` and `-2,147,483,648`.
 
-    give <target> <item> <amount> <data>
+```mcfunction
+give <target> <item> <amount> <data>
+```
 So for example:
 
-    give @s stick 1 5
+```mcfunction
+give @s stick 1 5
+```
 
 This stick will have a data of 5, that we can detect with the `hasitem` argument like this:
 
-    /effect @a[hasitem={item=stick,data=5}] speed
+```mcfunction
+/effect @a[hasitem={item=stick,data=5}] speed
+```
 
 ### Name with color codes
 As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this Reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, which is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
 
-    kill @e[type=item, name="§r§fApple"]
-
+```mcfunction
+kill @e[type=item, name="§r§fApple"]
+```

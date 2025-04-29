@@ -67,7 +67,7 @@ The best way this Subreddit has come up with so far is to use a modified loot ta
 
 Now, you of course need to create said loot table as well. Here is an example of a loot table that will always drop 1 dragon egg if the entity is killed by a player:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json

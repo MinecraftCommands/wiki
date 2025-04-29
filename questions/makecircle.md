@@ -28,14 +28,17 @@ For the example we're assuming that we want to make a block outline. You can eas
 ```
 
 3. now, to automatically place the blocks, we'll want to put the following command into a repeating commandblock and the ones after that into chain commandblocks attached to the repeating one. Starting off with placing the block in front of the armorstand.
-
-        execute as @e[tag=center] at @s run setblock ^ ^ ^10 stone
+    ```mcfunction
+    execute as @e[tag=center] at @s run setblock ^ ^ ^10 stone
+    ```
 
 4. Next, we rotate by what seems a good rotation to cover the entire circle. You can do some math to figure out a good stepsize, or you can just decrease the size if you end up with holes in your circle.
 
     The math works like this: You calculate the radian distance as follows: `d = (deg / 360) * 2 * π * radius`. Or, if we solve for the degrees needed from a distance between blocks: `deg = (180 * d) / (π * radius)`. So if your radius is 10 blocks as in the example above, and you want to place a block every one block of distance, you should rotate by (180 * 1) / (π * 10) = 5.7°. But with minecrafts blocky nature, if we want to place continuous blocks, we might just want to aim for half of that.  
 
-        execute as @e[tag=center] at @s run tp @s ~ ~ ~ ~ ~2.35
+    ```mcfunction
+    execute as @e[tag=center] at @s run tp @s ~ ~ ~ ~ ~2.35
+    ```
 
 5. Power the repeating commandblock until you have the circle you desire.
 

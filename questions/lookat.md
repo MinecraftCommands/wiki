@@ -38,7 +38,7 @@ execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^
 ### Predicate
 There is a predicate that allows us to detect when a player is looking at an entity, it's the one used by the 3 advancements related to the spyglass.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -66,7 +66,7 @@ execute as @a[predicate=example:looking_cow] run say Hi, cow!
 This example is the same advancement as the vanilla ones but without any display.
 You can find (and edit) the preset in [misode's advancement generator](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast))
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -118,7 +118,7 @@ Also, due to how rotations work in bedrock, this tends to be somewhat inaccurate
 
 This setup can only happen to one player at a time, so either use functions to make this better scalable or experiment with executing from the players and their closest armorstands (which will still lead to some issues, but less so). Hence this will use `@p` to signify this restriction.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
 
 ```mcfunction
@@ -155,7 +155,7 @@ The lookat component then lets us fire an event which could then cause whatever 
 
 In this example the entity will (without cooldown) fire the `custom:ive_been_looked_at` event when a player (even in creative mode) within a radius of 20 blocks. It will not set the looker as its attack target.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json

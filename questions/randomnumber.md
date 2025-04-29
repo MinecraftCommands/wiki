@@ -42,13 +42,13 @@ We need to store the result of the [`/random`](https://minecraft.wiki/w/random) 
 
 For example:
 
-```
+```mcfunction
 execute store result score #command random run random value 1..5
 ```
 
 And now we need to check the value of the scoreboard, in this case we used numbers from 1 to 5 so we use one command to check every possible scoreboard value.
 
-```
+```mcfunction
 execute if score #command random matches 1 run <command 1>
 execute if score #command random matches 2 run <command 2>
 execute if score #command random matches 3 run <command 3>
@@ -58,7 +58,7 @@ execute if score #command random matches 5 run <command 5>
 
 Or we can use [ranges](wiki/questions/ranges) to detect more of one number.
 
-```
+```mcfunction
 execute if score #command random matches 1..3 run say 1, 2 or 3
 execute if score #command random matches 4..5 run say 4 or 5
 ```
@@ -109,7 +109,9 @@ _The second best option listed here. More taxing on the server due to it's creat
 
 ***<1.16*** In versions before 1.16, UUIDs were split into two separate NBT tags called `UUIDLeast` and `UUIDMost`. To make the example above compatible, you'll need to replace the second command with this:
 
-    execute store result score @s random run data get entity @e[type=area_effect_cloud,tag=random_uuid,limit=1] UUIDMost 0.00000000023283064365386962890625
+```mcfunction
+execute store result score @s random run data get entity @e[type=area_effect_cloud,tag=random_uuid,limit=1] UUIDMost 0.00000000023283064365386962890625
+```
 
 The NBT tags `UUIDLeast` and `UUIDMost` are both the size of a `long` (64 bits), while `data get` can only return an `int` (32 bits). To shrink the `long` sized value into the size of an `int`, we use the scale value `0.00000000023283064365386962890625` which we get from the value of `1 / (2^32)`. This effectively gives us the upper half of the `long`.
 
@@ -121,7 +123,7 @@ This method takes advantage of the fact that using `execute store` with the `loo
 
 Example loot table:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -156,7 +158,9 @@ Change the rolls to fit your desired range (not negative, 0 is allowed), and/or 
 
 Command to get the value from the table:
 
-    execute store result score @s <OBJ> run loot spawn ~ ~ ~ loot example:random_loot_table
+```mcfunction
+execute store result score @s <OBJ> run loot spawn ~ ~ ~ loot example:random_loot_table
+```
 
 _The third best option, with a small effective range. Use only for smaller amounts of values and if methods 1 and 2 don't work for you._
 

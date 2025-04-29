@@ -86,7 +86,7 @@ In a predicate, you can use the `minecraft:alternative` (1.14-1.19.4) or `minecr
 
 Below is an example of a predicate for checking three cubic areas:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">Example predicate</summary>
 
 ```json

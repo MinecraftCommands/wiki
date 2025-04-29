@@ -8,15 +8,21 @@ In this version, the functionality of [item_modifier](https://minecraft.wiki/w/I
 
 Quick example:
 
-    execute if predicate {condition:weather_check, raining:true}
+```mcfunction
+execute if predicate {condition:weather_check, raining:true}
+```
 
 Here's a simple example of how to add a [food component](https://minecraft.wiki/w/Data_component_format#food) to any item in a player's hand (if the item is not food) without replacing the item completely:
 
-    execute as @a if items entity @s weapon *[!minecraft:food] run item modify entity @s weapon {function:"minecraft:set_components", components: {"minecraft:food": {nutrition:1, saturation:2, can_always_eat:true, eat_seconds:3.2}}}
+```mcfunction
+execute as @a if items entity @s weapon *[!minecraft:food] run item modify entity @s weapon {function:"minecraft:set_components", components: {"minecraft:food": {nutrition:1, saturation:2, can_always_eat:true, eat_seconds:3.2}}}
+```
 
 You can also change the item ID without changing any components:
 
-    execute as @a run item modify entity @s weapon {function:"minecraft:filtered", item_filter: {items:"minecraft:iron_sword"}, modifier: {function:"minecraft:set_item", item:"minecraft:golden_sword"}}
+```mcfunction
+execute as @a run item modify entity @s weapon {function:"minecraft:filtered", item_filter: {items:"minecraft:iron_sword"}, modifier: {function:"minecraft:set_item", item:"minecraft:golden_sword"}}
+```
 
 This example uses the [`minecraft:filtered`](https://minecraft.wiki/w/Item_modifier#:~:text=or%20killer_player.-,filtered,-%E2%80%94Applies%20another%20function) loot function to check that the selected item is `minecraft:iron_sword` and not just any item and then uses the [`minecraft:set_item`](https://minecraft.wiki/w/Item_modifier#:~:text=is%20selected%20randomly.-,set_item,-%E2%80%94Replaces%20item%20type) function to replace iron_sword with golden_sword. In this case, any custom_data, damage, enchantments and other components that this item contains will not be changed, with the exception of inaccessible data, for example, if the original item had a [max_stack_size](https://minecraft.wiki/w/Data_component_format#max_stack_size) component greater than 1 and after modification you change to an item with a [max_damage](https://minecraft.wiki/w/Data_component_format#max_damage) component, then max_stack_size will be changed by 1.
 
@@ -29,7 +35,7 @@ In snapshot [20w46a](https://www.minecraft.net/article/minecraft-snapshot-20w46a
 With this command you can copy an item to a specified entity/block slot from an entity/block slot. To do this, you also need to use any entity/block that will be used as a buffer slot in which you can change the item data.
 Here's a quick example of adding an enchantment to an item in a player's hand:
 
-```
+```mcfunction
 # Setup
 setblock chest <pos>
 
@@ -51,10 +57,11 @@ _Note: Without using a datapack, you can only do this for 1 item per tick._
 By using a datapack you can avoid copying the item to another location, and simply apply the item modifier to the specified player slot. To do this, you need to create an [item modifier](https://minecraft.wiki/w/Item_modifier) in the datapack with what you want to change. Since version 1.20.5 this also supports changing item ID.
 Below is a small example of using the item modifier:
 
-```
+```mcfunction
 # Command
 item modify entity <player> weapon.mainhand example:add_knockback
-
+```
+```json
 # item_modifier example:add_knockback (data/example/item_modifiers/add_knockback.json)
 {
   "function": "minecraft:set_enchantments",
@@ -87,12 +94,14 @@ You can download it from here: [https://lanternmc.com/yellow_shulker_box.json](h
 
 Initialisation 
 
-    # A shulker box is placed somewhere.
-    setblock <pos> minecraft:yellow_shulker_box
+```mcfunction
+# A shulker box is placed somewhere.
+setblock <pos> minecraft:yellow_shulker_box
+```
 
 Editing an item
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction

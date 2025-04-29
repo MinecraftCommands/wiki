@@ -99,7 +99,7 @@ This method has some advantages and disadvantages.
 * 2 players can't acces the trading screen at the same time.
 
 Here is an example command:
-```
+```mcfunction
 /summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",count:1},buyB:{id:"minecraft:emerald",count:1},sell:{id:"minecraft:netherite_ingot",count:1}}]}}
 ```
 
@@ -112,12 +112,13 @@ Let's break it down:
 
 We can use item components or nbt for both the item the player will spend and the item the player will get, here is an example for 1.20.5+, every item needs to have a `custom_data` of `special:true`
 
-```
+```mcfunction
 /summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",count:1,components:{"minecraft:custom_data":{special:true}}},buyB:{id:"minecraft:emerald",count:1,components:{"minecraft:custom_data":{special:true}}},sell:{id:"minecraft:netherite_ingot",count:1,components:{"minecraft:custom_model_data":special:true}}}]}}
 ```
 Here is the same command but for pre-1.20.5, using nbt data instead:
 
-```
+
+```mcfunction
 /summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",Count:1b,tag:{special:true}},buyB:{id:"minecraft:emerald",Count:1b,tag:{special:true}},sell:{id:"minecraft:netherite_ingot",Count:1b,tag:{special:true}}}]}}
 ```
 

@@ -11,13 +11,17 @@ Sometimes there is a need to link two entities together in a logical fashion. In
 
 For example, let's create a dummy scoreboard for player/entity IDs.
 
-    # In chat / load function
-    scoreboard objectives add ID dummy
+```mcfunction
+# In chat / load function
+scoreboard objectives add ID dummy
+```
 
 Now, if you are using command blocks, you can use this command to give each player a unique score in the `ID` scoreboard.
 
-    # Command block
-    execute as @a unless score @s ID = @s ID store result score @s ID run scoreboard players add #new ID 1
+```mcfunction
+# Command block
+execute as @a unless score @s ID = @s ID store result score @s ID run scoreboard players add #new ID 1
+```
 
 This command selects all players who do not have a score `ID`, then increases the score for [fake player](/wiki/questions/fakeplayer) `#new` in `ID` score by 1 and store this result to the player's `ID` score.
 
@@ -59,7 +63,9 @@ scoreboard objectives add id dummy
 
 Next, to make sure that every player gets a unique id, we need a system that assigns every player a unique score. This can be achieved by simply counting up with every subsequent player that needs a score. For this, we'll set a [fake player](/wiki/questions/fakeplayer) score of this objective to 1 to start with.
 
-    scoreboard players set $total id 1
+```mcfunction
+scoreboard players set $total id 1
+```
 
 Next, to assign a unique id to every player that does not have an ID yet, it's best to use a function so that every new player get treated individually.
 

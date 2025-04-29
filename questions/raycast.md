@@ -65,7 +65,7 @@ setblock ~ ~ ~ stone
 
 And that's the basic skeleton of a raycast, which can now be extended to your heart's content.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
 ```mcfunction
@@ -94,7 +94,7 @@ scoreboard players remove @s ray_steps 1
 execute if score @s ray_steps matches 1.. positioned ^ ^ ^0.1 run function example:ray
 ```
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
 ```mcfunction
@@ -162,7 +162,7 @@ A technique first brought up by [/u/VentedMCBE](https://www.reddit.com/u/VentedM
 
 As mentioned, this works with just commandblocks, so for the following commands you can either put them into a repeating-chain of commandblocks or in a function.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
 
 ```mcfunction

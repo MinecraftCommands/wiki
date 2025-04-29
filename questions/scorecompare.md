@@ -6,21 +6,28 @@
 
 In 1.13, the [`if score`](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_score) execute subcommand makes this a lot easier. The syntax you'll want is:
 
-    execute if score <target> <targetObjective> (<|<=|=|>|>=) <source> <sourceObjective> run <command>
+```mcfunction
+execute if score <target> <targetObjective> (<|<=|=|>|>=) <source> <sourceObjective> run <command>
+```
 
 For example, to check if the executer's `kills` is greater than their `deaths`:
 
-    execute if score @s kills > @s deaths run say I have more kills than deaths!
+```mcfunction
+execute if score @s kills > @s deaths run say I have more kills than deaths!
+```
 
 Or, to check if the nearest player's `money` score is equal to their `cost`:
 
-    execute if score @p money = @p cost run <command>
+```mcfunction
+execute if score @p money = @p cost run <command>
+```
 
 You can also use `matches` to check for a [range](/wiki/questions/range) if you want to always check for a given range and don't want to store that in a different scoreboard:
 
-    execute if score @s diamonds matches 1..4 run say I have somewhere between 1 and 4 diamonds in my inventory.
-    execute if entity @s[scores={diamonds=1..4}] run say I have somewhere between 1 and 4 diamonds in my inventory.
-
+```mcfunction
+execute if score @s diamonds matches 1..4 run say I have somewhere between 1 and 4 diamonds in my inventory.
+execute if entity @s[scores={diamonds=1..4}] run say I have somewhere between 1 and 4 diamonds in my inventory.
+```
 
 ### 1.12 and below
 
@@ -30,17 +37,22 @@ For example, select all players whose `kills` score is greater than their `death
 
 1. Take everyone's `deaths` from their `kills`
 
-       execute @a ~ ~ ~ scoreboard players operation @s kills -= @s deaths
+    ```mcfunction
+    execute @a ~ ~ ~ scoreboard players operation @s kills -= @s deaths
+    ```
 
 2. Select all players that now have a positive `kills` score (so they had more kills than deaths)
-
-       say @a[score_kills_min=1]
+    ```mcfunction
+    say @a[score_kills_min=1]
+    ```
 
 3. Add everyone's `deaths` back to their `kills`, to restore `kills` original value
 
-       execute @a ~ ~ ~ scoreboard players operation @s kills += @s deaths
+    ```mcfunction
+    execute @a ~ ~ ~ scoreboard players operation @s kills += @s deaths
 
-       execute if score @p money matches 10.. run say I have 10 money or more.
+    execute if score @p money matches 10.. run say I have 10 money or more.
+    ```
 
 ## Predicate / storage
 
@@ -48,7 +60,7 @@ For example, select all players whose `kills` score is greater than their `death
 
 Since version 1.20.5 can also compare values in storage directly, without copying values to the scoreboard. Below is an example of using the `minecraft:value_check` condition to compare values in storage.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -100,7 +112,7 @@ For `entity_score` condition, you can compare the value of the selected entity w
 
 Example to compare that players score `kills` >= score `deaths`:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -125,7 +137,7 @@ For the <= operator, simply replace `"min"` with `"max"` in the predicate above.
 
 But if you want to check that score `kills` > `deaths`, then checking in the predicate will be a little more complicated. So, we need to do two checks: first check that `kills` >= `deaths`, AND the second check is the inversion of the condition `kills` <= `deaths`.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -167,7 +179,7 @@ But if you want to check that score `kills` > `deaths`, then checking in the pre
 
 If you need to check that `kills` = `deaths` score, then you can do one range check, where `"min"` and `"max"` are the same score.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json

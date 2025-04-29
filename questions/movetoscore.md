@@ -14,7 +14,7 @@ Since version 1.20.2 you can summon the entity directly at the position of the s
 
 Below is an example of summoning a pig according to the set value in the scoreboard:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -147,7 +147,7 @@ See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about thi
 
 You basically copy their score to some temporary score so you don't lose it when you modify it, and then you go through the different powers of 2 (hence the name), check if their score is above that and then teleport them relatively that far.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction

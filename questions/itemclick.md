@@ -48,7 +48,7 @@ When using a datapack, you don't have to run these commands in a tick function, 
 * Right click - `minecraft:player_interacted_with_entity` advancement trigger
 * Left click - `minecraft:entity_hurt_player` advancement trigger
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -127,7 +127,7 @@ People tend to use a carrot on a stick and then use a resource pack to remodel t
 
 The `models/item/carrot_on_a_stick.json` file within the resource pack might end up looking like this:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See file</summary>
 
 ```json
@@ -155,7 +155,9 @@ The `models/item/carrot_on_a_stick.json` file within the resource pack might end
 
 The new `item_model` component allows you to make any item look like any other item without a resource pack. See this example command of a carrot on a stick that looks like a nether star
 
-    give @p carrot[item_model="nether_star"] 1
+```mcfunction
+give @p carrot[item_model="nether_star"] 1
+```
 
 #### Make item food method
 
@@ -182,7 +184,7 @@ This method has obvious disadvantages, such as particles appearing when used, so
 But when using a datapack, there are none of these disadvantages. Then you want to change `eat_seconds` to something very large so that the eating animation can't start and use the advancement trigger [`minecraft:using_item`](https://minecraft.wiki/w/Custom_advancement#minecraft:using_item) to check the item's usage. Since this advancement trigger is triggered every tick while the player is using the item, you can execute the command up to 20 times per second. However, often you don't want to do this as often and want to add a delay between command runs.
 Below is an example for this with a delay that is easy to configure:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -209,7 +211,8 @@ scoreboard objectives add stick.cooldown dummy
         "function": "example:right_click"
     }
 }
-
+```
+```mcfunction
 # function example:right_click
 execute store result score @s stick.cooldown run time query gametime
 scoreboard players add @s stick.cooldown 10
@@ -229,14 +232,14 @@ This method allows you to check a right click for almost any item and you do not
 
 In 1.21.2 some part of the `food` component has been separated into the `consumable` component. So we will need to change the `give` command, depending on what of the two methods you are using. The `consume_seconds` will be set to `0`, that is now possible in 1.21.2+ (if using the scoreboard method) or to `2147483647` (if using an advancement)
 
-```
+```mcfunction
 # get item
 give @p stick[food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:2147483647}] 1
 ```
 
 We can also add a cooldown (with the `use_cooldown` component) and use another animation instead of eating (it can be `none`, `eat`, `drink`, `block`, `bow`, `spear`, `crossbow`, `spyglass`, `toot_horn` or `brush`). Keep in mind that the item will be gone when using it. Here is a small example, detecting it using an advancement, of a nether star with the bow animation and a 5 second cooldown.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -262,7 +265,9 @@ give @p nether_star[use_cooldown={seconds:5},food={nutrition:0,saturation:0,can_
         "function": "example:right_click"
     }
 }
+```
 
+```mcfunction
 # function example:right_click
 say used nether star
 ```
@@ -291,13 +296,15 @@ _Parts of this post are taken and modified from [here](https://www.reddit.com/r/
 
 This method is based on checking the player's cursor slot. To do this, need to check slot `player.cursor` using the `if items` subcommand or predicates. Below is an example for running a command when holding a custom item in the cursor.
 
-    # Setup
-    give @s stick[minecraft:custom_data={in_cursor:true}]
-    scoreboard objectives add hold.in_cursor dummy
-    
-    # Command blocks
-    execute as @a[scores={hold.in_cursor=0}] if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}] run say Cursor Command.
-    execute as @a store success score @s hold.in_cursor if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}]
+```mcfunction
+# Setup
+give @s stick[minecraft:custom_data={in_cursor:true}]
+scoreboard objectives add hold.in_cursor dummy
+
+# Command blocks
+execute as @a[scores={hold.in_cursor=0}] if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}] run say Cursor Command.
+execute as @a store success score @s hold.in_cursor if items entity @s player.cursor *[minecraft:custom_data~{in_cursor:true}]
+```
 
 ## Java and Bedrock
 
@@ -321,18 +328,21 @@ tag @a[tag=right_click] remove right_click
 
 Java
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-    # Example item
-    give @s bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
+```mcfunction
+# Example item
+give @s bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
 
-    # Command blocks:
-    execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] on owner run tag @s run add right_click_bundle
-    execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] run kill @s
-    clear @a *[custom_data:{right_click_bundle:true}]
-    execute as @a[tag=right_click_bundle] run say example
-    execute as @a[tag=right_click_bundle] if items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
-    execute as @a[tag=right_click_bundle] unless items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
-    tag @a[tag=right_click_bundle] remove right_click_bundle
+# Command blocks:
+execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] on owner run tag @s run add right_click_bundle
+execute as @e[type=item] if contents entity @s *[custom_data:{right_click_bundle:true}] run kill @s
+clear @a *[custom_data:{right_click_bundle:true}]
+execute as @a[tag=right_click_bundle] run say example
+execute as @a[tag=right_click_bundle] if items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
+execute as @a[tag=right_click_bundle] unless items entity @s weapon.mainhand bundle[custom_data:{bundle_click:true}] run item replace entity @s weapon.mainhand with bundle[custom_data:{bundle_click:true},bundle_contents=[{id:"minecraft:music_disc_11",count:1,components:{"minecraft:custom_data":{right_click_bundle:true}}}]]
+tag @a[tag=right_click_bundle] remove right_click_bundle
+```
+
 </details>

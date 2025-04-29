@@ -32,7 +32,7 @@ We're going to use a [fake player](/wiki/questions/fakeplayer) (because it's abo
 
 Then, whenever you want to perform a conditional command:
 
-```
+```mcfunction
 execute store success #success success_score if block 73 10 31 stone
 execute if score #success success_score matches 1 run say Success!!
 execute unless score #success success_score matches 1 run say Not success!!

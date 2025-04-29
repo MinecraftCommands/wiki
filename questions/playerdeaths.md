@@ -28,7 +28,7 @@ If you are limited to using command blocks, then you can read the [player data](
 
 Below is an example for 1.19.4 and above versions:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -52,7 +52,7 @@ This method requires reading data for each dimension in the world in a separate 
 
 Using a datapack will make executing any command in the death position much easier. This method is based on the fact that the [advancement trigger](https://minecraft.wiki/w/Advancement/JSON_format) `minecraft:entity_hurt_player` does not depend on the tick schedule, but on events, so this trigger is executed before the player is respawned, and even before the scoreboard is updated, so score health will not work, but only the NBT check player data:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json

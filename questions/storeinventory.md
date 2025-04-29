@@ -88,7 +88,7 @@ Since version 1.20.2, [macro](https://minecraft.wiki/w/Function_(Java_Edition)#M
 
 Below is an example of storing a player's inventory in storage using the [scoreboard ID system](/wiki/questions/linkentity), or you can store the UUID / nickname instead of using the scoreboard ID system. To do this you need to run the function `example:storing` as a player.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -119,7 +119,7 @@ The way to do this is to store the players `Inventory` NBT somewhere safe. There
 
 So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard ID system](/wiki/questions/linkentity) set up to link the entity to the player.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -162,7 +162,7 @@ For items without tags, you need to create an empty tag before running the macro
 
 Below is an example for versions 1.20.2 - 1.20.4. To do this need to run function `example:returning` as a player:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -210,7 +210,7 @@ However, as of version 1.20.5, item tags have now been replaced with components 
 
 Below is an example of a loot table in which you need to put the item data using a macro:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -244,7 +244,7 @@ Below is an example of a loot table in which you need to put the item data using
 
 Below is an updated example for version 1.20.5 without comments, since otherwise it is the same as for version 1.20.2:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
 
 ```mcfunction
@@ -287,7 +287,7 @@ This one is a little command intensive, but probably the easiest to understand. 
 **This replaces all items that might still be in the players inventory.**  
 
 Running this function `as` the marker entity and having the target player marked with the `target` tag. This assumes you have a `temp` dummy scoreboard you can use.
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -362,7 +362,7 @@ This means that we can just go through all the items in the array and give them 
 
 Thankfully we can just recursively run through all the entries/items in the array and thus summon them all in the same tick. This is assuming you're executing this `as` the linked marker entity, but `at` the player and that you have a dummy objective you can use, this example uses `temp`.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -407,7 +407,7 @@ So first, make sure you have the loottable from the link above added to your dat
 
 Next, run this function `as` the marker, where the target player is `@a[tag=target]`.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -457,7 +457,7 @@ The second option is described here in more detail. See the explanation for the 
 
 For this we assume the two chests of the double chest are located at `~ ~ ~` and `~1 ~ ~`. Execute positioned and adjust the relative coordinates accordingly. Replace `<pos>` with the yellow shulkerbox position. Have a dummy `temp` scoreboard objective.
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -527,7 +527,7 @@ This method consist on using `/item` (on Java) or to replace all slots in 2 cont
 |---------|
 |You must run this function `as` the player|
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction

@@ -44,7 +44,7 @@ Key points:
 
 Here's a quick example to detect if a any skeleton type with the tag some\_tag was killed by a player:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```json
@@ -113,7 +113,7 @@ tag @e[type=marker,tag=set_ride] remove set_ride
 
 On versions 1.16 - 1.19.3, the only way to check this mob is to use the [predicate](https://minecraft.wiki/w/Predicate) in the datapack:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -166,7 +166,7 @@ execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {
 
 However, this implementation on command blocks may cause lags due to NBT checks every tick, so it is recommended to use a [check delay](/wiki/questions/blockdelay) or use a datapack with [schedule function](https://minecraft.wiki/w/Commands/schedule):
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
@@ -215,7 +215,7 @@ After detecting the death of a mob, it is also necessary to remove the UUID from
 
 Below is an example to check the death of any mob that has the `death_check` tag:
 
-<details>
+<details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
 ```mcfunction
