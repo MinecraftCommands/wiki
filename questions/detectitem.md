@@ -1,5 +1,8 @@
 # Detect a specific item
 
+* [Java](#java)
+* [Bedrock](#bedrock)
+
 ## Java
 
 Detecting an item by some property is a relatively easy task if you know your way around NBT. If you have control over how and when the item is given, [consider using a special item tag to detect it](/wiki/questions/customitemtag) (that post also contains useful information about how to nest the NBT, so read it before reading on).
@@ -59,7 +62,10 @@ The correct check in the `SelectedItem` slot would look something like this:
  
 ### Target selector
 
-In 1.20.5 you can check an item using the NBT data check in the [target selector](https://minecraft.wiki/w/Target_selectors#Selecting_targets_by_nbt), however now can use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if|unless)_items) to flexibly detect items and can now use the [predicate](https://minecraft.wiki/w/Predicate) not only for equipment, but also for any slot and now even without using a datapack.
+In 1.20.5 you can check an item using the NBT data check in the [target selector](https://minecraft.wiki/w/Target_selectors#Selecting_targets_by_nbt), however now can use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_items) to flexibly detect items and can now use the [predicate](https://minecraft.wiki/w/Predicate) not only for equipment, but also for any slot and now even without using a datapack.
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
 
     # Any slot
     @a[nbt={Inventory:[{id:"minecraft:stick",components:{"minecraft:custom_data":{awesome_stick:true}}}]}]
@@ -73,11 +79,13 @@ In 1.20.5 you can check an item using the NBT data check in the [target selector
     @a[nbt={SelectedItem:{id:"minecraft:stick",components:{"minecraft:custom_data":{awesome_stick:true}}}}]
     @a[nbt={SelectedItem:{id:"minecraft:stick",components:{"minecraft:custom_name":'"Awesome Stick"'}}}]
 
+</details>
+
 **Note:** The component `“minecraft:custom_data”` is escaped with parentheses because it contains the special character colon. And although you can omit `minecraft:` in /give and other commands, when checking NBT data in the target selector you should always specify the full format, which also includes the [namespace](https://minecraft.wiki/w/Resource_location#Namespaces).
 
 ### execute if items
 
-The syntax looks like this [\[wiki\]](https://minecraft.wiki/w/Commands/execute#(if|unless)_items):
+The syntax looks like this [\[wiki\]](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_items):
 
     if/unless items block <pos> <slots> <item_predicate>
     if/unless items entity <entities> <slots> <item_predicate>
@@ -146,7 +154,10 @@ When using predicates in a datapack, you can now check not only equipment slots,
 
 This is an example of updating a predicate to detect an item with a custom tag:
 
-```
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See predicate</summary>
+
+```json
 {
   "condition": "minecraft:entity_properties",
   "entity": "this",
@@ -165,6 +176,7 @@ This is an example of updating a predicate to detect an item with a custom tag:
   }
 }
 ```
+</details>
 
 **Note:** If in the predicate you do not check the item ID, but only the NBT data of the item in the mainhand, then always also check the count item in this slot because of a bug [\[MC-229882\]](https://bugs.mojang.com/browse/MC-229882).
 
@@ -213,10 +225,11 @@ The items NBT is stored inside the `Item` NBT tag, so we can test for an item th
 
 When using a datapack, you can check items in equipment slots. To do this, create a file `data/<namespace>/predicates/<predicate_name>.json` in your datapack. For example, the predicate `data/example/predicates/has/awesome_stick.json` would have the resourcename `example:has/awesome_stick`. And you can check the predicate in any target selector, `execute if predicate <predicate>`, as well as in loot and advancements tables.
 Here is an example of a predicate and its use in a target selector:
-```
-execute as @a[predicate=example:has/awesome_stick] run say Example Command. 
 
-# predicate example:has/awesome_stick
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See predicate</summary>
+
+```json
 {
   "condition": "minecraft:entity_properties",
   "entity": "this",
@@ -236,6 +249,8 @@ execute as @a[predicate=example:has/awesome_stick] run say Example Command.
 }
 ```
 
+</details>
+
 **Note:** If in the predicate you do not check the item ID, but only the NBT data of the item in the mainhand, then always also check the count item in this slot because of a bug [\[MC-229882\]](https://bugs.mojang.com/browse/MC-229882).
 
 ## Bedrock
@@ -252,7 +267,7 @@ In the 1.18.20 beta they added the [`hasitem`](https://minecraft.wiki/wiki/Targe
 
 A player with 5 or more apples in their inventory
 
-    @a[hasitem={item:apple,quantity=5..}]
+    @a[hasitem={item=apple,quantity=5..}]
 
 A player with an iron pickaxe in their mainhand
 
@@ -277,8 +292,9 @@ effect @a[hasitem={item=stick,data=5}] speed
 
 #### before 1.18.20
 
-> [!NOTE]
-> This information is outaded and it is not useful for the current version of the game.
+| 📝 Note |
+|---------|
+|This information is outaded and it is not useful for the current version of the game|
 
 Using the `clear` command with a max count of 0 will return a successful result if the item is in the players inventory, without actually removing the item, which can be picked up by either a conditional commandblock or a comparator. **You can only do this for 1 player at a time though, as if you use `@a` you have no way of knowing which one of the players has the item in their inventory.**
 
@@ -301,7 +317,8 @@ Detecting a specific item on the ground involves using its name.
 
 **This method is language specific and won't work if your hosting player is not playing in english!** A way to circumvent that problem would be to either rename the item if possible, or to change every language file the game has to make the name of the item the same across all languages, which will require you to include a resourcepack.
 
-> [!NOTE]
-> You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name.
+| 📝 Note |
+|---------|
+|You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name|
 
     kill @e[type=item, name="§r§Dirt"]

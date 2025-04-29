@@ -1,18 +1,28 @@
 # Generate a random number
 
-This article talks about the Java Edition of the game. In Bedrock, you can just use `scoreboard players random` to get a random number into your scoreboard and don't need to go through all this hassle, the command is the following one:
 
-    scoreboard players random <player: target> <objective: string> <min: int> <max: int>
+| 📝 Note |
+|---------|
+|**None of these numbers are truly random**. They are all only "pseudo" random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out|
+
+## Bedrock
+
+In Bedrock, you can use `scoreboard players random` to get a random number into your scoreboard, the command is the following one:
+
+```mcfunction
+scoreboard players random <player: target> <objective: string> <min: int> <max: int>
+```
 
 So for example, from 1 to 10 in a score called `some_score`
 
-    scoreboard players random @p some_score 1 10
+```mcfunction
+scoreboard players random @p some_score 1 10
+```
 
-> [!NOTE]
-> **None of these numbers are truly random**. They are all only "pseudo" random (which means they only feel like they are random to a human, but are using some form of deterministic algorithm behind the scenes) because that's how computers work. They will be refered to "random" generator for simplicity. This likely won't affect your contraption, but it's important to point out.
+## Java
 
-## /random command
-**This method is, currently, the best, there is no reason to use the others**
+### /random command
+This method is, currently, the best, there is no reason to use the others unless you want to have something happen with a random chance, then use a predicate.
 
 Effective Range [-2'147'483'648 to 2'147'483'647]
 
@@ -20,46 +30,58 @@ This command is used to generate a random number specifying the maximum and the 
 
 First we need to create a scoreboard where we will store the random number.
 
-    /scoreboard objectives add random dummy
+```mcfunction
+/scoreboard objectives add random dummy
+```
+
 We need to store the result of the [`/random`](https://minecraft.wiki/w/random) command to a fake player
 
-    /execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
-    
+```mcfunction
+/execute store result score <player/fakeplayer> <scoreboard> run random value <min>..<max>
+```
+
 For example:
 
-    execute store result score #command random run random value 1..5
+```
+execute store result score #command random run random value 1..5
+```
 
 And now we need to check the value of the scoreboard, in this case we used numbers from 1 to 5 so we use one command to check every possible scoreboard value.
 
-    execute if score #command random matches 1 run <command 1>
-    execute if score #command random matches 2 run <command 2>
-    execute if score #command random matches 3 run <command 3>
-    execute if score #command random matches 4 run <command 4>
-    execute if score #command random matches 5 run <command 5>
+```
+execute if score #command random matches 1 run <command 1>
+execute if score #command random matches 2 run <command 2>
+execute if score #command random matches 3 run <command 3>
+execute if score #command random matches 4 run <command 4>
+execute if score #command random matches 5 run <command 5>
+```
 
 Or we can use [ranges](wiki/questions/ranges) to detect more of one number.
 
-    execute if score #command random matches 1..3 run say 1, 2 or 3
-    execute if score #command random matches 4..5 run say 4 or 5
+```
+execute if score #command random matches 1..3 run say 1, 2 or 3
+execute if score #command random matches 4..5 run say 4 or 5
+```
 
-## without /random command (Pre-1.20.2)
-> [!NOTE]
-> This information is outdated and should **not** be used in the current version of the game.
 
-There are many ways to get a random number in minecraft. the first two are arguably the best as they have the least limitations and require the least work to set up.
-
-## Have something happen with a random chance
+### Have something happen with a random chance
 
 For this special case, you don't need any of the random number methods, thanks to 1.15's predicates. A simple predicate can be used to run something with an e.g. 1/10 chance like this:
 
-    {
-        "condition": "minecraft:random_chance",
-        "chance": 0.1
-    }
+```json
+{
+    "condition": "minecraft:random_chance",
+    "chance": 0.1
+}
+```
 
-If you need to choose one of 10 things at random, you should read on.
+---
+| 📝 Note |
+|---------|
+|The following information is outdated and should **not** be used in the current version of the game as there are better methods of randomess descrived above|
+|The following methods should only be used in pre-1.20.2|
 
-## 1: PRNG/LCG
+### 1: PRNG/LCG
 
 Effective Range: Depends on the implementation, one of the ones on the discord server has [0, 130000]
 
@@ -69,7 +91,7 @@ If you don't want to do it yourself, you can go on the [discord](https://discord
 
 _Probably the best listed method if the range is enough for you, as it creates the least amount of server strain while having a very high range that should be enough for most purposes._
 
-## 2: UUID
+### 2: UUID
 
 Effective Range: [-2147483648, 2147483647]
 
@@ -91,7 +113,7 @@ _The second best option listed here. More taxing on the server due to it's creat
 
 The NBT tags `UUIDLeast` and `UUIDMost` are both the size of a `long` (64 bits), while `data get` can only return an `int` (32 bits). To shrink the `long` sized value into the size of an `int`, we use the scale value `0.00000000023283064365386962890625` which we get from the value of `1 / (2^32)`. This effectively gives us the upper half of the `long`.
 
-## 3: Loot Tables
+### 3: Loot Tables
 
 Effective Range: [0, 10000] (in theory all the way up to 2^(31)-1, but since you're summoning an entity which gets deleted instantly again for this to work, anything above a few thousand will likely lag your game).
 
@@ -99,29 +121,36 @@ This method takes advantage of the fact that using `execute store` with the `loo
 
 Example loot table:
 
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+{
+  "type": "minecraft:empty",
+  "pools": [
     {
-      "type": "minecraft:empty",
-      "pools": [
+      "rolls": {
+        "min": 1,
+        "max": 5
+      },
+      "entries": [
         {
-          "rolls": {
-            "min": 1,
-            "max": 5
-          },
-          "entries": [
+          "type": "minecraft:item",
+          "name": "stone",
+          "functions": [
             {
-              "type": "minecraft:item",
-              "name": "stone",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": 0
-                }
-              ]
+              "function": "minecraft:set_count",
+              "count": 0
             }
           ]
         }
       ]
     }
+  ]
+}
+```
+
+</details>
 
 Change the rolls to fit your desired range (not negative, 0 is allowed), and/or use the method described below to fit it into a range using modulo, so you don't need a different loottable for every different range.
 
@@ -133,7 +162,7 @@ _The third best option, with a small effective range. Use only for smaller amoun
 
 _Taken from [this](https://www.reddit.com/r/MinecraftCommands/comments/evoghb/another_rng_method/) post on the subreddit_.  
 
-## 4: item rotation
+### 4: item rotation
 
 **Outdated**
 
@@ -141,7 +170,7 @@ Effective Range: [0, 360]
 
 A way to get a random number before 1.13 in the range of up to 360 numbers was to summon an entity like a squid, kill it and check the rotation of the inksac item entity it just dropped, since that rotation is always random. It's very much deprecated now though, thanks to Number 2 in this list.
 
-## 5: @r / @e[sort=random]
+### 5: @r / @e[sort=random]
 
 Effective Range: [0, 10] (theoretically infinite, but practically anything above 10 is not worth it)
 
@@ -149,7 +178,7 @@ Before we got the (arguably much better) solutions above, we could use `@e[limit
 
 ## 6: spreadplayers
 
-**Outdated.**
+**Outdated**
 
 Effective Range: [0, 100] (theoretically 900000000000000 if you're using every single block in a minecraft world as a position, practically even 100 is a stretch)
 
@@ -157,11 +186,11 @@ Another Minecraft-included way for randomisation is `/spreadplayers`, which will
 
 A different way to use the spreadplayers randomisation is to `data get` the position the entity ends up on. This only works reliably in loaded chunks. Since spreadplayers does load the chunk the entity is placed in briefly, it _may_ work when using a function or chained commands, but this method of chunkloading has been quite unreliable in the past.
 
-## 7: running score
+### 7: running score
 
 A very primitive way to get somewhat random numbers but probably the easiest one. It relies on time to get a random number, so this is not applicable for when random numbers are needed in predefined time lengths (X amount of ticks, maybe even the same tick) and **it is advised not to use this**, as there are much better alternatives. How it works is you basically count up a scoreboard from the minimum to the maximum random number, incrementing by one per tick and resetting it to the minimum once you reached the maximum. Then to get a "random" number you just take whatever number this running score happens to be on at that moment.
 
-## Get the number into the desired range
+### Get the number into the desired range
 
 Many of the generators above have a range that only covers positive numbers, reaching from 0 up to X. But what if you need a random number between 5 and 15? what about -10 and 10?  
 

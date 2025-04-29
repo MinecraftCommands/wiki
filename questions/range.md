@@ -1,6 +1,6 @@
 # Ranges
 
-Multiple selectors (e.g. `scores` or `distance`) allow for you to specify a **range** of values to test for, instead of just a single value. They are denoted by two dots which seperate the min and max value (including): `min..max`  
+Multiple selectors (e.g., `scores` or `distance`) allow for you to specify a **range** of values to test for, instead of just a single value. They are denoted by two dots that separate the min and max value (including): `min..max`  
 Either one can be left out to signify an open-ended range. Leaving writing a single number signifies an exact check for this value alone.
 
 `1` means "exactly 1"  
@@ -10,5 +10,6 @@ Either one can be left out to signify an open-ended range. Leaving writing a sin
 
 Some selectors (like `distance`) also allow for decimal numbers. `0.5..0.9` works fine in those instances.
 
-> [!IMPORTANT]
-> Ranges are not useable when checking for NBT!
+| ⚠️ Important |
+|--------------|
+|Ranges are not usable when checking for NBT!|

@@ -1,13 +1,17 @@
 # How to make a shop
 This is a quick guide of how to make a shop where you can buy items with other items or costing a scoreboard value (money or coins).
 
+* [Java](#java)
+* [Bedrock](#bedrock)
+
 ## Item shop
 This method consists of buying items with other items, in this example, you will buy 1 netherite ingot with 5 diamonds.
 
-_Related:_ [Count how much of X item the player has](wiki/questions/amountitems)
+_Related:_ [Count how much of X item the player has](/wiki/questions/amountitems)
 
-> [!NOTE]
-> You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before.
+| 📝 Note |
+|--------------|
+|You can add any command you want to run (for example a playsound) before the last command, but the selector must be the same as the command before|
 
 
 ### Java
@@ -20,52 +24,59 @@ Using command blocks we need to make sure we select the correct player every tim
 To avoid the player getting unintentionally re-selected we remove the tag at the end.
 Using functions we can rely on `@s` instead, assuming the function is executed `as` the relevant player.
 
-    # Command blocks
-    tag @p add buyer.netherite
-    execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
-    give @a[tag=buyer.netherite,scores={diamonds=5..}] netherite_ingot 1
-    clear @a[tag=buyer.netherite,scores={diamonds=5..}] diamond 5
-    tellraw @a[tag=buyer.netherite,scores={diamonds=5..}] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
-    tellraw @a[tag=buyer.netherite,scores={diamonds=..4}] {"text":"You don't have 5 diamonds","color":"dark_red"}
-    tag @a remove buyer.netherite
+```mcfunction
+# Command blocks
+tag @p add buyer.netherite
+execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
+give @a[tag=buyer.netherite,scores={diamonds=5..}] netherite_ingot 1
+clear @a[tag=buyer.netherite,scores={diamonds=5..}] diamond 5
+tellraw @a[tag=buyer.netherite,scores={diamonds=5..}] {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+tellraw @a[tag=buyer.netherite,scores={diamonds=..4}] {"text":"You don't have 5 diamonds","color":"dark_red"}
+tag @a remove buyer.netherite
+```
 
 Or if you prefer a function:
 
-    # function example:load
-    scoreboard objectives add diamonds dummy
-    
-    # function example:buy/netherite
-    execute store result score @s diamonds run clear @s diamond 0
-    execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
-    execute unless entity @s[scores={diamonds=5..}] run tellraw @s {"text":"You don't have 5 diamonds","color":"dark_red"}
+```mcfunction
+# function example:load
+scoreboard objectives add diamonds dummy
 
-    # function example:buy/netheirte/success
-    give @s netherite_ingot 1
-    clear @s diamond 5
-    tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+# function example:buy/netherite
+execute store result score @s diamonds run clear @s diamond 0
+execute if entity @s[scores={diamonds=5..}] run function example:buy/netherite/success
+execute unless entity @s[scores={diamonds=5..}] run tellraw @s {"text":"You don't have 5 diamonds","color":"dark_red"}
 
-> [!NOTE]
-> The function `example:buy/netherite` must be run `as` the player
+# function example:buy/netheirte/success
+give @s netherite_ingot 1
+clear @s diamond 5
+tellraw @s {"text":"You bought a netherite ingot for 5 diamonds","color":"green"}
+```
+
+| 📝 Note |
+|--------------|
+|The function `example:buy/netherite` must be run `as` the player|
 
 In 1.20.5 `execute if items` was added, which allows to count items in a diferent way.
 To use this method, all command remains the same, as the previus example except the one for counting items that is this one:
 
-    execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
-
+```mcfunction
+execute as @a[tag=buyer.netherite] store result score @s diamonds run clear @s diamond 0
+```
 That we can replace it for this one:
-
-    execute as @p[tag=buyer.netherite] store result score @s diamonds if items entity @s container.* diamond
-    
+```mcfunction
+execute as @p[tag=buyer.netherite] store result score @s diamonds if items entity @s container.* diamond
+```
 Or if you are using the example function, you need to replace this command
-
-    execute store result score @s diamonds run clear @s diamond 0
-
+```mcfunction
+execute store result score @s diamonds run clear @s diamond 0
+```
 With this command:
 
-    execute store result score @s diamonds if items entity @s container.* diamond
+execute store result score @s diamonds if items entity @s container.* diamond
 
-> [!NOTE]
-> The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`, that will not work below 1.20.5).
+| 📝 Note |
+|--------------|
+|The method that uses the `/clear` command will work in 1.20.5+ but it is recomended to use the one specific for that versions (using `execute if items`, that will not work below 1.20.5)|
 
 #### Using a villager
 Villagers are a passive mob that can be interacted with, and will open the trading GUI.
@@ -91,7 +102,8 @@ Here is an example command:
 ```
 /summon villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:0b,maxUses:2147483647,buy:{id:"minecraft:diamond",count:1},buyB:{id:"minecraft:emerald",count:1},sell:{id:"minecraft:netherite_ingot",count:1}}]}}
 ```
-Let's break it donw:
+
+Let's break it down:
 * Inside `Offers` we have `Recipes`, there will be all listed trades.
 * This trade has `rewardExp:0b` so the player will not get any experience when buying it (you can enable it if you want).
 * `maxUses:2147483647` is the maximum times it can be traded, this is the maximum value we can set.
@@ -114,19 +126,24 @@ In bedrock we have the `hasitem` argument, so it uses less commands than in Java
 
 If you don't want to use an NPC can use this method, it is very similar to Java but it uses the `hasitem` argument instead.
 
-    tag @p add buyer.netherite
-    give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
-    tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
-    tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
-    clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
-    tag @a remove buyer.netherite
+```mcfunction
+# Command blocks
+tag @p add buyer.netherite
+give @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] netherite_ingot
+tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] {"rawtext":[{"text":"§2You bought a netherite ingot"}]}
+tellraw @a[tag=buyer.netherite,hasitem={item=diamond,quantity=..5}] {"rawtext":[{"text":"§3You don't have 5 diamonds"}]}
+clear @a[tag=buyer.netherite,hasitem={item=diamond,quantity=5..}] diamond 5
+tag @a remove buyer.netherite
+```
 
-> [!NOTE]
-> in order for it to work with npc, change `@p` to `@initiator`
-> _Related: [How to setup a NPC?](wiki/questions/npc)_
+| 📝 Note |
+|--------------|
+|in order for it to work with npc, change `@p` and `@a` to `@initiator`|
+|_Related: [How to setup a NPC?](/wiki/questions/npc)_|
 
-> [!NOTE]
-> It is super important to clear the diamonds in the last step before removing the tag
+| 📝 Note |
+|--------------|
+|It is super important to clear the diamonds in the last step before removing the tag|
 
 ### Add more than one items
 In this gide we will use just one item, but you can have multiples but it will require a second tag, that must be added if the player has both items.
@@ -134,17 +151,19 @@ Then when we clear the items we are going to clear them for the player with that
 
 In this example we will buy a gold block with 2 emeralds and 5 diamonds. If you are in Java you will need one scoreboard for each item, assuming you already store the items result in each one.
 
-    # Example
-    tag @p add buyer.example
-    execute as @a[tag=buyer.example] run tag @s[scores={diamonds=5..,emeralds=2..}] add buy.example
-    # run any tellraw to the player with the tag buy.example
-    clear @a[tag=buy.example] diamond 5
-    clear @a[tag=buy.example] emerald 2
-    give @a[tag=buy.example] gold_block 1
-And then we remove all the previus used tags:
+```mcfunction
+# Command blocks
+tag @p add buyer.example
+execute as @a[tag=buyer.example] run tag @s[scores={diamonds=5..,emeralds=2..}] add buy.example
+# Run any tellraw to the player with the tag buy.example
+clear @a[tag=buy.example] diamond 5
+clear @a[tag=buy.example] emerald 2
+give @a[tag=buy.example] gold_block 1
 
-    tag @a remove buy.example
-    tag @a remove buyer.example
+# And then we remove all the previus used tags
+tag @a remove buy.example
+tag @a remove buyer.example
+```
 
 In bedrock use the `hasitem` argument instead of `scores`
 
@@ -158,28 +177,34 @@ In this example the currency is a `dummy` scoreboard called `coins`.
 
 #### With command blocks
 
-> [!NOTE]
-> This example uses Java syntax for the message that appears when the player buys the item
+| 📝 Note |
+|--------------|
+|This example uses Java syntax for the message that appears when the player buys the item|
 
-    /tag @p add buyer.diamond
-    /execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
-    /scoreboard players remove @a[tag=buy.diamond] coins 10
-    /tellraw @a[tag=buyer_diamond,tag=!buy.diamond] "You need at least 10 coins"
-    /tellraw @a[tag=buy.diamond] "You bought a diamond"
-    /tag @a remove buy.diamond
-    /tag @a remove buyer.diamond
+```mcfunction
+tag @p add buyer.diamond
+execute as @p[tag=buyer.diamond] run tag @s[scores={coins=10..}] add buy.diamond
+scoreboard players remove @a[tag=buy.diamond] coins 10
+tellraw @a[tag=buyer_diamond,tag=!buy.diamond] "You need at least 10 coins"
+tellraw @a[tag=buy.diamond] "You bought a diamond"
+tag @a remove buy.diamond
+tag @a remove buyer.diamond
+```
 
 #### In a function
 This is more optimized compared to using command blocks as functions keep the context
 
-    # function example:buy/diamond
-    execute if entity @s[scores={coins=10..}] run function example:buy/diamond/success
-    tellraw @s[scores={coins=..9}] {"text":"You don't have 10 coins","color":"red"}
+```mcfunction
+# function example:buy/diamond
+execute if entity @s[scores={coins=10..}] run function example:buy/diamond/success
+tellraw @s[scores={coins=..9}] {"text":"You don't have 10 coins","color":"red"}
 
-    # function example:buy/diamond/success
-    give @s diamond
-    scoreboard players remove @s coins 10
-    tellraw @s {"text":"You bought a diamond","color":"green"}
+# function example:buy/diamond/success
+give @s diamond
+scoreboard players remove @s coins 10
+tellraw @s {"text":"You bought a diamond","color":"green"}
+```
 
-> [!NOTE]
-> The function `example:buy/diamond` must be run `as` the player
+| 📝 Note |
+|--------------|
+|The function `example:buy/diamond` must be run `as` the player|

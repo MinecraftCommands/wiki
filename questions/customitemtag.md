@@ -1,7 +1,7 @@
 # Give an item a custom tag to identify it by
 
-* [Java](#Java)
-* [Bedrock](#Bedrock)
+* [Java](#java)
+* [Bedrock](#bedrock)
 
 ## Java
 
@@ -73,7 +73,10 @@ When using a loot table since version 1.20.5, you need to use the `minecraft:set
 
 Below are examples of loot tables for different versions. **For version 1.20.5+, two ways to set custom data are shown, but you should only use one.**
 
-```
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
 # 1.20.5 and above
 {
   "pools": [
@@ -122,6 +125,7 @@ Below are examples of loot tables for different versions. **For version 1.20.5+,
   ]
 }
 ```
+</details>
 
 The new `set_custom_data` loot function is exactly the same as the `set_nbt` function, but sets data only to the `custom_data` component. But using `set_components` for set `custom_data` is different because it cannot be represented as a string with NBT data, but it must be a JSON object and follow [JSON formatting](https://minecraft.wiki/w/JSON). Thus, any text must be escaped, and numeric values must be specified without a variable type.
 
@@ -160,7 +164,7 @@ For example, the crafting recipe below (1.20.5+), which will give an item with t
 ```
 ## Bedrock
 
-In bedrock we will need use a workarround, because we can't use custom tags.
+In bedrock we will need use a workaround, because we can't use custom tags.
 
 ### Item data
 To get an item with specific data, you can use a number between `2,147,483,647` and `-2,147,483,648`.
@@ -175,7 +179,7 @@ This stick will have a data of 5, that we can detect with the `hasitem` argument
     /effect @a[hasitem={item=stick,data=5}] speed
 
 ### Name with color codes
-As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, wich is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
+As proposed by [u/V1beRater](https://www.reddit.com/user/V1beRater/) in [this Reddit post](https://www.reddit.com/r/MinecraftCommands/comments/xzbj5t/comment/irlhawd/). We can use color codes to change the name of an item of an apple to, for example, `§r§fApple`, which is indistinguishable from a normal apple name, but you can detect if it's dropped with this command:
 
     kill @e[type=item, name="§r§fApple"]
 

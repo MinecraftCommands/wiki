@@ -1,12 +1,13 @@
 # Bedrock Codebase Resources
 
-This page contains a list of links to utilities and references for **Pocket Edition/Windows 10** ("Minecraft Unified") map making that you may find useful.
+This page contains a list of links to utilities and references for **Minecraft Bedrock Edition** map making that you may find useful.
 
 Looking for resources for the normal Java PC edition? [Click here for Java/PC resources.](/wiki/resources)
 
-Submit a pull request or create a GitHub issue if you've found a useful tool or reference that you think would fit here.
+Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or create a [GitHub issue](https://github.com/MinecraftCommands/wiki/issues) if you've found a useful tool or reference that you think would fit here.
 
-[Online documentation](https://bedrock.dev) (TheDestruc7i0n)
+* [Online documentation](https://bedrock.dev) (TheDestruc7i0n)
+* [Online documentation](https://wiki.bedrock.dev)
 
 ## NBT
 

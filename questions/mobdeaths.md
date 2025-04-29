@@ -19,12 +19,14 @@ Key points:
 
 Here's a quick example to detect if a zombie was killed by a player:
 
-    # In chat / load function
-    scoreboard objectives add killed.zombie killed:zombie
-    
-    # Command blocks / tick function
-    execute as @a[scores={killed.zombie=1..}] run say Some zombie has died.
-    scoreboard players reset @a[scores={killed.zombie=1..}] killed.zombie
+```mcfunction
+# In chat / load function
+scoreboard objectives add killed.zombie killed:zombie
+
+# Command blocks / tick function
+execute as @a[scores={killed.zombie=1..}] run say Some zombie has died.
+scoreboard players reset @a[scores={killed.zombie=1..}] killed.zombie
+```
 
 ----
 
@@ -42,34 +44,41 @@ Key points:
 
 Here's a quick example to detect if a any skeleton type with the tag some\_tag was killed by a player:
 
-    # advancement example:killed_skeleton
-    {
-      "criteria": {
-        "requirement": {
-          "trigger": "minecraft:player_killed_entity",
-          "conditions": {
-            "entity": [
-              {
-                "condition": "minecraft:entity_properties",
-                "entity": "this",
-                "predicate": {
-                  "type": "#minecraft:skeletons",
-                  "nbt": "{Tags:['some_tag']}"
-                }
-              }
-            ]
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+# advancement example:killed_skeleton
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "#minecraft:skeletons",
+              "nbt": "{Tags:['some_tag']}"
+            }
           }
-        }
-      },
-      "rewards": {
-        "function": "example:skeleton_death"
+        ]
       }
     }
-    
-    # function example:skeleton_death
-    advancement revoke @s only example:killed_skeleton
-    say Skeleton with tag some_tag has died.
+  },
+  "rewards": {
+    "function": "example:skeleton_death"
+  }
+}
+```
+```mcfunction
+# function example:skeleton_death
+advancement revoke @s only example:killed_skeleton
+say Skeleton with tag some_tag has died.
+```
 
+</details>
 ----
 
 ## Passenger entity
@@ -90,74 +99,95 @@ Key points:
 
 This method requires preliminary setup of the mob, for example, you can summon a mob with an entity marker as a passenger:
 
-    summon husk ~ ~ ~ {Tags:["some_tag"],Passengers:[{id:"minecraft:marker",Tags:["death_detector"]}]}
+```mcfunction
+summon husk ~ ~ ~ {Tags:["some_tag"],Passengers:[{id:"minecraft:marker",Tags:["death_detector"]}]}
+```
 
 From version 1.19.4 you can also add a marker entity as passenger to an existing mob using the [/ride command](https://minecraft.wiki/w/Commands/ride):
 
-    summon marker ~ ~ ~ {Tags:["death_detector","set_ride"]}
-    ride @e[type=marker,tag=death_detector,tag=set_ride,limit=1] mount <mob>
-    tag @e[type=marker,tag=set_ride] remove set_ride
+```mcfunction
+summon marker ~ ~ ~ {Tags:["death_detector","set_ride"]}
+ride @e[type=marker,tag=death_detector,tag=set_ride,limit=1] mount <mob>
+tag @e[type=marker,tag=set_ride] remove set_ride
+```
 
 On versions 1.16 - 1.19.3, the only way to check this mob is to use the [predicate](https://minecraft.wiki/w/Predicate) in the datapack:
 
-    # function example:tick
-    execute as @e[type=marker,tag=death_detector,predicate=example:death_mob] run function example:death_mob
-    execute as @e[type=marker,tag=death_detector,predicate=example:despawn_mob] run function example:despawn_mob
-    
-    # function example:death_mob
-    say Mob is dead!
-    kill @s
-    
-    # function example:despawn_mob
-    say Mob is despawn!
-    kill @s
-    
-    # predicate example:death_mob
-    {
-      "condition": "minecraft:entity_properties",
-      "entity": "this",
-      "predicate": {
-        "vehicle": {
-          "nbt": "{DeathTime:1s}"
-        }
-      }
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# function example:tick
+execute as @e[type=marker,tag=death_detector,predicate=example:death_mob] run function example:death_mob
+execute as @e[type=marker,tag=death_detector,predicate=example:despawn_mob] run function example:despawn_mob
+
+# function example:death_mob
+say Mob is dead!
+kill @s
+
+# function example:despawn_mob
+say Mob is despawn!
+kill @s
+```
+```json
+# predicate example:death_mob
+{
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "vehicle": {
+      "nbt": "{DeathTime:1s}"
     }
-    
-    # predicate example:despawn_mob
-    {
-      "condition": "minecraft:inverted",
-      "term": {
-        "condition": "minecraft:entity_properties",
-        "entity": "this",
-        "predicate": {
-          "vehicle": {}
-        }
-      }
+  }
+}
+
+# predicate example:despawn_mob
+{
+  "condition": "minecraft:inverted",
+  "term": {
+    "condition": "minecraft:entity_properties",
+    "entity": "this",
+    "predicate": {
+      "vehicle": {}
     }
+  }
+}
+```
+
+</details>
 
 As of version 1.19.4, you can use the [execute](https://minecraft.wiki/w/Commands/execute#on) `on vehicle` subcommand to select a dying mob:
 
-    # Command blocks
-    execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} run say This mob is dying!
-    execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} on passengers run kill @s
+```mcfunction
+# Command blocks
+execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} run say This mob is dying!
+execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} on passengers run kill @s
+```
 
 However, this implementation on command blocks may cause lags due to NBT checks every tick, so it is recommended to use a [check delay](/wiki/questions/blockdelay) or use a datapack with [schedule function](https://minecraft.wiki/w/Commands/schedule):
 
-    # function example:load
-    function example:loops/1s
-    
-    # function example:loops/1s
-    schedule function example:loops/1s 1s
-    execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} run function example:death_mob
-    execute as @e[type=marker,tag=death_detector,predicate=example:despawn_mob] run function example:despawn_mob
-    
-    # function example:death_mob
-    say Mob is dead!
-    execute on passengers run kill @s
-    
-    # function example:despawn_mob
-    say Mob is despawn!
-    kill @s
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# function example:load
+function example:loops/1s
+
+# function example:loops/1s
+schedule function example:loops/1s 1s
+execute as @e[type=marker,tag=death_detector] on vehicle unless data entity @s {DeathTime:0s} run function example:death_mob
+execute as @e[type=marker,tag=death_detector,predicate=example:despawn_mob] run function example:despawn_mob
+
+# function example:death_mob
+say Mob is dead!
+execute on passengers run kill @s
+
+# function example:despawn_mob
+say Mob is despawn!
+kill @s
+```
+
+</details>
 
 ----
 
@@ -185,32 +215,39 @@ After detecting the death of a mob, it is also necessary to remove the UUID from
 
 Below is an example to check the death of any mob that has the `death_check` tag:
 
-    # function example:load
-    function example:loops/1s
-    
-    # function example:loops/1s
-    schedule function example:loops/1s 1s
-    execute as @e[tag=death_check,tag=!init] run function example:death_check/init
-    data modify storage example:macro death_check set from storage example:database death_check
-    function example:death_check/check with storage example:macro death_check[-1]
-    
-    # function example:death_check/init
-    function gu:convert with entity @s
-    data remove storage example:data this
-    data modify storage example:data this.UUID set from storage gu:main out
-    data modify storage example:database death_check append from storage example:data this
-    data modify entity @s PersistenceRequired set value true
-    tag @s add init
-    
-    # function example:death_check/check
-    $execute as $(UUID) unless data entity @s {DeathTime:0s} at @s run function example:death_check/death_event {UUID:$(UUID)}
-    $data remove storage example:macro death_check[{UUID:$(UUID)}]
-    function example:death_check/check with storage example:macro death_check[-1]
-    
-    # function example:death_check/death_event
-    $data remove storage example:database death_check[{UUID:$(UUID)}]
-    say This mob is dying!
-    particle minecraft:soul_fire_flame ~ ~1 ~ 0.5 1 0.5 0.01 100
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# function example:load
+function example:loops/1s
+
+# function example:loops/1s
+schedule function example:loops/1s 1s
+execute as @e[tag=death_check,tag=!init] run function example:death_check/init
+data modify storage example:macro death_check set from storage example:database death_check
+function example:death_check/check with storage example:macro death_check[-1]
+
+# function example:death_check/init
+function gu:convert with entity @s
+data remove storage example:data this
+data modify storage example:data this.UUID set from storage gu:main out
+data modify storage example:database death_check append from storage example:data this
+data modify entity @s PersistenceRequired set value true
+tag @s add init
+
+# function example:death_check/check
+$execute as $(UUID) unless data entity @s {DeathTime:0s} at @s run function example:death_check/death_event {UUID:$(UUID)}
+$data remove storage example:macro death_check[{UUID:$(UUID)}]
+function example:death_check/check with storage example:macro death_check[-1]
+
+# function example:death_check/death_event
+$data remove storage example:database death_check[{UUID:$(UUID)}]
+say This mob is dying!
+particle minecraft:soul_fire_flame ~ ~1 ~ 0.5 1 0.5 0.01 100
+```
+
+</details>
 
 **Note:** This method cannot detect mob despawn, so you need to set the `PersistenceRequired:true` tag to prevent despawn.
 

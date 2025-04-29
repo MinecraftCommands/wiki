@@ -86,7 +86,9 @@ Selectors are used a lot in commands. To make sure you're not causing extra work
 
 Your main aim here is to narrow down the list as much as possible before getting to the expensive distance-sorting/shuffling and especially the super expensive NBT checks. You shouldn't however unnecessarily check arguments that won't narrow down the list before distance-sorting/shuffling. For example, don't check `@e[type=zombie,tag=IsUndeadMob]` if all zombies will have that tag. You shouldn't make your selector imprecise so that it applies to more entities than it needs to, either. 
 
-`nbt` is the least efficient target selector, as it has to do a lot of converting and comparing, and as such should be avoided at (almost) all costs, or at least limited to the absolute minimum required. [Predicates](https://minecraft.wiki/w/Predicate), in the other hand, can archive the same causing less performance impact only when not using NBT checks but built-in checks. If using NBT checks it actually performs worse. 
+`nbt` is the least efficient target selector, as it has to do a lot of converting and comparing, and as such should be avoided at (almost) all costs, or at least limited to the absolute minimum required. [Predicates](https://minecraft.wiki/w/Predicate), in the other hand, can archive the same causing less performance impact only when not using NBT checks but built-in checks. If using NBT checks it actually performs worse.
+
+Use `execute if/unless items` instead of `nbt` to detect items in the player inventory. For more details see [Detect a specific item?](/wiki/questions/detectitem)  
 
 `@s` is the most efficient selector, directly grabbing the command sender. See the section on **function-specific optimisations** for how you can make use of it to cut down on use of other selectors.
 
@@ -98,9 +100,16 @@ Consider also whether you actually need a selector. If you're selecting the same
 
 ## Optimize entities
 
-Using armor stands as markers? Strongly consider switching to area effect clouds or, even better, the marker entity instead. [Here's a good video showing just how much difference this makes.](https://www.youtube.com/watch?v=RKXzWGQfIcg) You can summon an area effect cloud that acts as a marker with:
+Using armor stands as markers? Strongly consider switching to area effect clouds or, even better, the `marker` entity instead. [Here's a good video showing just how much difference this makes.](https://www.youtube.com/watch?v=RKXzWGQfIcg) You can summon an area effect cloud that acts as a marker with:
 
+    # 1.20.5+
+    summon area_effect_cloud ~ ~ ~ {Duration:-1}
+    # Pre-1.20.5
     summon area_effect_cloud ~ ~ ~ {Duration:2147483647}
+
+| 📝 Note |
+|---------|
+|Starting [in 1.21.5](https://www.minecraft.net/de-de/article/minecraft-java-edition-1-21-5), setting the `Duration` to `-1` causes the area effect cloud to never expire (this is now the default, so the `Duration` field can be omitted). Before that you'd set it to `2147483647` which made the cloud expire after over 3 years of ingame time.|
 
 These won't show up to spectators, which is a bonus if you don't want spectators to see your markers. If you want to see them for debugging purposes, turn on hitboxes (`F3 + B`). Armor stands should only be used where necessary, such as displaying an item (In pre-1.19.4, as you can use item displays in newer versions) or using `Motion`.
 
@@ -140,3 +149,5 @@ This means that instead of evaluating `@e[tag=blah]` many times, it is only eval
 [/u/Wooden_chest](https://www.reddit.com/user/Wooden_chest/) created an in-depth analysis of a lot of small things that can improve your performance, like what order to put your execute subcommands into or that depending on the circumstance it might actually be faster to copy NBT you want to test to the storage first before testing it instead of testing it on the entity/player directly.
 
 Read their full post here: https://www.reddit.com/r/MinecraftCommands/comments/w4vjs3/whenever_i_create_datapacks_i_sometimes_do/
+
+You can use [Misode's Report Inspector](https://misode.github.io/report/) to see what commands are causing lag.

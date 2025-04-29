@@ -12,8 +12,9 @@ For this, you need to put them somewhere in a confined space, so the items don't
 
 Same for the return part, as you only want to give the player who owns the items those items back. You also need to consider that a completely full inventory (including armor) will not be able to be picked up instantly by the player without them manually equipping their armor.
 
-> [!CAUTION]
-> You will lose any item with the curse of vanishing enchantment
+| ⚠️ Caution |
+|------------|
+|You will lose any item with the curse of vanishing enchantment|
 
 ### Custom Hopper Entity
 
@@ -21,34 +22,40 @@ This method requires you to make a custom entity that has both an `minecraft:inv
 
 The `inventory_size` needs to be at least 40 slots, but it is recommended in this case to just add a few more for good measure. 
 
-    "components": {
-      "minecraft:inventory": {
-        "inventory_size": 45,
-        "container_type": "container"
-      }
-    }
+```json
+"components": {
+  "minecraft:inventory": {
+    "inventory_size": 45,
+    "container_type": "container"
+  }
+}
+```
 
 Next, since you'll want to add an event that removes the `item_hopper` component and one that kills the entity (e.g. by setting its health to 0), both of these components need to be in a component group.  
 
-    "component_groups": {
-      "mcc:kill_entity": {
-        "minecraft:health": {"value": 0, "max": 0}
-      },
-      "mcc:pickup_active": {
-        "minecraft:item_hopper": {}
-      }
-    }
+```json
+"component_groups": {
+  "mcc:kill_entity": {
+    "minecraft:health": {"value": 0, "max": 0}
+  },
+  "mcc:pickup_active": {
+    "minecraft:item_hopper": {}
+  }
+}
+```
 
 *We can't just kill the entity without removing the item hopper functionality first, as it would spew out the items on death but would pick up 1-2 items during the death animation again which would then be deleted!*
 
 For convenience, we can create a single event that deals with both of these component groups so we only need to execute one event.
 
-    "events": {
-      "mcc:release_items": {
-        "add": {"component_groups": [ "mcc:kill_entity" ]},
-        "remove": {"component_groups": [ "mcc:pickup_active" ]}
-      }
-    }
+```json
+"events": {
+  "mcc:release_items": {
+    "add": {"component_groups": [ "mcc:kill_entity" ]},
+    "remove": {"component_groups": [ "mcc:pickup_active" ]}
+  }
+}
+```
 
 For a better performance however I recommend to remove the item_hopper component once you're done picking up the items through a dedicated event.
 
@@ -81,20 +88,28 @@ Since version 1.20.2, [macro](https://minecraft.wiki/w/Function_(Java_Edition)#M
 
 Below is an example of storing a player's inventory in storage using the [scoreboard ID system](/wiki/questions/linkentity), or you can store the UUID / nickname instead of using the scoreboard ID system. To do this you need to run the function `example:storing` as a player.
 
-    # function example:storing
-    data remove storage example:inv this
-    execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
-    data modify storage example:inv this.Inventory set from entity @s Inventory
-    function example:storing/update with storage example:inventory this
-    
-    # function example:storing/update
-    $execute unless data storage example:inv players[{ID:$(ID)}] run data modify storage example:inv players append {ID:$(ID)}
-    $data modify storage example:inv players[{ID:$(ID)}] merge from storage example:inv this
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# function example:storing
+data remove storage example:inv this
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+data modify storage example:inv this.Inventory set from entity @s Inventory
+function example:storing/update with storage example:inventory this
+
+# function example:storing/update
+$execute unless data storage example:inv players[{ID:$(ID)}] run data modify storage example:inv players append {ID:$(ID)}
+$data modify storage example:inv players[{ID:$(ID)}] merge from storage example:inv this
+```
+</details>
 
 This player data storage system will create an in storage `example:inv` object for each player in the `players` list that will look something like:
 
-    # storage example:inv players[{ID:5}]
-    {ID:5,Inventory:[{Slot:0b,id:"minecraft:stick",Count:1b}]}
+```mcfunction
+# storage example:inv players[{ID:5}]
+{ID:5,Inventory:[{Slot:0b,id:"minecraft:stick",Count:1b}]}
+```
 
 However, this implementation can support any data other than player `ID` and `Inventory` and you can easily add saving any other data.
 
@@ -104,17 +119,24 @@ The way to do this is to store the players `Inventory` NBT somewhere safe. There
 
 So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard ID system](/wiki/questions/linkentity) set up to link the entity to the player.
 
-    # summon marker
-    summon marker ~ ~ ~ {Tags:["inv_store","inv_new"]}
-    
-    # link marker to player    
-    scoreboard players operation @e[tag=inv_new] id = @s id
-    
-    # copy Inventory of player to marker data.Inventory
-    data modify entity @e[tag=inv_new,limit=1] data.Inventory set from from entity @s Inventory
-    
-    # remove the new tag to get ready for the next player
-    tag @e[tag=inv_new] remove inv_new
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# function example:new_marker
+# summon marker
+summon marker ~ ~ ~ {Tags:["inv_store","inv_new"]}
+
+# link marker to player    
+scoreboard players operation @e[tag=inv_new] id = @s id
+
+# copy Inventory of player to marker data.Inventory
+data modify entity @e[tag=inv_new,limit=1] data.Inventory set from from entity @s Inventory
+
+# remove the new tag to get ready for the next player
+tag @e[tag=inv_new] remove inv_new
+```
+</details>
 
 And **that's it, the entire inventory is now stored in this marker** that has been linked through a scoreboard to our player.
 
@@ -140,106 +162,123 @@ For items without tags, you need to create an empty tag before running the macro
 
 Below is an example for versions 1.20.2 - 1.20.4. To do this need to run function `example:returning` as a player:
 
-    # function example:load
-    scoreboard objectives add Slot dummy
-    
-    # function example:returning
-    ## Read player Scoreboard ID
-    execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID 
-    ## Reading the selected player's data from the entire array of data of all players.
-    function example:returning/read with storage example:inv this
-    ## Create an empty tag if there is no tag data in the current slot.
-    execute unless data storage example:inv this.Inventory[-1].tag run data modify storage example:inv this.Inventory[-1].tag set value "" 
-    ## Running the function of returning items from the end of the list.
-    function example:returning/item with storage example:inv this.Inventory[-1]
-    
-    # function example:returning/read
-    $data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
-    
-    # function example:returning/item
-    ## Set the current slot to select slot processing
-    $scoreboard players set #this Slot $(Slot)
-    execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
-    execute unless score #this Slot matches 0..35 run function example:returning/equipment with storage example:inv this.Inventory[-1]
-    ## After returning the current item, remove this slot from storage and start returning the next item
-    data remove storage example:inv this.Inventory[-1]
-    execute unless data storage example:inv this.Inventory[-1].tag run data modify storage example:inv this.Inventory[-1].tag set value "" 
-    function example:returning/item with storage example:inv this.Inventory[-1]
-    
-    # function example:returning/inventory
-    ## For inventory slots, can directly insert Slot into the /item command
-    function example:returning/equipment with storage example:inv this.Inventory[-1]
-    $item replace entity @s container.$(Slot) $(id)$(tag) $(Count)
-    
-    # function example:returning/equipment
-    ## Equipment slots require converting slot number to slot name
-    $execute if score #this Slot matches -106 run item replace entity @s weapon.offhand $(id)$(tag) $(Count)
-    $execute if score #this Slot matches 100 run item replace entity @s armor.feet $(id)$(tag) $(Count)
-    $execute if score #this Slot matches 101 run item replace entity @s armor.legs $(id)$(tag) $(Count)
-    $execute if score #this Slot matches 102 run item replace entity @s armor.chest $(id)$(tag) $(Count)
-    $execute if score #this Slot matches 103 run item replace entity @s armor.head $(id)$(tag) $(Count)
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
+```mcfunction
+# function example:load
+scoreboard objectives add Slot dummy
+
+# function example:returning
+## Read player Scoreboard ID
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID 
+## Reading the selected player's data from the entire array of data of all players.
+function example:returning/read with storage example:inv this
+## Create an empty tag if there is no tag data in the current slot.
+execute unless data storage example:inv this.Inventory[-1].tag run data modify storage example:inv this.Inventory[-1].tag set value "" 
+## Running the function of returning items from the end of the list.
+function example:returning/item with storage example:inv this.Inventory[-1]
+
+# function example:returning/read
+$data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
+
+# function example:returning/item
+## Set the current slot to select slot processing
+$scoreboard players set #this Slot $(Slot)
+execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+execute unless score #this Slot matches 0..35 run function example:returning/equipment with storage example:inv this.Inventory[-1]
+## After returning the current item, remove this slot from storage and start returning the next item
+data remove storage example:inv this.Inventory[-1]
+execute unless data storage example:inv this.Inventory[-1].tag run data modify storage example:inv this.Inventory[-1].tag set value "" 
+function example:returning/item with storage example:inv this.Inventory[-1]
+
+# function example:returning/inventory
+## For inventory slots, can directly insert Slot into the /item command
+function example:returning/equipment with storage example:inv this.Inventory[-1]
+$item replace entity @s container.$(Slot) $(id)$(tag) $(Count)
+
+# function example:returning/equipment
+## Equipment slots require converting slot number to slot name
+$execute if score #this Slot matches -106 run item replace entity @s weapon.offhand $(id)$(tag) $(Count)
+$execute if score #this Slot matches 100 run item replace entity @s armor.feet $(id)$(tag) $(Count)
+$execute if score #this Slot matches 101 run item replace entity @s armor.legs $(id)$(tag) $(Count)
+$execute if score #this Slot matches 102 run item replace entity @s armor.chest $(id)$(tag) $(Count)
+$execute if score #this Slot matches 103 run item replace entity @s armor.head $(id)$(tag) $(Count)
+```
+</details>
 However, as of version 1.20.5, item tags have now been replaced with components that cannot simply be inserted into the /item command, so for this need use a loot table written inline.
 
 Below is an example of a loot table in which you need to put the item data using a macro:
 
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+{
+  "pools": [
     {
-      "pools": [
+      "rolls": 1,
+      "entries": [
         {
-          "rolls": 1,
-          "entries": [
+          "type": "minecraft:item",
+          "name": "$(id)",
+          "functions": [
             {
-              "type": "minecraft:item",
-              "name": "$(id)",
-              "functions": [
-                {
-                  "function": "minecraft:set_count",
-                  "count": $(count)
-                },
-                {
-                  "function": "minecraft:set_components",
-                  "components": $(components)
-                }
-              ]
+              "function": "minecraft:set_count",
+              "count": $(count)
+            },
+            {
+              "function": "minecraft:set_components",
+              "components": $(components)
             }
           ]
         }
       ]
     }
+  ]
+}
+```
+</details>
 
 **Note: This loot table should be inside a macro function, and not as a separate loot table file!**
 
 Below is an updated example for version 1.20.5 without comments, since otherwise it is the same as for version 1.20.2:
 
-    # function example:load
-    scoreboard objectives add Slot dummy
-    
-    # function example:returning
-    execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
-    function example:returning/read with storage example:inv this
-    execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
-    function example:returning/item with storage example:inv this.Inventory[-1]
-    
-    # function example:returning/read
-    $data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
-    
-    # function example:returning/item
-    $scoreboard players set #this Slot $(Slot)
-    execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
-    execute unless score #this Slot matches 0..35 run function example:returning/equipment with storage example:inv this.Inventory[-1]
-    data remove storage example:inv this.Inventory[-1]
-    execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {} 
-    function example:returning/item with storage example:inv this.Inventory[-1]
-    
-    # function example:returning/inventory with storage example:inv this.Inventory[-1]
-    $loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
-    
-    # function example:returning/equipment
-    $execute if score #this Slot matches -106 run loot replace entity @s weapon.offhand loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
-    $execute if score #this Slot matches 100 run loot replace entity @s armor.feet loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
-    $execute if score #this Slot matches 101 run loot replace entity @s armor.legs loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
-    $execute if score #this Slot matches 102 run loot replace entity @s armor.chest loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
-    $execute if score #this Slot matches 103 run loot replace entity @s armor.head loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
+
+```mcfunction
+# function example:load
+scoreboard objectives add Slot dummy
+
+# function example:returning
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+function example:returning/read with storage example:inv this
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
+
+# function example:returning/read
+$data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
+
+# function example:returning/item
+$scoreboard players set #this Slot $(Slot)
+execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+execute unless score #this Slot matches 0..35 run function example:returning/equipment with storage example:inv this.Inventory[-1]
+data remove storage example:inv this.Inventory[-1]
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {} 
+function example:returning/item with storage example:inv this.Inventory[-1]
+
+# function example:returning/inventory with storage example:inv this.Inventory[-1]
+$loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+
+# function example:returning/equipment
+$execute if score #this Slot matches -106 run loot replace entity @s weapon.offhand loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+$execute if score #this Slot matches 100 run loot replace entity @s armor.feet loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+$execute if score #this Slot matches 101 run loot replace entity @s armor.legs loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+$execute if score #this Slot matches 102 run loot replace entity @s armor.chest loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+$execute if score #this Slot matches 103 run loot replace entity @s armor.head loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+```
+</details>
 
 #### Putting things in the original slot (from marker)
 
@@ -248,66 +287,74 @@ This one is a little command intensive, but probably the easiest to understand. 
 **This replaces all items that might still be in the players inventory.**  
 
 Running this function `as` the marker entity and having the target player marked with the `target` tag. This assumes you have a `temp` dummy scoreboard you can use.
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-    # count the amount of items in the array so we know how often to repeat
-    execute store result score #items temp run data get entity @s data.Inventory
-    
-    # if there is at least one item, start the process.
-    execute if score #items temp matches 1.. positioned <pos> run function namespace:return_item
-    
-    # remove entity, it served its purpose. If you want to keep it around
-    # you should first copy the data and work on the copy instead.
-    kill @s
+```mcfunction
+# count the amount of items in the array so we know how often to repeat
+execute store result score #items temp run data get entity @s data.Inventory
+
+# if there is at least one item, start the process.
+execute if score #items temp matches 1.. positioned <pos> run function namespace:return_item
+
+# remove entity, it served its purpose. If you want to keep it around
+# you should first copy the data and work on the copy instead.
+kill @s
+```
 
 `return_item.mcfunction`
 
-    # get the slot number into a scoreboard so we can use it later
-    execute store result score #slot temp run data get entity @s data.Inventory[0].Slot
-    # remove the Slot data so it doesn't get removed from the chest
-    data remove entity @s data.Inventory[0].Slot
-    # empty the chest items
-    data merge block ~ ~ ~ {Items:[]}
-    # copy the item data to the chest
-    data modify block ~ ~ ~ Items append from entity @s data.Inventory[0]
-    
-    # give player the item based the slot number
-    execute as @a[tag=target] run function namespace:give_correct_slot
-    
-    # remove item data from entity
-    data remove entity @s data.Inventory[0]
-    # count down the remaining slots
-    scoreboard players remove #items temp 1
-    # run the same function again if there are more items to process
-    execute if score #items temp matches 1.. run function namespace:return_item
+```mcfunction
+# get the slot number into a scoreboard so we can use it later
+execute store result score #slot temp run data get entity @s data.Inventory[0].Slot
+# remove the Slot data so it doesn't get removed from the chest
+data remove entity @s data.Inventory[0].Slot
+# empty the chest items
+data merge block ~ ~ ~ {Items:[]}
+# copy the item data to the chest
+data modify block ~ ~ ~ Items append from entity @s data.Inventory[0]
 
+# give player the item based the slot number
+execute as @a[tag=target] run function namespace:give_correct_slot
+
+# remove item data from entity
+data remove entity @s data.Inventory[0]
+# count down the remaining slots
+scoreboard players remove #items temp 1
+# run the same function again if there are more items to process
+execute if score #items temp matches 1.. run function namespace:return_item
+```
 `give_correct_slot.mcfunction`
+```mcfunction
+# based on the previously stored slotnumber copy the item to the correct slot
 
-    # based on the previously stored slotnumber copy the item to the correct slot
-    
-    # offhand
-    execute if score #slot temp matches -106 run item replace entity @s weapon.offhand from block ~ ~ ~ container.0
-    
-    # hotbar
-    execute if score #slot temp matches 0 run item replace entity @s hotbar.0 from block ~ ~ ~ container.0
-    execute if score #slot temp matches 1 run item replace entity @s hotbar.1 from block ~ ~ ~ container.0
-    execute if score #slot temp matches 2 run item replace entity @s hotbar.2 from block ~ ~ ~ container.0
-    execute if score #slot temp matches 3 run item replace entity @s hotbar.3 from block ~ ~ ~ container.0
-    ...
-    execute if score #slot temp matches 8 run item replace entity @s hotbar.8 from block ~ ~ ~ container.0
-    
-    # inv
-    execute if score #slot temp matches 9 run item replace entity @s inventory.0 from block ~ ~ ~ container.0
-    execute if score #slot temp matches 10 run item replace entity @s inventory.1 from block ~ ~ ~ container.0
-    execute if score #slot temp matches 11 run item replace entity @s inventory.2 from block ~ ~ ~ container.0
-    execute if score #slot temp matches 12 run item replace entity @s inventory.3 from block ~ ~ ~ container.0
-    ...
-    execute if score #slot temp matches 35 run item replace entity @s inventory.26 from block ~ ~ ~ container.0
-    
-    # armor
-    execute if score #slot temp matches 100 run item replace entity @s armor.feet from block ~ ~ ~ container.0
-    execute if score #slot temp matches 101 run item replace entity @s armor.legs from block ~ ~ ~ container.0
-    execute if score #slot temp matches 102 run item replace entity @s armor.chest from block ~ ~ ~ container.0
-    execute if score #slot temp matches 103 run item replace entity @s armor.head from block ~ ~ ~ container.0
+# offhand
+execute if score #slot temp matches -106 run item replace entity @s weapon.offhand from block ~ ~ ~ container.0
+
+# hotbar
+execute if score #slot temp matches 0 run item replace entity @s hotbar.0 from block ~ ~ ~ container.0
+execute if score #slot temp matches 1 run item replace entity @s hotbar.1 from block ~ ~ ~ container.0
+execute if score #slot temp matches 2 run item replace entity @s hotbar.2 from block ~ ~ ~ container.0
+execute if score #slot temp matches 3 run item replace entity @s hotbar.3 from block ~ ~ ~ container.0
+...
+execute if score #slot temp matches 8 run item replace entity @s hotbar.8 from block ~ ~ ~ container.0
+
+# inv
+execute if score #slot temp matches 9 run item replace entity @s inventory.0 from block ~ ~ ~ container.0
+execute if score #slot temp matches 10 run item replace entity @s inventory.1 from block ~ ~ ~ container.0
+execute if score #slot temp matches 11 run item replace entity @s inventory.2 from block ~ ~ ~ container.0
+execute if score #slot temp matches 12 run item replace entity @s inventory.3 from block ~ ~ ~ container.0
+...
+execute if score #slot temp matches 35 run item replace entity @s inventory.26 from block ~ ~ ~ container.0
+
+# armor
+execute if score #slot temp matches 100 run item replace entity @s armor.feet from block ~ ~ ~ container.0
+execute if score #slot temp matches 101 run item replace entity @s armor.legs from block ~ ~ ~ container.0
+execute if score #slot temp matches 102 run item replace entity @s armor.chest from block ~ ~ ~ container.0
+execute if score #slot temp matches 103 run item replace entity @s armor.head from block ~ ~ ~ container.0
+```
+
+</details>
 
 #### Don't care about the slot
 
@@ -315,30 +362,38 @@ This means that we can just go through all the items in the array and give them 
 
 Thankfully we can just recursively run through all the entries/items in the array and thus summon them all in the same tick. This is assuming you're executing this `as` the linked marker entity, but `at` the player and that you have a dummy objective you can use, this example uses `temp`.
 
-    # count the amount of items in the array so we know how often to repeat
-    execute store result score #items temp run data get entity @s data.Inventory
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-    # if there is at least one item, start the process.
-    execute if score #items temp matches 1.. run function namespace:return_items
-    
-    # remove entity, it served its purpose. If you want to keep it around
-    # you should first copy the data and work on the copy instead.
-    kill @s
+```mcfunction
+# count the amount of items in the array so we know how often to repeat
+execute store result score #items temp run data get entity @s data.Inventory
+
+# if there is at least one item, start the process.
+execute if score #items temp matches 1.. run function namespace:return_items
+
+# remove entity, it served its purpose. If you want to keep it around
+# you should first copy the data and work on the copy instead.
+kill @s
+```
 
 `return_items.mcfunction`
 
-    # summon a new item entity
-    summon item ~ ~ ~ {Item:{id:"minecraft:stone",Count:1b},Tags:["new_item"]}
-    # copy the info about the entity from the marker entity
-    data modify entity @e[tag=new_item,limit=1] Item set from entity @s data.Inventory[0]
-    # remove the item from the marker
-    data remove entity @s data.Inventory[0]
-    # remove 1 from the amount of items that we still need to process
-    scoreboard players remove #items temp 1
-    # remove item tag
-    tag @e[tag=new_item] remove new_item
-    # run the same function again if there are more items to process
-    execute if score #items temp matches 1.. run function namespace:return_items
+```mcfunction
+# summon a new item entity
+summon item ~ ~ ~ {Item:{id:"minecraft:stone",Count:1b},Tags:["new_item"]}
+# copy the info about the entity from the marker entity
+data modify entity @e[tag=new_item,limit=1] Item set from entity @s data.Inventory[0]
+# remove the item from the marker
+data remove entity @s data.Inventory[0]
+# remove 1 from the amount of items that we still need to process
+scoreboard players remove #items temp 1
+# remove item tag
+tag @e[tag=new_item] remove new_item
+# run the same function again if there are more items to process
+execute if score #items temp matches 1.. run function namespace:return_items
+```
+</details>
 
 And we should be getting all our items back in a single tick. Items that do not fit in our inventory stay on the floor as item entities instead.
 
@@ -352,34 +407,39 @@ So first, make sure you have the loottable from the link above added to your dat
 
 Next, run this function `as` the marker, where the target player is `@a[tag=target]`.
 
-    # count the amount of items in the array so we know how often to repeat
-    execute store result score #items temp run data get entity @s data.Inventory
-    # if there is at least one item, start the process.
-    execute if score #items temp matches 1.. positioned <pos> run function namespace:restore_shulker
-    
-    # remove entity, it served its purpose. If you want to keep it around
-    # you should first copy the data and work on the copy instead.
-    kill @s
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
+```mcfunction
+# count the amount of items in the array so we know how often to repeat
+execute store result score #items temp run data get entity @s data.Inventory
+# if there is at least one item, start the process.
+execute if score #items temp matches 1.. positioned <pos> run function namespace:restore_shulker
+
+# remove entity, it served its purpose. If you want to keep it around
+# you should first copy the data and work on the copy instead.
+kill @s
+```
 
 `restore_shulker.mcfunction`
+```mcfunction
+# reset the shulkerbox
+data merge block ~ ~ ~ {Items:[]}
+# remove Slot data from item
+data remove entity @s data.Inventory[0].Slot
+# copy first item over to the shulkerbox
+data modify block ~ ~ ~ Items append from entity @s data.Inventory[0]
+# use /loot to give it back to the player
+loot give @a[tag=target] mine ~ ~ ~ minecraft:air{drop_contents:1b}
+# remove the first entry in the list
+data remove entity @s data.Inventory[0]
+# remove 1 from the amount of items that we still need to process
+scoreboard players remove #items temp 1
 
-    # reset the shulkerbox
-    data merge block ~ ~ ~ {Items:[]}
-    # remove Slot data from item
-    data remove entity @s data.Inventory[0].Slot
-    # copy first item over to the shulkerbox
-    data modify block ~ ~ ~ Items append from entity @s data.Inventory[0]
-    # use /loot to give it back to the player
-    loot give @a[tag=target] mine ~ ~ ~ minecraft:air{drop_contents:1b}
-    # remove the first entry in the list
-    data remove entity @s data.Inventory[0]
-    # remove 1 from the amount of items that we still need to process
-    scoreboard players remove #items temp 1
-    
-    # run the same function again if there are more items to process
-    execute if score #items temp matches 1.. run function namespace:restore_shulker
-
+# run the same function again if there are more items to process
+execute if score #items temp matches 1.. run function namespace:restore_shulker
+```
+</details>
 
 &nbsp;
 
@@ -397,36 +457,44 @@ The second option is described here in more detail. See the explanation for the 
 
 For this we assume the two chests of the double chest are located at `~ ~ ~` and `~1 ~ ~`. Execute positioned and adjust the relative coordinates accordingly. Replace `<pos>` with the yellow shulkerbox position. Have a dummy `temp` scoreboard objective.
 
-    # reset/empty the chests
-    data merge block ~ ~ ~ {Items:[]}
-    data merge block ~1 ~ ~ {Items:[]}
-    # count the amount of items in the array so we know how often to repeat
-    execute store result score #items temp run data get entity @s data.Inventory
-    # if there is at least one item, start the process.
-    execute if score #items temp matches 1.. run function namespace:into_chest
-    
-    # remove entity, it served its purpose. If you want to keep it around
-    # you should first copy the data and work on the copy instead.
-    kill @s
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# reset/empty the chests
+data merge block ~ ~ ~ {Items:[]}
+data merge block ~1 ~ ~ {Items:[]}
+# count the amount of items in the array so we know how often to repeat
+execute store result score #items temp run data get entity @s data.Inventory
+# if there is at least one item, start the process.
+execute if score #items temp matches 1.. run function namespace:into_chest
+
+# remove entity, it served its purpose. If you want to keep it around
+# you should first copy the data and work on the copy instead.
+kill @s
+```
 
 `into_chest.mcfunction`
 
-    # reset the shulkerbox
-    data merge block <pos> {Items:[]}
-    # remove Slot data from item
-    data remove entity @s data.Inventory[0].Slot
-    # copy first item over to the shulkerbox
-    data modify block <pos> Items append from entity @s data.Inventory[0]
-    # use /loot to put it into the chest, depending on which chest it needs to be
-    execute if score #items temp matches 27.. run loot insert ~ ~ ~ mine <pos> minecraft:air{drop_contents:1b}
-    execute if score #items temp matches ..26 run loot insert ~1 ~ ~ mine <pos> minecraft:air{drop_contents:1b}
-    # remove the first entry in the list
-    data remove entity @s data.Inventory[0]
-    # remove 1 from the amount of items that we still need to process
-    scoreboard players remove #items temp 1
-    
-    # run the same function again if there are more items to process
-    execute if score #items temp matches 1.. run function namespace:into_chest
+```mcfunction
+# reset the shulkerbox
+data merge block <pos> {Items:[]}
+# remove Slot data from item
+data remove entity @s data.Inventory[0].Slot
+# copy first item over to the shulkerbox
+data modify block <pos> Items append from entity @s data.Inventory[0]
+# use /loot to put it into the chest, depending on which chest it needs to be
+execute if score #items temp matches 27.. run loot insert ~ ~ ~ mine <pos> minecraft:air{drop_contents:1b}
+execute if score #items temp matches ..26 run loot insert ~1 ~ ~ mine <pos> minecraft:air{drop_contents:1b}
+# remove the first entry in the list
+data remove entity @s data.Inventory[0]
+# remove 1 from the amount of items that we still need to process
+scoreboard players remove #items temp 1
+
+# run the same function again if there are more items to process
+execute if score #items temp matches 1.. run function namespace:into_chest
+```
+</details>
 
 ### Some explanations on why we do it this way
 
@@ -449,74 +517,83 @@ We often see something like `Inventory[0]` in this article. This is an array sel
 It is possible to select an item from the array based on its Slot like this: `Inventory[{Slot:10b}]`. We could use this for the "correct slot" method, if it weren't for the fact that we can't use `/item replace` with arbitrary data but we need to use something that is guaranteed to be an item. So we can't skip the step of first putting it into a container / entity inventory first.
 
 ### storing in a chest
->  [!NOTE]
-> This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)
+| 📝 Note |
+|---------|
+|This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)|
 
 This method consist on using `/item` (on Java) or to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
 
-> [!NOTE]
-> You must run this function `as` the player
+| 📝 Note |
+|---------|
+|You must run this function `as` the player|
 
-    # function example:storing
-    execute positioned <pos1> run function example:storing/container_1
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
 
-    # function example:storing/container_1
-    # First we store the hotbar
-    item replace block ~ ~ ~ container.0 with entity @s hotbar.0
-    item replace block ~ ~ ~ container.1 with entity @s hotbar.1
-    [...]
-    item replace block ~ ~ ~ container.8 with entity @s hotbar.8
-    # Now we store the inventory
-    item replace block ~ ~ ~ container.9 with entity @s inventory.0
-    [...]
-    item replace block ~ ~ ~ container.26 with entity @s inventory.17
-    # Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
-    # We will need to run the second function in the position of the second chest
-    execute positioned <pos2> run function example:storing/container_2
+```mcfunction
+# function example:storing
+execute positioned <pos1> run function example:storing/container_1
 
-    # function example:storing/container_2
-    item replace block ~ ~ ~ container.0 with entity @s inventory.19
-    item replace block ~ ~ ~ container.1 with entity @s inventory.20
-    item replace block ~ ~ ~ container.2 with entity @s inventory.21
-    [...]
-    item replace block ~ ~ ~ container.8 with entity @s inventory.26
-    # now we will store the armor and offhand
-    item replace block ~ ~ ~ container.9 with entity @s armor.head
-    item replace block ~ ~ ~ container.10 with entity @s armor.chest
-    item replace block ~ ~ ~ container.11 with entity @s armor.legs
-    item replace block ~ ~ ~ container.12 with entity @s armor.feet
-    item replace block ~ ~ ~ container.13 with entity @s weapon.offhand
+# function example:storing/container_1
+# First we store the hotbar
+item replace block ~ ~ ~ container.0 with entity @s hotbar.0
+item replace block ~ ~ ~ container.1 with entity @s hotbar.1
+[...]
+item replace block ~ ~ ~ container.8 with entity @s hotbar.8
+# Now we store the inventory
+item replace block ~ ~ ~ container.9 with entity @s inventory.0
+[...]
+item replace block ~ ~ ~ container.26 with entity @s inventory.17
+# Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
+# We will need to run the second function in the position of the second chest
+execute positioned <pos2> run function example:storing/container_2
 
-And now we stored the entire inventory in 2 chest (or barrels). To give it back (returning the inventory) we will need to do the same but replacing the player slots with the container's slots.
+# function example:storing/container_2
+item replace block ~ ~ ~ container.0 with entity @s inventory.19
+item replace block ~ ~ ~ container.1 with entity @s inventory.20
+item replace block ~ ~ ~ container.2 with entity @s inventory.21
+[...]
+item replace block ~ ~ ~ container.8 with entity @s inventory.26
+# now we will store the armor and offhand
+item replace block ~ ~ ~ container.9 with entity @s armor.head
+item replace block ~ ~ ~ container.10 with entity @s armor.chest
+item replace block ~ ~ ~ container.11 with entity @s armor.legs
+item replace block ~ ~ ~ container.12 with entity @s armor.feet
+item replace block ~ ~ ~ container.13 with entity @s weapon.offhand
 
-    # function example:returning
-    execute positioned <pos1> run function example:returning/container_1
+# And now we stored the entire inventory in 2 chest (or barrels). To give it back (returning the inventory) we will need to do the same but replacing the player slots with the container's slots.
 
-    # function example:returning/container_1
-    # First we store the hotbar
-    item replace entity @s container.0 with block ~ ~ ~ container.0
-    item replace entity @s container.1 with block ~ ~ ~ container.1
-    [...]
-    item replace entity @s container.8 with block ~ ~ ~ container.8
-    # Now we store the inventory
-    item replace entity @s container.9 with block ~ ~ ~ container.9
-    [...]
-    item replace entity @s container.26 with block ~ ~ ~ container.26
-    # Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
-    # We will need to run the second function in the position of the second chest
-    execute positioned <pos2> run function example:returning/container_2
+# function example:returning
+execute positioned <pos1> run function example:returning/container_1
 
-    # function example:returning/container_2
-    item replace entity @s container.27 with block ~ ~ ~ container.0
-    item replace entity @s container.28 with block ~ ~ ~ container.1
-    item replace entity @s container.29 with block ~ ~ ~ container.2
-    [...]
-    item replace entity @s container.35 with block ~ ~ ~ container.8
-    # now we will store the armor and offhand
-    item replace entity @s armor.head with block ~ ~ ~ container.9
-    item replace entity @s armor.chest with block ~ ~ ~ container.10
-    item replace entity @s armor.legs with block ~ ~ ~ container.11
-    item replace entity @s armor.feet with block ~ ~ ~ container.12
-    item replace entity @s weapon.offhand with block ~ ~ ~ container.13
+# function example:returning/container_1
+# First we store the hotbar
+item replace entity @s container.0 with block ~ ~ ~ container.0
+item replace entity @s container.1 with block ~ ~ ~ container.1
+[...]
+item replace entity @s container.8 with block ~ ~ ~ container.8
+# Now we store the inventory
+item replace entity @s container.9 with block ~ ~ ~ container.9
+[...]
+item replace entity @s container.26 with block ~ ~ ~ container.26
+# Now the container is full (if you are using a chest or barrel as they can't only have 27 slots)
+# We will need to run the second function in the position of the second chest
+execute positioned <pos2> run function example:returning/container_2
+
+# function example:returning/container_2
+item replace entity @s container.27 with block ~ ~ ~ container.0
+item replace entity @s container.28 with block ~ ~ ~ container.1
+item replace entity @s container.29 with block ~ ~ ~ container.2
+[...]
+item replace entity @s container.35 with block ~ ~ ~ container.8
+# now we will store the armor and offhand
+item replace entity @s armor.head with block ~ ~ ~ container.9
+item replace entity @s armor.chest with block ~ ~ ~ container.10
+item replace entity @s armor.legs with block ~ ~ ~ container.11
+item replace entity @s armor.feet with block ~ ~ ~ container.12
+item replace entity @s weapon.offhand with block ~ ~ ~ container.13
+```
+
+</details>
 
 As you can see it takes 40 commands for storing and 40 for returning, so it is a very ineficient way to store the inventory.

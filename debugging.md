@@ -20,26 +20,24 @@ This page details information on common problems you might have with a command, 
 * Watch out for `“smart quotes”` that word processors might auto-add, only `"normal quotes"` will work. You should use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Narrow down your problem as much as possible. Remove parts slowly (or build up your command slowly in the first place) until you have just the part that's causing the issue
 * Macs add weird characters that are invisible in-game when the arrow keys are pressed. These will stop the command from working
-* Mods/plugins (especially Essentials) may overwrite vanilla commands. To avoid this you can use one of the two following methods:
-  * `/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
-  * `/execute run command` instead of `/command`, this is better because it works in vanilla servers too
+* Mods/plugins (especially Essentials) may overwrite vanilla commands. To avoid this you can use`/minecraft:command` instead of `/command` for the vanilla implementation (e.g: `/minecraft:give`)
+  * `/execute run command` instead of `/command`, no longer works, as `execute` can run plugin commands
     * If you have any mods, try vanilla to see if the mod is causing the problem. Even mods like Optifine can cause issues
     * Make sure you don't have a mod that dissables command blocks or functions
-* Make sure command blocks are enabled in server.propieties
-* When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20)
+* Make sure command blocks are enabled in `server.properties`
+* When using tutorials or [online generators](/wiki/resources) make sure that are for the correct edition (java or bedrock) and version (1.12, 1.17, 1.20...)
 * Check if the command block is in a loaded chunk, you can use the [`/forceload`](https://minecraft.wiki/w/Commands/forceload) command in Java or the [`/tickingarea`](https://minecraft.wiki/w/Commands/tickingarea) command in Bedrock to force a chunk to be always loaded
 * Maybe you set the command to conditional accidentaly and it should be uncoditional, double check that
 * The command block must be `always active` or have redstone powering in order for it to run the command
 * Make sure to capitalize the correct leters in the command, for example `/Say` will not work but `/say` will do (in bedrock edition works different, as you can capitalize commands)
   * Same goes for scoreboard values, if you capitalized it when creating it, it should be capitalized when you use it
-* The `commandModificationBlockLimit` gamerule (defaults to 32768) specifies the limit of blocks that can be selected with the `/fill`, `/fillbiome` and `/clone` commands
+* The `commandModificationBlockLimit` gamerule (defaults to `32768`) specifies the limit of blocks that can be selected with the `/fill`, `/fillbiome` and `/clone` commands
 * Make sure you are **not** using per-1.13 execute in newer versions
   * Or viceversa, using 1.13+ execute in pre-1.13
   * The same goes for bedrock new execute
 * Command blocks can only run commands of level permission of 1 or 2
   * The can **not** ban, kick or deop, for example
 * Make sure you are **not** using item components in pre-1.20.5 or item `nbt` in 1.20.5+
-* execute does not allow the use of commands for plugins, so the command `/execute as @a run tpa ...` will **not** work
 
 ## Functions
 
@@ -51,8 +49,8 @@ This page details information on common problems you might have with a command, 
   * Inserting from a list/array or NBT path is not allowed
 * Use a plain plain text editor (Notepad, Notepad++, Sublime, Code), **not** a word processor or rich text editor (Microsoft Word, Wordpad, Textedit)
 * Make sure your file's encoding is UTF-8 (without BOM) - this is not the default in many programs! ([Notepad](http://i.imgur.com/R4yFjAQ.png), [Notepad++](http://i.imgur.com/8AsDJ3F.png), [Sublime](http://i.imgur.com/63rsYOB.png), [Code](http://i.imgur.com/dmOqy0y.png))
-* The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/<namespace>/functions/`
-* Don't forget to save changes if editing directly the datapack (with programs like VScode), normaly `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
+* The namespace folder is not optional, functions should **not** be directly inside `data/functions/`, they must be in `data/<namespace>/functions/` (or in `data/<namespace>/function/` in 1.21+)
+* Don't forget to save changes if editing directly the datapack (with programs like VScode), normally `ctrl+s` (Windows/Lunix) or `cmd+s` (Mac)
 * Don't forget to use `/reload` to reload the functions after making changes
   * Make sure you have the datapack enabled. You can enable the datapack by typing `/datapack enable "<datapack name>"`
   * When edition world generation you need to leave and rejoin the world in order to save changes (or restart the server).
@@ -60,8 +58,8 @@ This page details information on common problems you might have with a command, 
 * Recursive/looping functions will run `maxCommandChainLength` commands in one tick, then stop, the default value of this gamerule is `65536`
   * To check if a function did **not** end (so it has been cut off by this gamerule) you can set a scoreboard value of a [fakeplayer](wiki/questions/fakeplayer) to 1, run all commands and set it to 0 after that (that command should be the last one in the whole tick). In the next tick you can check if the value is 1 or 0, if its 1, the function has been cutted.
 * Make sure the tick/load function tag is specifing the correct function
-* Functions can run any command that requires a higher level permission than 2.
-  * You can override this if you set `function-level-permission` in `server.propieties` to a higher number
+* Functions can not run any command that requires a higher level permission than 2.
+  * You can override this if you set `function-level-permission` in `server.properties` to a higher number
 * If a function has a syntax error, it will **not** show up in the autocomplete and it will flail, if you try to run it
   * All commands must have a correct syntax in order to run the function
   * You can start the function with a `/say` command, so you will know if the function has been executed

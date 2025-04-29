@@ -4,7 +4,7 @@
 
 ### 1.13 and above
 
-In 1.13, the [`if score`](https://minecraft.wiki/w/Commands/execute#(if|unless)_score) execute subcommand makes this a lot easier. The syntax you'll want is:
+In 1.13, the [`if score`](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_score) execute subcommand makes this a lot easier. The syntax you'll want is:
 
     execute if score <target> <targetObjective> (<|<=|=|>|>=) <source> <sourceObjective> run <command>
 
@@ -24,7 +24,7 @@ You can also use `matches` to check for a [range](/wiki/questions/range) if you 
 
 ### 1.12 and below
 
-To do this we must take one score from another, check if the score is now equal to/greater than/less than 0, then add the score back (to restore the first score's original value).
+To do this, we must take one score from another, check if the score is now equal to/greater than/less than 0, then add the score back (to restore the first score's original value).
 
 For example, select all players whose `kills` score is greater than their `deaths` score:
 
@@ -46,40 +46,48 @@ For example, select all players whose `kills` score is greater than their `death
 
 ### 1.20.5 and above
 
-Since version 1.20.5 can also compare values in storage directly, without copying values to scoreboard. Below is an example of using the `minecraft:value_check` condition to compare values in storage.
+Since version 1.20.5 can also compare values in storage directly, without copying values to the scoreboard. Below is an example of using the `minecraft:value_check` condition to compare values in storage.
 
-    # Example storage
-    data merge storage example:data {value:7.5f,min:0,max:10}
-    
-    # predicate example:storage_compire
-    {
-      "condition": "minecraft:value_check",
-      "value": {
-        "type": "minecraft:storage",
-        "storage": "example:data",
-        "path": "value"
-      },
-      "range": {
-        "min": {
-          "type": "minecraft:storage",
-          "storage": "example:data",
-          "path": "min"
-        },
-        "max": {
-          "type": "minecraft:storage",
-          "storage": "example:data",
-          "path": "max"
-        }
-      }
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# Example storage
+data merge storage example:data {value:7.5f,min:0,max:10}
+```
+```json
+# predicate example:storage_compire
+{
+  "condition": "minecraft:value_check",
+  "value": {
+    "type": "minecraft:storage",
+    "storage": "example:data",
+    "path": "value"
+  },
+  "range": {
+    "min": {
+      "type": "minecraft:storage",
+      "storage": "example:data",
+      "path": "min"
+    },
+    "max": {
+      "type": "minecraft:storage",
+      "storage": "example:data",
+      "path": "max"
     }
+  }
+}
+```
+
+</details>
 
 This now allows to compare values more accurately because it supports non-integer variable values for comparison.
 
 ### 1.15 and above
 
-Since version 1.15 you can also use [predicates](https://minecraft.wiki/w/Predicate) in a datapack to compare scores. Unlike using the `if score` subcommand, you cannot in most cases compare the score values between two entities. Basically this is only available in mob loot tables and you can only compare the score between the killed mob (`this`) and the entity that killed the mob (`killer` / `killer_player`), or the projectile that killed the mob (`direct_killer`). In other cases, you can only check the score of the selected entity (`this`) and score [fakename](/wiki/questions/fakeplayer).
+Since version 1.15 you can also use [predicates](https://minecraft.wiki/w/Predicate) in a datapack to compare scores. Unlike using the `if score` subcommand, you cannot, in most cases, compare the score values between two entities. Basically this is only available in mob loot tables and you can only compare the score between the killed mob (`this`) and the entity that killed the mob (`killer` / `killer_player`), or the projectile that killed the mob (`direct_killer`). In other cases, you can only check the score of the selected entity (`this`) and score [fakename](/wiki/questions/fakeplayer).
 
-You can compare score in a predicate using the `minecraft:entity_scores` condition to compare the score of the selected entity with a specific value or a specified range of values, as well as using the `minecraft:value_check` condition which does the same thing, but without using the entity.
+You can compare scores in a predicate using the `minecraft:entity_scores` condition to compare the score of the selected entity with a specific value or a specified range of values, as well as using the `minecraft:value_check` condition, which does the same thing, but without using the entity.
 
 But you can't just use comparison operators (=, >, <, >=, <=), but only compare whether the value is in the specified range.
 
@@ -92,71 +100,57 @@ For `entity_score` condition, you can compare the value of the selected entity w
 
 Example to compare that players score `kills` >= score `deaths`:
 
-    # execute if score @s kills >= @s deaths
-    {
-      "condition": "minecraft:entity_scores",
-      "entity": "this",
-      "scores": {
-        "kills": {
-          "min": {
-            "type": "minecraft:score",
-            "target": "this",
-            "score": "deaths"
-          }
-        }
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+# execute if score @s kills >= @s deaths
+{
+  "condition": "minecraft:entity_scores",
+  "entity": "this",
+   "scores": {
+     "kills": {
+      "min": {
+        "type": "minecraft:score",
+        "target": "this",
+        "score": "deaths"
       }
     }
+  }
+}
+```
+</details>
 
 For the <= operator, simply replace `"min"` with `"max"` in the predicate above.
 
 But if you want to check that score `kills` > `deaths`, then checking in the predicate will be a little more complicated. So, we need to do two checks: first check that `kills` >= `deaths`, AND the second check is the inversion of the condition `kills` <= `deaths`.
 
-    # execute if score @s kills > @s deaths
-    [
-      {
-        "condition": "minecraft:entity_scores",
-        "entity": "this",
-        "scores": {
-          "kills": {
-            "min": {
-              "type": "minecraft:score",
-              "target": "this",
-              "score": "deaths"
-            }
-          }
-        }
-      },
-      {
-        "condition": "minecraft:inverted",
-        "term": {
-          "condition": "minecraft:entity_scores",
-          "entity": "this",
-          "scores": {
-            "kills": {
-              "max": {
-                "type": "minecraft:score",
-                "target": "this",
-                "score": "deaths"
-              }
-            }
-          }
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+# execute if score @s kills > @s deaths
+[
+  {
+    "condition": "minecraft:entity_scores",
+    "entity": "this",
+    "scores": {
+      "kills": {
+        "min": {
+          "type": "minecraft:score",
+          "target": "this",
+          "score": "deaths"
         }
       }
-    ]
-
-If you need to check that `kills` = `deaths` score, then you can do one range check, where `"min"` and `"max"` are the same score.
-
-    # execute if score @s kills = @s deaths
-    {
+    }
+  },
+  {
+    "condition": "minecraft:inverted",
+    "term": {
       "condition": "minecraft:entity_scores",
       "entity": "this",
       "scores": {
         "kills": {
-          "min": {
-            "type": "minecraft:score",
-            "target": "this",
-            "score": "deaths"
-          },
           "max": {
             "type": "minecraft:score",
             "target": "this",
@@ -165,3 +159,35 @@ If you need to check that `kills` = `deaths` score, then you can do one range ch
         }
       }
     }
+  }
+]
+```
+
+</details>
+
+If you need to check that `kills` = `deaths` score, then you can do one range check, where `"min"` and `"max"` are the same score.
+
+<details>
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+# execute if score @s kills = @s deaths
+{
+  "condition": "minecraft:entity_scores",
+  "entity": "this",
+  "scores": {
+    "kills": {
+      "min": {
+        "type": "minecraft:score",
+        "target": "this",
+        "score": "deaths"
+      },
+      "max": {
+        "type": "minecraft:score",
+        "target": "this",
+        "score": "deaths"
+      }
+    }
+  }
+}
+```
