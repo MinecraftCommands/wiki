@@ -4,6 +4,22 @@ This page contains a list of links to utilities and references relating to comma
 
 Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or create a [GitHub issue](https://github.com/MinecraftCommands/wiki/issues) if you've found a useful tool or reference that you think would fit here.
 
+- [Resources](#resources)
+  - [Commands](#commands)
+    - [Utilities](#utilities)
+    - [References](#references)
+  - [NBT](#nbt)
+    - [Utilities](#utilities)
+    - [References](#references)
+  - [Datapacks](#datapacks)
+    - [Utilities](#utilities)
+    - [References](#references)
+  - [Misc](#misc)
+  - [Resource Packs](#resource-packs)
+    - [Utilities](#utilities)
+    - [References](#references)
+  - [Ask for help](#ask-for-help)
+
 ## Commands
 
 ### Utilities
@@ -78,4 +94,4 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 - [/r/MinecraftCommands](https://www.reddit.com/r/MinecraftCommands/)
 - [Discord server](https://discord.com/invite/9wNcfsH)
 
-For older versions of minecraft (1.14 and before) check the [pre-1.15 resources page](wiki/oldresources)
+For older versions of minecraft (1.14 and before) check the [pre-1.15 resources page](/wiki/oldresources)

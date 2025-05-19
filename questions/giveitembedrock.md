@@ -1,5 +1,10 @@
 # How to give a special item (Bedrock)
 
+  - [Loot Table](#loot-table)
+  - [Structure command](#structure-command)
+  - [Physical chest](#physical-chest)
+  - [Structure block](#structure-block)
+
 This article is for **Bedrock only**, as Java can just use NBT or item components to give the special items directly.
 
 Using `/give` on bedrock only works for "basic" items, without any alterations like change of names or enchantments.
@@ -10,7 +15,7 @@ Using `/give` on bedrock only works for "basic" items, without any alterations l
 
 Thus, a different method needs to be followed, of which there are multiple common ones.
 
-### Loot Table
+## Loot Table
 
 **_The best method currently available, but doesn't work for all kinds of custom entity data._**
 
@@ -19,7 +24,7 @@ You can use [loot tables](https://wiki.bedrock.dev/loot/loot-tables.html) to def
 Thanks to [loot table functions](https://wiki.bedrock.dev/loot/item-functions.html) you can modify many things about these items, not only setting amount and data value, but name, lore, spawn eggs, enchantments, book contents and much more.
 
 
-### Structure command
+## Structure command
 
 **_The best method currently available if you cannot use loot tables_**
 
@@ -28,7 +33,7 @@ Same as the structure block method below, but instead of loading it with a struc
 **Make sure to save the structure with a structure void block inside, or the air might override whatever block the player is currently standing on.**
 
 
-### Physical chest
+## Physical chest
 
 Either use step 4 or step 6, reasons and problems see below
 
@@ -42,7 +47,7 @@ Either use step 4 or step 6, reasons and problems see below
 Step 4: requires you to either rename the container or hope the player is playing in English, because @e[type=item,name="Chest"] only works in English. Alternatively, you can change the language files for every language so all and every chest is called "Chest" in every language.  
 Step 6: Has the advantage that you don't need to fiddle with the language files or renamed containers, but has the problem that the item may not be picked up instantly, thus making it harder to set up properly.
 
-### Structure block
+## Structure block
 
 Instead of storing the item in a chest, you store it in a structure block by saving a 1x1 structure that consists of just air and the item entities. So the step-by-step guide is:
 

@@ -1,4 +1,12 @@
 # What is escaping?
+
+  - [Introduction to Escaping](#introduction-to-escaping)
+  - [Combining Quotes to Avoid Escaping](#combining-quotes-to-avoid-escaping)
+  - [Escaping backslashes](#escaping-backslashes)
+  - [Nested Strings](#nested-strings)
+  - [Escaping in JSON Files](#escaping-in-json-files)
+  - [Common errors](#common-errors)
+
 ## Introduction to Escaping
 Escaping is the process of marking special characters in a string to be interpreted literally rather than as part of a special syntax. Commands and JSON rely on precise syntax where unescaped characters can break the structure.
 

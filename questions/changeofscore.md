@@ -1,5 +1,9 @@
 # Detect a change of score
 
+  - [The destructive method](#the-destructive-method)
+  - [The non-destructive method](#the-non-destructive-method)
+
+
 _Both Java and Bedrock_
 
 If you need to detect when and if a score of a player has changed, there are two ways to go about this. This is generally most useful if you're using a scoreboard objective that changes because of something the player is doing (e.g., clicking, attacking, sneaking) or the game is doing to the player (e.g., taking damage, change of health and hunger).

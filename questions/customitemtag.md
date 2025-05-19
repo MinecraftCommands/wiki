@@ -1,7 +1,10 @@
 # Give an item a custom tag to identify it by
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [Java](#java)
+  - [Bedrock](#bedrock)
+    - [Item data](#item-data)
+    - [Name with color codes](#name-with-color-codes)
+
 
 ## Java
 

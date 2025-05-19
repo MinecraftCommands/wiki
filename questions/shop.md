@@ -1,8 +1,17 @@
 # How to make a shop
 This is a quick guide of how to make a shop where you can buy items with other items or costing a scoreboard value (money or coins).
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [Item shop](#item-shop)
+    - [Java](#java)
+      - [Using commands](#using-commands)
+      - [Using a villager](#using-a-villager)
+    - [Bedrock](#bedrock)
+    - [Add more than one items](#add-more-than-one-items)
+  - [Score shop](#score-shop)
+    - [Java and Bedrock](#java-and-bedrock)
+      - [With command blocks](#with-command-blocks)
+      - [In a function](#in-a-function)
+
 
 ## Item shop
 This method consists of buying items with other items, in this example, you will buy 1 netherite ingot with 5 diamonds.

@@ -1,5 +1,13 @@
 # Make a mob attack another specific entity / player
 
+  - [Bedrock and Java](#bedrock-and-java)
+    - [Using /damage](#using-damage)
+  - [Java (without /damage)](#java-without-damage)
+    - [Spawning a projectile with a specific owner](#spawning-a-projectile-with-a-specific-owner)
+  - [Bedrock](#bedrock)
+    - [Using behaviors](#using-behaviors)
+
+
 The basic principle for this method is that a mob that can attack will get angry at whoever attacks them. _(some exceptions apply)_
 
 ## Bedrock and Java

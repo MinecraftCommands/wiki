@@ -1,5 +1,9 @@
 # Target a player above/below a certain Y level
 
+  - [`dy`](#dy)
+  - [predicate](#predicate)
+
+## `dy`
 For example, you want to teleport players to a certain point if they go above y=200. To do this, we will use the `dx`/`dy`/`dz` cuboid volume selectors, which allow us to specify a width/height/length in which to match a player.
 
 An incorrect first attempt to match players above y=200 might look like:
@@ -28,3 +32,23 @@ To detect below a certain height, you can make the `dy` negative.
 /execute as @a at @s run say @s[y=-30,dy=-500]
 ```
 this will detect any players below `-30`
+
+## Predicate
+
+Predicates have a built in check for the `y` values (alongside with the other axis). Keep in mind that this is Java exclusive and will need a datapack if you are in pre-1.20.5.
+
+```json
+{
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "location": {
+      "position": {
+        "y": {
+          "min": 40
+        }
+      }
+    }
+  }
+}
+```

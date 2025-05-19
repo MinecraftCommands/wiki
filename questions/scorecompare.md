@@ -1,5 +1,12 @@
 # Check if a score / storage is equal to, greater than, or less than, another score / storage
 
+  - [Scoreboard](#scoreboard)
+    - [1.13 and above](#113-and-above)
+    - [1.12 and below](#112-and-below)
+  - [Predicate / storage](#predicate-storage)
+    - [1.20.5 and above](#1205-and-above)
+    - [1.15 and above](#115-and-above)
+
 ## Scoreboard
 
 ### 1.13 and above
@@ -68,7 +75,7 @@ Since version 1.20.5 can also compare values in storage directly, without copyin
 data merge storage example:data {value:7.5f,min:0,max:10}
 ```
 ```json
-# predicate example:storage_compire
+# predicate example:storage_compare
 {
   "condition": "minecraft:value_check",
   "value": {

@@ -1,5 +1,9 @@
 # Creating a circle with commands
 
+  - [The idea](#the-idea)
+  - [Implementation](#implementation)
+  - [Potential issues](#potential-issues)
+
 Creating perfect (or as perfect as they can be with minecrafts blocky nature) circles by hand can be annoying, daunting even. And while there are [tools that help you lay out block circles](https://minecraftcirclegenerator.co/), it might be easier to write a few commands to do it for you.
 
 ## The idea

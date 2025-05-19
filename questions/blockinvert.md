@@ -1,7 +1,7 @@
 # Do something if a command block *wasn't* successful
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [Java](#java)
+  - [Bedrock](#bedrock)
 
 ## Java
 

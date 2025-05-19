@@ -1,5 +1,12 @@
 # Do conditions with functions
 
+  - [1.13+](#113)
+    - [My condition is whether or not a selector matches anything](#my-condition-is-whether-or-not-a-selector-matches-anything)
+    - [My condition is whether or not another command succeeds](#my-condition-is-whether-or-not-another-command-succeeds)
+  - [1.12](#112)
+    - [My condition is whether or not a selector matches anything](#my-condition-is-whether-or-not-a-selector-matches-anything)
+    - [My condition is whether or not another command succeeds](#my-condition-is-whether-or-not-another-command-succeeds)
+
 ## 1.13+
 
 ### My condition is whether or not a selector matches anything

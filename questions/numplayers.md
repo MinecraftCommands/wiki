@@ -1,5 +1,12 @@
 # Check if there are exactly X players (or entities) matching a selector?
 
+  - [Java and Bedrock](#java-and-bedrock)
+  - [Bedrock](#bedrock)
+  - [Java](#java)
+    - [Method 1: Storing the found entities using `execute store`](#method-1-storing-the-found-entities-using-execute-store)
+    - [Method 2: Checking the command block's `SuccessCount`](#method-2-checking-the-command-blocks-successcount)
+    - [Method 3: With `/stats` (1.8-1.12)](#method-3-with-stats-18-112)
+
 For example, you want to check if a team has exactly 2 players. 
 
 | 📝 Note |
@@ -9,6 +16,7 @@ For example, you want to check if a team has exactly 2 players.
 A command will still run (and potentially succeed once) even if `@a[team=red,limit=2]` only finds one player, and succeeding once is all that is needed for conditional blocks coming off of the command block to run.
 
 ## Java and Bedrock
+
 | 📝 Note |
 |---------|
 |This method will work in Java too, but it's recommended to use the Java exclusive method|
