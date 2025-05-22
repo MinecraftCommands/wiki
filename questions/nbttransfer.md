@@ -1,5 +1,9 @@
 # Store an NBT value to a score, and vice versa?
 
+  - [NBT --> Score](#nbt----score)
+  - [Score --> NBT](#score----nbt)
+  - [NBT --> NBT](#nbt----nbt)
+
 Any **numeric** NBT tag, even inside lists, can be set to, or gotten into, a scoreboard value.
 
 ## NBT --> Score
@@ -60,7 +64,7 @@ As an example, setting the nearest creeper's y-motion to 0.05 times the executer
 execute store result entity @e[type=creeper,limit=1,sort=nearest] Motion[1] double 0.05 run scoreboard players get @s y_speed
 ```
 
-### NBT --> NBT
+## NBT --> NBT
 
 You can even store directly from an NBT path to another NBT path. Keep in mind though that command results are always cast to integers, even when you just want to transfer from a float to a float.
 

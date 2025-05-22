@@ -1,6 +1,10 @@
 # How to create / customize an NPC?
 This article will explain how to create NPCs and add commands to it.
 
+  - [Basics of an NPC](#basics-of-an-npc)
+  - [Dialogues and commands](#dialogues-and-commands)
+  - [Add another dialog](#add-another-dialog)
+
 | 📝 Note |
 |---------|
 |This is for the entity in Bedrock edition called [`NPC`](https://minecraft.wiki/w/NPC)|

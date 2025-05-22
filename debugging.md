@@ -2,6 +2,14 @@
 
 This page details information on common problems you might have with a command, and general debugging tips.
 
+  - [General](#general)
+  - [Functions](#functions)
+  - [Selectors](#selectors)
+  - [NBT](#nbt)
+  - [Loot tables](#loot-tables)
+  - [Resource packs](#resource-packs)
+  - [Scoreboard objectives](#scoreboard-objectives)
+
 ## General
 
 * A command block [may not be running](https://bugs.mojang.com/browse/MC-86846) even when it is *Always Active* + *Unconditional* + *Repeating*.

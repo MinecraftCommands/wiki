@@ -1,5 +1,14 @@
 # Check whether the player / an entity is looking at something
 
+  - [Java & Bedrock after 1.19.50](#java-bedrock-after-11950)
+  - [Java](#java)
+    - [Predicate](#predicate)
+    - [Advancement](#advancement)
+  - [Bedrock](#bedrock)
+    - [Using Commands (before 1.19.50)](#using-commands-before-11950)
+    - [Using Add-Ons](#using-add-ons)
+  - [Calculate viewing angle](#calculate-viewing-angle)
+
 _This method describes how to check whether the player / an entity is **looking at something specific / predetermined**, like a specific entity or a specific position! If you're looking for a more general approach, [you'll need to use a raycast](/wiki/questions/raycast)._
 
 ## Java & Bedrock after 1.19.50
@@ -32,6 +41,8 @@ Example 2: looking at the position 10 20 30
 ```mcfunction
 execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello block
 ```
+
+To execute commands `as` or `at` the entity add `at` and include the original target selecor used after `facing entity`
 
 ## Java
 
@@ -180,11 +191,11 @@ In this example the entity will (without cooldown) fire the `custom:ive_been_loo
 
 To approximate the distance/radius you want to use based on your viewing angle, you can use the following formula, where `α` is the angle that you want this method to trigger inside of, left and right of the target:
 
-$r = 2 \times \sin \left( \frac{\alpha}{2} \right)$
+r = 2 &times; sin(&alpha;&frasl;2)  
 
 or, the inverse to calculate what viewing angle a certain radius / distance (`r`) value will give you
 
-$\alpha = \sin^{-1} \left( \frac{r}{2} \right) \times 2$
+&alpha; = sin<sup>-1</sup>(r&frasl;2) &times; 2
 
 _(remember that depending on your calculator you need to convert from radians to degrees)_.
 

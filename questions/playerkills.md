@@ -2,8 +2,10 @@
 
 _Related: [Detect Player Deaths](/wiki/questions/playerdeaths)_
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [Java](#java)
+  - [Bedrock](#bedrock)
+    - [Without behavior packs](#without-behavior-packs)
+
 
 ## Java
 

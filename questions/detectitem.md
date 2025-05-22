@@ -1,7 +1,21 @@
 # Detect a specific item
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [Java](#java)
+  - [1.20.5 and above](#1205-and-above)
+    - [Target selector](#target-selector)
+    - [execute if items](#execute-if-items)
+    - [Predicate](#predicate)
+  - [1.20.4 and below](#1204-and-below)
+    - [In the inventory](#in-the-inventory)
+    - [In the selected slot](#in-the-selected-slot)
+    - [On the ground](#on-the-ground)
+    - [Use predicate](#use-predicate)
+  - [Bedrock](#bedrock)
+    - [In the inventory](#in-the-inventory)
+      - [since 1.18.20](#since-11820)
+      - [before 1.18.20](#before-11820)
+    - [On the ground](#on-the-ground)
+
 
 ## Java
 

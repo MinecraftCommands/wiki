@@ -1,5 +1,9 @@
 # Make compass point towards player/location
 
+  - [Java and Bedrock](#java-and-bedrock)
+  - [1.16+ (Java only)](#116-java-only)
+  - [1.17+ (Java only)](#117-java-only)
+
 ## Java and Bedrock
 
 Since the compass will always point to the worldspawnpoint, your only option is to move the worldspawn to the player you want to point the compass towards. **This means it can only point to one player at a time and the pointing is global, meaning everyone sees the same compass pointing.**

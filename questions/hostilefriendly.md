@@ -1,5 +1,16 @@
 # How to make hostile mobs friendly? / disable PvP?
 
+  - [Disable both hostile and PvP](#disable-both-hostile-and-pvp)
+    - [Teams (Java only)](#teams-java-only)
+    - [Weakness and resistance (Java and Bedrock)](#weakness-and-resistance-java-and-bedrock)
+  - [Only disable hostile](#only-disable-hostile)
+    - [Helmet](#helmet)
+    - [Follow range](#follow-range)
+  - [Only disable PvP](#only-disable-pvp)
+    - [Interactions (Java only)](#interactions-java-only)
+    - [Distance attribute (Java only)](#distance-attribute-java-only)
+    - [Game Rule (Bedrock only)](#game-rule-bedrock-only)
+
 ## Disable both hostile and PvP
 This method can be used to make both, disable PvP and make hostile mobs passive.
 

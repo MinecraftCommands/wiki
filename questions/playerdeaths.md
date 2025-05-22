@@ -1,5 +1,11 @@
 # Detect Player Death
 
+  - [Java](#java)
+    - [Just death check](#just-death-check)
+    - [Run command at death position](#run-command-at-death-position)
+    - [Run a command when the player respawns](#run-a-command-when-the-player-respawns)
+  - [Bedrock](#bedrock)
+
 _Related: [Detect Player Kills](/wiki/questions/playerkills)_
 
 * [Java](#java)

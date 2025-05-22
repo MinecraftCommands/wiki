@@ -1,5 +1,9 @@
 # Activate a command *once* when a player does something (e.g: enters an area)
 
+  - [Scoreboard](#scoreboard)
+  - [Advancements](#advancements)
+  - [Add/remove tag](#addremove-tag)
+
 | 📝 Note |
 |--------------|
 |In bedrock `distance` does not exist so instead of `distance=..X` use `r=X` and instead of `distance=X..` use `rm=X` and instead of `distance=X..Y` use `rm=X,r=Y`, all methods only work in Java unless stated otherwise|

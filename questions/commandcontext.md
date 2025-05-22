@@ -1,5 +1,8 @@
 # What is command context?
 
+  - [Defaults](#defaults)
+  - [Context in Functions](#context-in-functions)
+
 All commands exist in a __context__.  
 
 This context is first set when the command is run and consists of multiple parts that all describe the "situation" that a command is run in.   

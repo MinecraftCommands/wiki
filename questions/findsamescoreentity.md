@@ -1,5 +1,11 @@
 # Find an entity with the same score as another entity or player
 
+  - [Java 1.13+ and Bedrock](#java-113-and-bedrock)
+    - [Method 1: Compare directly](#method-1-compare-directly)
+    - [Method 2: Store the score in a fake player first](#method-2-store-the-score-in-a-fake-player-first)
+    - [Method 3: Keeping the context through location](#method-3-keeping-the-context-through-location)
+  - [Java Pre-1.12](#java-pre-112)
+
 Related: [Check if a score is equal to, greater than, or less than another score](/wiki/questions/scorecompare)
 
 ## Java 1.13+ and Bedrock

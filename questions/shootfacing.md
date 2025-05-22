@@ -1,5 +1,11 @@
 # Shoot a Projectile/Entity in the direction a player is facing
 
+  - [Using teleports to essentially do vector calculations](#using-teleports-to-essentially-do-vector-calculations)
+    - [Explanation](#explanation)
+  - [Method 1: Let the game do the math for us by using the zero point (simplified)](#method-1-let-the-game-do-the-math-for-us-by-using-the-zero-point-simplified)
+  - [Method 2: Storing all values (for easier manipulation)](#method-2-storing-all-values-for-easier-manipulation)
+  - [Visual bug fix](#visual-bug-fix)
+
 *Java only. This doesn't work in bedrock and there are currently no known workarounds.*
 
 ***Advanced**. It is highly recommended that you use functions for this and already know how `execute at` and `execute as` works!*

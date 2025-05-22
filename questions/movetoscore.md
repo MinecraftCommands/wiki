@@ -1,5 +1,12 @@
 ## Summon an entity at the position set in a score
 
+  - [Teleport an entity to the position set in a score](#teleport-an-entity-to-the-position-set-in-a-score)
+  - [Teleport the player to the position set in a score](#teleport-the-player-to-the-position-set-in-a-score)
+    - [1: Macro function](#1-macro-function)
+    - [2: End Gateways](#2-end-gateways)
+    - [3: Use an entity](#3-use-an-entity)
+    - [4: Binary Teleportation](#4-binary-teleportation)
+
 | 📝 Note |
 |---------|
 |This article is about Java Edition, except for binary teleport, found at the end of the article, that will work in bedrock too|

@@ -1,5 +1,17 @@
 # Generate a random number
 
+  - [Bedrock](#bedrock)
+  - [Java](#java)
+    - [/random command](#random-command)
+    - [Have something happen with a random chance](#have-something-happen-with-a-random-chance)
+    - [1: PRNG/LCG](#1-prnglcg)
+    - [2: UUID](#2-uuid)
+    - [3: Loot Tables](#3-loot-tables)
+    - [4: item rotation](#4-item-rotation)
+    - [5: @r / @e[sort=random]](#5-r-esortrandom)
+    - [6: spreadplayers](#6-spreadplayers)
+    - [7: running score](#7-running-score)
+    - [Get the number into the desired range](#get-the-number-into-the-desired-range)
 
 | 📝 Note |
 |---------|
@@ -180,7 +192,7 @@ Effective Range: [0, 10] (theoretically infinite, but practically anything above
 
 Before we got the (arguably much better) solutions above, we could use `@e[limit=1,sort=random,tag=randomizer]` to select a random entity, which we would've each given their respective scoreboard score (or put the commandblock to be triggered below them or something similar). This has the obvious disadvantage, that you'll need one entity per possible score. as long as it's below 10 this is still doable, anything above does get tedious. To avoid performance issues, use a [marker entity](https://minecraft.wiki/w/Marker).
 
-## 6: spreadplayers
+### 6: spreadplayers
 
 **Outdated**
 

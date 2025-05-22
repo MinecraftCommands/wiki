@@ -1,7 +1,23 @@
 # Item Click Detection
 
-* [Java](#java)
-* [Java and Bedorck](#java-and-bedrock)
+  - [Java](#java)
+    - [Left / right clicks in / on specific areas](#left-right-clicks-in-on-specific-areas)
+      - [Interaction entity](#interaction-entity)
+    - [Left-click](#left-click)
+      - [Hurt entity](#hurt-entity)
+    - [Right-click](#right-click)
+      - [Carrot on a stick method](#carrot-on-a-stick-method)
+        - [Make the CoaS look like any item](#make-the-coas-look-like-any-item)
+          - [1.13+](#113)
+          - [1.21.2+](#1212)
+      - [Make item food method](#make-item-food-method)
+        - [1.20.5+](#1205)
+        - [1.21.2+](#1212)
+      - [Villager method](#villager-method)
+    - [Inventory click](#inventory-click)
+  - [Java and Bedrock](#java-and-bedrock)
+    - [Bundles](#bundles)
+
 
 ## Java
 

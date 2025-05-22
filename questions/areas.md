@@ -1,5 +1,12 @@
 # Do something if a player is in certain areas
 
+- [Do something if a player is in certain areas](#do-something-if-a-player-is-in-certain-areas)
+  - [Hardcoded locations](#hardcoded-locations)
+  - [Anchor entities](#anchor-entities)
+  - [Block layer](#block-layer)
+  - [Predicates](#predicates)
+
+
 | 📝 Note |
 |---------|
 |Java Syntax, but this can be applied to Bedrock just as well by changing the selector arguments to Bedrock Syntax. Instead of `distance=..X` use `r=X`, instead of `distance=X..Y` use `r=Y,rm=X` and instead of `distance=X..` use `rm=X`.|

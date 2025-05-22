@@ -1,8 +1,16 @@
-
 # Add a delay to a command block
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [Bedrock](#bedrock)
+  - [Java](#java)
+    - [Area Effect Clouds](#area-effect-clouds)
+    - [Marker](#marker)
+    - [Scoreboard](#scoreboard)
+      - [Java 1.13+ and Bedrock](#java-113-and-bedrock)
+      - [Java pre-1.13](#java-pre-113)
+    - [Schedule](#schedule)
+    - [Success Count](#success-count)
+    - [Command block minecart](#command-block-minecart)
+    - [Falling blocks or entities](#falling-blocks-or-entities)
 
 ## Bedrock
 

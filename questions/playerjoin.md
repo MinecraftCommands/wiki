@@ -1,7 +1,14 @@
 # Detect a player joining
 
-* [Java](#java)
-* [Bedrock](#bedrock)
+  - [First time](#first-time)
+    - [Tags](#tags)
+    - [Advancements](#advancements)
+  - [Consecutive Time](#consecutive-time)
+    - [Java](#java)
+    - [Bedrock](#bedrock)
+  - [Both](#both)
+    - [Java](#java)
+    - [Bedrock](#bedrock)
 
 For this, we'll have to differentiate between players joining for the first time and players *re*joining the world for the Nth time, as the approaches are slightly different.
 

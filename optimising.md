@@ -1,5 +1,14 @@
 # Optimising
 
+  - [Turn off commands when they don't need to be running](#turn-off-commands-when-they-dont-need-to-be-running)
+  - [Slow down your commands](#slow-down-your-commands)
+  - [Avoid chunk updates](#avoid-chunk-updates)
+  - [Avoid redstone](#avoid-redstone)
+  - [Optimize selectors](#optimize-selectors)
+  - [Optimize entities](#optimize-entities)
+  - [Function-specific optimisations](#function-specific-optimisations)
+  - [More in-depth optimization](#more-in-depth-optimization)
+
 *Relevant information on Functions are generally at the end of their paragraph.*
 
 ## Turn off commands when they don't need to be running

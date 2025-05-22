@@ -1,5 +1,8 @@
 # Do something (e.g: kill) to the entity I just found with /execute if entity (testfor)
 
+  - [Relies on NBT, 1.12 and below](#relies-on-nbt-112-and-below)
+  - [Relies on NBT, 1.13 and above](#relies-on-nbt-113-and-above)
+
 If your `execute if entity` **does not rely on NBT data**, you can simply move the selector into the command you want to use. For example, if you have:
 
 ```mcfunction
