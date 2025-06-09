@@ -354,31 +354,31 @@ In order to account for this, some small tweaks are needed in order for proper s
 
 # function example:returning
 scoreboard objectives add Slot dummy
-execute store result storage skyblock:inv this.ID int 1 run scoreboard players get @s ID
-function skyblock:returning/read with storage skyblock:inv this
-execute unless data storage skyblock:inv this.Inventory[-1].components run data modify storage skyblock:inv this.Inventory[-1].components set value {}
-function skyblock:returning/item with storage skyblock:inv this.Inventory[-1]
-function skyblock:returning/equipment with storage skyblock:inv this.Equipment[-1]
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+function example:returning/read with storage example:inv this
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
+function example:returning/equipment with storage example:inv this.Equipment[-1]
 
 # function example:returning/read
-$data modify storage skyblock:inv this set from storage skyblock:inv players[{ID:$(ID)}]
+$data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
 
 # function example:returning/item
 $scoreboard players set #this Slot $(Slot)
-execute if score #this Slot matches 0..35 run function skyblock:returning/inventory with storage skyblock:inv this.Inventory[-1]
-data remove storage skyblock:inv this.Inventory[-1]
-execute unless data storage skyblock:inv this.Inventory[-1].components run data modify storage skyblock:inv this.Inventory[-1].components set value {}
-function skyblock:returning/item with storage skyblock:inv this.Inventory[-1]
+execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+data remove storage example:inv this.Inventory[-1]
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
 
 # function example:returning/inventory with storage example:inv this.Inventory[-1]
 $loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
 
 # function example:returning/equipment
 $scoreboard players set #thisEquipmentVersion Slot $(Slot)
-execute if score #thisEquipmentVersion Slot matches 0..4 run function skyblock:returning/equipment_return with storage skyblock:inv this.Equipment[-1]
-data remove storage skyblock:inv this.Equipment[-1]
-execute unless data storage skyblock:inv this.Equipment[-1].components run data modify storage skyblock:inv this.Equipment[-1].components set value {}
-function skyblock:returning/equipment with storage skyblock:inv this.Equipment[-1]
+execute if score #thisEquipmentVersion Slot matches 0..4 run function example:returning/equipment_return with storage example:inv this.Equipment[-1]
+data remove storage example:inv this.Equipment[-1]
+execute unless data storage example:inv this.Equipment[-1].components run data modify storage example:inv this.Equipment[-1].components set value {}
+function example:returning/equipment with storage example:inv this.Equipment[-1]
 
 # function example:returning/equipment_return
 $loot replace entity @s $(equipment) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
