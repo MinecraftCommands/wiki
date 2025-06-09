@@ -99,7 +99,7 @@ There are community made datapacks that do the heavy lifting for you like [Playe
 
 #### In storage
 
-Since version 1.20.2, [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) have been added that allow you to insert any data into any part of the command, making storing/returning easier.
+Since version 1.20.2, [macros](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) have been added that allow you to insert any data into any part of the command, making storing/returning easier.
 
 Below is an example of storing a player's inventory in storage using the [scoreboard ID system](/wiki/questions/linkentity), or you can store the UUID / nickname instead of using the scoreboard ID system. To do this you need to run the function `example:storing` as a player.
 
@@ -125,8 +125,53 @@ This player data storage system will create an in storage `example:inv` object f
 # storage example:inv players[{ID:5}]
 {ID:5,Inventory:[{Slot:0b,id:"minecraft:stick",Count:1b}]}
 ```
-
 However, this implementation can support any data other than player `ID` and `Inventory` and you can easily add saving any other data.
+
+
+In 1.21.5, all of the NBT paths for equipment slots (except for mainhand in players) were moved to the equipment map.
+e.g.
+```Inventory[{Slot:-106b}]``` moved to ```equipment.offhand```
+```Inventory[{Slot:100b}]``` moved to ```equipment.feet```
+etc. 
+In order to account for this, some small tweaks are needed in order for proper storing and loading of items in offhand and armor slots to occur. One implementation of that is shown below.
+
+<details markdown="1">
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```mcfunction
+# function example:storing
+data remove storage example:inv this
+
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+
+data modify storage example:inv this.Inventory set from entity @s Inventory
+
+data modify storage example:inv this.Equipment[{equipment:"weapon.offhand"}] merge from entity @s equipment.offhand
+data modify storage example:inv this.Equipment[{equipment:"weapon.offhand"}] merge value {Slot:0b}
+execute unless data entity @s equipment.offhand run data modify storage example:inv this.Equipment[{equipment:"weapon.offhand"}] set value {Slot:0b,count:1,equipment:"weapon.offhand",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.feet"}] merge from entity @s equipment.feet
+data modify storage example:inv this.Equipment[{equipment:"armor.feet"}] merge value {Slot:1b}
+execute unless data entity @s equipment.feet run data modify storage example:inv this.Equipment[{equipment:"armor.feet"}] set value {Slot:1b,count:1,equipment:"armor.feet",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.legs"}] merge from entity @s equipment.legs
+data modify storage example:inv this.Equipment[{equipment:"armor.legs"}] merge value {Slot:2b}
+execute unless data entity @s equipment.legs run data modify storage example:inv this.Equipment[{equipment:"armor.legs"}] set value {Slot:2b,count:1,equipment:"armor.legs",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.chest"}] merge from entity @s equipment.chest
+data modify storage example:inv this.Equipment[{equipment:"armor.chest"}] merge value {Slot:3b}
+execute unless data entity @s equipment.chest run data modify storage example:inv this.Equipment[{equipment:"armor.chest"}] set value {Slot:3b,count:1,equipment:"armor.chest",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.head"}] merge from entity @s equipment.head
+data modify storage example:inv this.Equipment[{equipment:"armor.head"}] merge value {Slot:4b}
+execute unless data entity @s equipment.head run data modify storage example:inv this.Equipment[{equipment:"armor.head"}] set value {Slot:4b,count:1,equipment:"armor.head",id:"minecraft:air"}
+function example:storing/update with storage example:inv this
+
+# function example:storing/update
+$execute unless data storage example:inv players[{ID:$(ID)}] run data modify storage example:inv players append value {ID:$(ID)}
+$data modify storage example:inv players[{ID:$(ID)}] merge from storage example:inv this
+```
+</details>
 
 #### In marker entity
 
@@ -292,6 +337,52 @@ $execute if score #this Slot matches 100 run loot replace entity @s armor.feet l
 $execute if score #this Slot matches 101 run loot replace entity @s armor.legs loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
 $execute if score #this Slot matches 102 run loot replace entity @s armor.chest loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
 $execute if score #this Slot matches 103 run loot replace entity @s armor.head loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+```
+</details>
+
+In 1.21.5, all of the NBT paths for equipment slots (except for mainhand in players) were moved to the equipment map.
+e.g.
+```Inventory[{Slot:-106b}]``` moved to ```equipment.offhand```
+```Inventory[{Slot:100b}]``` moved to ```equipment.feet```
+etc. 
+In order to account for this, some small tweaks are needed in order for proper storing and loading of items in offhand and armor slots to occur. One implementation of that is shown below.
+
+<details markdown="1">
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
+
+```mcfunction
+
+# function example:returning
+scoreboard objectives add Slot dummy
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+function example:returning/read with storage example:inv this
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
+function example:returning/equipment with storage example:inv this.Equipment[-1]
+
+# function example:returning/read
+$data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
+
+# function example:returning/item
+$scoreboard players set #this Slot $(Slot)
+execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+data remove storage example:inv this.Inventory[-1]
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
+
+# function example:returning/inventory with storage example:inv this.Inventory[-1]
+$loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+
+# function example:returning/equipment
+$scoreboard players set #thisEquipmentVersion Slot $(Slot)
+execute if score #thisEquipmentVersion Slot matches 0..4 run function example:returning/equipment_return with storage example:inv this.Equipment[-1]
+data remove storage example:inv this.Equipment[-1]
+execute unless data storage example:inv this.Equipment[-1].components run data modify storage example:inv this.Equipment[-1].components set value {}
+function example:returning/equipment with storage example:inv this.Equipment[-1]
+
+# function example:returning/equipment_return
+$loot replace entity @s $(equipment) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+
 ```
 </details>
 
