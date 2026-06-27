@@ -57,6 +57,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 - [Datapack Helper+](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server): syntax highlighter.
 - [Misode’s Generator](https://misode.github.io): loot table, predicate, item modifier, advancement, recipe, dimension, structure and tag generator, between others.
 - [Datapack Assembler](https://far.ddns.me): generate data pack from commands
+- [Kore](https://github.com/Ayfri/Kore): Advanced Kotlin framework and DSL to programmatically generate Minecraft Java datapacks.
 
 ### References
 
