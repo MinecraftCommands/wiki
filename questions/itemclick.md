@@ -62,7 +62,7 @@ execute as @e[type=interaction,tag=click_scan] run data remove entity @s interac
 
 When using a datapack, you don't have to run these commands in a tick function, but only once when interacting using advancements:
 * Right click - `minecraft:player_interacted_with_entity` advancement trigger
-* Left click - `minecraft:entity_hurt_player` advancement trigger
+* Left click - `minecraft:player_hurt_entity` advancement trigger
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
