@@ -1,18 +1,13 @@
 # Shoot a Projectile/Entity in the direction a player is facing
 
-  - [Using teleports to essentially do vector calculations](#using-teleports-to-essentially-do-vector-calculations)
-    - [Explanation](#explanation)
-  - [Method 1: Let the game do the math for us by using the zero point (simplified)](#method-1-let-the-game-do-the-math-for-us-by-using-the-zero-point-simplified)
-  - [Method 2: Storing all values (for easier manipulation)](#method-2-storing-all-values-for-easier-manipulation)
-  - [Visual bug fix](#visual-bug-fix)
 
-*Java only. This doesn't work in bedrock and there are currently no known workarounds.*
+*Java only. This doesn't work in bedrock, and there are currently no known workarounds.*
 
 ***Advanced**. It is highly recommended that you use functions for this and already know how `execute at` and `execute as` works!*
 
 Shooting a projectile/entity in the direction a player is facing is not trivial, and in the older versions of the game, the process was to basically hardcode a bunch of possible motions for various facing values of the player. That technique however is completely obsolete as of 1.13.  
 
-*This article has been updated to use a `marker` entity. If you're using an older version that doesn't have the marker entity yet, swap it out for an `area_effect_cloud`.*
+*This article has been updated to use a `marker` entity. If you're using an older version that doesn't have the marker entity yet, swap it out for an :aoe: `area_effect_cloud`.*
 
 *Related: [How to detect item click](/wiki/questions/itemclick)*
 
@@ -20,17 +15,17 @@ Shooting a projectile/entity in the direction a player is facing is not trivial,
 
 ### Explanation
 
-Sounds complicated, but is actually pretty easy. The end goal is to find the correct Motion values to apply to the entity for it to fly into the correct direction. Motion is a three dimensional vector, where each axis corresponds to one of the ingame directions: `Motion:[xMotion,yMotion,zMotion]`. Each value is limited to [-10..10] and will be clamped to these values if you go above or below this limit. A value of 1 means a motion of 1 block per tick in that axis positive direction. Motion will also automatically be changed by the games physics engine, so we only need to set the initial motion and the rest will happen by itself.
+Sounds complicated, but is actually pretty easy. The end goal is to find the correct Motion values to apply to the entity for it to fly into the correct direction. Motion is a three-dimensional vector, where each axis corresponds to one of the in game directions: `Motion:[xMotion,yMotion,zMotion]`. Each value is limited to [-10..10] and will be clamped to these values if you go above or below this limit. A value of 1 means a motion of 1 block per tick in that axis positive direction. Motion will also automatically be changed by the game's physics engine, so we only need to set the initial motion and the rest will happen by itself.
 
-To find the correct Motion to apply, we need to find the difference between the position the entity starts in and the position the entity should be in the next tick after that (because that's how far it's supposed to move in this one tick). Luckily,  we can get both of these positions from the local coordinates (`^ ^ ^`) of the shooting player. For the following examples we'll assume the entity should be shot out with a speed of 1 block per tick in the direction the player is facing (`^ ^ ^1`), but this can be altered to your liking (but remember the limit of 10 in the motion tag!).  
+To find the correct Motion to apply, we need to find the difference between the position the entity starts in and the position the entity should be in the next tick after that (because that's how far it's supposed to move in this one tick). Luckily,  we can get both of these positions from the local coordinates (`^ ^ ^`) of the shooting player. For the following examples, we'll assume the entity should be shot out with a speed of 1 block per tick in the direction the player is facing (`^ ^ ^1`), but this can be altered to your liking (but remember the limit of 10 in the motion tag!).  
 
-So, we can get the players location using its `Pos` NBT values and we can summon an entity `^ ^ ^1` blocks in front of the player, using its `Pos` attribute to get the second position and thus we know starting position P and target position T. From here vector calculations tell us that to get the movement vector V between those two  points, all we need to do is T - P = V for each value individually (T.x - P.x = V.x etc.). Then we have V and can store it into the Motion values of our entity.
+So, we can get the players' location using its `Pos` NBT values, and we can summon an entity `^ ^ ^1` blocks in front of the player, using its `Pos` attribute to get the second position, and thus we know starting position P and target position T. From here vector calculations tell us that to get the movement vector V between those two  points, all we need to do is T - P = V for each value individually (T.x - P.x = V.x etc.). Then we have V and can store it into the Motion values of our entity.
 
 -----
 
 ## Method 1: Let the game do the math for us by using the zero point (simplified)
 
-Or rather, make use of the fact that we can use the worlds zero position and pretend the player is there. And because X - 0 = X, we don't need to do the math ourselves but can directly store the result into the entity. Here is how it works (running `as` and `at` the player):
+Or rather, make use of the fact that we can use the world's zero position and pretend the player is there. And because X - 0 = X, we don't need to do the math ourselves but can directly store the result into the entity. Here is how it works (running `as` and `at` the player):
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -54,7 +49,7 @@ kill @e[tag=direction]
 
 </details>
 
-**This method requires the worlds `0 0 0` point to be loaded to work. If that is not the case or cannot be guaranteed, use the following modification instead (still `as` and `at` the player).** It ensures that the marker entity doesn't get lost along the way by being teleported to unloaded chunks. Luckily the `@s` selector is able to still select the entity even if it was unloaded, which means we can do it as follows.
+**This method requires the worlds `0 0 0` point to be loaded to work. If that is not the case or cannot be guaranteed, use the following modification instead (still `as` and `at` the player).** It ensures that the marker entity doesn't get lost along the way by being teleported to unloaded chunks. Luckily, the `@s` selector is able to still select the entity even if it was unloaded, which means we can do it as follows.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -95,14 +90,15 @@ kill @s
 
 Since version 1.19.4 you can use `summon` inside the `/execute` command, which allows you to simplify shootfacing and combine the command of calling the direction of an entity and modifying the `Motion` tag of the projectile.
 
-Now, instead of a marker that must be manually killed, you can use area_effect_cloud, which will disappear on its own on the next tick. Also, force loaded coordinates 0 0 0 are no longer required to work, since we are creating and using direction entities within one command, but it is still strongly recommended to load chunks [-1, -1] to [0, 0], since area_effect_cloud will not be deleted in unloaded chunks automatically.
+Now, instead of a marker that must be manually killed, you can use :aoe: `area_effect_cloud`, which will disappear on its own on the next tick. In recent versions, this is no longer the case, but we can still set the `Duration` data to 0 after spawning with `execute store`. In older versions, you can remove `store sucess entity @s Duration int 0` from this tutorial.  
+Also, force loaded coordinates 0 0 0 are no longer required to work, since we are creating and using direction entities within one command, but it is still strongly recommended to load chunks [-1, -1] to [0, 0], since :aoe: `area_effect_cloud` will not be deleted in unloaded chunks automatically.
 
 ```mcfunction
 # Summon the projectile entity
 summon sheep ~ ~ ~ {Tags:["projectile"]}
 
 # Use player rotation to create an area_effect_cloud of about 0 0 and immediately copy the position of this entity into the projectile motion tag.
-execute rotated as <player> positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
+execute rotated as <player> positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud store sucess entity @s Duration int 0 run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
 
 # Remove projectile tag
 tag @e[tag=projectile] remove projectile
@@ -110,12 +106,12 @@ tag @e[tag=projectile] remove projectile
 
 `^ ^ ^1` is used as the throw strength.
 
-You can go ahead and do this using almost just one command block. You can perform all settings using `store success entity`. For example, for a fireball, you can immediately set ExplosionPower and power[1] so that the projectile does not fly in a straight line, but in an arc:
+You can go ahead and do this using almost just one command block. You can perform all settings using `store success entity`. For example, for a :fireball: fireball, you can immediately set `ExplosionPower` and `power[1]` so that the projectile does not fly in a straight line, but in an arc:
 
 ```mcfunction
 # Command blocks
 tag @e[type=fireball,tag=!exist] add exist
-execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
+execute as <player> at @s anchored eyes positioned ^ ^ ^3 summon fireball store success entity @s ExplosionPower byte 4 store success entity @s power[1] double -0.08 positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud store sucess entity @s Duration int 0 run data modify entity @e[type=fireball,tag=!exist,limit=1] Motion set from entity @s Pos
 ```
 
 However, you may notice that this projectile lags in flight. Read about how to fix this in the [\[Visual bug fix\]](#visual-bug-fix) section.
@@ -124,9 +120,9 @@ However, you may notice that this projectile lags in flight. Read about how to f
 
 ## Method 2: Storing all values (for easier manipulation)
 
-*Please note that you probably shouldn't be using this method if method 1 covers your usecase.*
+*Please note that you probably shouldn't be using this method if method 1 covers your use case.*
 
-This example will assume you have a dummy scoreboard objective set up that is named `pos` and that you're running these commands `as` and `at` the player (in a function). Whenever you see `#<something>` this is a [fake player](/wiki/questions/fakeplayer) that we use for convenient value storage. Because scoreboards can only hold integer values (whole numbers), we scale up the values by 1000 when storing them and down by 0.001 when putting them back into the Motion tag so we don't lose too much accuracy. We need to use scoreboards however, because we need to do some subtractions which is only conveniently possible with scoreboard operations. (This means that the system will stop working once you go above a position of 2'000'000 on either axis, if that is a concern, change it to 100/0.01, that way you can reach 2/3 to the worldborder without issues.)
+This example will assume you have a dummy scoreboard objective set up that is named `pos` and that you're running these commands `as` and `at` the player (in a function). Whenever you see `#<something>` this is a [fake player](/wiki/questions/fakeplayer) that we use for convenient value storage. Because scoreboards, can only hold :int: integer values (whole numbers), we scale up the values by 1000 when storing them and down by 0.001 when putting them back into the Motion tag so we don't lose too much accuracy. We need to use scoreboards however, because we need to do some subtractions which is only conveniently possible with scoreboard operations. (This means that the system will stop working once you go above a position of 2'000'000 on either axis, if that is a concern, change it to 100/0.01, that way you can reach 2/3 to the worldborder without issues.)
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -189,7 +185,7 @@ forceload add -1 -1 0 0
 execute as @e[tag=projectile] store result entity @s Air short 1 run time query gametime
 tag @e[tag=projectile] remove projectile
 execute as @a[scores={click=1..}] at @s anchored eyes run summon snowball ^ ^ ^ {Tags:["projectile"]}
-execute rotated as @a[scores={click=1..}] positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
+execute rotated as @a[scores={click=1..}] positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud store sucess entity @s Duration int 0 run data modify entity @e[tag=projectile,limit=1] Motion set from entity @s Pos
 scoreboard players reset @a click
 ```
 
@@ -208,7 +204,7 @@ execute anchored eyes positioned ^ ^ ^ summon snowball run function example:shoo
 
 # function example:shootfacing
 tag @s add this
-execute positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon minecraft:area_effect_cloud run data modify entity @e[tag=this,limit=1] Motion set from entity @s Pos
+execute positioned 0.0 0.0 0.0 positioned ^ ^ ^1 summon area_effect_cloud store sucess entity @s Duration int 0 run data modify entity @e[tag=this,limit=1] Motion set from entity @s Pos
 tag @s remove this
 tag @s add fix
 schedule function example:fix 2t replace

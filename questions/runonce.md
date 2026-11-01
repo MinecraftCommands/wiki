@@ -1,8 +1,5 @@
 # Activate a command *once* when a player does something (e.g: enters an area)
 
-  - [Scoreboard](#scoreboard)
-  - [Advancements](#advancements)
-  - [Add/remove tag](#addremove-tag)
 
 | 📝 Note |
 |--------------|
@@ -55,7 +52,7 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
 ```json
 # predicate example:at_spawn
 {
-  "condition": "minecraft:location_check",
+  "type": "minecraft:location_check",
   "predicate": {
     "position": {
       "x": {
@@ -76,12 +73,7 @@ This method involves creating a [predicate](https://minecraft.wiki/w/Predicate) 
     "requirement": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:reference",
-            "name": "example:at_spawn"
-          }
-        ]
+        "player": "example:at_spawn"
       }
     }
   },
@@ -105,9 +97,83 @@ tellraw @s "Welcome to spawn!"
       "conditions": {
         "player": [
           {
-            "condition": "minecraft:inverted",
+            "type": "minecraft:inverted",
+            "term": "example:at_spawn"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "example:spawn/leave"
+  }
+}
+```
+```mcfunction
+# function example:spawn/leave
+advancement revoke @s only example:spawn/enter
+tellraw @s "You leave spawn!"
+```
+For versions before 26.3 the syntax is a bit different, but the main idea is the same:
+
+<details markdown="1">
+  <summary style="color: #e67e22; font-weight: bold;">See example</summary>
+
+```json
+# predicate example:at_spawn
+{
+  "type": "minecraft:location_check",
+  "predicate": {
+    "position": {
+      "x": {
+        "min": -100,
+        "max": 100
+      },
+      "z": {
+        "min": 200,
+        "max": 400
+      }
+    }
+  }
+}
+
+# advancement example:spawn/enter
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "type": "minecraft:reference",
+            "name": "example:at_spawn"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "example:spawn/enter"
+  }
+}
+```mcfunction
+# function example:spawn/enter
+advancement revoke @s only example:spawn/leave
+tellraw @s "Welcome to spawn!"
+```
+
+```json
+# advancement example:spawn/leave
+{
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "type": "minecraft:inverted",
             "term": {
-              "condition": "minecraft:reference",
+              "type": "minecraft:reference",
               "name": "example:at_spawn"
             }
           }
@@ -125,6 +191,7 @@ tellraw @s "Welcome to spawn!"
 advancement revoke @s only example:spawn/enter
 tellraw @s "You leave spawn!"
 ```
+</details>
 </details>
 
 | 📝 Note |

@@ -1,11 +1,5 @@
 # Check if a score / storage is equal to, greater than, or less than, another score / storage
 
-  - [Scoreboard](#scoreboard)
-    - [1.13 and above](#113-and-above)
-    - [1.12 and below](#112-and-below)
-  - [Predicate / storage](#predicate-storage)
-    - [1.20.5 and above](#1205-and-above)
-    - [1.15 and above](#115-and-above)
 
 ## Scoreboard
 
@@ -77,7 +71,7 @@ data merge storage example:data {value:7.5f,min:0,max:10}
 ```json
 # predicate example:storage_compare
 {
-  "condition": "minecraft:value_check",
+  "type": "minecraft:value_check",
   "value": {
     "type": "minecraft:storage",
     "storage": "example:data",
@@ -97,22 +91,22 @@ data merge storage example:data {value:7.5f,min:0,max:10}
   }
 }
 ```
-
+For versions before 26.3 the `"type": "minecraft:value_check"` field is renamed to `condition`.
 </details>
 
-This now allows to compare values more accurately because it supports non-integer variable values for comparison.
+This now allows to compare values more accurately because it supports non-:int: integer variable values for comparison.
 
 ### 1.15 and above
 
-Since version 1.15 you can also use [predicates](https://minecraft.wiki/w/Predicate) in a datapack to compare scores. Unlike using the `if score` subcommand, you cannot, in most cases, compare the score values between two entities. Basically this is only available in mob loot tables and you can only compare the score between the killed mob (`this`) and the entity that killed the mob (`killer` / `killer_player`), or the projectile that killed the mob (`direct_killer`). In other cases, you can only check the score of the selected entity (`this`) and score [fakename](/wiki/questions/fakeplayer).
+Since version 1.15 you can also use [predicates](https://minecraft.wiki/w/Predicate) in a datapack to compare scores. Unlike using the `if score` subcommand, you cannot, in most cases, compare the score values between two entities. Basically this is only available in mob loot tables, and you can only compare the score between the killed mob (`this`) and the entity that killed the mob (`killer` / `killer_player`), or the projectile that killed the mob (`direct_killer`). In other cases, you can only check the score of the selected entity (`this`) and score [fakename](/wiki/questions/fakeplayer).
 
 You can compare scores in a predicate using the `minecraft:entity_scores` condition to compare the score of the selected entity with a specific value or a specified range of values, as well as using the `minecraft:value_check` condition, which does the same thing, but without using the entity.
 
 But you can't just use comparison operators (=, >, <, >=, <=), but only compare whether the value is in the specified range.
 
-For `entity_score` condition, you can compare the value of the selected entity with an exact value specified manually or a range (`min` and `max`). When using range can use for each min and max:
+For `entity_score` condition, you can compare the value of the selected entity with an exact value specified manually or a range (`min` and `max`). When using range, can use for each min and max:
 
-- exact value (supports non-integer values)
+- exact value (supports non-:int: integer values)
 - [binomial distribution](https://en.wikipedia.org/wiki/Binomial_distribution)
 - score
 - storage (1.20.5+)
@@ -125,7 +119,7 @@ Example to compare that players score `kills` >= score `deaths`:
 ```json
 # execute if score @s kills >= @s deaths
 {
-  "condition": "minecraft:entity_scores",
+  "type": "minecraft:entity_scores",
   "entity": "this",
    "scores": {
      "kills": {
@@ -138,6 +132,7 @@ Example to compare that players score `kills` >= score `deaths`:
   }
 }
 ```
+For versions before 26.3 the `"type": "minecraft:entity_scores"` field is renamed to `condition`.
 </details>
 
 For the <= operator, simply replace `"min"` with `"max"` in the predicate above.
@@ -151,7 +146,7 @@ But if you want to check that score `kills` > `deaths`, then checking in the pre
 # execute if score @s kills > @s deaths
 [
   {
-    "condition": "minecraft:entity_scores",
+    "type": "minecraft:entity_scores",
     "entity": "this",
     "scores": {
       "kills": {
@@ -164,9 +159,9 @@ But if you want to check that score `kills` > `deaths`, then checking in the pre
     }
   },
   {
-    "condition": "minecraft:inverted",
+    "type": "minecraft:inverted",
     "term": {
-      "condition": "minecraft:entity_scores",
+      "type": "minecraft:entity_scores",
       "entity": "this",
       "scores": {
         "kills": {
@@ -181,6 +176,7 @@ But if you want to check that score `kills` > `deaths`, then checking in the pre
   }
 ]
 ```
+For versions before 26.3 the `"type": "minecraft:entity_scores"` and `"type": "minecraft:inverted"` fields are renamed to `condition`.
 
 </details>
 
@@ -192,7 +188,7 @@ If you need to check that `kills` = `deaths` score, then you can do one range ch
 ```json
 # execute if score @s kills = @s deaths
 {
-  "condition": "minecraft:entity_scores",
+  "type": "minecraft:entity_scores",
   "entity": "this",
   "scores": {
     "kills": {
@@ -210,3 +206,4 @@ If you need to check that `kills` = `deaths` score, then you can do one range ch
   }
 }
 ```
+For versions before 26.3 the `"type": "minecraft:entity_scores"` field is renamed to `condition`.

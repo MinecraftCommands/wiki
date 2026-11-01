@@ -5,7 +5,7 @@
 Because in 1.19.50, the [new execute syntax](https://learn.microsoft.com/en-us/minecraft/creator/documents/commandsnewexecute) became mandatory, so you'll need to switch to that. See also [this information on bedrock.dev](https://wiki.bedrock.dev/commands/new-execute.html).
 
 ## Why is my give command broken (java)?
-In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with structured "components." Learn more in [this article](https://minecraft.wiki/w/Item_format/1.20.5).
+In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with structured "components". Learn more in [this article](https://minecraft.wiki/w/Item_format/1.20.5).
 
 ## How do I...
 
@@ -18,7 +18,7 @@ In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with struct
 [Give a special item (Bedrock)?](/wiki/questions/giveitembedrock)  
 [Change an item while it's in the players inventory?](/wiki/questions/modifyinventory)  
 [Do custom crafting?](/wiki/questions/customcrafting)  
-[Make a shop? / Buy items?](/wiki/questions/shop)
+[Make a shop? / Buy items?](/wiki/questions/shop)  
 
 ### Scores
 
@@ -41,6 +41,7 @@ In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with struct
 [Detect a player joining (for the first time)?](/wiki/questions/playerjoin)  
 [Store a players inventory (and give it back later)?](/wiki/questions/storeinventory)  
 [Detect a player looking at something (entity / position)?](/wiki/questions/lookat)  
+[Detect the player moving/sneaking/crawling/sleeping?](/wiki/questions/movement)  
 
 ### Conditions
 
@@ -55,7 +56,7 @@ In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with struct
 [Summon an entity/projectile flying in the direction the player is looking?](/wiki/questions/shootfacing)  
 [Detect when a mob has died](/wiki/questions/mobdeaths)  
 [Make hostile mobs friendly / disable PvP?](/wiki/questions/hostilefriendly)  
-[Setup, configure and add multiple dialogues to NPCs?](/wiki/questions/npc)
+[Setup, configure and add multiple dialogues to NPCs?](/wiki/questions/npc)  
 
 ### Misc
 
@@ -64,6 +65,8 @@ In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with struct
 [Make a scoreboard ID system?](/wiki/questions/linkentity)   
 [Do raycasting?](/wiki/questions/raycast)   
 [Make a circle (of blocks / entities)?](/wiki/questions/makecircle)  
+[Add custom commands](/wik/questions/customcommands)  
+[Get the player username](/wiki/questions/getusername)  
 
 ## What is...
 
@@ -71,6 +74,7 @@ In 1.20.5, unstructured NBT for item stacks (tag field) was replaced with struct
 [a range? / those two dots `..`?](/wiki/questions/range)  
 [command context?](/wiki/questions/commandcontext)  
 [escaping?](/wiki/questions/escaping)  
+[An NBT path](/wiki/questions/nbtpath)  
 
 ## How do I... (1.12 and below only)
 

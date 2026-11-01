@@ -1,19 +1,11 @@
-# Modify an item inside a players inventory
+# Modify an item inside a player's inventory
 
-  - [1.20.5 and above](#1205-and-above)
-  - [1.17 and above](#117-and-above)
-    - [item replace](#item-replace)
-    - [item modify](#item-modify)
-  - [1.16 and below](#116-and-below)
-    - [The method:](#the-method)
-    - [The loot table](#the-loot-table)
-    - [The commands:](#the-commands)
 
-_Java only, as NBT data is inaccessible in bedrock this article is irrelevant for BE._
+_Java only, as NBT data is inaccessible in bedrock, this article is irrelevant for BE._
 
 ## 1.20.5 and above
 
-In this version, the functionality of [item_modifier](https://minecraft.wiki/w/Item_modifier) has been expanded with the ability to filter selected items for modification and the ability to change item ID. And the /item command now has the ability to use item_modifier / [predicates](https://minecraft.wiki/w/Predicate) directly in the game without using a datapack. Values have same structure as matching JSON files, though they are encoded as SNBT.
+In this version, the functionality of [item_modifier](https://minecraft.wiki/w/Item_modifier) has been expanded with the ability to filter selected items for modification and the ability to change item ID. And the /item command now has the ability to use item_modifier / [predicates](https://minecraft.wiki/w/Predicate) directly in the game without using a datapack. Values have the same structure as matching :json: JSON files, though they are encoded as SNBT.
 
 Quick example:
 
@@ -21,10 +13,13 @@ Quick example:
 execute if predicate {condition:weather_check, raining:true}
 ```
 
-Here's a simple example of how to add a [food component](https://minecraft.wiki/w/Data_component_format#food) to any item in a player's hand (if the item is not food) without replacing the item completely:
+Here's a simple example of how to add a [food component](https://minecraft.wiki/w/Data_component_format#food) to any item in a player's hand (if the item is not food) without replacing the item completely (modifing `consumable` too for 1.21.2+):
 
 ```mcfunction
+# 1.20.5-1.21.2
 execute as @a if items entity @s weapon *[!minecraft:food] run item modify entity @s weapon {function:"minecraft:set_components", components: {"minecraft:food": {nutrition:1, saturation:2, can_always_eat:true, eat_seconds:3.2}}}
+# 1.21.2+
+execute as @a if items entity @s weapon *[!minecraft:food] run item modify entity @s weapon {function:"minecraft:set_components",components:{"minecraft:food":{nutrition:1,saturation:2,can_always_eat:1b},"minecraft:consumable":{consume_seconds:1.6}}}
 ```
 
 You can also change the item ID without changing any components:
@@ -33,7 +28,7 @@ You can also change the item ID without changing any components:
 execute as @a run item modify entity @s weapon {function:"minecraft:filtered", item_filter: {items:"minecraft:iron_sword"}, modifier: {function:"minecraft:set_item", item:"minecraft:golden_sword"}}
 ```
 
-This example uses the [`minecraft:filtered`](https://minecraft.wiki/w/Item_modifier#:~:text=or%20killer_player.-,filtered,-%E2%80%94Applies%20another%20function) loot function to check that the selected item is `minecraft:iron_sword` and not just any item and then uses the [`minecraft:set_item`](https://minecraft.wiki/w/Item_modifier#:~:text=is%20selected%20randomly.-,set_item,-%E2%80%94Replaces%20item%20type) function to replace iron_sword with golden_sword. In this case, any custom_data, damage, enchantments and other components that this item contains will not be changed, with the exception of inaccessible data, for example, if the original item had a [max_stack_size](https://minecraft.wiki/w/Data_component_format#max_stack_size) component greater than 1 and after modification you change to an item with a [max_damage](https://minecraft.wiki/w/Data_component_format#max_damage) component, then max_stack_size will be changed by 1.
+This example uses the [`minecraft:filtered`](https://minecraft.wiki/w/Item_modifier#:~:text=or%20interacting_entity..-,filtered,-%E2%80%94Applies%20an%20Item) loot function to check that the selected item is `minecraft:iron_sword` and not just any item, and then uses the [`minecraft:set_item`](https://minecraft.wiki/w/Item_modifier#:~:text=is%20selected%20randomly.-,set_item,-%E2%80%94Replaces%20item%20type) function to replace iron_sword with golden_sword. In this case, any custom_data, damage, enchantments and other components that this item contains will not be changed, with the exception of inaccessible data, for example, if the original item had a [max_stack_size](https://minecraft.wiki/w/Data_component_format#max_stack_size) component greater than 1 and after modification you change to an item with a [max_damage](https://minecraft.wiki/w/Data_component_format#max_damage) component, then max_stack_size will be changed by 1.
 
 ## 1.17 and above
 
@@ -41,7 +36,7 @@ In snapshot [20w46a](https://www.minecraft.net/article/minecraft-snapshot-20w46a
 
 ### item replace
 
-With this command you can copy an item to a specified entity/block slot from an entity/block slot. To do this, you also need to use any entity/block that will be used as a buffer slot in which you can change the item data.
+With this command, you can copy an item to a specified entity/block slot from an entity/block slot. To do this, you also need to use any entity/block that will be used as a buffer slot in which you can change the item data.
 Here's a quick example of adding an enchantment to an item in a player's hand:
 
 ```mcfunction
@@ -71,7 +66,7 @@ Below is a small example of using the item modifier:
 item modify entity <player> weapon.mainhand example:add_knockback
 ```
 ```json
-# item_modifier example:add_knockback (data/example/item_modifiers/add_knockback.json)
+# item_modifier example:add_knockback (data/example/item_modifier/add_knockback.json)
 {
   "function": "minecraft:set_enchantments",
   "enchantments": {
@@ -81,9 +76,13 @@ item modify entity <player> weapon.mainhand example:add_knockback
 }
 ```
 
+| 📝 Note |
+|---------|
+|For versions before 1.21, the path is `data/example/item_modifiers/add_knockback.json`|
+
 ## 1.16 and below
 
-_As of 1.15, [MC-123307](https://bugs.mojang.com/browse/MC-123307), which allowed execute store and data modify commands to edit a player's inventory or ender chest items, has been fixed. The offical replacement was introduced in early 1.17 snapshots. However, there is still a trick dating back to 1.14 that makes use of the loot command with a modified shulker box loot table._
+_As of 1.15, [MC-123307](https://bugs.mojang.com/browse/MC-123307), which allowed `execute store` and data modify commands to edit a player's inventory or ender chest items, has been fixed. The official replacement was introduced in early 1.17 snapshots. However, there is still a trick dating back to 1.14 that makes use of the loot command with a modified shulker box loot table._
 
 ### The method:
 
@@ -91,7 +90,7 @@ In vanilla without data packs, shulker boxes drop themselves with their contents
 
 Of course, that would change normal behavior of loot tables. The actual loot table consists of two entries, one which keeps the normal shulker box drop, and one that drops its contents when mined with a specific item: minecraft:air{drop_contents: 1b}. Because air cannot have NBT data, a player cannot notice any difference, whatever they are holding. The only case where this is useful is in the loot command.  
 
-A shulker box is placed somewhere out of sight of the player. Sometimes far away, usually in a forceloaded chunk, like some libraries (Phi, AESTD, Lantern) do. Alternatively you can place it e.g. at ~ 0 ~ and replace it back with bedrock at the end of the thing. _It is desireable to not constantly setblock and replace a block though, so if you can place it somewhere permanently, do that._ An item is placed inside the shulker box, and is injected to the player's inventory.
+A shulker box is placed somewhere out of sight of the player. Sometimes far away, usually in a forceloaded chunk, like some libraries (Phi, AESTD, Lantern) do. Alternatively, you can place it e.g. at ~ 0 ~ and replace it back with bedrock at the end of the thing. _It is desirable to not constantly setblock and replace a block, though, so if you can place it somewhere permanently, do that._ An item is placed inside the shulker box, and is injected to the player's inventory.
 
 ### The loot table
 

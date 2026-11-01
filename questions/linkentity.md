@@ -1,13 +1,11 @@
 # Link an entity to another entity / to a player
 
-_Also known as a **scoreboard ID system**_.
 
-* [Java](#java)
-* [Java and Bedrock](#java-and-bedrock)
+_Also known as a **scoreboard ID system**_.
 
 ## Java
 
-Sometimes there is a need to link two entities together in a logical fashion. In Minecraft, we can achieve this by giving both entities the same scoreboard score. In this article we'll be linking an entity to a player.
+Sometimes there is a need to link two entities together in a logical fashion. In Minecraft, we can achieve this by giving both entities the same scoreboard score. In this article, we'll be linking an entity to a player.
 
 For example, let's create a dummy scoreboard for player/entity IDs.
 
@@ -61,7 +59,7 @@ First we need to set up a dummy scoreboard objective
 scoreboard objectives add id dummy
 ```
 
-Next, to make sure that every player gets a unique id, we need a system that assigns every player a unique score. This can be achieved by simply counting up with every subsequent player that needs a score. For this, we'll set a [fake player](/wiki/questions/fakeplayer) score of this objective to 1 to start with.
+Next, to make sure that every player gets a unique ID, we need a system that assigns every player a unique score. This can be achieved by simply counting up with every subsequent player that needs a score. For this, we'll set a [fake player](/wiki/questions/fakeplayer) score of this objective to 1 to start with.
 
 ```mcfunction
 scoreboard players set $total id 1

@@ -1,11 +1,5 @@
 # Do conditions with functions
 
-  - [1.13+](#113)
-    - [My condition is whether or not a selector matches anything](#my-condition-is-whether-or-not-a-selector-matches-anything)
-    - [My condition is whether or not another command succeeds](#my-condition-is-whether-or-not-another-command-succeeds)
-  - [1.12](#112)
-    - [My condition is whether or not a selector matches anything](#my-condition-is-whether-or-not-a-selector-matches-anything)
-    - [My condition is whether or not another command succeeds](#my-condition-is-whether-or-not-another-command-succeeds)
 
 ## 1.13+
 
@@ -13,7 +7,7 @@
 
 For example, you want to execute a command when `@a[tag=TeamChange]` finds something.
 
-Easiest way to do this is by prefixing the command with an `execute if entity`:
+The easiest way to do this is by prefixing the command with an `execute if entity`:
 
 ```mcfunction
 execute if entity @a[tag=TeamChange,limit=1] run say test

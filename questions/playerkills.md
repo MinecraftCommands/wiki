@@ -1,11 +1,7 @@
 # Detect the player killing entities and players
 
+
 _Related: [Detect Player Deaths](/wiki/questions/playerdeaths)_
-
-  - [Java](#java)
-  - [Bedrock](#bedrock)
-    - [Without behavior packs](#without-behavior-packs)
-
 
 ## Java
 
@@ -57,9 +53,9 @@ When the player kills a pig, they will run the function `example:kill_entity` as
 
 ## Bedrock
 
-In Bedrock this is much more tricky, as there is only the dummy objective type.
+In Bedrock, this is much more tricky, as there is only the dummy objective type.
 
-The best way this Subreddit has come up with so far is to use a modified loot table, making the entity drop a certain item on death that they otherwise wouldn't drop. _This also works for players, but only if the `keepInventory` gamerule is false._ To change an entities loot table, you will have to modify their behavior file and change the loot table to be your custom one or replace their default loot table if they have one. Find the `minecraft:loot` component (or add it if it doesn't exist) and give it your custom loot table.
+The best way this Subreddit has come up with so far is to use a modified loot table, making the entity drop a certain item on death that they otherwise wouldn't drop. _This also works for players, but only if the `keepInventory`/`keep_inventory` gamerule is false._ To change an entities loot table, you will have to modify their behavior file and change the loot table to be your custom one or replace their default loot table if they have one. Find the `minecraft:loot` component (or add it if it doesn't exist) and give it your custom loot table.
 
 ```json
 "minecraft:loot": {
@@ -110,4 +106,4 @@ _Credit to [u/DanRileyCG](https://www.reddit.com/user/DanRileyCG/), for the orig
 
 **If you don't have access to the files and are thus unable to create a behavior pack for this, there is a toned down version for player kills only that you can do.**
 
-It involves giving the player the special item into their inventory and making sure they drop it on death. To make it fool-proof / non-abuseable, there are a few more systems required (don't repeatedly replace it, or they could farm kills, only replace it if it's empty, don't award a kill if the player does have a bee nest in their inventory, etc.). Too much to go into in this wiki article, but here is a video where they show off one such system: [https://www.youtube.com/watch?v=zuhd3qEOJ1I](https://www.youtube.com/watch?v=zuhd3qEOJ1I). Keep in mind that this video uses the old `execute` syntax and it will need to be updated, see [this information](https://wiki.bedrock.dev/commands/new-execute.html) about the changes
+It involves giving the player the special item into their inventory and making sure they drop it on death. To make it fool-proof / non-abusable, there are a few more systems required (don't repeatedly replace it, or they could farm kills, only replace it if it's empty, don't award a kill if the player does have a bee nest in their inventory, etc.). Too much to go into in this wiki article, but here is a video where they show off one such system: [https://www.youtube.com/watch?v=zuhd3qEOJ1I](https://www.youtube.com/watch?v=zuhd3qEOJ1I). Keep in mind that this video uses the old `execute` syntax, and it will need to be updated, see [this information](https://wiki.bedrock.dev/commands/new-execute.html) about the changes

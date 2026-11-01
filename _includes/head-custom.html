@@ -1,0 +1,312 @@
+<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/logos/default_static.png">
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script>
+// Syntax highlighting
+Prism.languages.mcfunction = {
+  'comment': {pattern: /^#.*/m, greedy: true},
+  'angle-word': {pattern: /<[\w_]+>/, greedy: true},
+  'run-command': {
+    pattern: /\brun\s+\b[a-zA-Z_][\w]*\b/,
+    inside: {
+      'keyword': /\brun\b/,
+      'command': /\b[a-zA-Z_][\w]*\b/
+    },
+    greedy: true
+  },
+  'command': {pattern: /^\s*\b[a-zA-Z_][\w]*\b/m, greedy: true},
+  'macro': {pattern: /(^\$)|\$\([a-zA-Z_][\w]*\)/m, greedy: true},
+  'fakeplayer': {pattern: /([#\$][a-zA-Z_][\w]*)/, greedy: true},
+  'resource': {pattern: /#?\b[a-z0-9_.-]+:[a-z0-9_./-]+\b/i},
+  'property': {pattern: /\b[a-zA-Z_][\w]*=/, greedy: true},
+  'string': {pattern: /"(?:\\.|[^"\\])*"/, greedy: true},
+  'boolean': /\b(?:true|false)\b/,
+  'number': /\b-?\d+(?:\.\d+)?\b/,
+  'punctuation': /[{}\[\](),.:]/,
+  'selector': {pattern: /@(s|n|a|e|p|r|initiator)\b/, greedy: true},
+  'operator': {pattern: /[=+\-*/%]=?|!=|<|>|<=|>=|\^/, greedy: true},
+  'coordinate': {pattern: /[~\^]-?\d*(?:\.\d+)?/, greedy: true},
+  'nbt': {pattern: /[\{\}][^{}]*[\{\}]?|[\[\]][^\[\]]*[\[\]]?/, greedy: true},
+  'nbtpath': {pattern: /\b[a-zA-Z_][\w]*(?:\.[a-zA-Z_][\w]*)+\b/, greedy: true},
+  'uuid': {pattern: /\b[0-9a-f]+(?:-[0-9a-f]+){4,4}\b/i, greedy: true},
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+  reloadTheme()
+  // Copy button
+  document.querySelectorAll("pre > code").forEach(function(codeBlock) {
+    const pre = codeBlock.parentNode;
+    if (pre.previousElementSibling?.classList.contains("copy-button")) return;
+
+    const button = document.createElement("button");
+    button.className = "copy-button";
+    button.type = "button";
+    button.textContent = "Copy";
+    button.setAttribute("aria-label", "Copy code to clipboard");
+    button.setAttribute("aria-live", "polite");
+    button.setAttribute("role", "status");
+    pre.insertAdjacentElement("beforebegin", button);
+
+    button.addEventListener("click", function() {
+      navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+        button.textContent = "Copied!";
+        setTimeout(() => { button.textContent = "Copy"; }, 1500);
+      });
+    });
+  });
+
+  // Generate Table of Contents
+  const h1s = document.querySelectorAll("h1");
+  if (h1s.length === 0) return;
+  const firstH1 = h1s[0];
+  let lastH1 = firstH1;
+  h1s.forEach(h1 => lastH1 = h1);
+
+  const headings = [];
+  let next = lastH1.nextElementSibling;
+  while (next) {
+    if (/H[2-6]/.test(next.tagName)) {headings.push(next);}
+    next = next.nextElementSibling;
+  }
+  if (headings.length === 0) return;
+
+  function createTOC(headings) {
+    const toc = [];
+    const stack = [{level: 1, ul: toc}];
+
+    headings.forEach(h => {
+      const level = parseInt(h.tagName[1]);
+      const li = {text: h.innerText, href: "#" + h.id, children: []};
+      while (stack.length > 0 && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+      stack[stack.length - 1].ul.push(li);
+      stack.push({level, ul: li.children});
+    });
+    return toc;
+  }
+
+  function tocToHTML(items, depth = 0) {
+    const indent = "\t".repeat(depth);
+    let html = `${indent}<ul>\n`;
+    items.forEach(item => {
+      html += `${indent}\t<li><a href="${item.href}">${item.text}</a>`;
+      if (item.children.length > 0) {
+        html += "\n" + tocToHTML(item.children, depth + 2) + `${indent}\t`;
+      }
+      html += "</li>\n";
+    });
+    html += `${indent}</ul>\n`;
+    return html;
+  }
+
+  const tocStructure = createTOC(headings);
+  const tocHTML = tocToHTML(tocStructure);
+  const container = document.createElement("nav");
+  container.setAttribute("aria-label", "Table of contents");
+  container.innerHTML = tocHTML;
+  lastH1.insertAdjacentElement("afterend", container);
+  container.insertAdjacentHTML("beforeend", '<div id="main-content"></div>');
+
+  // emoji index
+  var emojis = {
+    "any": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_any.png",
+    "boolean": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_boolean.png",
+    "byte": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_byte.png",
+    "byte_array": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_byte_array.png",
+    "double": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_double.png",
+    "float": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_float.png",
+    "int": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_int.png",
+    "int_array": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_int_array.png",
+    "list": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_list.png",
+    "long": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_long.png",
+    "long_array": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_long_array.png",
+    "short": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_short.png",
+    "string": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_string.png",
+    "struct": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/bots/emojis/mcdoc_struct.png",
+    "armor_stand": "https://minecraft.wiki/images/EntitySprite_armor-stand.png",
+    "aoe": "https://minecraft.wiki/images/EntitySprite_area-effect-cloud.png",
+    "area_effect_cloud": "https://minecraft.wiki/images/EntitySprite_area-effect-cloud.png",
+    "fireball": "https://minecraft.wiki/images/EntitySprite_fireball.png",
+    "command_block": "https://minecraft.wiki/images/BlockSprite_command-block.png",
+    "chain_command_block": "https://minecraft.wiki/images/BlockSprite_chain-command-block.png",
+    "repeating_command_block": "https://minecraft.wiki/images/BlockSprite_repeating-command-block.png",
+    "command_blocks": "https://minecraft.wiki/images/BlockSprite_all-command-blocks.png",
+    "folder": "https://minecraft.wiki/images/File_directory.png",
+    "file": "https://minecraft.wiki/images/File_file.png",
+    "steve": "https://minecraft.wiki/images/EntitySprite_steve.png",
+    "minecraftcommands": "https://raw.githubusercontent.com/MinecraftCommands/discord-server-assets/refs/heads/main/logos/default_static.png",
+    "json": "https://json.com/public/apple-touch-icon-precomposed.png",
+  };
+
+  var regex = /:([a-z0-9_+-]+):/gi;
+  document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, a, td, li, strong, b, em, th").forEach(function(p) {
+    p.innerHTML = p.innerHTML.replace(regex, function(m, name) {
+      var src = emojis[name.toLowerCase()];
+      if (!src) return m;
+      return '<img class="emoji" alt="" aria-hidden="true" loading="lazy" src="'+src+'">';
+    });
+  });
+  document.body.insertAdjacentHTML('afterbegin', `
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <button type="button" aria-label="Toggle dark mode" class="dark-mode-button" onclick="switchTheme()">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/>
+      <path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+    </svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>
+    </svg>
+    </button>
+  `);
+});
+
+// Dark mode
+let isDarkMode = localStorage.getItem("minecraftcommandswiki_darkmode") !== null;
+function switchTheme() {
+    isDarkMode = !isDarkMode;
+    reloadTheme()
+    const btn = document.querySelector('.dark-mode-button');
+    if (btn) btn.setAttribute('aria-pressed', String(isDarkMode));
+}
+function reloadTheme() {
+    const body = document.body;
+    if (isDarkMode) {
+        body.classList.add('dark-mode');
+        localStorage.setItem("minecraftcommandswiki_darkmode","true")
+    } else {
+          localStorage.removeItem("minecraftcommandswiki_darkmode")
+        body.classList.remove('dark-mode');
+    }
+}
+</script>
+
+<style>
+.token.comment { color: #5b7f44; }
+.token.macro { color: #ffd000; }
+.token.command { color: #c678dd; }
+.token.resource { color: #4b97d5; }
+.token.property { color: #e06c75; }
+.token.string { color: #7fbf6a; }
+.token.boolean { color: #56b6c2; }
+.token.number { color: #d19a66; }
+.token.punctuation { color: #0093c4; }
+.token.selector { color: #d19a66; }
+.token.fakeplayer { color: #ff8800; }
+.token.operator { color: #e06c75; background: none}
+.token.coordinate { color: #56b6c2; }
+.token.nbt { color: #61afef; }
+.token.nbtpath { color: #be5046; }
+.token.uuid { color: #d19a66; font-style: italic; }
+.token.keyword { color: #0093c4;}
+.token.angle-word {
+  color: #5a1a01;
+  background-color: #ffe3b3;
+  border-radius: 4px;
+  padding: 0 3px;
+}
+.dark-mode .token.angle-word {
+  color: #910000;
+  background-color: #56b6c2;
+}
+.copy-button {
+  display: block;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  background: #61afef;
+  color: white;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+.copy-button:hover { opacity: 1; }
+.dark-mode .copy-button:focus-visible { outline: 2px solid #4da3ff; }
+.copy-button:focus-visible { outline: 3px solid #ffcb6b; outline-offset: 2px; }
+a[href^="http"]:not([href*="minecraftcommands.github.io"])::after { content: " ↗"; font-size: 0.8em; }
+.emoji { height: 1.4em; width: auto; }
+.dark-mode {
+    background-color: #2c2f33;
+    color: #ffffff;
+    scrollbar-color: #555 #1E1E1E;
+}
+.dark-mode h6 { color: #ffffff; }
+.dark-mode a { color: #4da3ff; }
+.dark-mode a:visited { color: #b48eff; }
+.dark-mode a:hover { color: #82cfff; }
+.dark-mode table { border-collapse: collapse; }
+.dark-mode th,
+.dark-mode td { border: 1px solid #555; padding: 6px; }
+.dark-mode th { background-color: #2c2f33; }
+.dark-mode code {
+    background-color: #1e2124;
+    color: #ffcb6b;
+    text-shadow: none;
+}
+.dark-mode pre {
+    background: black !important;
+}
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+    background-color: #23272a;
+    color: #ffffff;
+    border: 1px solid #555;
+}
+.dark-mode blockquote {
+    border-left: 4px solid #555;
+    color: #ccc;
+}
+.dark-mode :not(pre) > code[class*="language-"] { background: #000000; }
+.dark-mode td {
+  background-color: #18191b;
+}
+.dark::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+.dark::-webkit-scrollbar-track { background: #1E1E1E; }
+.dark::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 6px;
+}
+.dark::-webkit-scrollbar-thumb:hover { background: #777; }
+.dark-mode .scroller {
+  scrollbar-color: #555 #1E1E1E;
+  scrollbar-width: thin;
+}
+code::selection, .token::selection {
+  background-color: #3a7bd5 !important;
+  color: #ffffff;
+}
+code::-moz-selection {
+  background-color: #3a7bd5 !important;
+  color: #ffffff;
+}
+.dark-mode-button {
+  border-radius:12px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+.dark-mode-button:focus-visible {
+  outline: 2px solid #4da3ff;
+  outline-offset: 2px;
+}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 10px;
+}
+.skip-link:focus-visible {
+  left: 10px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 1000;
+}
+.dark-mode .highlight {
+    background-color: #2c2f33 !important;
+}
+</style>

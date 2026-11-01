@@ -14,7 +14,7 @@ First, you set up a [fake player](/wiki/questions/fakeplayer) with the smallest 
 scoreboard players set #max score -2147483648
 ```
 
-then you execute as all the entities you want to compare, running the scoreboard operation as all of them. Here we'll use all players in the example.
+Then you execute as all the entities you want to compare, running the scoreboard operation as all of them. Here we'll use all players in the example.
 
 ```mcfunction
 execute as @a run scoreboard players operation #max score > @s score

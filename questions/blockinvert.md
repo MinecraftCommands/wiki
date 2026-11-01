@@ -1,7 +1,5 @@
 # Do something if a command block *wasn't* successful
 
-  - [Java](#java)
-  - [Bedrock](#bedrock)
 
 ## Java
 
@@ -40,4 +38,8 @@ The third command is conditional, and is whatever you want to happen when the fi
 
 ## Bedrock
 
-Because we can't access the `SuccessCount` in bedrock we will need to use a comparator pointing into a block that has a wall redstone torch to invert the output. Keep in mind that redstone is not run every tick.
+Because we can't access the `SuccessCount` in bedrock we will need to use a comparator pointing into a block that has a wall redstone torch to invert the output. Keep in mind that redstone is not run every tick. Furthermore, for `if` conditions we can use `unless` instead. For example
+
+```mcfunction
+execute unless entity @e[r=5] run say Nobody is within 5 blocks!
+```

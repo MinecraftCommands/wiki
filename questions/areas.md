@@ -1,11 +1,31 @@
 # Do something if a player is in certain areas
 
-- [Do something if a player is in certain areas](#do-something-if-a-player-is-in-certain-areas)
-  - [Hardcoded locations](#hardcoded-locations)
-  - [Anchor entities](#anchor-entities)
-  - [Block layer](#block-layer)
-  - [Predicates](#predicates)
 
+## Singe area
+### Sphere selection
+This method selects players in a radius, `x y z` define the center, and `distance` the radius.In Java: `@a[x=0,y=90,z=0,distance=..6]` selects players up to 6 blocks away, it uses [ranges](/wiki/questions/range): `..a` = a or less, `a..` = a or more, `a..b` = between a and b. Bedrock uses `r` (max) and `rm` (min) instead of distance. It uses the entity position (center of feet).
+
+### Cubic selection
+This method selects players in a box. `x y z` define the origin, `dx dy dz` define the size of the bounding box, keep in mind that `dx dy dz` add `1` on each axis (e.g. `x=37,dx=10` is `37` to `48`). Keep in mind that this checks any part of the hitbox not only entity position, so heads can count 
+
+### Predicates 
+You can select entities using a `location_check` predicate.
+```
+{
+  "type": "minecraft:location_check",
+  "predicate": {
+    "position": {
+      "x": {
+        "min": 38.2,
+        "max": 41.7
+      }
+    }
+  }
+}
+```
+Unlike the `dx dy dz` arguments, this does not check for an entity's hitbox but for its position. For versions before 26.3 the `type` field is renamed to `condition`
+
+## Multiple areas
 
 | 📝 Note |
 |---------|
@@ -22,7 +42,7 @@ gamemode survival @a[x=0,y=0,z=0,distance=X..]
 
 This method quickly falls apart if you have a non-spherical or non-box shaped area or you want this to apply to more than one area, because a player will always be outside of the other areas, even if they are inside one, so will always end up in survival.
 
-## Hardcoded locations
+### Hardcoded locations
 
 The best way to make sure players are in one of multiple areas without overwriting each other, is to use a tag: So instead of applying the desired effect to each area individually, you tag all players that are in one of the areas and apply the effect once to all of them (or everyone else). But this method requires a separate command block for each location. For a large number of locations, use the anchor entity method.
 
@@ -45,11 +65,11 @@ gamemode survival @a[tag=!inArea,gamemode=!survival]
 
 If for some reason you want to keep commandBlockOutput on and don't want your output to be spammed by this system, check out [this post](https://www.reddit.com/r/MinecraftCommands/comments/mw11xm/do_something_to_players_in_multiple_specific) by [u/Afanofall23](https://www.reddit.com/u/Afanofall23).
 
-## Anchor entities
+### Anchor entities
 
 If you need to check if the player is in one of several spherical areas, for example to switch gamemode to adventure, then you can use some kind of entity as an anchor to check if the player is nearby.
 
-For versions before 1.17 you can use armor_stand or area_effect_cloud, but since version 1.17 it is strongly recommended to use an [marker entity](https://minecraft.wiki/w/Marker) to mark a place.
+For versions before 1.17 you can use :armor_stand: armor_stand or area_effect_cloud, but since version 1.17 it is strongly recommended to use an [marker entity](https://minecraft.wiki/w/Marker) to mark a place.
 
 ```mcfunction
 # Summon marker
@@ -72,9 +92,9 @@ give @s bat_spawn_egg{EntityTag:{id:"minecraft:marker",Tags:["adventure_area"]},
 give @s minecraft:bat_spawn_egg[entity_data={id:"minecraft:marker",Tags:["adventure_area"]},item_name='"Adventure Area Marker"']
 ```
 
-Because in bedrock edition we can't give a custom spawn egg (some exceptions apply, see [give custom item in Bedrock](wiki/questions/giveitembedrock)), you will need to manually tag the entity with the `/tag` command and use `armor_stand` instead of `marker`.
+Because in bedrock edition we can't give a custom spawn egg (some exceptions apply, see [give custom item in Bedrock](wiki/questions/giveitembedrock)), you will need to manually tag the entity with the `/tag` command and use :armor_stand: `armor_stand` instead of `marker`.
     
-## Block layer
+### Block layer
 
 If you need to execute a command when a player enters a very randomly shaped area, then you can place under the map, for example, at a height of Y=-63, a layer of some block that you will check under the player.
 
@@ -82,10 +102,10 @@ For example, you want to create an area on your map where the player will be det
 
 ```mcfunction
 # Command block / tick function (1.20.5+)
-execute as @a at @s if predicate {condition:"entity_properties",entity:"this",predicate:{flags:{is_sneaking:false}}} if block ~ -63 ~ minecraft:red_concrete run say You have been found!
+execute as @a at @s if block ~ -63 ~ red_concrete run say You have been found!
 ```
 
-## Predicates
+### Predicates
 
 If you need to check multiple cubic, spherical or cylindrical areas, you can also use [predicates](https://minecraft.wiki/w/Predicate) in datapack or command blocks (1.20.5+).
 
@@ -98,10 +118,10 @@ Below is an example of a predicate for checking three cubic areas:
 
 ```json
 {
-  "condition": "minecraft:any_of",
+  "type": "minecraft:any_of",
   "terms": [
     {
-      "condition": "minecraft:location_check",
+      "type": "minecraft:location_check",
       "predicate": {
         "position": {
           "x": {
@@ -120,7 +140,7 @@ Below is an example of a predicate for checking three cubic areas:
       }
     },
     {
-      "condition": "minecraft:location_check",
+      "type": "minecraft:location_check",
       "predicate": {
         "position": {
           "x": {
@@ -139,7 +159,7 @@ Below is an example of a predicate for checking three cubic areas:
       }
     },
     {
-      "condition": "minecraft:location_check",
+      "type": "minecraft:location_check",
       "predicate": {
         "position": {
           "x": {
@@ -160,4 +180,5 @@ Below is an example of a predicate for checking three cubic areas:
   ]
 }
 ```
+For versions before 26.3 the `type` field is renamed to `condition`
 </details>

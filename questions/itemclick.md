@@ -1,27 +1,9 @@
 # Item Click Detection
 
-  - [Java](#java)
-    - [Left / right clicks in / on specific areas](#left-right-clicks-in-on-specific-areas)
-      - [Interaction entity](#interaction-entity)
-    - [Left-click](#left-click)
-      - [Hurt entity](#hurt-entity)
-    - [Right-click](#right-click)
-      - [Carrot on a stick method](#carrot-on-a-stick-method)
-        - [Make the CoaS look like any item](#make-the-coas-look-like-any-item)
-          - [1.13+](#113)
-          - [1.21.2+](#1212)
-      - [Make item food method](#make-item-food-method)
-        - [1.20.5+](#1205)
-        - [1.21.2+](#1212)
-      - [Villager method](#villager-method)
-    - [Inventory click](#inventory-click)
-  - [Java and Bedrock](#java-and-bedrock)
-    - [Bundles](#bundles)
-
 
 ## Java
 
-For item clicks we have to differentiate between leftclick and rightclick detection in the hotbar / offhand as well as clicking on the item while it is in the inventory. Clicking on the item while it is in the inventory works since version 1.20.5 with the addition of a player cursor slot (`player.cursor`) for checking.
+For item clicks, we have to differentiate between leftclick and rightclick detection in the hotbar / offhand as well as clicking on the item while it is in the inventory. Clicking on the item while it is in the inventory works since version 1.20.5 with the addition of a player cursor slot (`player.cursor`) for checking.
 
 ### Left / right clicks in / on specific areas
 
@@ -33,7 +15,7 @@ Here's a simple example for command blocks:
 
 ```mcfunction
 # Setup
-summon minecraft:interaction ~ ~ ~ {Tags:["click_scan"],width:0.5f,height:0.5f}
+summon interaction ~ ~ ~ {Tags:["click_scan"],width:0.5f,height:0.5f}
 
 # Command blocks
 execute as @e[type=interaction,tag=click_scan] store success entity @s attack.player[] int 0 on attacker run say Left Click!
@@ -44,7 +26,7 @@ execute as @e[type=interaction,tag=click_scan] store success entity @s interacti
 
 | 💡 Tip |
 |--------|
-|To see interaction entity press `F3 + B` to show hitboxes|
+|To see interaction entity, press `F3 + B` to show hitboxes|
 
 If you need to check left/right clicks in a large area (or anywhere), then use multiple interaction entities or create a separate interaction entity for each player and teleport to the player every tick, and use the [scoreboard ID system](/wiki/questions/linkentity) for linking.
 
@@ -76,7 +58,7 @@ When using a datapack, you don't have to run these commands in a tick function, 
       "conditions": {
         "entity": [
           {
-            "condition": "minecraft:entity_properties",
+            "type": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
               "type": "minecraft:interaction",
@@ -98,13 +80,14 @@ advancement revoke @s only example:interaction/right_click
 say Right Click!
 execute as @e[type=interaction,tag=click_scan] run data remove entity @s interaction
 ```
+For versions before 26.3 the `type` field in the predicate is renamed to `condition`.
 </details>
 
 ### Left-click
 
 #### Hurt entity
 
-This one is as easily explained as it is flawed: You can only detect left clicks, if you put something in front of the player to hit. Teleport some form of entity or mob that can take damage and has a hitbox directly in the players face or even over their head, so they have no other chance but to hit that entity. You can then "detect" the clicks either using an advancement with the `player_hurt_entity` trigger ([see here](https://minecraft.wiki/Advancements/JSON_format#minecraft:player_hurt_entity)) or with a scoreboard objective of type `minecraft.custom:minecraft.damage_dealt` ([see here](https://minecraft.wiki/Scoreboard#Criteria)). This method however has many obvious flaws:  
+This one is as easily explained as it is flawed: You can only detect left clicks, if you put something in front of the player to hit. Teleport some form of entity or mob that can take damage and has a hitbox directly in the player's face or even over their head, so they have no other chance but to hit that entity. You can then "detect" the clicks either using an advancement with the `player_hurt_entity` trigger ([see here](https://minecraft.wiki/Advancements/JSON_format#minecraft:player_hurt_entity)) or with a scoreboard objective of type `minecraft.custom:minecraft.damage_dealt` ([see here](https://minecraft.wiki/Scoreboard#Criteria)). This method however has many obvious flaws:  
 
 - you're blocking the player from hitting anything else but the entity in their face  
 - you're also blocking the player from building and breaking blocks  
@@ -124,7 +107,7 @@ Mapmakers have for many years now exploited what is technically [a bug](https://
 
 This is the generally preferred method of doing this if it fits your situation, as its pros outweigh the cons.
 
-It should be noted that the debug_stick has the same property in which clicking with it can be tested using scoreboards but it also changes block properties and that tends to remove it from the list of reasonable methods. Since 1.16 there is also the warped fungus on a stick, which has the same properties as the carrot on a stick.
+It should be noted that the debug_stick has the same property in which clicking with it can be tested using scoreboards, but it also changes block properties and that tends to remove it from the list of reasonable methods. Since 1.16 there is also the warped fungus on a stick, which has the same properties as the carrot on a stick.
 
 Pros:
 - Multiplayer friendly.
@@ -139,7 +122,7 @@ Cons:
 
 ###### 1.13+
 
-People tend to use a carrot on a stick and then use a resource pack to remodel them for various CustomModelData tags. This way the CoaS looks like your desired item while still providing the same rightclick functionality.
+People tend to use a carrot on a stick and then use a resource pack to remodel them for various `CustomModelData` tags (pre-1.20.5) or `custom_model_data` components (1.20.5+). This way, the CoaS looks like your desired item while still providing the same rightclick functionality.
 
 The `models/item/carrot_on_a_stick.json` file within the resource pack might end up looking like this:
 
@@ -165,14 +148,14 @@ The `models/item/carrot_on_a_stick.json` file within the resource pack might end
 
 | 💡 Tip |
 |---------|
-|You can make the item completly invisible if using the custom model data of a chest|
+|You can make the item completely invisible if using the custom model data of a chest|
 
 ###### 1.21.2+
 
 The new `item_model` component allows you to make any item look like any other item without a resource pack. See this example command of a carrot on a stick that looks like a nether star
 
 ```mcfunction
-give @p carrot[item_model="nether_star"] 1
+give @p carrot_on_a_stick[item_model="nether_star"]
 ```
 
 #### Make item food method
@@ -181,13 +164,13 @@ give @p carrot[item_model="nether_star"] 1
 
 From version 1.20.5 you can add a right click check for any item that does not already use a right click event.
 
-This method involves adding the [`minecraft:food component`](https://minecraft.wiki/w/Data_component_format#food) to the item.
+This method involves adding the [`minecraft:food` component](https://minecraft.wiki/w/Data_component_format#food) to the item.
 
 When using only command blocks, you need to actually consume this item in order for the usage statistics of your item to change. So it might make sense to set the `eat_seconds` tag to a small value, such as 0.05 seconds (1 tick). Here is a small example for command blocks:
 
 ```mcfunction
 # Setup
-give @s minecraft:stick[minecraft:food={nutrition:0,saturation:0f,eat_seconds:0.05f,can_always_eat:true}]
+give @s stick[minecraft:food={nutrition:0,saturation:0f,eat_seconds:0.05f,can_always_eat:true}]
 scoreboard objectives add click.stick used:stick
 
 # Command blocks
@@ -197,7 +180,7 @@ scoreboard players reset @a click.stick
 
 This method has obvious disadvantages, such as particles appearing when used, sounds and the fact that the item is actually used.
 
-But when using a datapack, there are none of these disadvantages. Then you want to change `eat_seconds` to something very large so that the eating animation can't start and use the advancement trigger [`minecraft:using_item`](https://minecraft.wiki/w/Custom_advancement#minecraft:using_item) to check the item's usage. Since this advancement trigger is triggered every tick while the player is using the item, you can execute the command up to 20 times per second. However, often you don't want to do this as often and want to add a delay between command runs.
+But when using a datapack, there are none of these disadvantages. Then you want to change `eat_seconds` to something very large so that the eating animation can't start, and use the advancement trigger [`minecraft:using_item`](https://minecraft.wiki/w/Custom_advancement#minecraft:using_item) to check the item's usage. Since this advancement trigger is triggered every tick while the player is using the item, you can execute the command up to 20 times per second. However, often you don't want to do this as often and want to add a delay between command runs.
 Below is an example for this with a delay that is easy to configure:
 
 <details markdown="1">
@@ -205,7 +188,7 @@ Below is an example for this with a delay that is easy to configure:
 
 ```mcfunction
 # Example item
-give @s minecraft:stick[minecraft:custom_data={right_click:true},minecraft:food={nutrition:0,saturation:0f,eat_seconds:2147483648f,can_always_eat:true}]
+give @s stick[minecraft:custom_data={right_click:true},minecraft:food={nutrition:0,saturation:0f,eat_seconds:2147483648f,can_always_eat:true}]
 scoreboard objectives add stick.cooldown dummy
 ```
 ```json
@@ -242,7 +225,7 @@ execute as @a if score @s stick.cooldown = #reset stick.cooldown run advancement
 
 </details>
 
-This method allows you to check a right click for almost any item and you do not need to use a resourcepack to change the texture as for the CoaS / FoaS method.
+This method allows you to check a right click for almost any item, and you do not need to use a resourcepack to change the texture as for the CoaS / FoaS method.
 
 ##### 1.21.2+
 
@@ -250,10 +233,10 @@ In 1.21.2 some part of the `food` component has been separated into the `consuma
 
 ```mcfunction
 # get item
-give @p stick[food={nutrition:0,saturation:0,can_always_eat:true},consumable={consume_seconds:2147483647}] 1
+give @p stick[custom_data={right_click:true},consumable={consume_seconds:2147483647}]
 ```
 
-We can also add a cooldown (with the `use_cooldown` component) and use another animation instead of eating (it can be `none`, `eat`, `drink`, `block`, `bow`, `spear`, `crossbow`, `spyglass`, `toot_horn` or `brush`). Keep in mind that the item will be gone when using it. Here is a small example, detecting it using an advancement, of a nether star with the bow animation and a 5 second cooldown.
+We can also add a cooldown (with the `use_cooldown` component) and use another animation instead of eating (it can be `none`, `eat`, `drink`, `block`, `bow`, `spear`, `crossbow`, `spyglass`, `toot_horn` or `brush`). Keep in mind that the item will be gone when using it. Here is a small example, detecting it using an advancement, of a nether star with the bow animation and a 5-second cooldown.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -291,14 +274,14 @@ say used nether star
 
 #### Villager method
 
-Spawn an invisible, NoAI, Silent dummy villager in front of the player and test if the player's "talked to villager" score increases (`minecraft.custom:minecraft.talked_to_villager`, see [here](https://minecraft.wiki/Scoreboard#Criteria)).
+Spawn an invisible, `NoAI`, `Silent` dummy villager in front of the player and test if the player's "talked to villager" score increases (`minecraft.custom:minecraft.talked_to_villager`, see [here](https://minecraft.wiki/Scoreboard#Criteria)).
 
 Pros:
 - Works for any item.
 
 Cons:
 - Stops players from hitting entities as well as placing and breaking blocks whilst the villager is present.  
-- Zombies will path-find to the fake villager often and not the player.  
+- Zombies will path-find to the fake villager often, and not the player.  
 - Creates unexpected behaviour in multiplayer, as other players can also interfere with one player's fake villager; possible to abuse.  
 
 _Parts of this post are taken and modified from [here](https://www.reddit.com/r/MinecraftCommands/comments/elnygk/item_abilities), which have been written by [u/Lemon_Lord1](https://www.reddit.com/u/Lemon_Lord1)_
@@ -330,14 +313,14 @@ execute as @a store success score @s hold.in_cursor if items entity @s player.cu
 |---------|
 |In Java, it is recommended to use the other methods listed above|
 
-Right-clicking a bundle will take the first item that has. Because it will spawn an enitity, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
+Right-clicking a bundle will take the first item that has. Because it will spawn an entity, we can target it. In bedrock edition you will need [a complex method](wiki/questions/giveitembedrock) to be able to give a bundle with a renamed item inside, in this example the item is called `right_click` (so we can distinguish it from other items) and we are going to use the structure method to give the item. In Java, you can use custom data for better performance instead, but it’s recommended to use the other methods listed above.
 
 ```mcfunction
 # bedrock
 execute at @e[type=item,name="right_click"] run tag @p add right_click
-replaceitem entity @a[tag=right_click] slot.weapon 0 air
-execute at @e[tag=right_click] run structure load right_click_bundle ~ ~ ~
-execute as @e[tag=rigth_click] at @s run say Right click
+replaceitem entity @a[tag=right_click] slot.weapon.mainhand 0 air
+execute at @a[tag=right_click] run structure load right_click_bundle ~ ~ ~
+execute as @a[tag=right_click] at @s run say Right click
 kill @e[type=item,name="right_click"]
 tag @a[tag=right_click] remove right_click
 ```

@@ -1,9 +1,6 @@
 # How to create / customize an NPC?
 This article will explain how to create NPCs and add commands to it.
 
-  - [Basics of an NPC](#basics-of-an-npc)
-  - [Dialogues and commands](#dialogues-and-commands)
-  - [Add another dialog](#add-another-dialog)
 
 | 📝 Note |
 |---------|
@@ -18,7 +15,7 @@ For spawning an NPC, you will need to use the `/summmon` or `/give` command:
 /give @s spawn_egg 1 51
 ```
 
-For removing the NPC just left-click it while you are in creative, or use the `/kill` command.
+For removing the NPC, just left-click it while you are in creative, or use the `/kill` command.
 A NPC is invulnerable if you try to kill it with other methods (unless when falling into the void), but it can be moved with water, lava, breeze's wind charges, explosions or pistons.
 
 To edit an NPC right click it in creative, you will open a GUI that allows you to edit the display name and the skin.
@@ -39,14 +36,14 @@ You can use a target selector variable to target the player that is “talking�
 
 For that command there are 3 options: “On Enter” to run the command when the player right clicks it, “On Exit” to run the command when the player leaves the NPC screen and “Button Mode”. 
 This option will show a button in the dialog screen when the player interacts with it. You can change the button’s text by typing it in the text box below the options.
-You can add another command at the same button (or action, if you choosed it to be `On Enter`, for example) by pressing `enter` to create a new line.
+You can add another command at the same button (or action, if you chose it to be `On Enter`, for example) by pressing `enter` to create a new line.
 
 The command is run `as` the NPC and `at` the NPC, see [command context](wiki/questions/commandcontext) for more information.
 
 Below the options, you can choose to add another command, to remove a command press the trash button in the top right corner of that command.
 
 ## Add another dialog
-If you want you can add another dialog when the player presses a button.
+If you want, you can add another dialog when the player presses a button.
 
 Example: the NPC asks if the player wants a challenge and there are 2 options, yes and no. If the player selects no, no action is initiated. However, if the player selects yes, a dialog will appear inquiring if they are certain about this with 2 options again: yes and no. If they select yes, a zombie will spawn.
 

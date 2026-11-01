@@ -1,19 +1,5 @@
-# Store a players inventory and return it to them at some point
+# Store a player's inventory and return it to them at some point
 
-  - [Bedrock](#bedrock)
-    - [Custom Hopper Entity](#custom-hopper-entity)
-    - [`/structure`](#structure)
-  - [Java](#java)
-    - [Storing](#storing)
-      - [In storage](#in-storage)
-      - [In marker entity](#in-marker-entity)
-    - [Returning](#returning)
-      - [Putting things in the original slot (from storage)](#putting-things-in-the-original-slot-from-storage)
-      - [Putting things in the original slot (from marker)](#putting-things-in-the-original-slot-from-marker)
-      - [Don't care about the slot](#dont-care-about-the-slot)
-      - [**Put it in a chest**](#put-it-in-a-chest)
-    - [Some explanations on why we do it this way](#some-explanations-on-why-we-do-it-this-way)
-    - [storing in a chest](#storing-in-a-chest)
 
 This is a rather difficult thing to do that requires some advanced techniques. And due to the matter of the problem, not all details can be covered in detail in this article and are left for the reader to implement and figure out.
 
@@ -21,7 +7,7 @@ Thus, in your case **it might be easier to just give every player a double chest
 
 ## Bedrock
 
-To get the items from the player, you need to kill them with the `keepinventory` gamerule switched off. Now the question is how you can store the items and give them back at a later point. (Turning on `immediateRespawn` and `showDeathMessages` off helps with making this more seemless for the player.)
+To get the items from the player, you need to kill them with the `keepinventory` gamerule switched off. Now the question is how you can store the items and give them back at a later point. (Turning on `immediateRespawn` and `showDeathMessages` off helps with making this more seamless for the player.)
 
 For this, you need to put them somewhere in a confined space, so the items don't spill everywhere, and you also need to make sure only one player gets put into that area at a time, so the items don't get mixed up.
 
@@ -72,13 +58,13 @@ For convenience, we can create a single event that deals with both of these comp
 }
 ```
 
-For a better performance however I recommend to remove the item_hopper component once you're done picking up the items through a dedicated event.
+For a better performance however, it is recommend removing the item_hopper component once you're done picking up the items through a dedicated event.
 
 You are now ready to get the items out of the player, let them be picked up by your custom entity, link them through a [scoreboard ID system](/wiki/questions/linkentity) (aka giving the entity and the player the same id score) and after the game is over, teleport the entity and the player into the same room and kill the entity (through the `/event` described above).
 
 ### `/structure`
 
-One option that allows for an ingame solution (commands only, so without the need to make an add-on) would be to save the item entities in a structure using the `/structure save` command, and giving them back using `/structure load`.
+One option that allows for an in game solution (commands only, so without the need to make an add-on) would be to save the item entities in a structure using the `/structure save` command, and giving them back using `/structure load`.
 
 This has the **disadvantage** that structure names cannot be dynamic, so you have to hardcode all structure names that you intend to use at some point. This also means that you're very much limited in the amount of concurrently stored player inventories to the amount of structures you hardcoded.
 
@@ -88,9 +74,9 @@ Please note that while an add-on isn't necessarily required for this solution, u
 
 ## Java
 
-Luckily in Java we don't have to go through what is essentially a custom hopper minecart, killing the player to get their items. Instead we can use `NBT` to solve this issue for us. _Usage of functions is highly recommended and is expected for this explanation._
+Luckily, in Java we don't have to go through what is essentially a custom hopper minecart, killing the player to get their items. Instead, we can use `NBT` to solve this issue for us. _Usage of functions is highly recommended and is expected for this explanation._
 
-There are community made datapacks that do the heavy lifting for you like [PlayerDB](https://rx-modules.github.io/PlayerDB).
+There are community made datapacks that do the heavy lifting for you, like [PlayerDB](https://rx-modules.github.io/PlayerDB).
 
 ### Storing
 
@@ -99,9 +85,9 @@ There are community made datapacks that do the heavy lifting for you like [Playe
 
 #### In storage
 
-Since version 1.20.2, [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) have been added that allow you to insert any data into any part of the command, making storing/returning easier.
+Since version 1.20.2, [macros](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) have been added that allow you to insert any data into any part of the command, making storing/returning easier.
 
-Below is an example of storing a player's inventory in storage using the [scoreboard ID system](/wiki/questions/linkentity), or you can store the UUID / nickname instead of using the scoreboard ID system. To do this you need to run the function `example:storing` as a player.
+Below is an example of storing a player's inventory in storage using the [scoreboard ID system](/wiki/questions/linkentity), or you can store the UUID / nickname instead of using the scoreboard ID system. To do this, you need to run the function `example:storing` as a player.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -128,11 +114,57 @@ This player data storage system will create an in storage `example:inv` object f
 
 However, this implementation can support any data other than player `ID` and `Inventory` and you can easily add saving any other data.
 
+In 1.21.5, all of the NBT paths for equipment slots (except for mainhand in players) were moved to the equipment map.
+e.g.
+`Inventory[{Slot:-106b}]` moved to `equipment.offhand`
+`Inventory[{Slot:100b}]` moved to `equipment.feet`
+etc. 
+In order to account for this, some small tweaks are needed in order for proper storing and loading of items in offhand and armor slots to occur. One implementation of that is shown below.
+
+<details markdown="1">
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
+
+```mcfunction
+# function example:storing
+data remove storage example:inv this
+
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+
+data modify storage example:inv this.Inventory set from entity @s Inventory
+
+data modify storage example:inv this.Equipment[{equipment:"weapon.offhand"}] merge from entity @s equipment.offhand
+data modify storage example:inv this.Equipment[{equipment:"weapon.offhand"}] merge value {Slot:0b}
+execute unless data entity @s equipment.offhand run data modify storage example:inv this.Equipment[{equipment:"weapon.offhand"}] set value {Slot:0b,count:1,equipment:"weapon.offhand",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.feet"}] merge from entity @s equipment.feet
+data modify storage example:inv this.Equipment[{equipment:"armor.feet"}] merge value {Slot:1b}
+execute unless data entity @s equipment.feet run data modify storage example:inv this.Equipment[{equipment:"armor.feet"}] set value {Slot:1b,count:1,equipment:"armor.feet",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.legs"}] merge from entity @s equipment.legs
+data modify storage example:inv this.Equipment[{equipment:"armor.legs"}] merge value {Slot:2b}
+execute unless data entity @s equipment.legs run data modify storage example:inv this.Equipment[{equipment:"armor.legs"}] set value {Slot:2b,count:1,equipment:"armor.legs",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.chest"}] merge from entity @s equipment.chest
+data modify storage example:inv this.Equipment[{equipment:"armor.chest"}] merge value {Slot:3b}
+execute unless data entity @s equipment.chest run data modify storage example:inv this.Equipment[{equipment:"armor.chest"}] set value {Slot:3b,count:1,equipment:"armor.chest",id:"minecraft:air"}
+
+data modify storage example:inv this.Equipment[{equipment:"armor.head"}] merge from entity @s equipment.head
+data modify storage example:inv this.Equipment[{equipment:"armor.head"}] merge value {Slot:4b}
+execute unless data entity @s equipment.head run data modify storage example:inv this.Equipment[{equipment:"armor.head"}] set value {Slot:4b,count:1,equipment:"armor.head",id:"minecraft:air"}
+
+function example:storing/update with storage example:inv this
+
+# function example:storing/update
+$execute unless data storage example:inv players[{ID:$(ID)}] run data modify storage example:inv players append value {ID:$(ID)}
+$data modify storage example:inv players[{ID:$(ID)}] merge from storage example:inv this
+```
+</details>
+
 #### In marker entity
 
-The way to do this is to store the players `Inventory` NBT somewhere safe. There are many things in the game that can store arbitrary NBT data (storage, item tag nbt, etc), and they sure are all good solutions in their own right. In this case, since we're assuming that one player is supposed to be connected to one Inventory save, without any further knowledge of the environment, we'll be using the `marker` entities ability to store arbitrary data for us. *(In case a player is bound to a certain area in a map for example, an item in a jukebox might be a better choice. In any situation, using the `storage` might be a better choice for various reasons, if you know how to properly link data in there with players.)*
+The way to do this is to store the players `Inventory` NBT somewhere safe. There are many things in the game that can store arbitrary NBT data (storage, item tag nbt, etc), and they sure are all good solutions in their own right. In this case, since we're assuming that one player is supposed to be connected to one Inventory save, without any further knowledge of the environment, we'll be using the `marker` entities ability to store arbitrary data for us. *(In case a player is bound to a certain area in a map, for example, an item in a jukebox might be a better choice. In any situation, using the `storage` might be a better choice for various reasons, if you know how to properly link data in there with players.)*
 
-So, assume we want to **store** a players inventory then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player but **not** `at` the player. Instead if possible, make sure this is executed in the spawnchunks or an otherwise ensured to be loaded chunk so the marker entities stay loaded). This also assumes you have a [scoreboard ID system](/wiki/questions/linkentity) set up to link the entity to the player.
+So, assume we want to **store** a player's inventory, then. This part is the easy part, as it just takes a few commands (assuming it's executed in a function `as` the player, but **not** `at` the player. Instead, if possible, make sure this is executed in the spawnchunks (that were removed in 1.21.9) or an otherwise ensured to be loaded chunk, so the marker entities stay loaded). This also assumes you have a [scoreboard ID system](/wiki/questions/linkentity) set up to link the entity to the player.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -169,13 +201,13 @@ But now, we **want to give it back**. This is where it becomes tricky. Choose th
 Using macros makes it very easy to return items to the player, since you can simply read the `Slot`, `id`, `Count` and `tag` tags and paste this data into the /item replace command. But there are two small difficulties:
 
 - some slots (offhand and armor slots) cannot be directly inserted by slot number, so a separate function is needed to handle these slots.
-- items may not contain a tag tag, but macros always require all the data to be inserted.
+- items may not contain a tag, but macros always require all the data to be inserted.
 
 Therefore, need to create a scoreboard in which the current slot will be stored in order to run one of two functions: `example:returning/inventory` - for inventory slots (0 - 35) and `example:returning/equipment` - for offhand (-106) and armor slots (100 - 103).
 
 For items without tags, you need to create an empty tag before running the macro for that slot.
 
-Below is an example for versions 1.20.2 - 1.20.4. To do this need to run function `example:returning` as a player:
+Below is an example for versions 1.20.2 - 1.20.4. To do this, you need to run function `example:returning` as a player:
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -221,7 +253,7 @@ $execute if score #this Slot matches 102 run item replace entity @s armor.chest 
 $execute if score #this Slot matches 103 run item replace entity @s armor.head $(id)$(tag) $(Count)
 ```
 </details>
-However, as of version 1.20.5, item tags have now been replaced with components that cannot simply be inserted into the /item command, so for this need use a loot table written inline.
+However, as of version 1.20.5, item tags have now been replaced with components that cannot simply be inserted into the /item command, so for this need to use a loot table written inline.
 
 Below is an example of a loot table in which you need to put the item data using a macro:
 
@@ -283,7 +315,7 @@ data remove storage example:inv this.Inventory[-1]
 execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {} 
 function example:returning/item with storage example:inv this.Inventory[-1]
 
-# function example:returning/inventory with storage example:inv this.Inventory[-1]
+# function example:returning/inventory
 $loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
 
 # function example:returning/equipment
@@ -295,11 +327,55 @@ $execute if score #this Slot matches 103 run loot replace entity @s armor.head l
 ```
 </details>
 
+In 1.21.5, all of the NBT paths for equipment slots (except for mainhand in players) were moved to the equipment map.
+e.g.
+`Inventory[{Slot:-106b}]` moved to `equipment.offhand`
+`Inventory[{Slot:100b}]` moved to `equipment.feet`
+etc. 
+In order to account for this, some small tweaks are needed in order for proper storing and loading of items in offhand and armor slots to occur. One implementation of that is shown below.
+
+<details markdown="1">
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
+
+```mcfunction
+# function example:returning
+scoreboard objectives add Slot dummy
+execute store result storage example:inv this.ID int 1 run scoreboard players get @s ID
+function example:returning/read with storage example:inv this
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
+function example:returning/equipment with storage example:inv this.Equipment[-1]
+
+# function example:returning/read
+$data modify storage example:inv this set from storage example:inv players[{ID:$(ID)}]
+
+# function example:returning/item
+$scoreboard players set #this Slot $(Slot)
+execute if score #this Slot matches 0..35 run function example:returning/inventory with storage example:inv this.Inventory[-1]
+data remove storage example:inv this.Inventory[-1]
+execute unless data storage example:inv this.Inventory[-1].components run data modify storage example:inv this.Inventory[-1].components set value {}
+function example:returning/item with storage example:inv this.Inventory[-1]
+
+# function example:returning/inventory
+$loot replace entity @s container.$(Slot) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+
+# function example:returning/equipment
+$scoreboard players set #thisEquipmentVersion Slot $(Slot)
+execute unless data storage example:inv this.Equipment[-1].components run data modify storage example:inv this.Equipment[-1].components set value {}
+execute if score #thisEquipmentVersion Slot matches 0..4 run function example:returning/equipment_return with storage example:inv this.Equipment[-1]
+data remove storage example:inv this.Equipment[-1]
+function example:returning/equipment with storage example:inv this.Equipment[-1]
+
+# function example:returning/equipment_return
+$loot replace entity @s $(equipment) loot {pools:[{rolls:1,entries:[{type:"minecraft:item",name:"$(id)",functions:[{function:"minecraft:set_count",count:$(count)},{function:"minecraft:set_components",components:$(components)}]}]}]}
+```
+</details>
+
 #### Putting things in the original slot (from marker)
 
-This one is a little command intensive, but probably the easiest to understand. All we do is use `item replace` to return all the items back to the player, for every slot. But because we can't get the item data directly from the data storage, we first need to put it into a different container or entity inventory. So lets assume we have a chest placed at `<pos>` that we can store these items into (you can instead use an entity that has an inventory and summon it as needed).  
+This one is a little command intensive, but probably the easiest to understand. All we do is use `item replace` to return all the items back to the player, for every slot. But because we can't get the item data directly from the data storage, we first need to put it into a different container or entity inventory. So let's assume we have a chest placed at `<pos>` that we can store these items into (you can instead use an entity that has an inventory and summon it as needed).  
 
-**This replaces all items that might still be in the players inventory.**  
+**This replaces all items that might still be in the player's inventory.**  
 
 Running this function `as` the marker entity and having the target player marked with the `target` tag. This assumes you have a `temp` dummy scoreboard you can use.
 <details markdown="1">
@@ -375,7 +451,7 @@ execute if score #slot temp matches 103 run item replace entity @s armor.head fr
 
 This means that we can just go through all the items in the array and give them back by summoning the item entity at the players feet for them to pick them up.
 
-Thankfully we can just recursively run through all the entries/items in the array and thus summon them all in the same tick. This is assuming you're executing this `as` the linked marker entity, but `at` the player and that you have a dummy objective you can use, this example uses `temp`.
+Thankfully, we can just recursively run through all the entries/items in the array and thus summon them all in the same tick. This is assuming you're executing this `as` the linked marker entity, but `at` the player and that you have a dummy objective you can use, this example uses `temp`.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -412,13 +488,13 @@ execute if score #items temp matches 1.. run function namespace:return_items
 
 And we should be getting all our items back in a single tick. Items that do not fit in our inventory stay on the floor as item entities instead.
 
-**However, if the player is moving or close to other players while this is supposed to happen, or if you're worried about spawning lots of item entites, use the following method instead**. It does NOT fix the issue of too many items, as the player isn't able to pick up more than 36 items, but there could be a total of up to 41 items in their inventory at the time of storing (armor and offhand). The first method will drop the item on the floor if that is the case. **The second method will not give the player anything once they reached limit due to how `/loot give` works!**
+**However, if the player is moving or close to other players while this is supposed to happen, or if you're worried about spawning lots of item entities, use the following method instead**. It does NOT fix the issue of too many items, as the player isn't able to pick up more than 36 items, but there could be a total of up to 41 items in their inventory at the time of storing (armor and offhand). The first method will drop the item on the floor if that is the case. **The second method will not give the player anything once they reached limit due to how `/loot give` works!**
 
-This method uses the [yellow shulkerbox loottable trick as outlined here](/wiki/questions/modifyinventory).
+This method uses the [yellow shulkerbox loot table trick as outlined here](/wiki/questions/modifyinventory).
 
 For this to work, we first need to get rid of the `Slot` data that is in the Inventory data (see under [explanations](#wiki_some_explanations_on_why_we_do_it_this_way) below as to why we need to do this). Then we copy the entire list of items to the shulkerbox, where it will promptly throw out all the ones that didn't fit, we use `/loot` to give its contents to the player. Then we remove the first 27 entries of the inventory (1 full shulkerbox worth) and repeat the same process with the remaining items.
 
-So first, make sure you have the loottable from the link above added to your datapack. Also make sure you have a yellow shulkerbox placed somewhere in the world. Put the yellow shulkerboxes position into `<pos>`.
+So first, make sure you have the loot table from the link above added to your datapack. Also make sure you have a yellow shulkerbox placed somewhere in the world. Put the yellow shulkerboxes position into `<pos>`.
 
 Next, run this function `as` the marker, where the target player is `@a[tag=target]`.
 
@@ -466,11 +542,11 @@ To ensure that all items that fit into a player inventory (a total of 41 items a
 1. Either we can hardcode all the slots again, making sure they get placed in an according slot in the chest (see the first method above) or  
 2. we use a method similar to the `yellow shulker box` method (the second option of the second method), but instead of using `/loot give` we use `/loot insert`.
 
-The first option is very similar to the option described above, with the change being that the first intermediate storage should be an entity so you can exeute positioned at the chest(s), and that you need to modify `give_correct_slot` to place the items into the slots of the chest instead of the player.
+The first option is very similar to the option described above, with the change being that the first intermediate storage should be an entity so you can exceute positioned at the chest(s), and that you need to modify `give_correct_slot` to place the items into the slots of the chest instead of the player.
 
 The second option is described here in more detail. See the explanation for the yellow shulker box method above.
 
-For this we assume the two chests of the double chest are located at `~ ~ ~` and `~1 ~ ~`. Execute positioned and adjust the relative coordinates accordingly. Replace `<pos>` with the yellow shulkerbox position. Have a dummy `temp` scoreboard objective.
+For this, we assume the two chests of the double chest are located at `~ ~ ~` and `~1 ~ ~`. Execute positioned and adjust the relative coordinates accordingly. Replace `<pos>` with the yellow shulkerbox position. Have a dummy `temp` scoreboard objective.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -519,24 +595,25 @@ There are various problems that we need to work around by using the above method
 If it wasn't for this, we could just store the inventory in some NBT storage and copy it back to the player at a later date. But sadly Minecraft isn't built to be able to directly manipulate the player entity so we have to do a workaround in the first place.
 
 **Slot numbers are important**
-When merging items into a chest (or other container) `Items` array, the game checks the data for some validity points, like whether it's even a proper item, whether it has a count, etc. One of the things the game checks is the `Slot` number. If this number is outside of a specific range (starting at 0, counting up however many slots a container has, so chest: 0-26, dispenser: 0-8, hopper: 0-4), this item will be discarded as well. This means, since a [player inventory](https://minecraft.wiki/images/Items_slot_number.png) has the slots 0 - 35 (inventory), plus 100 - 103 (armor) and -106 (offhand), we need to do some editing beforehand to modify / remove the `Slot` data so the items aren't discarded by the game.
+When merging items into a chest (or other container) `Items` array, the game checks the data for some validity points, like whether it's even a proper item, whether it has a count, etc. One of the things the game checks is the `Slot` number. If this number is outside of a specific range (starting at 0, counting up however many slots a container has, so chest: 0-26, dispenser: 0-8, hopper: 0-4), this item will be discarded as well. This means, since a [player inventory](https://minecraft.wiki/images/Items_slot_number.png) has the slots 0 - 35 (inventory), plus 100 - 103 (armor) and -106 (offhand), we need to do some editing beforehand to modify / remove the `Slot` data, so the items aren't discarded by the game.
 
 **One by one**
 Another trend you can see in the above solutions is that we're doing one item after another, instead of doing multiple at once. Especially with the yellow shulker box method, this might seem strange because on first thought one might think that it should be possible to just dump an entire array into the Items of the chest / box, and just letting it discard whatever doesn't fit anymore. If the items have slot numbers, that works as intended, but if the slot numbers are removed, instead of adding a new item, the slot 0 will be overwritten with each and every item, thus leading to only one item remaining.
 
-So yes, a part of the solution could be to keep the slots around for the first 27 items, and then use the second method for the remaining items. However, the concious choice has been made in this tutorial to not mix up these two options, as it would increase the command count in this already long enough article and might lead to more confusion over the inner workings of the system.
+So yes, a part of the solution could be to keep the slots around for the first 27 items, and then use the second method for the remaining items. However, the conscious choice has been made in this tutorial to not mix up these two options, as it would increase the command count in this already long enough article and might lead to more confusion over the inner workings of the system.
 
 **Slots != Index**
-We often see something like `Inventory[0]` in this article. This is an array selector notation, and means that we're selecting the first item out of the array called `Inventory`. Note that any item can be in this position in the array, and it's not guaranteed to be the one that was `Slot:0b`. Only items that are actually in your inventory are saved in this list, so anything that is empty (or air I guess) will not be in this list. So if the only item in your inventory is in the last hotbar slot, it will be the only item in the list, eventhough it has `Slot:8b`.
+We often see something like `Inventory[0]` in this article. This is an array selector notation, and means that we're selecting the first item out of the array called `Inventory`. Note that any item can be in this position in the array, and it's not guaranteed to be the one that was `Slot:0b`. Only items that are actually in your inventory are saved in this list, so anything that is empty (or air I guess) will not be in this list. So if the only item in your inventory is in the last hotbar slot, it will be the only item in the list, even though it has `Slot:8b`.
 
-It is possible to select an item from the array based on its Slot like this: `Inventory[{Slot:10b}]`. We could use this for the "correct slot" method, if it weren't for the fact that we can't use `/item replace` with arbitrary data but we need to use something that is guaranteed to be an item. So we can't skip the step of first putting it into a container / entity inventory first.
+It is possible to select an item from the array based on its Slot like this: `Inventory[{Slot:10b}]`. We could use this for the "correct slot" method, if it weren't for the fact that we can't use `/item replace` with arbitrary data, but we need to use something that is guaranteed to be an item. So we can't skip the step of first putting it into a container / entity inventory first.
 
-### storing in a chest
+### Storing in a chest
+
 | 📝 Note |
 |---------|
-|This method is not effective (unless you don't want to use functions) and it is **not** multiplyer compatible (unless using 2 chests for every player)|
+|This method is not effective (unless you don't want to use functions) and it is **not** multipalyer compatible (unless using 2 chests for every player)|
 
-This method consist on using `/item` (on Java) or to replace all slots in 2 containers (for example 2 chest) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the positon of the chest
+This method consist on using `/item` (on Java) or to replace all slots in 2 containers (for example 2 chests) with the items in the player inventory. You can use command blocks, but you will need to run every command `as` the player and change `~ ~ ~` to the position of the chest
 
 | 📝 Note |
 |---------|
@@ -611,4 +688,4 @@ item replace entity @s weapon.offhand with block ~ ~ ~ container.13
 
 </details>
 
-As you can see it takes 40 commands for storing and 40 for returning, so it is a very ineficient way to store the inventory.
+As you can see, it takes 40 commands for storing and 40 for returning, so it is a very inefficient way to store the inventory.

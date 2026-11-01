@@ -1,21 +1,11 @@
 # How to make hostile mobs friendly? / disable PvP?
 
-  - [Disable both hostile and PvP](#disable-both-hostile-and-pvp)
-    - [Teams (Java only)](#teams-java-only)
-    - [Weakness and resistance (Java and Bedrock)](#weakness-and-resistance-java-and-bedrock)
-  - [Only disable hostile](#only-disable-hostile)
-    - [Helmet](#helmet)
-    - [Follow range](#follow-range)
-  - [Only disable PvP](#only-disable-pvp)
-    - [Interactions (Java only)](#interactions-java-only)
-    - [Distance attribute (Java only)](#distance-attribute-java-only)
-    - [Game Rule (Bedrock only)](#game-rule-bedrock-only)
 
 ## Disable both hostile and PvP
-This method can be used to make both, disable PvP and make hostile mobs passive.
+This method can be used to make, both, disable PvP and make hostile mobs passive.
 
 ### Teams (Java only)
-In java, we can create teams, and we can configure friendly fire to make people of that team unable to attack each other. This also works for mobs. In this example we are going to make zombies passive to players.
+In java, we can create teams, and we can configure friendly fire to make people of that team unable to attack each other. This also works for mobs. In this example, we are going to make zombies passive to players.
 
 ```mcfunction
 # in chat / load function
@@ -27,13 +17,13 @@ team join @e[team=!friendly,type=zombie] friendly
 ```
 
 ### Weakness and resistance (Java and Bedrock)
-If you can’t use the `/team` command (because you are using it for another thing or you are in bedrock) you can use effects. If we give resistance level 5 or higher the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob to cause knockback.
+If you can’t use the `/team` command (because you are using it for another thing, or you are in bedrock) you can use effects. If we give resistance level 5 or higher, the entity will be invulnerable to all damages except the `/kill` command. Weakness is recommended to avoid the player or mob to cause knockback.
 
 | 📝 Note |
 |---------|
 |The entity will be invulnerable even to other damage sources, such as fall damage, entity cramming or attacks that aren’t caused by the player.|
 
-In this example we are going to make all zombies unable to attack the player for one minute
+In this example, we are going to make all zombies unable to attack the player for one minute
 
 ```mcfunction
 /effect give @e[type=zombie] weakness 60 127 true
@@ -50,10 +40,10 @@ And if we want the player to be unable to attack the zombie
 |You can still attack the player/entity if you have the sharpness enchantment, that's why we use resistance|
 
 ## Only disable hostile
-This method wont work to disable PvP, it will only prevent the entity attacking the player.
+This method won't work to disable PvP, it will only prevent the entity attacking the player.
 
 ### Helmet
-It is unclear whether this is a bug, but it is shown [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) that constantly using /item on the mob will mess up the AI and will thus prevent it from attacking the player.
+It is unclear whether this is a bug, but it is shown [in this Reddit post](https://new.reddit.com/r/MinecraftCommands/comments/1cuibxp/comment/l4ya7gx/) that constantly using `/item` on the mob will mess up the AI and will thus prevent it from attacking the player.
 
 | 📝 Note |
 |---------|
@@ -65,10 +55,10 @@ It is unclear whether this is a bug, but it is shown [in this Reddit post](https
 ```
 
 ### Follow range
-You can modify the follow range attribute of some mobs so they can't find you. In bedrock you can use the invisibility effect to reduce this range, use mob heads or you change a mobs behavior file to change their follow range that way.
+You can modify the follow range attribute of some mobs so they can't find you. In bedrock, you can use the invisibility effect to reduce this range, use mob heads, or you change a mobs' behavior file to change their follow range that way.
 
 ## Only disable PvP
-This method will not make hostile mobs passive but it will prevent players from attacking other entities or players.
+This method will not make hostile mobs passive, but it will prevent players from attacking other entities or players.
 
 ### Interactions (Java only)
 If it is for only one mob you can add an `interaction` entity that constantly teleports to the mob or rides it and the player will attack the interaction instead of the mob, this will make the mob unkillable with attacks
@@ -76,12 +66,12 @@ If it is for only one mob you can add an `interaction` entity that constantly te
 Important things to keep in mind when using this method:
 
 * The players will **not** be able to interact with the mob, if it’s a villager you will not be able to trade with them.
-* The interaction can “lag” behind if the mob moves too quickly such as when it falls if teleporting it into the mob.
+* The interaction can “lag” behind if the mob moves too quickly, such as when it falls if teleporting it into the mob.
 * Hacked clients can override this method, and attack directly the entity with hacks such as killaura.
 * Arrows and other projectiles will be able to attack the entity
 
 ### Distance attribute (Java only)
-In java edition, there is an attribute related to the range that players can interact with other entities. we can reduce this range to make them unable to interact with other entities.
+In java edition, there is an attribute related to the range that players can interact with other entities. We can reduce this range to make them unable to interact with other entities.
 
 ```mcfunction
 attribute <target> entity_interaction_range base set 0
@@ -91,9 +81,9 @@ attribute <target> entity_interaction_range base set 0
 |---------|
 |This will affect right click too so they won't be able to trade with villagers, for example.|
 
-### Game Rule (Bedrock only)
+### Game Rule
 
-You can use the gamerule `pvp` but you can specify which players so it will take effect on everybody
+You can use the gamerule `pvp` but you can not specify which players to take effect in, so it will take effect on everybody
 
 ```mcfunction
 gamerule pvp false

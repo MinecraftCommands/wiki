@@ -1,7 +1,5 @@
 # Target a player above/below a certain Y level
 
-  - [`dy`](#dy)
-  - [predicate](#predicate)
 
 ## `dy`
 For example, you want to teleport players to a certain point if they go above y=200. To do this, we will use the `dx`/`dy`/`dz` cuboid volume selectors, which allow us to specify a width/height/length in which to match a player.
@@ -18,7 +16,7 @@ The problem with this is that, as they are not specified but `y` is, `x` and `z`
 say @a[x=1,y=200,z=3,dx=0,dy=500,dz=0]
 ```
 
-Instead, we'll need to `execute at` the player, so that the `x` and `z` will default to the players own `x` and `z`, which they will always match:
+Instead, we'll need to `execute at` the player, so that the `x` and `z` will default to the player's own `x` and `z`, which they will always match:
 
 ```mcfunction
 execute as @a at @s run say @s[y=200,dy=500]
@@ -31,15 +29,15 @@ To detect below a certain height, you can make the `dy` negative.
 ```mcfunction
 /execute as @a at @s run say @s[y=-30,dy=-500]
 ```
-this will detect any players below `-30`
+This will detect any players below `-30`
 
 ## Predicate
 
-Predicates have a built in check for the `y` values (alongside with the other axis). Keep in mind that this is Java exclusive and will need a datapack if you are in pre-1.20.5.
+Predicates have a built-in check for the `y` values (alongside with the other axis). Keep in mind that this is Java exclusive and will need a datapack if you are in pre-1.20.5.
 
 ```json
 {
-  "condition": "minecraft:entity_properties",
+  "type": "minecraft:entity_properties",
   "entity": "this",
   "predicate": {
     "location": {
@@ -52,3 +50,4 @@ Predicates have a built in check for the `y` values (alongside with the other ax
   }
 }
 ```
+For versions before 26.3 the `type` field is renamed to `condition`.

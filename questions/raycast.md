@@ -1,15 +1,5 @@
 # Raycast
 
-  - [What is a raycast?](#what-is-a-raycast)
-  - [Java](#java)
-    - [Without an entity](#without-an-entity)
-    - [With an entity](#with-an-entity)
-  - [Bedrock](#bedrock)
-    - [Without an entity](#without-an-entity)
-    - [With an entity](#with-an-entity)
-      - [Do it all in one tick with commands (using XP orbs)](#do-it-all-in-one-tick-with-commands-using-xp-orbs)
-      - [Using functions (Old execute)](#using-functions-old-execute)
-
 
 | 📝 Note |
 |--------------|
@@ -35,7 +25,7 @@ You can generate a raycasting datapack using this generator: https://sourceblock
 
 ### Without an entity
 
-This is the preferred method of raycasting, as this entityless approach causes less strain on the server and you don't need to clean up the used entity afterwards. Of course you can still summon an entity to mark the position you've found for later usage, but it is often encouraged to do it all in a single tick.
+This is the preferred method of raycasting, as this entityless approach causes less strain on the server, and you don't need to clean up the used entity afterwards. Of course, you can still summon an entity to mark the position you've found for later usage, but it is often encouraged to do it all in a single tick.
 
 This method only works in a single tick, so if you need the raycast to be over a period of time instead of instantaneous, use the entity based method instead. It also requires functions to work, so if you're unable to use a datapack, you also need to use the other method.
 
@@ -45,7 +35,7 @@ First, the command that will initiate a raycast. We're anchoring the execution p
 execute as <shooter> at @s anchored eyes positioned ^ ^ ^ anchored feet run function namespace:start_ray
 ```
 
-Next up, the ray setup. We need to set a maximum amount of steps that we can go before we abort our search. This means we can just set a score to the maximum amount of steps. Here, a `dummy` scoreboard named `ray_steps` is used. It's set to 50 steps, so a maximum distance of 5 blocks considering our step distance is 0.1 blocks per step (which is also the reach distance of a player). We also want to store whether our ray successfully hit something, so we know whether to continue or to stop. In this case another `dummy` objective is used, called `ray_success`. Instead of two scoreboards you can also use a single scoreboard and use [fake players](/wiki/questions/fakeplayer) to store the scores.
+Next up, the ray setup. We need to set a maximum amount of steps that we can go before we abort our search. This means we can just set a score to the maximum amount of steps. Here, a `dummy` scoreboard named `ray_steps` is used. It's set to 50 steps, so a maximum distance of 5 blocks considering our step distance is 0.1 blocks per step (which is also the reach distance of a player). We also want to store whether our ray successfully hit something, so we know whether to continue or to stop. In this case, another `dummy` objective is used, called `ray_success`. Instead of two scoreboards, you can also use a single scoreboard and use [fake players](/wiki/questions/fakeplayer) to store the scores.
 
 ```mcfunction
 # function example:start_ray
@@ -54,7 +44,7 @@ scoreboard players set @s ray_success 0
 function example:ray
 ```
 
-Next, the actual ray is being cast. For that, we first check whether our stopping condition has been achieved and run a success function if we did. Next, we count up the steps we can still take by 1. And lastly, we run the function again, moved forward by our step size, if we neither hit the stopping condition nor the maximum step size. In this example the stopping condition is hitting a block that is not air.
+Next, the actual ray is being cast. For that, we first check whether our stopping condition has been achieved and run a success function if we did. Next, we count up the steps we can still take by 1. And lastly, we run the function again, moved forward by our step size, if we neither hit the stopping condition nor the maximum step size. In this example, the stopping condition is hitting a block that is not air.
 
 ```mcfunction
 # function example:ray
@@ -63,7 +53,7 @@ scoreboard players remove @s ray_steps 1
 execute if score @s ray_steps matches 1.. if score @s ray_success matches 0 positioned ^ ^ ^0.1 run function example:ray
 ```
 
-Lastly, we can use the success function to run whatever we intend to do at the found place. In this case we'll just set a stone block. _Make sure to set the `ray_success` score to 1 at some point in the function though!_
+Lastly, we can use the success function to run whatever we intend to do at the found place. In this case, we'll just set a stone block. _Make sure to set the `ray_success` score to 1 at some point in the function, though!_
 
 ```mcfunction
 # function example:hit_block
@@ -190,9 +180,9 @@ kill @e[type=xp_orb,tag=!ignore]
 
 </details>
 
-The 4th command is where the magic happens: Due to us splitting the execution path into 2, every time `as @e[c=2]` is called, we're essentially doubling the executions over and over. So because we're calling it 9 times, the rest of the command will be run 2^9 = 512 times. You can adjust this accordingly to your needs. In this case we're moving the ray forwards by 0.1 blocks (thus, to a maximum of 51.2 blocks), only if we can move into the block there (as denoted by the `true` at the end of the tp command). Thus, this command would cause us to find the next solid block the player is looking at (in a 51 block radius). 
+The 4th command is where the magic happens: Due to us splitting the execution path into 2, every time `as @e[c=2]` is called, we're essentially doubling the executions over and over. So because we're calling it 9 times, the rest of the command will be run 2^9 = 512 times. You can adjust this accordingly to your needs. In this case we're moving the ray forwards by 0.1 blocks (thus, to a maximum of 51.2 blocks), only if we can move into the block there (as denoted by the `true` at the end of the `tp` command). Thus, this command would cause us to find the next solid block the player is looking at (in a 51 block radius). 
 
-So, for different applications you'd modify the 4th command to find different things. For example, to stop moving if there is a creeper (feet) close by, going through blocks, the command could look like this:
+So, for different applications, you'd modify the 4th command to find different things. For example, to stop moving if there is a creeper (feet) close by, going through blocks, the command could look like this:
 
 ```mcfunction
 execute as @e[c=2] ... as @e[c=2] as @e[type=xp_orb,tag=!ignore] at @s positioned ^^^0.1 unless entity @e[type=creeper,r=1] at @s run tp @s ^^^0.1

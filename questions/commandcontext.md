@@ -1,7 +1,5 @@
 # What is command context?
 
-  - [Defaults](#defaults)
-  - [Context in Functions](#context-in-functions)
 
 All commands exist in a __context__.  
 
@@ -14,7 +12,11 @@ This context is first set when the command is run and consists of multiple parts
 
 All of which can be modified individually with the 1.13+ Java as well as 1.19.1+ Bedrock execute command.
 
-See [the Minecraft wiki on the execute command](https://minecraft.wiki/wiki/Commands/execute) for which subcommands modify which context.
+See [the Minecraft wiki on the `execute` command](https://minecraft.wiki/wiki/Commands/execute) for which subcommands modify which context. The most used are:
+- `at`: changes the execution position to be the one of an entity.
+- `as`: changes the executing entity, this is useful to run a function afterward so we don't need to retarget the same entity.
+- `in`: changes dimension.
+- `positioned`: changes the execution position, allows global, relative (`~ ~ ~`) or directional (`^ ^ ^`) coordinates.
 
 ## Defaults
 

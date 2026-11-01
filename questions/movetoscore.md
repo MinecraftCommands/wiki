@@ -1,11 +1,5 @@
 ## Summon an entity at the position set in a score
 
-  - [Teleport an entity to the position set in a score](#teleport-an-entity-to-the-position-set-in-a-score)
-  - [Teleport the player to the position set in a score](#teleport-the-player-to-the-position-set-in-a-score)
-    - [1: Macro function](#1-macro-function)
-    - [2: End Gateways](#2-end-gateways)
-    - [3: Use an entity](#3-use-an-entity)
-    - [4: Binary Teleportation](#4-binary-teleportation)
 
 | 📝 Note |
 |---------|
@@ -13,9 +7,15 @@
 
 | ⚠️ Important |
 |--------------|
-|If the coordinate is inside a block and below it there isn't a solid block, the entity will clip trought and fall, this is common if you are storing the scoreboard value by storing the `Pos` value, when the player is not in a full block (for example a slab)|
+|If the coordinate is inside a block and below it there isn't a solid block, the entity will clip through and fall, this is common if you are storing the scoreboard value by storing the `Pos` value, when the player is not in a full block (for example a slab)|
 
-If you want to store the position of the player see this [transfer nbt to score](wiki/questions/nbttransfer)
+If you want to store the position of the player, see this [transfer nbt to score](wiki/questions/nbttransfer), but in short, you use `execute store` to retrieve data and store it in a score
+
+```mcfunction
+execute as <player> store result score @s posX run data get entity @s Pos[0]
+execute as <player> store result score @s posY run data get entity @s Pos[1]
+execute as <player> store result score @s posZ run data get entity @s Pos[2]
+```
 
 Since version 1.20.2 you can summon the entity directly at the position of the score using a [macro](https://minecraft.wiki/w/Function_(Java_Edition)#Macros) in the datapack. If you are using an earlier version, or do not use a datapack, then you cannot summon the entity directly at the position of the score, instead you have to summon the entity and then teleport it to your desired position.
 
@@ -45,7 +45,9 @@ $tellraw @a "Pig summoning at $(x) $(y) $(z)"
 ```
 </details>
 
-**Note: You cannot use macro data in the same function in which you set data for the macro command. You should always run a separate function to execute the macro command.**
+| 📝 Note |
+|---------|
+|You cannot use macro data in the same function in which you set data for the macro command. You should always run a separate function to execute the macro command.|
 
 The macro allows you to insert any numeric or text data into any part of the command; however, before using these values in the command you need to set this data in storage, read the data from the entity / block, or you can manually set the values when running the function. Below is an example:
 
@@ -59,7 +61,7 @@ $summon $(id) $(x) $(y) $(z)
 
 ## Teleport an entity to the position set in a score
 
-Assuming your desired position is stored in the entity's posX, posY and posZ value, you can just run `execute store` to save the score into the Position like this:
+Assuming your desired position is stored in the entity's `posX`, `posY` and `posZ` value, you can just run `execute store` to save the score into the Position like this:
 
 ```mcfunction
 execute store result entity @s Pos[0] double 1 run scoreboard players get @s posX
@@ -67,7 +69,7 @@ execute store result entity @s Pos[1] double 1 run scoreboard players get @s pos
 execute store result entity @s Pos[2] double 1 run scoreboard players get @s posZ
 ```
 
-**Be aware that if the entity enters unloaded chunks at any point during this operation, it might not continue to work, especially if you're not using a function to do this**. So if your X moves the entity out of the loaded chunks, the Y and Z won't be applied anymore. If you're running the commands from above in a function you'll be fine, as we don't need to re-find the entity because we're using the `@s` selector.
+**Be aware that if the entity enters unloaded chunks at any point during this operation, it might not continue to work, especially if you're not using a function to do this**. So if your X moves the entity out of the loaded chunks, the Y and Z won't be applied anymore. If you're running the commands from above in a function, you'll be fine, as we don't need to re-find the entity because we're using the `@s` selector.
 
 But you can easily avoid unloading the entity if you do not change each axis separately, but first do it in storage and then copy the ready `Pos` tag from storage to the entity data:
 
@@ -81,7 +83,7 @@ data modify entity @s Pos set from storage example:data Pos
 
 ## Teleport the player to the position set in a score
 
-The problem with the player is that the player NBT data cannot be modified and thus we can't just set their position like we can with entities. There are four decent ways to go about this:
+The problem with the player is that the player NBT data cannot be modified, and thus we can't just set their position like we can with entities. There are four decent ways to go about this:
 
 ### 1: Macro function
 
@@ -117,14 +119,14 @@ function example:tp/macro with storage example:macro pos
 
 You can use end gateways to teleport the players to an exact location, see [this for more info](https://minecraft.wiki/End_Gateway_(block)#Data_values).  
 
-Basically you can set its block NBT Data to `ExactTeleport:1b,ExitPortal:{X:1,Y:2,X:3}` using `data merge block` or `execute store` and then teleport the player into said portal. Thanks to `execute store` you can set the Exit Portal NBT dynamically:
+Basically, you can set its block NBT Data to `ExactTeleport:1b,ExitPortal:{X:1,Y:2,X:3}` using `data merge block` or `execute store` and then teleport the player into said portal. Thanks to `execute store` you can set the Exit Portal NBT dynamically:
 
 ```mcfunction
 # 1.13 - 1.20.4
 setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,ExitPortal:{X:0,Y:0,Z:0},Age:-9223372036854775808L}
-execute store result block 0 5 0 ExitPortal.X int 1 run scoreboard players get @s MapX
-execute store result block 0 5 0 ExitPortal.Y int 1 run scoreboard players get @s MapY
-execute store result block 0 5 0 ExitPortal.Z int 1 run scoreboard players get @s MapZ
+execute store result block 0 5 0 ExitPortal.X int 1 run scoreboard players get @s PosX
+execute store result block 0 5 0 ExitPortal.Y int 1 run scoreboard players get @s PosY
+execute store result block 0 5 0 ExitPortal.Z int 1 run scoreboard players get @s PosZ
 tp @s 0 5 0
 ```
 
@@ -135,16 +137,30 @@ Since version 1.20.5, the `ExitPortal` Compound tag has been replaced by the [In
 ```mcfunction
 # 1.20.5+
 setblock 0 5 0 minecraft:end_gateway{ExactTeleport:1b,exit_portal:[I;0,0,0],Age:-9223372036854775808L}
-execute store result block 0 5 0 exit_portal[0] int 1 run scoreboard players get @s MapX
-execute store result block 0 5 0 exit_portal[1] int 1 run scoreboard players get @s MapY
-execute store result block 0 5 0 exit_portal[2] int 1 run scoreboard players get @s MapZ
+execute store result block 0 5 0 exit_portal[0] int 1 run scoreboard players get @s PosX
+execute store result block 0 5 0 exit_portal[1] int 1 run scoreboard players get @s PosY
+execute store result block 0 5 0 exit_portal[2] int 1 run scoreboard players get @s PosZ
 tp @s 0 5 0
 ```
 
 ### 3: Use an entity
 
-Summon an entity, use the above method to teleport the entity to the position and then teleport the player to the entity. Here it is also important that the entity is `@s` from the moment you move it, in case it goes into unloaded chunks.  
+Summon an entity, use the above method to teleport the entity to the position, and then teleport the player to the entity. Here it is also important that the entity is `@s` from the moment you move it, in case it goes into unloaded chunks.  
 See [u/SanianCreations](https://www.reddit.com/u/SanianCreations) post about this [here](https://www.reddit.com/r/MinecraftCommands/comments/fd1lds/new_method_to_tp_to_scoreboard_values).
+
+```mcfunction
+# function example:teleport (run as the player)
+tag @s add this
+execute summon area_effect_cloud run function example:teleport_target
+tag @s remove this
+
+# function example:teleport_target
+execute store result entity @s Pos[0] double 1 run scoreboard players get @a[limit=1,tag=this] PosX
+execute store result entity @s Pos[1] double 1 run scoreboard players get @a[limit=1,tag=this] PosY
+execute store result entity @s Pos[2] double 1 run scoreboard players get @a[limit=1,tag=this] PosZ
+tp @a[limit=1,tag=this] @s
+kill @s
+```
 
 ### 4: Binary Teleportation
 
@@ -174,4 +190,4 @@ all the way down to 1, repeat for all 3 coordinates
 ```
 </details>
 
-This does use a lot of commands but using a function it's fairly easy to do and you can go as high as you want. Always start with the highest power of 2.
+This does use a lot of commands but using a function it's fairly easy to do, and you can go as high as you want. Always start with the highest power of 2.

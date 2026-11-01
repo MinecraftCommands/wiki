@@ -1,8 +1,5 @@
 # Detect a change of score
 
-  - [The destructive method](#the-destructive-method)
-  - [The non-destructive method](#the-non-destructive-method)
-
 
 _Both Java and Bedrock_
 
@@ -15,13 +12,13 @@ If you are changing the score yourself, it is generally advised to also do the e
 This is the more commonly used method, because in many use cases it's not important to know the total score, just that the score changed. It is generally used for [item click detection](/wiki/questions/itemclick), [player deaths](/wiki/questions/playerdeaths) in minigames and more and involves resetting the score back to 0 once it has been changed.  
 _Some objective types are read-only, such as Health or Hunger. Those won't work for this method._
 
-So lets assume you have a score that detects a player's death and want to do something with that player every time they die once.
+So let's assume you have a score that detects a player's death and want to do something with that player every time they die once.
 ```mcfunction
 execute as @a[scores={deaths=1..}] run say I died :(
 scoreboard players reset @a[scores={dead=1..}] deaths
 ```
 
-You can either `set` the score back to 0, or `reset` the score, whichever one fits your system better. In most cases either one will work fine.
+You can either `set` the score back to 0, or `reset` the score, whichever one fits your system better. In most cases, either one will work fine.
 
 ## The non-destructive method
 
@@ -42,4 +39,4 @@ execute as @a if score @s health > @s health.tmp run say My health has increased
 execute as @a run scoreboard players operation @s health.tmp = @s health
 ```
 
-The first command detects if the health is not the same as the value in the last tick and the second and third command detects if the value incremented or decreased. The last command updates the `health.tpm` scoreboard to be the same as the current health.
+The first command detects if the health is not the same as the value in the last tick, and the second and third command detects if the value incremented or decreased. The last command updates the `health.tpm` scoreboard to be the same as the current health.

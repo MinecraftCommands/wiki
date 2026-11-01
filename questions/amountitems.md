@@ -1,9 +1,5 @@
 # Select players with exactly X amount of items?
 
-  - [Java](#java)
-    - [Clear](#clear)
-    - [Execute if items](#execute-if-items)
-  - [Bedrock](#bedrock)
 
 ## Java
 
@@ -28,7 +24,7 @@ execute if score @s diamonds matches ..20 run say I have 20 or less diamonds in 
 
 Since version 1.20.5, you can also use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_items) to count the number of items.
 
-The `if items` subcommand, when executed, returns the number of items that meet the specified conditions. For a quick example, running this command will show the count of all items in the player's inventory (except for armor and left hand slots):
+The `if items` subcommand, when executed, returns the number of items that meet the specified conditions. For a quick example, running this command will show the count of all items in the player's inventory (except for armor and offhand slots):
 
 ```mcfunction
 # In chat
@@ -41,7 +37,7 @@ Below is an example for getting the amount of a custom item and executing some c
 
 ```mcfunction
 # Example item
-give @s diamond[minecraft:custom_data={diamond:true},minecraft:item_name="'Custom Diamond'"]
+give @s diamond[custom_data={diamond:true},item_name="'Custom Diamond'"]
 
 # Command blocks
 execute as @a store result score @s diamonds if items entity @s container.* *[custom_data~{diamond:true}]

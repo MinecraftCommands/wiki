@@ -1,21 +1,5 @@
 # Detect a specific item
 
-  - [Java](#java)
-  - [1.20.5 and above](#1205-and-above)
-    - [Target selector](#target-selector)
-    - [execute if items](#execute-if-items)
-    - [Predicate](#predicate)
-  - [1.20.4 and below](#1204-and-below)
-    - [In the inventory](#in-the-inventory)
-    - [In the selected slot](#in-the-selected-slot)
-    - [On the ground](#on-the-ground)
-    - [Use predicate](#use-predicate)
-  - [Bedrock](#bedrock)
-    - [In the inventory](#in-the-inventory)
-      - [since 1.18.20](#since-11820)
-      - [before 1.18.20](#before-11820)
-    - [On the ground](#on-the-ground)
-
 
 ## Java
 
@@ -36,10 +20,13 @@ Let's give a simple example of an item with a custom name and [custom tag](/wiki
 
 ```mcfunction
 # 1.13 - 1.20.4
-give @s minecraft:stick{awesome_stick:true,display:{Name:'{"text":"Awesome Stick"}'}}
+give @s stick{awesome_stick:true,display:{Name:'{"text":"Awesome Stick"}'}}
 
-# 1.20.5+
-give @s minecraft:stick[minecraft:custom_data={awesome_stick:true},minecraft:custom_name='"Awesome Stick"']
+# 1.20.5-1.21.4
+give @s stick[custom_data={awesome_stick:true},custom_name='"Awesome Stick"']
+
+# 1.21.4+
+give @s stick[custom_data={awesome_stick:true},custom_name="Awesome Stick"]
 ```
 
 **Important!** When you create any custom item that the player should not be able to obtain by renaming it at an anvil, always add a [custom tag](/wiki/questions/customitemtag) to your item. When checking the item, only check for the tag, not the item name, because checking the item name can cause problems with proper formatting and makes the command longer. All examples of check items below will be duplicated with checking the item name and checking the custom tag, if applicable.
@@ -59,13 +46,17 @@ Due to changes in different versions, you may receive different results in the c
 # 1.20.2 - 1.20.4
 {id:"minecraft:stick",Count:1b,tag:{awesome_stick:true,display:{Name:'"Awesome Stick"'}}}
 
-# 1.20.5+
+# 1.20.5-1.21.5
 {id:"minecraft:stick",count:1,components:{"minecraft:custom_data":{awesome_stick:true},"minecraft:custom_name":'"Awesome Stick"'}}
+
+# 1.21.5+
+{id:"minecraft:stick",count:1,components:{"minecraft:custom_data":{awesome_stick:true},"minecraft:custom_name":"Awesome Stick"}}
 ```
 
-As of version 1.20.2, any [JSON text](https://minecraft.wiki/w/Raw_JSON_text_format) will now be represented as plain text, if applicable. So if you give the player an item named `'{"text":"Some Text"}'` it will automatically be converted to `'"Some Text"'` unless you change the color, italic, or any other formatting. This applies not only to items, but also to books, signs, and any other places where JSON text is used.
+As of version 1.20.2, any :json: [JSON text](https://minecraft.wiki/w/Raw_JSON_text_format) will now be represented as plain text, if applicable. So if you give the player an item named `'{"text":"Some Text"}'` it will automatically be converted to `'"Some Text"'` unless you change the color, italic, or any other formatting. This applies not only to items, but also to books, signs, and any other places where :json: JSON text is used. In 1.21.5 the outer quotes aren't used since text components are now SNBT instead of :json: JSON.
 
 **Important!** When checking NBT data, you can only check the data you need, so you don't have to check the item ID or Count tag if it's not important to you, but you can't use the shorthand syntax that is available with the /give command.
+
 So, you can give yourself an item with this command:
 
 ```mcfunction
@@ -90,7 +81,11 @@ The correct check in the `SelectedItem` slot would look something like this:
  
 ### Target selector
 
-In 1.20.5 you can check an item using the NBT data check in the [target selector](https://minecraft.wiki/w/Target_selectors#Selecting_targets_by_nbt), however now can use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_items) to flexibly detect items and can now use the [predicate](https://minecraft.wiki/w/Predicate) not only for equipment, but also for any slot and now even without using a datapack.
+| 📝 Note |
+|---------|
+|This method is not recommended for 1.20.5+, you should use `execute if items` instead|
+
+In 1.20.5 you can check an item using the NBT data check in the [target selector](https://minecraft.wiki/w/Target_selectors#Selecting_targets_by_nbt), however since 1.20.5 you can use [`execute if items`](https://minecraft.wiki/w/Commands/execute#(if%7Cunless)_items) to flexibly detect items and you can use the [predicate](https://minecraft.wiki/w/Predicate) not only for equipment, but also for any slot and even without using a datapack.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
@@ -109,9 +104,15 @@ In 1.20.5 you can check an item using the NBT data check in the [target selector
 @a[nbt={SelectedItem:{id:"minecraft:stick",components:{"minecraft:custom_name":'"Awesome Stick"'}}}]
 ```
 
+| 📝 Note |
+|---------|
+|For 1.21.5+ remove the outer single quotes `'` in `minecraft:custom_name`|
+
 </details>
 
-**Note:** The component `“minecraft:custom_data”` is escaped with parentheses because it contains the special character colon. And although you can omit `minecraft:` in /give and other commands, when checking NBT data in the target selector you should always specify the full format, which also includes the [namespace](https://minecraft.wiki/w/Resource_location#Namespaces).
+| 📝 Note |
+|---------|
+|The component `"minecraft:custom_data"` is escaped with double quotes because it contains the special character colon. And although you can omit `minecraft:` in /give and other commands, when checking NBT data in the target selector you should always specify the full format, which also includes the [namespace](https://minecraft.wiki/w/Resource_location#Namespaces).|
 
 ### execute if items
 
@@ -122,14 +123,16 @@ if/unless items block <pos> <slots> <item_predicate>
 if/unless items entity <entities> <slots> <item_predicate>
 ```
 
+Where `<item_predicate`> is an item predicate: https://minecraft.wiki/w/Argument_types#minecraft:item_predicate
+
 `<slots>` - a specific [slot](https://minecraft.wiki/w/Slot) (`hotbar.3`) or a range of slots (`hotbar.*`). *Ranges as in `distance=1..5` are not allowed.*
 
 `<item_predicate>` - specific item (`minecraft:yellow_wool`), item tag (`#minecraft:banners`) or any item (`*`). Checking a components or item sub-predicate is also supported.
 
-An example for checking an item in almost any player slot:
+An example for checking an item in any of the 36 normal inventory slots:
 
 ```mcfunction
-execute as @a if items entity @s container.* minecraft:stick[minecraft:custom_data~{awesome_stick:true}]
+execute as @a if items entity @s container.* stick[custom_data~{awesome_stick:true}]
 ```
 
 This will not include the offhand slot, armor slots and ender_chest slots, so it will require an additional command to check these slots or use a predicate in the datapack.
@@ -146,10 +149,25 @@ The component check (`=`) checks the exact match of the component specified in t
 
 *Therefore, in this article, all `custom_data` component checks are used as item sub-predicate (`~`).*
 
+For example, with an item with 2 entries on the `custom_data` component:
+
+```mcfunction
+give @s diamond[custom_data={my_item:true,valuable:true}]
+
+# Succeeds
+execute if items entity @s container.* diamond[custom_data~{my_item:true}]
+# Fails
+execute if items entity @s container.* diamond[custom_data={my_item:true}]
+```
+
 In this example, any item in the hotbar with the unbreaking enchantment is detected, but if the item has any other enchantment, or enchantment level, then the check will fail for that item:
 
 ```mcfunction
+# 1.20.5-1.21.5
 execute as @a if items entity @s hotbar.* *[minecraft:enchantments={levels:{"minecraft:unbreaking":1}}]
+
+# 1.21.5+
+execute as @a if items entity @s hotbar.* *[minecraft:enchantments={"minecraft:unbreaking":1}]
 ```
 
 But if you want this to work if the item has a different enchantment, or enchantment level, you need to use the item sub-predicate (~) for this. Here the syntax is the same as checking item data in a predicate:
@@ -168,7 +186,7 @@ execute as @a if items entity @s weapon *[minecraft:damage~{durability:{max:10}}
 
 Here in the first example it will detect an item that has at least 5 damage. The second example detects an item that has durability for no more than 10 uses.
 
-But in addition to AND checks, you can check OR conditions.
+But in addition to AND checks, you can check OR conditions. Unlike most programming languages, the precedence of `|` (Logical OR) is higher than `,` (Logical AND).
 
 This is an example of checking an item that has no more than 5 damage, OR more than 40 damage.
 
@@ -178,7 +196,7 @@ execute as @a if items entity @s hotbar.* *[minecraft:damage~{damage:{max:5}}|mi
 
 Using `execute if items` you can check for an item not only in the player's inventory, but also in any slot for entity, [block entity](https://minecraft.wiki/w/Block_entity), item_frame, any projectile, or item on the ground.
 
-You can check any slot block entity (chest, furnace, shulker_box, etc.) using container.<num> for a specific slot or container.* for any slot:
+You can check any slot block entity (chest, furnace, shulker_box, etc.) using container.\<num\> for a specific slot or container.* for any slot:
 
 ```mcfunction
 execute if items block ~ ~ ~ container.* *[minecraft:custom_data~{awesome_stick:true}]
@@ -195,12 +213,12 @@ This will check every slot in a chest or any container and find all item stacks 
 To check for an item inside an item_frame, projectile or an item on the ground, use `container.0` or `contents` slot:
 
 ```mcfunction
-execute as @e[type=item] if items entity @s contents minecraft:stick[minecraft:custom_data~{awesome_stick:true}]
+execute as @e[type=item] if items entity @s contents stick[custom_data~{awesome_stick:true}]
 ```
 
 ### Predicate
 
-When using predicates in a datapack, you can now check not only equipment slots, but any slot. Here, just like when using if items, you can check for an exact match of components or use item sub-predicate for more flexible item detection. Also, "items" now accepts one item, one item tag (separate "tag" has been removed), or a list of items.
+When using predicates, you can check not only equipment slots, but any slot (since 1.20.5). Here, just like when using if items, you can check for an exact match of components or use item sub-predicate for more flexible item detection. Also, "items" now accepts one item, one item tag (separate "tag" has been removed), or a list of items.
 
 This is an example of updating a predicate to detect an item with a custom tag:
 
@@ -209,7 +227,7 @@ This is an example of updating a predicate to detect an item with a custom tag:
 
 ```json
 {
-  "condition": "minecraft:entity_properties",
+  "type": "minecraft:entity_properties",
   "entity": "this",
   "predicate": {
     "slots": {
@@ -226,9 +244,10 @@ This is an example of updating a predicate to detect an item with a custom tag:
   }
 }
 ```
+For versions before 26.3 the `type` field is renamed to `condition`.
 </details>
 
-**Note:** If in the predicate you do not check the item ID, but only the NBT data of the item in the mainhand, then always also check the count item in this slot because of a bug [\[MC-229882\]](https://bugs.mojang.com/browse/MC-229882).
+**Note:** In 1.20.4 and before, if in the predicate you do not check the item ID, but only the NBT data of the item in the mainhand, then always also check the count item in this slot because of a bug [\[MC-229882\]](https://bugs.mojang.com/browse/MC-229882).
 
 But in addition to creating predicates in a datapack, you can now use any predicates in command blocks without using a datapack.
 Below is an example of checking the weather_check predicate, just as an example, you can use any predicate in this way:
@@ -284,7 +303,7 @@ The items NBT is stored inside the `Item` NBT tag, so we can test for an item th
 
 ### Use predicate
 
-When using a datapack, you can check items in equipment slots. To do this, create a file `data/<namespace>/predicates/<predicate_name>.json` in your datapack. For example, the predicate `data/example/predicates/has/awesome_stick.json` would have the resourcename `example:has/awesome_stick`. And you can check the predicate in any target selector, `execute if predicate <predicate>`, as well as in loot and advancements tables.
+When using a datapack, you can check items in equipment slots. To do this, create a file `data/<namespace>/predicate/<predicate_name>.json` (``data/<namespace>/predicates/<predicate_name>.json` before 1.21) in your datapack. For example, the predicate `data/example/predicate/has/awesome_stick.json` would have the resourcename `example:has/awesome_stick`. And you can check the predicate in any target selector, `execute if predicate <predicate>`, as well as in loot and advancements tables.
 Here is an example of a predicate and its use in a target selector:
 
 <details markdown="1">
@@ -292,7 +311,7 @@ Here is an example of a predicate and its use in a target selector:
 
 ```json
 {
-  "condition": "minecraft:entity_properties",
+  "type": "minecraft:entity_properties",
   "entity": "this",
   "predicate": {
     "equipment": {
@@ -309,7 +328,7 @@ Here is an example of a predicate and its use in a target selector:
   }
 }
 ```
-
+For versions before 26.3 the `type` field is renamed to `condition`.
 </details>
 
 **Note:** If in the predicate you do not check the item ID, but only the NBT data of the item in the mainhand, then always also check the count item in this slot because of a bug [\[MC-229882\]](https://bugs.mojang.com/browse/MC-229882).
@@ -390,7 +409,7 @@ Detecting a specific item on the ground involves using its name.
 
 | 📝 Note |
 |---------|
-|You can use a [special item tag](/wiki/questions/customitemtag#Bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name|
+|You can use a [special item tag](/wiki/questions/customitemtag#bedrock) to differentiate it from other `Dirt` items, this method consists of changing the name with color codes, which can not be differentiate from the normal name|
 
 ```mcfunction
 kill @e[type=item, name="§r§Dirt"]

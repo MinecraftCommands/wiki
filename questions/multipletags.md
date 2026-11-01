@@ -1,7 +1,5 @@
 # Select an entity with *multiple* scoreboard tags
 
-  - [Method 1: Nested `@s` execute (1.12 and above)](#method-1-nested-s-execute-112-and-above)
-  - [Method 2: NBT tag checking](#method-2-nbt-tag-checking)
 
 In 1.12 and below, you're unable to specify multiple selector arguments of the same key directly in a single selector. For example, `@e[tag=A,tag=B,tag=C]` ignores the first two arguments and acts the same as `@e[tag=c]`, regardless of whether the entity has tags `a` or `b`.
 
@@ -31,4 +29,4 @@ To optimize how this performs, you can specify the least common tag in the `@e` 
 scoreboard players tag @e[tag=A] add HasAllTags {Tags:["B","C"]}
 ```
 
-This means that less entities will need to have their NBT checked.
+This means that fewer entities will need to have their NBT checked.

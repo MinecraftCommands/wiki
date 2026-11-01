@@ -1,11 +1,5 @@
 # Check if there are exactly X players (or entities) matching a selector?
 
-  - [Java and Bedrock](#java-and-bedrock)
-  - [Bedrock](#bedrock)
-  - [Java](#java)
-    - [Method 1: Storing the found entities using `execute store`](#method-1-storing-the-found-entities-using-execute-store)
-    - [Method 2: Checking the command block's `SuccessCount`](#method-2-checking-the-command-blocks-successcount)
-    - [Method 3: With `/stats` (1.8-1.12)](#method-3-with-stats-18-112)
 
 For example, you want to check if a team has exactly 2 players. 
 
@@ -85,7 +79,7 @@ testfor @a[team=red]
 testforblock <x> <y> <z> command_block -1 {SuccessCount:2}
 ```
 
-Change `<x> <y> <z>` in the second command block to the coordinates of the first command block. You may also need to change `command_block` to `chain_command_block` or `repeating_command_block`.
+Change `<x> <y> <z>` in the second command block to the coordinates of the first command block. You may also need to change :command_block: `command_block` to :chain_command_block: `chain_command_block` or :repeating_command_block: `repeating_command_block`.
 
 The second command will only succeed if the first command has a SuccessCount of 1 (it found exactly 1 player). You can then run a conditional chain block off of that second command to activate whatever you want to happen when there is exactly 1 player:
 

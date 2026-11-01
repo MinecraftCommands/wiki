@@ -1,12 +1,5 @@
 # Make a mob attack another specific entity / player
 
-  - [Bedrock and Java](#bedrock-and-java)
-    - [Using /damage](#using-damage)
-  - [Java (without /damage)](#java-without-damage)
-    - [Spawning a projectile with a specific owner](#spawning-a-projectile-with-a-specific-owner)
-  - [Bedrock](#bedrock)
-    - [Using behaviors](#using-behaviors)
-
 
 The basic principle for this method is that a mob that can attack will get angry at whoever attacks them. _(some exceptions apply)_
 
@@ -62,9 +55,9 @@ In the following example a skeleton tagged `attacker` is tricked into attacking 
 
 ```mcfunction
 # summon the snowball
-execute at @e[type=skeleton,tag=attacker] run summon minecraft:snowball ~ ~2.3 ~ {Tags:["atk_target"]}
+execute at @e[type=skeleton,tag=attacker] run summon snowball ~ ~2.3 ~ {Tags:["atk_target"]}
 # make the snowball owner the zombie
-execute as @e[type=minecraft:snowball,tag=atk_target] run data modify entity @s Owner set from entity @e[type=zombie,limit=1,tag=target] UUID
+execute as @e[type=snowball,tag=atk_target] run data modify entity @s Owner set from entity @e[type=zombie,limit=1,tag=target] UUID
 ```
 ## Bedrock
 

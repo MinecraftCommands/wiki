@@ -1,10 +1,5 @@
 # Give an item a custom tag to identify it by
 
-  - [Java](#java)
-  - [Bedrock](#bedrock)
-    - [Item data](#item-data)
-    - [Name with color codes](#name-with-color-codes)
-
 
 ## Java
 
@@ -34,10 +29,10 @@ So, if you were to `give` an item like this:
 
 ```mcfunction
 # 1.20.5 and above
-give @s minecraft:stick[minecraft:custom_data={my_custom_tag:true}]
+give @s stick[minecraft:custom_data={my_custom_tag:true}]
 
 # 1.20.4 and below
-give @s minecraft:stick{my_custom_tag:true}
+give @s stick{my_custom_tag:true}
 ```
 
 Or like this if you want to `summon` item:
@@ -73,7 +68,7 @@ execute if entity @e[type=item,nbt={Item:{tag:{my_custom_tag:true}}}]
 
 [How to detect a specific item in more detail](/wiki/questions/detectitem).
 
-The key can be any string and the value of this tag can be any [NBT](https://minecraft.wiki/w/NBT_format), so long as you test for it in the same way:
+The key can be any :string: string and the value of this tag can be any [NBT](https://minecraft.wiki/w/NBT_format), so long as you test for it in the same way:
 
 ```mcfunction
 give @s stick[custom_data={BlahBlahBlah:"string value!"}]
@@ -142,18 +137,18 @@ Below are examples of loot tables for different versions. **For version 1.20.5+,
 ```
 </details>
 
-The new `set_custom_data` loot function is exactly the same as the `set_nbt` function, but sets data only to the `custom_data` component. But using `set_components` for set `custom_data` is different because it cannot be represented as a string with NBT data, but it must be a JSON object and follow [JSON formatting](https://minecraft.wiki/w/JSON). Thus, any text must be escaped, and numeric values must be specified without a variable type.
+The new `set_custom_data` loot function is exactly the same as the `set_nbt` function, but sets data only to the `custom_data` component. But using `set_components` for set `custom_data` is different because it cannot be represented as a :string: string with NBT data, but it must be a :json: JSON object and follow [JSON formatting](https://minecraft.wiki/w/JSON). Thus, any text must be escaped, and numeric values must be specified without a variable type.
 
 Therefore, when receiving an item, this data will be converted to NBT format according to approximately the following rules:
 
-* any string will remain a string
-* any integer will be converted to a numeric variable with the smallest possible size<sup>[1]</sup>.
-* Any non-integer number will be converted to double variable type<sup>[2]</sup>.
+* any :string: string will remain a :string: string
+* any :int: integer will be converted to a numeric variable with the smallest possible size<sup>[1]</sup>.
+* Any non-:int: integer number will be converted to :double: double variable type<sup>[2]</sup>.
 * The list of numeric variables will be converted to an array of numeric values if possible<sup>[3]</sup>.
 
-\[1\] A number from -128 to 127 will be converted to a **byte** value. The number between -32768 to 32767 is a **short** variable type, etc.
+\[1\] A number from -128 to 127 will be converted to a :byte: **byte** value. The number between -32768 to 32767 is a :short: **short** variable type, etc.
 
-\[2\] A value that cannot be rounded to the nearest integer without loss of precision.
+\[2\] A value that cannot be rounded to the nearest :int: integer without loss of precision.
 
 \[3\] Only if all values in the list are of the same numeric variable type after conversion. Otherwise, a list of objects with an empty variable and value will be created [\[bug?\]](https://i.imgur.com/ZXndsgB.png).
 

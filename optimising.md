@@ -1,13 +1,5 @@
 # Optimising
 
-  - [Turn off commands when they don't need to be running](#turn-off-commands-when-they-dont-need-to-be-running)
-  - [Slow down your commands](#slow-down-your-commands)
-  - [Avoid chunk updates](#avoid-chunk-updates)
-  - [Avoid redstone](#avoid-redstone)
-  - [Optimize selectors](#optimize-selectors)
-  - [Optimize entities](#optimize-entities)
-  - [Function-specific optimisations](#function-specific-optimisations)
-  - [More in-depth optimization](#more-in-depth-optimization)
 
 *Relevant information on Functions are generally at the end of their paragraph.*
 
@@ -23,26 +15,30 @@ One method to implement is with [repeating conditional blocks](http://i.imgur.co
 
 You can alternatively use the following commands to activate an impulse command block at X Y Z, then reset it so that it can be activated again the next tick:
 
-    # pre-1.13 syntax
-    blockdata X Y Z {auto:1b}
-    blockdata X Y Z {auto:0b}
-    # 1.13+ syntax
-    data merge block X Y Z {auto:1b}
-    data merge block X Y Z {auto:0b}
+```mcfunction
+# pre-1.13 syntax
+blockdata X Y Z {auto:1b}
+blockdata X Y Z {auto:0b}
+# 1.13+ syntax
+data merge block X Y Z {auto:1b}
+data merge block X Y Z {auto:0b}
+```
 
 These commands should be conditional blocks on the chain that performs the condition test. Your setup might look [something like this](http://i.imgur.com/vyhnmTH.png).
 
 **Functions** make this even easier and more efficient. You can run a different function only if a condition (for example, if a specified selector exist) succeeds/fails, for example:
 
-    # pre-1.13 syntax
-    function code:arena_events if @a[tag=in_arena]
-    function code:check_winner unless @a[tag=winner]
-    # 1.13+ syntax
-    execute if entity @a[tag=in_arena] run function code:arena_events
-    execute unless entity @a[tag=winner] run function code:check_winner
-    # 1.13+ syntax (block condition)
-    execute if block 0 60 0 air run function code:missing_block
-    execute unless block 0 90 0 grass_block run function code:place_block
+```mcfunction
+# pre-1.13 syntax
+function code:arena_events if @a[tag=in_arena]
+function code:check_winner unless @a[tag=winner]
+# 1.13+ syntax
+execute if entity @a[tag=in_arena] run function code:arena_events
+execute unless entity @a[tag=winner] run function code:check_winner
+# 1.13+ syntax (block condition)
+execute if block 0 60 0 air run function code:missing_block
+execute unless block 0 90 0 grass_block run function code:place_block
+```
 
 In 1.13+ you can check more things apart from selectors with [`execute if/unless`](https://minecraft.wiki/w/Commands/execute#Condition_subcommands)
 
@@ -111,10 +107,12 @@ Consider also whether you actually need a selector. If you're selecting the same
 
 Using armor stands as markers? Strongly consider switching to area effect clouds or, even better, the `marker` entity instead. [Here's a good video showing just how much difference this makes.](https://www.youtube.com/watch?v=RKXzWGQfIcg) You can summon an area effect cloud that acts as a marker with:
 
-    # 1.20.5+
-    summon area_effect_cloud ~ ~ ~ {Duration:-1}
-    # Pre-1.20.5
-    summon area_effect_cloud ~ ~ ~ {Duration:2147483647}
+```mcfunction
+# 1.20.5+
+summon area_effect_cloud ~ ~ ~ {Duration:-1}
+# Pre-1.20.5
+summon area_effect_cloud ~ ~ ~ {Duration:2147483647}
+```
 
 | 📝 Note |
 |---------|
@@ -133,23 +131,29 @@ Tools like [CommandStudio](http://commandstudio.github.io/commandstudio/) will l
 
 With functions, rather than running many commands on the same entities (e.g: `@e[tag=blah]`) by repeatedly evaluating `@e[tag=blah]`, like this:
 
-    effect give @e[tag=blah] nausea
-    execute at @e[tag=blah] run setblock ~ ~1 ~ stone
-    execute at @e[tag=blah] run setblock ~ ~2 ~ grass
-    tp @e[tag=blah] ~ ~5 ~
-    ...
+```mcfunction
+effect give @e[tag=blah] nausea
+execute at @e[tag=blah] run setblock ~ ~1 ~ stone
+execute at @e[tag=blah] run setblock ~ ~2 ~ grass
+tp @e[tag=blah] ~ ~5 ~
+...
+```
 
 You can instead put all the commands into a function targeting `@s`, then run that function from those entities:
 
-    execute as @e[tag=blah] at @s run function code:blah
+```mcfunction
+execute as @e[tag=blah] at @s run function code:blah
+```
 
 `code/blah.mcfunction`
 
-    effect give @s nausea
-    setblock ~ ~1 ~ stone
-    setblock ~ ~2 ~ grass
-    tp @s ~ ~5 ~
-    ...
+```mcfunction
+effect give @s nausea
+setblock ~ ~1 ~ stone
+setblock ~ ~2 ~ grass
+tp @s ~ ~5 ~
+...
+```
 
 This means that instead of evaluating `@e[tag=blah]` many times, it is only evaluated once and thus grants a huge performance boost.
 

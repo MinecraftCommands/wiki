@@ -1,16 +1,5 @@
 # Add a delay to a command block
 
-  - [Bedrock](#bedrock)
-  - [Java](#java)
-    - [Area Effect Clouds](#area-effect-clouds)
-    - [Marker](#marker)
-    - [Scoreboard](#scoreboard)
-      - [Java 1.13+ and Bedrock](#java-113-and-bedrock)
-      - [Java pre-1.13](#java-pre-113)
-    - [Schedule](#schedule)
-    - [Success Count](#success-count)
-    - [Command block minecart](#command-block-minecart)
-    - [Falling blocks or entities](#falling-blocks-or-entities)
 
 ## Bedrock
 
@@ -32,7 +21,7 @@ summon area_effect_cloud ~ ~ ~ {Duration:100}
 
 | 📝 Note |
 |---------|
-|To see area_effect_cloud press `F3 + B` to show hitboxes|
+|To see :aoe: area_effect_cloud press `F3 + B` to show hitboxes|
 
 You can set the `Duration` tag as a positive value or the `Age` tag as a negative value, but then you need to set the `Particle` tag to `"block air"` (1.20.4 and below) or `{type:"block",block_state:"minecraft:air"}` (1.20.5 and above) to prevent it from creating particles.
 
@@ -81,7 +70,7 @@ This is a simple way to execute any command at a specified position once with a 
 
 ### Marker
 
-If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use an [`area_effect_cloud`](https://minecraft.wiki/w/Lingering_Potion#Area_effect_cloud) that will not despawn or an invisible [`armor_stand`](https://minecraft.wiki/w/Armor_Stand).
+If you need to execute a command not only once, but every 5 seconds, for example, at specific location, then you can use the [marker entity](https://minecraft.wiki/w/Marker) (1.17+) for this. If you are on an earlier version use an :aoe: [`area_effect_cloud`](https://minecraft.wiki/w/Lingering_Potion#Area_effect_cloud) that will not despawn or an invisible :armor_stand: [`armor_stand`](https://minecraft.wiki/w/Armor_Stand).
 
 ```mcfunction
 # Summon
@@ -233,7 +222,29 @@ These cause no block updates and require no entities or scoreboard objectives, b
 
 
 ### Command block minecart
-The entity [`command_block_minecart`](https://minecraft.wiki/w/Minecart_with_Command_Block) execute the written command every 4 ticks. Keep in mind that people can break the minecart (but it will **not** drop the command block).
+The entity [`command_block_minecart`](https://minecraft.wiki/w/Minecart_with_Command_Block) executes the written command every 4 ticks. Keep in mind that people can break the minecart (but it will **not** drop the command block).
+
+### `time_check` predicate
+If the gamerule `advance_time`/`doDayLightCycle` is set to `true` you can check for a value in a specific period. In the below example, the predicate suceeds every 5 seconds.
+
+```json
+# 26.3+
+{
+  "type": "minecraft:time_check",
+  "clock": "overworld",
+  "value": 1,
+  "period": 100
+}
+```
+
+```json
+# pre-26.3
+{
+  "condition": "minecraft:time_check",
+  "value": 1,
+  "period": 100
+}
+```
 
 ### Falling blocks or entities
 Other methods such as a falling block clock exist and can be convenient, but cause block updates, lighting updates, and requires an entity.

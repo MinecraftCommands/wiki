@@ -1,28 +1,20 @@
 # Check whether the player / an entity is looking at something
 
-  - [Java & Bedrock after 1.19.50](#java-bedrock-after-11950)
-  - [Java](#java)
-    - [Predicate](#predicate)
-    - [Advancement](#advancement)
-  - [Bedrock](#bedrock)
-    - [Using Commands (before 1.19.50)](#using-commands-before-11950)
-    - [Using Add-Ons](#using-add-ons)
-  - [Calculate viewing angle](#calculate-viewing-angle)
 
 _This method describes how to check whether the player / an entity is **looking at something specific / predetermined**, like a specific entity or a specific position! If you're looking for a more general approach, [you'll need to use a raycast](/wiki/questions/raycast)._
 
 ## Java & Bedrock after 1.19.50
 
-in Java and later Bedrock versions this can actually be achieved in a single command, thanks to the versatility of the `execute` command. We'll use the following subcommands to achieve our goal:
+in Java and later Bedrock versions, this can actually be achieved in a single command, thanks to the versatility of the `execute` command. We'll use the following subcommands to achieve our goal:
 
 - `as @a at @s` to modify the execution entity and position.  
-- `anchored eyes` to move the execution position up to the players eyes. For it to take effect, you'll need a positioned ^ ^ ^ subcommand at some point after this subcommand (which we have 2 subcommands later). See this related bug [MC-169665](https://bugs.mojang.com/browse/MC-169665).
+- `anchored eyes` to move the execution position up to the player's eyes. For it to take effect, you'll need a positioned ^ ^ ^ subcommand at some point after this subcommand (which we have 2 subcommands later). See this related bug [MC-169665](https://bugs.mojang.com/browse/MC-169665).
 - `facing <entity / coordinates>` to change the execution rotation to be facing our object / entity of desire  
 - `positioned ^ ^ ^1` to move 1 block in the direction of the object  
-- `anchored feet` to move the anchor back down to the players feet (due to a bug in the game which would otherwise apply the eye height modification with each position change, which we don't want, as well as to be able to check for the players existence in the last subcommand, this is not the case in the current version of the game so it can be omitted, see [MC-124140](https://bugs.mojang.com/browse/MC-124140))
+- `anchored feet` to move the anchor back down to the players feet (due to a bug in the game which would otherwise apply the eye height modification with each position change, which we don't want, as well as to be able to check for the player's existence in the last subcommand, this is not the case in the current version of the game so it can be omitted, see [MC-124140](https://bugs.mojang.com/browse/MC-124140))
 - `rotated as @s` to change the execution rotation back to be the same as the executing player
 - `positioned ^ ^ ^-1` to move 1 block in the opposite direction of where the player is facing
-- `if entity @s[distance=..0.1]` to check whether after this back and forth we've arrived roughly back at the player's position. To increase / decrease the tolerance for what is considered "close enough", change the distance parameter (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough". So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
+- `if entity @s[distance=..0.1]` to check whether after this back and forth we've arrived roughly back at the player's position. To increase / decrease the tolerance for what is considered "close enough", change the distance parameter (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and, it's still close enough". So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
 
 So, to bring it all together, the full command is as follows:
 
@@ -42,7 +34,7 @@ Example 2: looking at the position 10 20 30
 execute as @a at @s anchored eyes facing 10 20 30 anchored feet positioned ^ ^ ^1 rotated as @s positioned ^ ^ ^-1 if entity @s[distance=..0.1] run say hello block
 ```
 
-To execute commands `as` or `at` the entity add `at` and include the original target selecor used after `facing entity`
+To execute commands `as` or `at` the entity, add `at` and include the original target selector used after `facing entity`
 
 ## Java
 
@@ -59,7 +51,7 @@ execute as @a[predicate=example:looking_cow] run say Hi, cow!
 ```json
 # predicate example:looking_cow
 {
-  "condition": "minecraft:entity_properties",
+  "type": "minecraft:entity_properties",
   "entity": "this",
   "predicate": {
     "type_specific": {
@@ -71,11 +63,12 @@ execute as @a[predicate=example:looking_cow] run say Hi, cow!
   }
 }
 ```
+For versions before 26.3 the `type` field is renamed to `condition`.
 </details>
 
 ### Advancement
 This example is the same advancement as the vanilla ones but without any display.
-You can find (and edit) the preset in [misode's advancement generator](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast))
+You can find (and edit) the preset in [misode's advancement generator](https://misode.github.io/advancement/?version=1.20.5&preset=adventure/spyglass_at_ghast)
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -89,7 +82,7 @@ You can find (and edit) the preset in [misode's advancement generator](https://m
       "conditions": {
         "player": [
           {
-            "condition": "minecraft:entity_properties",
+            "type": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
               "type_specific": {
@@ -117,6 +110,7 @@ You can find (and edit) the preset in [misode's advancement generator](https://m
 advancement revoke @s only example:lookat/cow
 say I am looking at a cow
 ```
+For versions before 26.3 the `type` field in the advancement is renamed to `condition`.
 </details>
 
 ## Bedrock
@@ -127,7 +121,7 @@ In bedrock the process is the same as in Java, but due to a lack of advanced exe
 
 Also, due to how rotations work in bedrock, this tends to be somewhat inaccurate when the target is on a different y level than the player. Hopefully this will be resolved when the new execute arrives in 1.19.
 
-This setup can only happen to one player at a time, so either use functions to make this better scalable or experiment with executing from the players and their closest armorstands (which will still lead to some issues, but less so). Hence this will use `@p` to signify this restriction.
+This setup can only happen to one player at a time, so either use functions to make this better scalable or experiment with executing from the players and their closest armorstands (which will still lead to some issues, but less so). Hence, this will use `@p` to signify this restriction.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See commands</summary>
@@ -154,7 +148,7 @@ kill @e[name=checker]
 
 </details>
 
-To increase / decrease the tolerance for what is considered "close enough", change the radius (`r`) selector (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough". So realistically you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
+To increase / decrease the tolerance for what is considered "close enough", change the radius (`r`) selector (it needs to be between 0 and 2, because 2 basically means "you can look in the opposite direction and it's still close enough". So realistically, you want to most likely stay well below 1). To calculate the exact viewing cone angle, see below.
 
 ### Using Add-Ons
 
@@ -162,9 +156,9 @@ To check whether the player is looking at an entity, we can use the endermans `l
 
 Also see [`minecraft:lookat` documentation on bedrock.dev](https://bedrock.dev/docs/stable/Entities#minecraft%3Alookat).
 
-The lookat component then lets us fire an event which could then cause whatever we want to happen to the entity.
+The lookat component then lets us fire an event, which could then cause whatever we want to happen to the entity.
 
-In this example the entity will (without cooldown) fire the `custom:ive_been_looked_at` event when a player (even in creative mode) within a radius of 20 blocks. It will not set the looker as its attack target.
+In this example, the entity will (without cooldown) fire the `custom:ive_been_looked_at` event when a player (even in creative mode) within a radius of 20 blocks. It will not set the looker as its attack target.
 
 <details markdown="1">
   <summary style="color: #e67e22; font-weight: bold;">See example</summary>
@@ -197,6 +191,6 @@ or, the inverse to calculate what viewing angle a certain radius / distance (`r`
 
 &alpha; = sin<sup>-1</sup>(r&frasl;2) &times; 2
 
-_(remember that depending on your calculator you need to convert from radians to degrees)_.
+_(remember that depending on your calculator, you need to convert from radians to degrees)_.
 
-With the above calculation the example value of `r=0.1` / `distance=..0.1` leaves us with roughly a 6° angle by which we can miss the exact target in either direction and still have it considered "close enough".
+With the above calculation, the example value of `r=0.1` / `distance=..0.1` leaves us with roughly a 6° angle by which we can miss the exact target in either direction and still have it considered "close enough".

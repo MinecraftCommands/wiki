@@ -1,8 +1,5 @@
 # Creating a circle with commands
 
-  - [The idea](#the-idea)
-  - [Implementation](#implementation)
-  - [Potential issues](#potential-issues)
 
 Creating perfect (or as perfect as they can be with minecrafts blocky nature) circles by hand can be annoying, daunting even. And while there are [tools that help you lay out block circles](https://minecraftcirclegenerator.co/), it might be easier to write a few commands to do it for you.
 
@@ -12,24 +9,24 @@ The idea of how to achieve this is pretty simple: Have an entity in the center t
 
 ## Implementation
 
-For the example we're assuming that we want to make a block outline. You can easily adjust this to summon entities or make a filled circle by swapping the `/setblock` command for something else (e.g., `/summon`, `/ fill`).
+For the example, we're assuming that we want to make a block outline. You can easily adjust this to summon entities or make a filled circle by swapping the `/setblock` command for something else (e.g., `/summon`, `/ fill`).
 
 1. Summon your center entity. We're using an armorstand for parity, but in Java you can use other things like a [`marker`](https://minecraft.wiki/w/Marker) (for better performance) or any NoAI entity.
 
-```mcfunction
-/summon armor_stand ~ ~ ~
-```
+    ```mcfunction
+    /summon armor_stand ~ ~ ~
+    ```
 
 2. tag the armorstand so we can reference it easily.
 
-```mcfunction
-# Bedrock
-/tag @e[type=armor_stand,c=1] add center
-# Java 1.13+
-/tag @e[type=armor_stand,sort=nearest,limit=1] add center
-# Java 1.21+
-/tag @n[type=armor_stand] add center
-```
+    ```mcfunction
+    # Bedrock
+    /tag @e[type=armor_stand,c=1] add center
+    # Java 1.13+
+    /tag @e[type=armor_stand,sort=nearest,limit=1] add center
+    # Java 1.21+
+    /tag @n[type=armor_stand] add center
+    ```
 
 3. now, to automatically place the blocks, we'll want to put the following command into a repeating commandblock and the ones after that into chain commandblocks attached to the repeating one. Starting off with placing the block in front of the armorstand.
     ```mcfunction

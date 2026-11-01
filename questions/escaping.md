@@ -1,18 +1,12 @@
 # What is escaping?
 
-  - [Introduction to Escaping](#introduction-to-escaping)
-  - [Combining Quotes to Avoid Escaping](#combining-quotes-to-avoid-escaping)
-  - [Escaping backslashes](#escaping-backslashes)
-  - [Nested Strings](#nested-strings)
-  - [Escaping in JSON Files](#escaping-in-json-files)
-  - [Common errors](#common-errors)
 
 ## Introduction to Escaping
-Escaping is the process of marking special characters in a string to be interpreted literally rather than as part of a special syntax. Commands and JSON rely on precise syntax where unescaped characters can break the structure.
+Escaping is the process of marking special characters in a :string: string to be interpreted literally rather than as part of a special syntax. Commands and :json: JSON rely on precise syntax, where unescaped characters can break the structure.
 
-Escaping prevents errors and ensures that commands or JSON structures function as intended. It is essential for handling characters like quotes (`"`) or backslashes (`\`) that are part of the syntax.
+Escaping prevents errors and ensures that commands or :json: JSON structures function as intended. It is essential for handling characters like quotes (`"`) or backslashes (`\`) that are part of the syntax.
 
-Using JSON text components required escaping quotes with a backslash (`\`):
+Using :json: JSON text components required escaping quotes with a backslash (`\`):
 
 ```mcfunction
 /tellraw @a "I said \"Hi\" "
@@ -35,9 +29,9 @@ give @p command_block[block_entity_data={id:"command_block",Command:"setblock ~ 
 
 The Command field is enclosed in quotes (Command:"..."), so the inner quotes within this string must be escaped.
 
-Inside the Command, the tellraw command also contains a string (tellraw @a "Hi"). To ensure "Hi" is treated literally, the quotes around it are escaped with a backslash (\").
+Inside the Command, the tellraw command also contains a string (tellraw @a "Hi"). To ensure "Hi" is treated literally, the quotes around it are escaped with a backslash (`\"`).
 
-Since this entire tellraw string is itself nested within another string, the escape characters (\") also need escaping. This is done by adding another layer of backslashes (\\\").
+Since this entire tellraw string is itself nested within another string, the escape characters (`\"`) also need escaping. This is done by adding another layer of backslashes (`\\\"`).
 
 ## Escaping in JSON Files
 Escaping is also required in JSON files, such as for resource packs, advancements, or custom loot tables:
@@ -94,7 +88,7 @@ Mismatched Quotes:
 /tellraw @a "Hi\"
 ```
 
-This quote must not be escaped as it defines the end of the string. The backslash must be removed to be interpreted correctly.
+This quote must not be escaped, as it defines the end of the string. The backslash must be removed to be interpreted correctly.
 
 Not nesting strings:
 
