@@ -131,14 +131,41 @@ The main difference being that we are now moving an entity instead of just the e
 # function example:start_ray
 
 # summon entity to use as a marker
-summon area_effect_cloud ~ ~ ~ {Tags:["ray_marker"]}
+summon marker ~ ~ ~ {Tags:["ray_marker"]}
 # make sure the marker entity is rotated in the same way as the executing entity
-tp @e[tag=ray_marker] ~ ~ ~ ~ ~
+rotate @e[type=marker,tag=ray_marker] ~ ~
 
-scoreboard players set @e[tag=ray_marker] ray_steps 50
-scoreboard players set @e[tag=ray_marker] ray_success 0
-execute as @e[tag=ray_marker] at @s run function example:ray
+scoreboard players set @e[type=marker,tag=ray_marker] ray_steps 50
+scoreboard players set @e[type=marker,tag=ray_marker] ray_success 0
+execute as @e[type=marker,tag=ray_marker] at @s run function example:ray
+
+kill @e[type=marker,tag=ray_marker]
 ```
+
+You can alternatively use `/execute summon` to avoid reselecting the entity after summoning it (which could fail or select the wrong entity).
+<details markdown="1">
+  <summary style="color: #e67e22; font-weight: bold;">See datapack</summary>
+
+  ```mcfunction
+# function example:start_ray
+execute summon marker run function example:ray_setup
+
+# function example:ray_setup
+scoreboard players set @s ray_steps 50
+rotate @s ~ ~
+function example:ray
+kill @s
+
+# function example:ray
+execute unless block ~ ~ ~ minecraft:air run return run function example:hit_block
+scoreboard players remove @s ray_steps 1
+tp @s ^ ^ ^0.1
+execute if score @s ray_steps matches 1.. at @s run function example:ray
+
+# function example:hit_block
+setblock ~ ~ ~ stone
+```
+</details>
 
 We are now executing the ray function as the marker entity instead of the executing entity. So, to move the execution position, we need to teleport the entity and make sure we re-align the function position to the entity at every step, instead of just repositioning the execution context.
 
@@ -154,6 +181,7 @@ Make sure you kill the entity once it's done its job, for example, by putting th
 
 If you're doing this **without a datapack**, just using commands, then you just need to make sure all the commands that are in the `ray` function are executed as and at the ray_marker entity, that the commands in the `start_ray` function are executed as the ray shooter entity and that you're only affecting the one ray_marker that was summoned on that entity.
 
+> **Please Note**: Killing any entity, **including marker entitiies**, will create a _vibration_ game event, which will trigger things such as sculks sensors. If you must raycast with an entity, you may want to teleport the marker into the void before killing it.
 -----
 
 ## Bedrock
