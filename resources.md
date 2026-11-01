@@ -69,6 +69,7 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 
 ## Misc
 
+- [MapMC Seed Map](https://mapmc.app/seed-map): browser-based Java seed biome viewer for previewing biomes and coordinates while planning a map.
 - [Order of trigger activations in a tick](https://gist.github.com/misode/77ee37217a69a3c74032679d8084d6c6#file-tick_order-md)
 
 ## Resource Packs
