@@ -25,9 +25,9 @@ Submit a [pull request](https://github.com/MinecraftCommands/wiki/pulls) or crea
 ### Utilities
 
 - [MCStacker](https://mcstacker.net): All commands generators
-- [MinecraftJSON](https://minecraftjson.com): All things text
-- [Minecraft Tools](https://minecraft.tools): Mainly for books and titles
-- [Colorize Fun](https://colorize.fun/en/minecraft): For text gradients
+- [Minecraft Text Editor](https://text.datapackhub.net/): Modern visual text component editor and generator (with gradients)
+- [MinecraftJSON](https://minecraftjson.com): Step-by-step text component generator
+- [Minecraft Tools](https://minecraft.tools): Outdated (pre-1.21.9) visual text component generator (good for signs and titles)
 - [Gamergeeks](https://www.gamergeeks.net): Almost all commands generators, it's better if MCStacker looks confusing for you
 
 ### References
